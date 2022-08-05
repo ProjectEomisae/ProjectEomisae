@@ -31,16 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+### Example user template template
+### Example user template
 
-###
-HELP.md
-mvnw
-mvnw.cmd
-pom.xml
-eomisae.iml
-target/
-test/
-
-src/main/resources/application.properties
-src/main/java/dev/dmchoi/eomiase/ServletInitializer.java
-src/main/java/dev/dmchoi/eomiase/EomisaeApplication.java
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
