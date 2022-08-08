@@ -1,8 +1,224 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <body>
 <header class="header" th:fragment="content">
-
+    <div class="header-container">
+        <div class="top-bar">
+            <div class="logo-container">
+                <a th:href="@{/}">
+                    <img alt="eomisae" class="logo" th:src="@{/resources/images/logo.png}">
+                </a>
+            </div>
+            <ul class="menu-wrap">
+                <li class="item">
+                    <a class="link" th:href="@{/}">
+                        <span class="text">전체글</span>
+                    </a>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/fs}">
+                        <span class="text">쇼핑정보</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/fs}">인기정보</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/os}">패션정보</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/rt}">기타정보</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/dr}">래플정보</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ec}">이벤트정보</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/fe}">
+                        <span class="text">커뮤니티</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/fe}">자유게시판</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/chc}">코드:대리</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/jp}">공동구매</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ui}">가입인사</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/fh}">
+                        <span class="text">Q & A</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/fh}">패션</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/qa}">직구</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/gl}">
+                        <span class="text">구매인증</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/gl}">패션구매</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ha}">기타구매</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/pot}">
+                        <span class="text">실사후기</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/pot}">패션후기</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/pop}">기타후기</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/gm}">소장품자랑</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/dl}">
+                        <span class="text">데일리룩</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/dl}">데일리룩</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ds}">데일리슈</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/jo}">
+                        <span class="text">플리마켓</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/jo}">판매</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/jo2}">구매</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/jo3}">교환</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/ms}">
+                        <span class="text">서비스</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/ms}">문화상품권</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <a class="link" th:href="@{/no}">
+                        <span class="text">운영관리</span>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/no}">공지사항</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ev}">이벤트</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/mail}">건의</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <form th:action="@{/#}" class="search-form" method="get">
+                <label class="keyword-input-container">
+                    <span hidden>검색어</span>
+                    <input class="keyword-input" maxlength="50" name="keyword"
+                           type="text">
+                </label>
+                <button class="search-button" type="submit">
+                    <i class="icon fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+            <div class="top-login-container">
+                <a th:href="@{/#}" class="top-login-button">
+                    로그인
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="shadow" role="none"></div>
+    <div class="login-form">
+        <div class="login-container">
+            <div class="login-header">
+                <h5 class="login-text">
+                    로그인
+                </h5>
+                <a class="login-close" th:href="@{/#}">
+                    <div class="button-icon">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="input-container">
+                <form th:action="@{/}" class="input-form" method="post">
+                    <label class="input">
+                        <input class="email" maxlength="50" type="email" name="email" placeholder="이메일 주소">
+                        <span class="placeholder">이메일 주소</span>
+                    </label>
+                    <label class="input">
+                        <input class="password" maxlength="100" type="password" name="password" placeholder="비밀번호">
+                        <span class="placeholder">비밀번호</span>
+                    </label>
+                    <div class="sub">
+                        <label class="autosign-container">
+                            <input class="checkbox" name="autosign" type="checkbox">
+                            <span class="text">로그인 상태유지</span>
+                        </label>
+                        <div class="link">
+                            <a th:href="@{/}">ID/PW 찾기</a>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <input class="login-button" value="로그인" type="submit">
+                    </div>
+                </form>
+            </div>
+            <div class="register-container">
+                <span>아직 회원이 아니신가요?</span>
+                <a class="register" th:href="@{/}">회원가입 하기</a>
+            </div>
+            <div class="empty">
+                <div class="empty-text">또는</div>
+            </div>
+            <div class="social-container">
+                <a class="naver" th:href="@{/}"><img alt="naver" th:src="@{/resources/images/naver.svg}"></a>
+            </div>
+        </div>
+    </div>
 </header>
-
 </body>
 </html>

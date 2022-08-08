@@ -1,0 +1,91 @@
+@charset "UTF-8";
+@import "header.css";
+
+:root {
+    --color-blue: 52, 152, 219;
+    --color-black-1: 37, 40, 43;
+    --color-black-33: 51, 51, 51;
+    --color-black-35: 53, 53, 53;
+    --color-black-36: 54, 54, 54;
+    --color-black-38: 56, 56, 56;
+    --color-black-44: 68, 68, 68;
+    --color-black-48: 72, 72, 72;
+    --color-black-50: 80, 80, 80;
+    --color-black-66: 102, 102, 102;
+    --color-black-77: 19, 119, 119;
+    --footer-color-white: rgba(255, 255, 255, 0.6);
+    --color-gray-e5: 229, 229, 229;
+    --color-green: 2, 184, 117;
+    --color-orange: 255, 87, 34;
+    --color-pink: 232, 122, 114;
+    --color-purple: 116, 124, 253;
+    --color-red: 255, 26, 26;
+    --color-white-fa: 250, 250, 250;
+    --color-whitea: 55, 255, 255;
+    --bg-color-white-f7 : 247, 247, 247;
+}
+
+html {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1.5;
+    background: rgb(255, 255, 255);
+    color: rgb(85, 91, 97);
+}
+
+body {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 0.875rem;
+    font-weight: normal;
+    line-height: 1.5;
+    padding: unset;
+    margin: unset;
+    width: 100%;
+    min-height: 100%;
+}
+
+table, input, textarea, select, button {
+    font-family: sans-serif !important;
+    font-size: 0.875rem;
+}
+
+main {
+    display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 1.25rem 0;
+    font: inherit;
+    margin-block: unset;
+    margin-inline: unset;
+}
+
+a:active, a:hover {
+    outline: none;
+}
+
+a:link, a:visited {
+    color: unset;
+    text-decoration: unset;
+}
+
+input, select {
+    appearance: none;
+    background-color: unset;
+    border: unset;
+    border-image: unset;
+    box-sizing: border-box;
+    color: unset;
+    font: unset;
+    margin: unset;
+    outline: unset;
+    padding: unset;
+}
+
+ol, ul {
+    list-style-type: none;
+    margin-block: unset;
+    margin-inline: unset;
+    padding-inline: unset;
+}
