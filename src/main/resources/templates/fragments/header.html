@@ -170,6 +170,55 @@
             </div>
         </div>
     </div>
+    <div class="shadow"></div>
+    <div class="login-form">
+        <div class="login-container">
+            <div class="login-header">
+                <h5 class="login-text">
+                    로그인
+                </h5>
+                <a class="login-close" th:href="@{/}">
+                    <div class="button-icon">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="input-container">
+                <form th:action="@{/}" class="input-form" method="post">
+                    <label class="input">
+                        <input class="email" maxlength="50" type="email" name="email" placeholder=" ">
+                        <span class="placeholder">이메일 주소</span>
+                    </label>
+                    <label class="input">
+                        <input class="password" maxlength="100" type="password" name="password" placeholder=" ">
+                        <span class="placeholder">비밀번호</span>
+                    </label>
+                    <div class="sub">
+                        <label class="autosign-container">
+                            <input class="checkbox" name="autosign" type="checkbox">
+                            <span class="text">로그인 상태유지</span>
+                        </label>
+                        <div class="link">
+                            <a th:href="@{/}">ID/PW 찾기</a>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <input class="login-button" value="로그인" type="submit">
+                    </div>
+                </form>
+            </div>
+            <div class="register-container">
+                <span>아직 회원이 아니신가요?</span>
+                <a class="register" th:href="@{/}">회원가입 하기</a>
+            </div>
+            <div class="empty">
+                <div class="empty-text">또는</div>
+            </div>
+            <div class="social-container">
+                <a class="naver" th:href="@{/}"><img alt="naver" th:src="@{/resources/images/naver.svg}"></a>
+            </div>
+        </div>
+    </div>
 </header>
 </body>
 </html>
