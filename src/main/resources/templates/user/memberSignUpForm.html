@@ -11,7 +11,7 @@
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
 </head>
 <body>
-<nav class="nav"></nav>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <main class="main">
     <section class="register">
         <h1 class="title">회원가입</h1>
@@ -338,77 +338,129 @@
         <form class="register-form">
             <div class="label-container">
                 <label for="emailInput" class="control-label">
-                    <span>*</span>
+                    <span class="required-inputs-star">*</span>
                     <span>이메일 주소</span>
                 </label>
                 <label class="input-container">
                     <span hidden>이메일 주소</span>
-                    <input class="input" id="emailInput" maxlength="50" name="email" type="email">
+                    <input class="input input-red" id="emailInput" maxlength="50" name="email" type="email">
                     <div class="input-text">회원등록후 1시간이내에 메일인증을 하지못하면 회원가입이 취소됩니다.</div>
                     <div class="input-text">naver.co.kr,naver.com 에서만 메일인증을 할 수 있습니다.</div>
                 </label>
             </div>
             <div class="label-container">
                 <label for="passwordInput" class="control-label">
-                    <span>*</span>
+                    <span class="required-inputs-star">*</span>
                     <span>비밀번호</span>
                 </label>
                 <label class="input-container">
                     <span hidden>비밀번호</span>
-                    <input class="input" id="passwordInput" maxlength="50" name="password" type="password">
+                    <input class="input input-red" id="passwordInput" maxlength="50" name="password" type="password">
                     <div class="input-text">비밀번호는 6자리 이상이어야 하며 영문과 숫자를 반드시 포함해야 합니다.</div>
                 </label>
             </div>
             <div class="label-container">
                 <label for="passwordCheckInput" class="control-label">
-                    <span>*</span>
+                    <span class="required-inputs-star">*</span>
                     <span>비밀번호 확인</span>
                 </label>
                 <label class="input-container">
                     <span hidden>비밀번호 확인</span>
-                    <input class="input" id="passwordCheckInput" maxlength="50" name="passwordCheck" type="password">
+                    <input class="input input-red" id="passwordCheckInput" maxlength="50" name="passwordCheck"
+                           type="password">
                 </label>
             </div>
             <div class="label-container">
                 <label for="idInput" class="control-label">
-                    <span></span>
                     <span>아이디</span>
                 </label>
                 <label class="input-container">
                     <span hidden>아이디</span>
-                    <input class="input" id="idInput" maxlength="12" name="id" type="text">
+                    <input class="input input-blue" id="idInput" maxlength="12" name="id" type="text">
                 </label>
             </div>
             <div class="label-container">
                 <label for="nickNameInput" class="control-label">
-                    <span>*</span>
+                    <span class="required-inputs-star">*</span>
                     <span>닉네임</span>
                 </label>
                 <label class="input-container">
                     <span hidden>닉네임</span>
-                    <input class="input" id="nickNameInput" maxlength="12" name="nickname" type="text">
+                    <input class="input input-blue" id="nickNameInput" maxlength="12" name="nickname" type="text">
                 </label>
             </div>
             <div class="label-container">
                 <label class="control-label">
-                    <span>*</span>
+                    <span class="required-inputs-star">*</span>
                     <span>비밀번호 찾기 질문/답변</span>
                 </label>
-                <select class="password-answer">
-                    <option>다른 이메일 주소는?</option>
-                    <option>나의 보물 1호는?</option>
-                    <option>나의 출신 고등학교는?</option>
-                    <option>나의 출신 고향은?</option>
-                    <option>나의 이상형은?</option>
-                    <option>어머니 성함은?</option>
-                    <option>아버지 성함은?</option>
-                    <option>가장 좋아하는 색깔은?</option>
-                    <option>가장 좋아하는 음식은?</option>
-                </select>
-                <label class="input-container">
-                    <span hidden>비밀번호 찾기 질문/답변</span>
-                    <input class="input" maxlength="100" name="passwordAnswer" type="text">
+                <div class="controls">
+                    <select name="password-answer" class="password-answer">
+                        <option selected>다른 이메일 주소는?</option>
+                        <option>나의 보물 1호는?</option>
+                        <option>나의 출신 고등학교는?</option>
+                        <option>나의 출신 고향은?</option>
+                        <option>나의 이상형은?</option>
+                        <option>어머니 성함은?</option>
+                        <option>아버지 성함은?</option>
+                        <option>가장 좋아하는 색깔은?</option>
+                        <option>가장 좋아하는 음식은?</option>
+                    </select>
+                    <label class="input-container">
+                        <span hidden>비밀번호 찾기 질문/답변</span>
+                        <input class="input input-blue" maxlength="100" name="passwordAnswer" type="text">
+                    </label>
+                </div>
+            </div>
+            <div class="label-container">
+                <label for="profileUploadInput" class="control-label">
+                    <span>프로필 사진</span>
                 </label>
+                <div class="profile-upload-container">
+                    <label class="input-container">
+                        <span hidden>프로필 사진</span>
+                        <input class="input" id="profileUploadInput" maxlength="12" name="profileUpload" type="file">
+                        <div class="input-text">가로 제한 길이: 50px, 세로 제한 길이: 50px</div>
+                    </label>
+                </div>
+            </div>
+            <div class="label-container">
+                <label class="control-label">
+                    <span>메일링 가입</span>
+                </label>
+                <div class="mailing-container">
+                    <label class="radio-container">
+                        <span hidden>메일링 가입 동의</span>
+                        <input class="input" name="agree" type="radio"><span>예</span>
+                    </label>
+                    <label class="radio-container">
+                        <span hidden>메일링 가입 미동의</span>
+                        <input class="input" name="agree" type="radio"><span>아니오</span>
+                    </label>
+                </div>
+            </div>
+            <div class="label-container">
+                <label class="control-label">
+                    <span>쪽지허용</span>
+                </label>
+                <div class="mailing-container">
+                    <label class="radio-container">
+                        <span hidden>모두 허용</span>
+                        <input class="input" name="allowEveryone" type="radio"><span>모두 허용</span>
+                    </label>
+                    <label class="radio-container">
+                        <span hidden>등록된 친구들만 허용</span>
+                        <input class="input" name="onlyFriends" type="radio"><span>등록된 친구들만 허용</span>
+                    </label>
+                    <label class="radio-container">
+                        <span hidden>모두 금지</span>
+                        <input class="input" name="ban" type="radio"><span>모두 금지</span>
+                    </label>
+                </div>
+            </div>
+            <div class="submit-container">
+                <a class="button cancel-button">취소</a>
+                <input class="button register-button" name="Registration" type="submit" value="등록">
             </div>
         </form>
     </section>
