@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+body > .nav {
+    background-color: rgb(var(--color-black-1));
+    height: 3.75rem;
+}
+
+body > .main {
+    min-height: 100vh;
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+}
+
+body > .main > .register {
+    width: 100%;
+    height: 100vh;
+    max-width: 78.125rem;
+    margin-top: 2.5rem;
+}
+
+body > .main > .register > .title {
+    border-bottom: 0.0625rem solid #ccc;
+    color: rgb(var(--color-black-33));
+    font-size: 1.375rem;
+    font-weight: 400;
+}
+
+body > .main > .register > .terms-of-use-container {
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 0.8125rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+}
+
+body > .main > .register > .terms-of-use-container > .terms-of-use-text {
+    height: 12rem;
+    overflow-y: scroll;
+}
+
+body > .main > .register > .terms-of-use-container > .terms-of-use-text > h1 {
+    color: rgb(var(--color-black-33));
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+body > .main > .register > .terms-of-use-container > .dotted-line {
+    border-bottom: 0.0625rem dotted #ccc;
+    margin: 1rem 0;
+}
+
+body > .main > .register > .terms-of-use-container > .confirm > .agree > .agree-check {
+    appearance: auto;
+}
+
+body > .main > .register > .terms-of-use-container > .confirm > .agree > span {
+    margin-bottom: 0.5rem;
+}
+
+body > .main > .register > .register-form > .label-container {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 1.5rem 1.5rem 1.5rem 0;
+}
+
+body > .main > .register > .register-form > .label-container > .control-label {
+    width: 10rem;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+body > .main > .register > .register-form > .label-container > .control-label > span:nth-child(1) {
+    color: rgb(var(--color-red));
+}
+
+body > .main > .register > .register-form > .label-container > .password-answer {
+    display: block;
+    margin-left: 1rem;
+}
+
+body > .main > .register > .register-form > .label-container > .input-container {
+    padding-left: 1.25rem;
+}
+
+body > .main > .register > .register-form > .label-container > .input-container > .input {
+    width: 12.875rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.2rem;
+}
+
+body > .main > .register > .register-form > .label-container > .input-container > .input-text {
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
