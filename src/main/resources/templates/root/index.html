@@ -14,8 +14,377 @@
 </head>
 <body>
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
-<main>
-
+<main id="main">
+    <div class="main-container">
+        <section class="main-section">
+            <div class="board-info">
+                <div class="board-container">
+                    <h5 class="board-title"><i class="fa-solid fa-cart-shopping"></i>세일정보</h5>
+                    <table class="article-content">
+                        <tbody>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>국내</strong>
+                                    <a class="content" th:href="@{/}">3레벨 미만 회원은 0시간 57분 이후 열람 가능합니다.</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>패션국내</strong>
+                                    <a class="content" th:href="@{/}">휴고보스 전쟁용 흰티 3장 2발대</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>이벤트</strong>
+                                    <a class="content" th:href="@{/}">3레벨 미만 회원은 0시간 49분 이후 열람 가능합니다.</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>기타국내</strong>
+                                    <a class="content" th:href="@{/}">위메프/허닭 주먹밥 1+1 1988원 1</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>국내</strong>
+                                    <a class="content" th:href="@{/}">염색샴푸 모다모다 프로체인지 블랙샴푸 39,900원~</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>국내</strong>
+                                    <a class="content" th:href="@{/}">롯데 과자 유통기한 임박 특가</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--            전체글-->
+            <div class="board-info">
+                <div class="board-container">
+                    <h5 class="board-title"><i class="fa-solid fa-cart-shopping"></i>전체글</h5>
+                    <table class="article-content">
+                        <tbody>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>판매</strong>
+                                    <a class="content" th:href="@{/}"> COS /브이넥 니티드 베스트 / S</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>교환</strong>
+                                    <a class="content" th:href="@{/}">휴고보스 전쟁용 흰티 3장 2발대</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>구매</strong>
+                                    <a class="content" th:href="@{/}">휴고보스 전쟁용 흰티 3장 2발대</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>질문</strong>
+                                    <a class="content" th:href="@{/}"> 대학생이 신기 좋은 발 편한 로퍼 없을까요?</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>잡담</strong>
+                                    <a class="content" th:href="@{/}">휴고보스 전쟁용 흰티 3장 2발대</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>질문</strong>
+                                    <a class="content" th:href="@{/}">휴고보스 전쟁용 흰티 3장 2발대</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="side-section">
+            <div class="board-info">
+                <div class="board-container">
+                    <h5 class="board-title">공지사항</h5>
+                    <table class="article-content">
+                        <tbody>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>공지사항</strong>
+                                    <a class="content" th:href="@{/}">[완료]서버 하드웨어 교체 및 점검 안내 / 22.08.02 (화) 오전 08시~10시</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>공지사항</strong>
+                                    <a class="content" th:href="@{/}">모바일앱 안정성 개선을 위한 업데이트</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">07-15</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>공지사항</strong>
+                                    <a class="content" th:href="@{/}">[처리완료] iOS, Android 푸시 알림 문제 관련</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">02-18</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>공지사항</strong>
+                                    <a class="content" th:href="@{/}">규정 미준수 게시글 삭제 유예 기간 적용 안내</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">01-29</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="board-info">
+                <div class="board-container">
+                    <h5 class="board-title">이벤트</h5>
+                    <table class="article-content">
+                        <tbody>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>이벤트</strong>
+                                    <a class="content event" th:href="@{/}">세일정보 문화상품권 이벤트 당첨자 [06월 30일 ~ 07월 20일]</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">08-08</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>이벤트</strong>
+                                    <a class="content event" th:href="@{/}">세일정보 문화상품권 이벤트 당첨자 [06월 09일 ~ 06월 29일]</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">07-16</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>이벤트</strong>
+                                    <a class="content event" th:href="@{/}">세일정보 문화상품권 이벤트 당첨자 [05월 19일 ~ 06월 08일]</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">06-26</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <div class="title-content">
+                                    <a th:href="@{/}"></a>
+                                    <strong>이벤트</strong>
+                                    <a class="content event" th:href="@{/}">세일정보 문화상품권 이벤트 당첨자 [04월 28일 ~ 05월 18일]</a>
+                                </div>
+                            </td>
+                            <td class="time">
+                                <span class="date">06-05</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="empty-section">
+            <div class="empty-container">
+                <span></span>
+            </div>
+        </section>
+        <section class="side-empty-section">
+            <div class="empty-container">
+                <span></span>
+            </div>
+        </section>
+        <section class="image-section">
+            <div class="board-container">
+                <h5 class="board-title"><i class="fa-solid fa-cart-shopping"></i>실사후기</h5>
+                <div class="image-container">
+                    <ul class="article-list">
+                        <li class="articles">
+                            <a th:href="@{/}"><img
+                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                            </a>
+                            <strong class="category">국내</strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                        </li>
+                        <li class="articles">
+                            <a th:href="@{/}"><img
+                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                            </a>
+                            <strong class="category">국내</strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                        </li>
+                        <li class="articles">
+                            <a th:href="@{/}"><img
+                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                            </a>
+                            <strong class="category">국내</strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                        </li>
+                        <li class="articles">
+                            <a th:href="@{/}"><img
+                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                            </a>
+                            <strong class="category">국내</strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="board-container">
+                <h5 class="board-title"><i class="fa-solid fa-cart-shopping"></i>실사후기</h5>
+                <div class="image-container">
+                    <ul class="article-list">
+                        <li class="articles">
+                            <a th:href="@{/}"><img
+                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                            </a>
+                            <strong class="category">국내</strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                        </li>
+                        <li class="articles">
+                            <a th:href="@{/}"><img
+                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                            </a>
+                            <strong class="category">국내</strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                        </li>
+                        <li class="articles">
+                            <a th:href="@{/}"><img
+                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                            </a>
+                            <strong class="category">국내</strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                        </li>
+                        <li class="articles">
+                            <a th:href="@{/}"><img
+                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                            </a>
+                            <strong class="category">국내</strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="empty-section">
+            <div class="empty-container">
+                <span></span>
+            </div>
+        </section>
+    </div>
 </main>
 </body>
 </html>
