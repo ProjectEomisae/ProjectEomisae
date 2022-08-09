@@ -8,20 +8,20 @@ body > .main {
     font-size: 0.8125rem;
 }
 
-body > .main > .register {
+body > .main > .register-form > .register {
     width: 100%;
-    max-width: 78.125rem;
+    max-width: 75.125rem;
     margin-top: 2.5rem;
 }
 
-body > .main > .register > .title {
+body > .main > .register-form > .register > .title {
     border-bottom: 0.0625rem solid #ccc;
     color: rgb(var(--color-black-33));
     font-size: 1.375rem;
     font-weight: 400;
 }
 
-body > .main > .register > .terms-of-use-container {
+body > .main > .register-form > .register > .terms-of-use-container {
     border: 0.0625rem solid #ccc;
     border-radius: 0.5rem;
     font-size: 0.8125rem;
@@ -29,31 +29,31 @@ body > .main > .register > .terms-of-use-container {
     padding: 1rem 1rem 0 1rem;
 }
 
-body > .main > .register > .terms-of-use-container > .terms-of-use-text {
+body > .main > .register-form > .register > .terms-of-use-container > .terms-of-use-text {
     height: 12rem;
     overflow-y: scroll;
 }
 
-body > .main > .register > .terms-of-use-container > .terms-of-use-text > h1 {
+body > .main > .register-form > .register > .terms-of-use-container > .terms-of-use-text > h1 {
     color: rgb(var(--color-black-33));
     font-size: 1.2rem;
     font-weight: 400;
 }
 
-body > .main > .register > .terms-of-use-container > .dotted-line {
+body > .main > .register-form > .register > .terms-of-use-container > .dotted-line {
     border-bottom: 0.0625rem dotted #ccc;
     margin: 0.8rem 0;
 }
 
-body > .main > .register > .terms-of-use-container > .confirm {
+body > .main > .register-form > .register > .terms-of-use-container > .confirm {
     margin-bottom: 0.8rem;
 }
 
-body > .main > .register > .terms-of-use-container > .confirm > .agree > .agree-check {
+body > .main > .register-form > .register > .terms-of-use-container > .confirm > .agree > .agree-check {
     appearance: auto;
 }
 
-body > .main > .register > .register-form > .label-container {
+body > .main > .register-form > .register > .label-container {
     align-items: flex-start;
     display: flex;
     flex-direction: row;
@@ -61,43 +61,65 @@ body > .main > .register > .register-form > .label-container {
     margin: 1.5rem 1.5rem 1.5rem 0;
 }
 
-body > .main > .register > .register-form > .label-container > .input-container {
+body > .main > .register-form > .register > .label-container > .input-container {
     padding-left: 1.25rem;
 }
 
-body > .main > .register > .register-form > .label-container > .input-container > .input {
+body > .main > .register-form > .register > .label-container > .input-container > .input {
     width: 12.875rem;
     border: 0.0625rem solid #ccc;
     border-radius: 0.2rem;
     padding: 0 0.425rem;
+    box-shadow: unset;
 }
 
-body > .main > .register > .register-form > .label-container > .input-container > .input.input-red:focus {
-    border-color: rgb(233, 50, 45);
-    box-shadow: 0 0 0.375rem rgb(248, 185, 183);
-}
+/*body > .main > .register-form > .register > .label-container > .input-container > .input.input-email:focus {*/
+/*    border-color: rgb(233, 50, 45);*/
+/*    box-shadow: 0 0 0.375rem rgb(248, 185, 183);*/
+/*}*/
 
-body > .main > .register > .register-form > .label-container > .input-container > .input.input-blue:focus {
-    border-color: rgb(82, 168, 236);
-    box-shadow: 0 0 0.375rem rgb(125, 194, 248);
-}
+/*body > .main > .register-form > .register > .label-container > .input-container > .input.input-email:valid {*/
+/*    border-color: rgb(82, 168, 236);*/
+/*    box-shadow: 0 0 0.375rem rgb(125, 194, 248);*/
+/*}*/
 
-body > .main > .register > .register-form > .label-container > .input-container > .input-text {
+/*body > .main > .register-form > .register > .label-container > .input-container > .input.input-password:focus {*/
+/*    border-color: rgb(233, 50, 45);*/
+/*    box-shadow: 0 0 0.375rem rgb(248, 185, 183);*/
+/*}*/
+
+/*!*body > .main > .register-form > .register > .label-container > .input-container > .input.input-password:invalid {*!*/
+/*!*    border-color: rgb(233, 50, 45);*!*/
+/*!*    box-shadow: 0 0 0.375rem rgb(248, 185, 183);*!*/
+/*!*}*!*/
+
+/*body > .main > .register-form > .register > .label-container > .input-container > .input.input-password:valid {*/
+/*    border-color: rgb(82, 168, 236);*/
+/*    box-shadow: 0 0 0.375rem rgb(125, 194, 248);*/
+/*}*/
+
+
+/*body > .main > .register-form > .register > .label-container > .input-container > .input.input-blue:focus {*/
+/*    border-color: rgb(82, 168, 236);*/
+/*    box-shadow: 0 0 0.375rem rgb(125, 194, 248);*/
+/*}*/
+
+body > .main > .register-form > .register > .label-container > .input-container > .input-text {
     display: inline-block;
     margin-left: 0.5rem;
 }
 
-body > .main > .register > .register-form > .label-container > .control-label {
+body > .main > .register-form > .register > .label-container > .control-label {
     width: 10rem;
     text-align: right;
     flex-shrink: 0;
 }
 
-body > .main > .register > .register-form > .label-container > .control-label > .required-inputs-star {
+body > .main > .register-form > .register > .label-container > .control-label > .required-inputs-star {
     color: rgb(var(--color-red));
 }
 
-body > .main > .register > .register-form > .label-container > .controls > .password-answer {
+body > .main > .register-form > .register > .label-container > .controls > .password-answer {
     appearance: auto;
     border: 0.0625rem solid #ccc;
     border-radius: 0.2rem;
@@ -106,78 +128,81 @@ body > .main > .register > .register-form > .label-container > .controls > .pass
     padding: 0.325rem 0 0.325rem 0.425rem;
 }
 
-body > .main > .register > .register-form > .label-container > .controls > .input-container {
+body > .main > .register-form > .register > .label-container > .controls > .input-container {
     padding-left: 1.25rem;
 }
 
-body > .main > .register > .register-form > .label-container > .controls > .input-container > .input {
+body > .main > .register-form > .register > .label-container > .controls > .input-container > .input {
     width: 12.875rem;
     border: 0.0625rem solid #ccc;
     border-radius: 0.2rem;
     padding: 0 0.425rem;
 }
 
-body > .main > .register > .register-form > .label-container > .controls > .input-container > .input:focus {
-    border-color: rgb(82, 168, 236);
-    box-shadow: 0 0 0.375rem rgb(125, 194, 248);
-}
+/*body > .main > .register-form > .register > .label-container > .controls > .input-container > .input:focus {*/
+/*    border-color: rgb(82, 168, 236);*/
+/*    box-shadow: 0 0 0.375rem rgb(125, 194, 248);*/
+/*}*/
 
-body > .main > .register > .register-form > .label-container > .profile-upload-container > .input-container {
+body > .main > .register-form > .register > .label-container > .profile-upload-container > .input-container {
     display: flex;
     flex-direction: column;
     padding-left: 1.25rem;
 }
 
-body > .main > .register > .register-form > .label-container > .profile-upload-container > .input-container > input {
+body > .main > .register-form > .register > .label-container > .profile-upload-container > .input-container > .input {
     margin-bottom: 0.625rem;
 }
 
-body > .main > .register > .register-form > .label-container > .mailing-container {
+body > .main > .register-form > .register > .label-container > .permission-container {
     display: flex;
     flex-direction: column;
 }
 
-body > .main > .register > .register-form > .label-container > .mailing-container > .radio-container {
+body > .main > .register-form > .register > .label-container > .permission-container > .radio-container {
     padding-left: 1.25rem;
     margin-bottom: 0.425rem;
 }
 
-body > .main > .register > .register-form > .label-container > .mailing-container > .radio-container > .input {
+body > .main > .register-form > .register > .label-container > .permission-container > .radio-container > .input {
     appearance: auto;
 
 }
 
-body > .main > .register > .register-form > .label-container > .mailing-container > .radio-container > span {
+body > .main > .register-form > .register > .label-container > .permission-container > .radio-container > span {
     margin-left: 0.225rem;
 }
 
-body > .main > .register > .register-form > .submit-container {
+body > .main > .register-form > .register > .submit-container {
     align-items: stretch;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     border-top: 0.0625rem solid #ccc;
+    margin-bottom: 3rem;
 }
 
-body > .main > .register > .register-form > .submit-container > .button.cancel-button {
+body > .main > .register-form > .register > .submit-container > .button {
+    margin-top: 0.725rem;
+}
+
+body > .main > .register-form > .register > .submit-container > .button.cancel-button {
     box-shadow: inset 0 0.0625rem 0 0 rgb(var(--color-white));
-    background: linear-gradient(to bottom, rgb(var(--color-white)) 5%, rgb(227, 227, 227) 100%);
+    background: linear-gradient(to bottom, rgb(var(--color-white)) 5%, rgb(232, 232, 232) 100%);
     background-color: rgb(var(--color-white));
     border-radius: 0.3rem;
     border: 0.0625rem solid rgb(211, 211, 211);
     display: inline-block;
     cursor: pointer;
-    color: rgb(0, 0, 0);
     padding: 0.185rem 0.75rem;
-    text-decoration: none;
     text-shadow: 0 0.0625rem 0 rgb(var(--color-white));
 }
 
-body > .main > .register > .register-form > .submit-container > .button.cancel-button:hover {
+body > .main > .register-form > .register > .submit-container > .button.cancel-button:hover {
     filter: brightness(95%);
 }
 
-body > .main > .register > .register-form > .submit-container > .button.register-button {
+body > .main > .register-form > .register > .submit-container > .button.register-button {
     box-shadow: inset 0 0.0625rem 0 0 rgb(82, 82, 82);
     background: linear-gradient(to bottom, rgb(87, 87, 87) 5%, rgb(0, 0, 0) 100%);
     background-color: rgb(87, 87, 87);
@@ -187,37 +212,10 @@ body > .main > .register > .register-form > .submit-container > .button.register
     cursor: pointer;
     color: rgb(var(--color-white));
     padding: 0.185rem 0.75rem;
-    text-decoration: none;
     text-shadow: 0 0.0625rem 0 rgb(0, 0, 0);
 }
 
-body > .main > .register > .register-form > .submit-container > .button.register-button:hover {
+body > .main > .register-form > .register > .submit-container > .button.register-button:hover {
     color: rgb(var(--color-white));
     background: linear-gradient(to bottom, rgb(38, 38, 38) 1%, rgb(0, 0, 0) 100%);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

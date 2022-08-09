@@ -1,9 +1,11 @@
 @charset "UTF-8";
 @import "header.css";
+@import "footer.css";
 
 :root {
     --color-blue: 52, 152, 219;
     --color-black-1: 37, 40, 43;
+    --color-black-27: 39, 39, 39;
     --color-black-33: 51, 51, 51;
     --color-black-35: 53, 53, 53;
     --color-black-36: 54, 54, 54;
