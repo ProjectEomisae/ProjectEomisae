@@ -4,6 +4,8 @@
 @import "myPageHeader.css";
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
 :root {
     --color-blue: 52, 152, 219;
     --color-black-1: 37, 40, 43;
@@ -37,6 +39,7 @@ html {
     line-height: 1.5;
     /*background: rgb(255, 255, 255);*/
     color: rgb(85, 91, 97);
+    overflow-x: hidden;
 }
 
 body {
