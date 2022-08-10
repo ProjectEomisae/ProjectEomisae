@@ -115,7 +115,7 @@ body > .main > .register-form > .register > .label-container > .control-label {
     flex-shrink: 0;
 }
 
-body > .main > .register-form > .register > .label-container > .control-label > .required-inputs-star {
+body > .main > .register-form > .register > .label-container > .control-label > .star {
     color: rgb(var(--color-red));
 }
 
@@ -187,15 +187,15 @@ body > .main > .register-form > .register > .submit-container > .button {
 }
 
 body > .main > .register-form > .register > .submit-container > .button.cancel-button {
-    box-shadow: inset 0 0.0625rem 0 0 rgb(var(--color-white));
     background: linear-gradient(to bottom, rgb(var(--color-white)) 5%, rgb(232, 232, 232) 100%);
     background-color: rgb(var(--color-white));
-    border-radius: 0.3rem;
     border: 0.0625rem solid rgb(211, 211, 211);
-    display: inline-block;
+    border-radius: 0.3rem;
+    box-shadow: inset 0 0.0625rem 0 0 rgb(var(--color-white));
     cursor: pointer;
-    padding: 0.185rem 0.75rem;
+    display: inline-block;
     text-shadow: 0 0.0625rem 0 rgb(var(--color-white));
+    padding: 0.185rem 0.75rem;
 }
 
 body > .main > .register-form > .register > .submit-container > .button.cancel-button:hover {
@@ -203,19 +203,19 @@ body > .main > .register-form > .register > .submit-container > .button.cancel-b
 }
 
 body > .main > .register-form > .register > .submit-container > .button.register-button {
-    box-shadow: inset 0 0.0625rem 0 0 rgb(82, 82, 82);
-    background: linear-gradient(to bottom, rgb(87, 87, 87) 5%, rgb(0, 0, 0) 100%);
     background-color: rgb(87, 87, 87);
+    background: linear-gradient(to bottom, rgb(87, 87, 87) 5%, rgb(0, 0, 0) 100%);
     border-radius: 0.3rem;
     border: 0.0625rem solid rgb(0, 0, 0);
-    display: inline-block;
-    cursor: pointer;
+    box-shadow: inset 0 0.0625rem 0 0 rgb(82, 82, 82);
     color: rgb(var(--color-white));
-    padding: 0.185rem 0.75rem;
+    cursor: pointer;
+    display: inline-block;
     text-shadow: 0 0.0625rem 0 rgb(0, 0, 0);
+    padding: 0.185rem 0.75rem;
 }
 
 body > .main > .register-form > .register > .submit-container > .button.register-button:hover {
-    color: rgb(var(--color-white));
     background: linear-gradient(to bottom, rgb(38, 38, 38) 1%, rgb(0, 0, 0) 100%);
+    color: rgb(var(--color-white));
 }

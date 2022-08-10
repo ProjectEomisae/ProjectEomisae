@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>어미새</title>
+    <link th:href="@{/user/my-page/resources/stylesheets/memberScrappedDocument.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main">
+<section class="mypage-table">
+<h1 class="title">스크랩 보기</h1>
+<table class="table-container">
+    <div class="count-container">
+        <div class="total-count">
+            <span>Total : </span>
+            <span>0,</span>
+        </div>
+        <div class="page">
+            <span>Page : </span>
+            <span>1/1</span>
+        </div>
+    </div>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>글쓴이</th>
+        <th>날짜</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>2</td>
+        <td class="title"><a th:href="@{/}">매치스 패션 (Matches Fashion) 아워레가시 토트백</a></td>
+        <td class="writer"><a th:href="@{/}">Nymphet</a></td>
+        <td>2022-08-10</td>
+        <td><button class="delete-button">삭제</button></td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td class="title"><a th:href="@{/}">매치스 패션 (Matches Fashion) 아워레가시 토트백</a></td>
+        <td class="writer"><a th:href="@{/}">Nymphet</a></td>
+        <td>2022-08-10</td>
+        <td><button class="delete-button">삭제</button></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr class="page-tr">
+        <td colspan="5">
+            <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
+            <a class="page-button page selected" th:href="@{/}">1</a>
+            <a class="page-button page" th:href="@{/}">2</a>
+            <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+</section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>
