@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>어미새</title>
-    <link th:href="@{/user/my-page/resources/stylesheets/memberSavedDocument.css}" rel="stylesheet">
+    <link th:href="@{/user/my-page/resources/stylesheets/memberLoginlogHistories.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
 <th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
 <main class="main">
     <section class="mypage-table">
-        <h1 class="title">저장함 보기</h1>
+        <h1 class="title">로그인 기록</h1>
         <table class="table-container">
             <div class="count-container">
                 <div class="total-count">
@@ -26,21 +26,27 @@
             </div>
             <thead>
             <tr>
-                <th>제목</th>
+                <th>번호</th>
+                <th>분류</th>
+                <th>IP주소</th>
+                <th>접속 환경</th>
                 <th>날짜</th>
-                <th>삭제</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td class="title"><a th:href="@{/}">임시저장 글2</a></td>
-                <td>2022-08-10</td>
-                <td><button class="delete-button">삭제</button></td>
+                <td>2</td>
+                <td class="login-failed">[실패]</td>
+                <td>58.149.46.252</td>
+                <td>Apple (Chrome 104.0.0.0)</td>
+                <td>2022-08-11 13:38:17</td>
             </tr>
             <tr>
-                <td class="title"><a th:href="@{/}">임시저장 글1</a></td>
-                <td>2022-08-10</td>
-                <td><button class="delete-button">삭제</button></td>
+                <td>1</td>
+                <td class="login-succeed">[성공]</td>
+                <td>58.149.46.252</td>
+                <td>Apple (Chrome 104.0.0.0)</td>
+                <td>2022-08-11 13:38:17</td>
             </tr>
             </tbody>
             <tfoot>

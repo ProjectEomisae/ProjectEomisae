@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>어미새</title>
+    <link th:href="@{/user/my-page/resources/stylesheets/memberOwnComment.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main">
+    <section class="mypage-table">
+        <h1 class="title">작성 댓글 보기</h1>
+        <table class="table-container" style="table-layout: fixed">
+            <div class="count-container">
+                <div class="total-count">
+                    <span>총 댓글수 : </span>
+                    <span>0</span>
+                </div>
+            </div>
+            <thead>
+            <tr>
+                <th width="50%">댓글</th>
+                <th width="10%">삭제</th>
+                <th width="40%">날짜  추천/비추천</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td rowspan="2" class="own-comment"><a th:href="@{/}">반갑습니다!</a></td>
+                <td rowspan="2" class="delete-button"><a th:href="@{/}">[삭제]</a></td>
+                <td colspan="2" class="posting"><a th:href="@{/}">문서 : <span>자주 정보 얻어갑니다!</span></a></td>
+            </tr>
+            <tr>
+                <td>댓글 : <span class="comment-date">2022-08-02 16:35</span><span class="recommendation-count">(0 / 0)</span></td>
+            </tr>
+            <tr>
+                <td rowspan="2" class="own-comment"><a th:href="@{/}"><span>[비밀]</span>실례지만 사이즈감 설명 한번 부탁드려도 될까요?</a></td>
+                <td rowspan="2" class="delete-button"><a th:href="@{/}">[삭제]</a></td>
+                <td colspan="2" class="posting"><a th:href="@{/}">문서 : <span>판매완료</span></a></td>
+            </tr>
+            <tr>
+                <td>댓글 : <span class="comment-date">2022-08-02 16:35</span><span class="recommendation-count">(0 / 0)</span></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="page-tr">
+                <td colspan="5">
+                    <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
+                    <a class="page-button page selected" th:href="@{/}">1</a>
+                    <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

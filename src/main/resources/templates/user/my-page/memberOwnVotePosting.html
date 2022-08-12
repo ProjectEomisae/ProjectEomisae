@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>어미새</title>
+    <link th:href="@{/user/my-page/resources/stylesheets/memberOwnVotePosting.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main">
+    <section class="mypage-table">
+        <h1 class="title">내 수정요청 내역</h1>
+        <div class="option-container">
+            <form class="modify-option-container">
+                <span class="modify-status">수정상태 : </span>
+                <select class="modify-option" name="messageOption">
+                    <option value="all-modify-comment">전체</option>
+                    <option value="modify-request">수정요청</option>
+                    <option value="modifying">수정중</option>
+                    <option value="modified">수정완료</option>
+                    <option value="approve">승인</option>
+                    <option value="reject">거절</option>
+                    <option value="auto-delete">자동삭제</option>
+                    <option value="active-delete">직접삭제</option>
+                </select>
+                <input class="button select-button" name="selectButton" type="submit" value="선택">
+            </form>
+        </div>
+        <table class="table-container">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>수정 요청일</th>
+                <th>수정 상태</th>
+                <th>삭제 예정일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="5" class="no-history">요청받은 수정내역이 없습니다. ~ hidden</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td class="title"><a th:href="@{/}">뷀뷁뷀뷁뷀뷁뷀뷁뷀뷁뷀뷁뷀뷁뷀뷁뷀뷁뷀뷁뷀뷁</a></td>
+                <td>2022-08-10</td>
+                <td class="modified not-modified">
+                    <span>[미수정]</span>
+                </td>
+                <td>2022-08-17</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td class="title"><a th:href="@{/}">매치스 패션 (Matches Fashion) 아워레가시 토트백</a></td>
+                <td>2022-08-10</td>
+                <td class="modified">
+                    <span>[수정]</span>
+                </td>
+                <td>2022-08-17</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="page-tr">
+                <td colspan="5">
+                    <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
+                    <a class="page-button page selected" th:href="@{/}">1</a>
+                    <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

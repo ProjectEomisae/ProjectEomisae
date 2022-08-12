@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>어미새</title>
+    <link th:href="@{/user/my-page/resources/stylesheets/memberSnsManage.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main">
+    <section class="mypage-table">
+        <h1 class="title">SNS 관리</h1>
+        <table class="table-container">
+            <thead>
+            <tr>
+                <th>SNS</th>
+                <th>프로필</th>
+                <th>연결</th>
+                <th>연동</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="sns-container">
+                        Naver
+                    </div>
+                </td>
+                <td class="profile"><a th:href="@{/}">-</a></td><!-- sns 연결 링크 a teg -->
+                <td class="cancel"><a th:href="@{/}">해제</a></td>
+                <td>
+                    <label>
+                        <input class="connected-check" name="connectedCheck" type="checkbox">
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

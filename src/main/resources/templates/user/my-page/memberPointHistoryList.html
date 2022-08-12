@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>어미새</title>
-    <link th:href="@{/user/my-page/resources/stylesheets/memberSavedDocument.css}" rel="stylesheet">
+    <link th:href="@{/user/my-page/resources/stylesheets/memberPointHistoryList.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
 <th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
 <main class="main">
     <section class="mypage-table">
-        <h1 class="title">저장함 보기</h1>
+        <h1 class="title">포인트</h1>
         <table class="table-container">
             <div class="count-container">
                 <div class="total-count">
@@ -26,21 +26,24 @@
             </div>
             <thead>
             <tr>
-                <th>제목</th>
                 <th>날짜</th>
-                <th>삭제</th>
+                <th>구분</th>
+                <th>내용</th>
+                <th>포인트</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td class="title"><a th:href="@{/}">임시저장 글2</a></td>
-                <td>2022-08-10</td>
-                <td><button class="delete-button">삭제</button></td>
+                <td>2022-08-12 12:57</td>
+                <td class="red">적립</td>
+                <td>금일 첫 로그인</td>
+                <td class="red">+10P</td>
             </tr>
             <tr>
-                <td class="title"><a th:href="@{/}">임시저장 글1</a></td>
-                <td>2022-08-10</td>
-                <td><button class="delete-button">삭제</button></td>
+                <td>2022-08-12 12:57</td>
+                <td class="red">적립</td>
+                <td>금일 첫 로그인</td>
+                <td class="red">+10P</td>
             </tr>
             </tbody>
             <tfoot>

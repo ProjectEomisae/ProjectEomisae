@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+body > .main {
+    width: 100%;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+body > .main > .mypage-table {
+    width: 100%;
+    max-width: 74.375rem;
+    padding: 1rem;
+}
+
+body > .main > .mypage-table  > .title {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+}
+
+body > .main > .mypage-table > .table-container {
+    width: 100%;
+    border: 0.0625rem solid rgb(220, 220, 220);
+    border-spacing: 0;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+body > .main > .mypage-table > .table-container > thead > tr {
+    background-color: rgb(243, 243, 243);
+}
+
+body > .main > .mypage-table > .table-container tr > td {
+    padding: 0.3rem;
+}
+
+body > .main > .mypage-table > .table-container tbody tr:hover {
+    background-color: rgb(243, 243, 243);
+}

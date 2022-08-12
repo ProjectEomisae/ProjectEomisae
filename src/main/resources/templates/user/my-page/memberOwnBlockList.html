@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>어미새</title>
-    <link th:href="@{/user/my-page/resources/stylesheets/memberScrappedDocument.css}" rel="stylesheet">
+    <link th:href="@{/user/my-page/resources/stylesheets/memberOwnBlockList.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
 <th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
 <main class="main">
     <section class="mypage-table">
-        <h1 class="title">스크랩 보기</h1>
+        <h1 class="title">회원차단내역</h1>
         <table class="table-container">
             <div class="count-container">
                 <div class="total-count">
@@ -27,35 +27,56 @@
             <thead>
             <tr>
                 <th>번호</th>
-                <th>제목</th>
-                <th>글쓴이</th>
-                <th>날짜</th>
-                <th>삭제</th>
+                <th>차단한 회원</th>
+                <th>차단된 회원</th>
+                <th>차단일</th>
+                <th>만료일</th>
+                <th>최근 활동</th>
+                <th>
+                    <label>
+                        <input class="user-all-check" name="userAllSelect" type="checkbox">
+                    </label>
+                </th>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td>2</td>
-                <td class="title"><a th:href="@{/}">매치스 패션 (Matches Fashion) 아워레가시 토트백</a></td>
-                <td class="writer"><a th:href="@{/}">Nymphet</a></td>
-                <td>2022-08-10</td>
+                <td>뮤지컬러풀</td>
+                <td>사리</td>
+                <td>22.08.12 16:01:36</td>
+                <td>23.08.12 16.01.36</td>
+                <td>22.08.12 12:54</td>
                 <td>
-                    <button class="delete-button">삭제</button>
+                    <label>
+                        <input class="user-checkbox" name="userSelect" type="checkbox">
+                    </label>
                 </td>
             </tr>
             <tr>
                 <td>1</td>
-                <td class="title"><a th:href="@{/}">매치스 패션 (Matches Fashion) 아워레가시 토트백</a></td>
-                <td class="writer"><a th:href="@{/}">Nymphet</a></td>
-                <td>2022-08-10</td>
+                <td>뮤지컬러풀</td>
+                <td>사리</td>
+                <td>22.08.12 16:01:36</td>
+                <td>23.08.12 16.01.36</td>
+                <td>22.08.12 12:54</td>
                 <td>
-                    <button class="delete-button">삭제</button>
+                    <label>
+                        <input class="user-checkbox" name="messageSelect" type="checkbox">
+                    </label>
                 </td>
             </tr>
             </tbody>
             <tfoot>
+            <tr class="delete-button-tr">
+                <td colspan="7">
+                    <label>
+                        <input class="delete-button" name="deleteMessage" type="submit" value="삭제">
+                    </label>
+                </td>
+            </tr>
             <tr class="page-tr">
-                <td colspan="5">
+                <td colspan="7">
                     <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
                     <a class="page-button page selected" th:href="@{/}">1</a>
                     <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>

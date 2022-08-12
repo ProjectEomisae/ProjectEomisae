@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>어미새</title>
+  <link th:href="@{/user/my-page/resources/stylesheets/memberOwnDocument.css}" rel="stylesheet">
+  <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+  <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main">
+  <section class="mypage-table">
+    <h1 class="title">작성 글 보기</h1>
+    <table class="table-container">
+      <div class="count-container">
+        <div class="total-count">
+          <span>Total : </span>
+          <span>0,</span>
+        </div>
+        <div class="page">
+          <span>Page : </span>
+          <span>1/1</span>
+        </div>
+      </div>
+      <thead>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>날짜</th>
+        <th>조회 수</th>
+        <th>추천 수</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>2</td>
+        <td class="title"><a th:href="@{/}">작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.</a></td>
+        <td>2022-08-10</td>
+        <td>10</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td class="title"><a th:href="@{/}">작성 글 1번입니다.</a></td>
+        <td>2022-08-08</td>
+        <td>7</td>
+        <td>2</td>
+      </tr>
+
+      </tbody>
+      <tfoot>
+      <tr class="page-tr">
+        <td colspan="5">
+          <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
+          <a class="page-button page selected" th:href="@{/}">1</a>
+          <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

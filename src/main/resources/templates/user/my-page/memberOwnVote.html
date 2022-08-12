@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>어미새</title>
+  <link th:href="@{/user/my-page/resources/stylesheets/memberOwnVote.css}" rel="stylesheet">
+  <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+  <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main">
+  <section class="mypage-table">
+    <h1 class="title">내가 추천한 글</h1>
+    <table class="table-container">
+      <div class="count-container">
+        <div class="total-count">
+          <span>Total : </span>
+          <span>0,</span>
+        </div>
+        <div class="page">
+          <span>Page : </span>
+          <span>1/1</span>
+        </div>
+      </div>
+      <thead>
+      <tr>
+        <th>번호</th>
+        <th>브라우저 제목</th>
+        <th>제목</th>
+        <th>추천한 날짜</th>
+        <th>전체 추천 수</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>2</td>
+        <td class="category"><a th:href="@{/}">패션정보</a></td>
+        <td class="title"><a th:href="@{/}">애프터프레이 22ss</a><span class="hits">[6]</span></td>
+        <td>2022-08-10</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td class="category"><a th:href="@{/}">기타정보</a></td>
+        <td class="title"><a th:href="@{/}">쿠팡 / 에어팟 3세대 / 199,920원 (우리,롯데,국민,농협,하나 8% 할인)</a><span class="hits">[7]</span></td>
+        <td>2022-08-10</td>
+        <td>1</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr class="page-tr">
+        <td colspan="5">
+          <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
+          <a class="page-button page selected" th:href="@{/}">1</a>
+          <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

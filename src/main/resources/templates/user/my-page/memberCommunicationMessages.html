@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>어미새</title>
+    <link th:href="@{/user/my-page/resources/stylesheets/memberCommunicationMessages.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main">
+    <section class="mypage-table">
+        <div class="option-container">
+            <form class="message-option-container">
+                <select class="message-option" name="messageOption">
+                    <option value="receivedMessage">받은 쪽지함</option>
+                    <option value="sentMessage">보낸 쪽지함</option>
+                    <option value="keepMessage">보관함</option>
+                </select>
+                <input class="button select-button" name="selectButton" type="submit" value="선택">
+                <select class="message-option" name="messageOption">
+                    <option value="receiveAll">전체 수신</option>
+                    <option value="receiveOnlyFriends">친구만 허용</option>
+                    <option value="refuse">거부</option>
+                </select>
+                <input class="button save-button" name="saveButton" type="submit" value="저장">
+            </form>
+        </div>
+        <table class="table-container">
+            <thead>
+            <tr>
+                <th>제목</th>
+                <th>보낸이</th>
+                <th>등록일</th>
+                <th>읽은 시간</th>
+                <th>
+                    <label>
+                        <input class="message-all-check" name="messageAllSelect" type="checkbox">
+                    </label>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="title"><a th:href="@{/}">공지사항 확인부탁드려요 :)</a></td>
+                <td class="writer"><a th:href="@{/}">어미새</a></td>
+                <td>2022-08-10</td>
+                <td>2022-08-10 14:31</td>
+                <td>
+                    <label>
+                        <input class="message-checkbox" name="messageSelect" type="checkbox">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td class="title"><a th:href="@{/}">공지사항 확인부탁드려요 :)</a></td>
+                <td class="writer"><a th:href="@{/}">어미새</a></td>
+                <td>2022-08-10</td>
+                <td>2022-08-10 14:31</td>
+                <td>
+                    <label>
+                        <input class="message-checkbox" name="messageSelect" type="checkbox">
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="delete-button-tr">
+                <td colspan="5">
+                    <label>
+                        <input class="delete-button" name="deleteMessage" type="submit" value="삭제">
+                    </label>
+                </td>
+            </tr>
+            <tr class="page-tr">
+                <td colspan="5">
+                    <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
+                    <a class="page-button page selected" th:href="@{/}">1</a>
+                    <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>어미새</title>
+  <link th:href="@{/user/my-page/resources/stylesheets/memberCashSendLog.css}" rel="stylesheet">
+  <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+  <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main">
+  <section class="mypage-table">
+    <h1 class="title">캐시 선물 받은 내역</h1>
+    <table class="table-container">
+      <thead>
+      <tr>
+        <th>등록일</th>
+        <th>보낸이</th>
+        <th>캐시</th>
+        <th>내용</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>2022-08-10</td>
+        <td class="sender"><a th:href="@{/}">어미새</a></td>
+        <td>10</td>
+        <td>신고 활동 대단히 감사합니다.</td>
+      </tr>
+      <tr>
+        <td>2022-08-08</td>
+        <td class="sender"><a th:href="@{/}">어미새</a></td>
+        <td>1</td>
+        <td>회원가입을 축하드립니다.</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr class="page-tr">
+        <td colspan="5">
+          <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
+          <a class="page-button page selected" th:href="@{/}">1</a>
+          <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>
