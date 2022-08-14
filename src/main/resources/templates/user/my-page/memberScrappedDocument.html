@@ -6,6 +6,7 @@
     <link th:href="@{/user/my-page/resources/stylesheets/memberScrappedDocument.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <script defer th:src="@{/resources/scripts/myPageHeader.js}"></script>
 </head>
 <body>
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
@@ -40,7 +41,9 @@
                 <td class="writer"><a th:href="@{/}">Nymphet</a></td>
                 <td>2022-08-10</td>
                 <td>
-                    <button class="delete-button">삭제</button>
+                    <label>
+                        <input class="scrap-delete-button" name="scrapDeleteButton" type="submit" value="삭제">
+                    </label>
                 </td>
             </tr>
             <tr>
@@ -49,7 +52,9 @@
                 <td class="writer"><a th:href="@{/}">Nymphet</a></td>
                 <td>2022-08-10</td>
                 <td>
-                    <button class="delete-button">삭제</button>
+                    <label>
+                        <input class="scrap-delete-button" name="scrapDeleteButton" type="submit" value="삭제">
+                    </label>
                 </td>
             </tr>
             </tbody>

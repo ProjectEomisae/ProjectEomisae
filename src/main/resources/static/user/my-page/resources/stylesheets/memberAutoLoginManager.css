@@ -22,9 +22,9 @@ body > .main > .mypage-table  > .title {
 
 body > .main > .mypage-table > .table-container {
     width: 100%;
-    border: 0.0625rem solid rgb(220, 220, 220);
+    border: 0.0625rem solid rgb(187, 187, 187);
     border-spacing: 0;
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-family: inherit;
     font-weight: 400;
     text-align: center;
@@ -36,9 +36,36 @@ body > .main > .mypage-table > .table-container > thead > tr {
 }
 
 body > .main > .mypage-table > .table-container tr > td {
-    padding: 0.3rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
 }
 
-body > .main > .mypage-table > .table-container tbody tr:hover {
-    background-color: rgb(243, 243, 243);
+body > .main > .mypage-table > .table-container tbody {
+    font-size: 0.75rem;
+}
+
+
+body > .main > .mypage-table > .table-container tbody > .auto-login-info-tr > td {
+    border-top: 0.0625rem solid rgb(187, 187, 187);
+}
+body > .main > .mypage-table > .table-container tbody > .user-agent-tr {
+    color: rgb(153, 153, 153);
+    font-size: 0.75rem;
+}
+
+body > .main > .mypage-table > .table-container tbody > .auto-login-info-tr > td > label > .delete-auto-login-histories {
+    background: linear-gradient(to bottom, rgb(var(--color-white)) 5%, rgb(232, 232, 232) 100%);
+    background-color: rgb(var(--color-white));
+    border: 0.0625rem solid rgb(187, 187, 187);
+    border-radius: 0.3rem;
+    box-shadow: inset 0 0.0625rem 0 0 rgb(var(--color-white));
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.75rem;
+    text-shadow: 0 0.0625rem 0 rgb(var(--color-white));
+    padding: 0.175rem 0.75rem;
+}
+
+body > .main > .mypage-table > .table-container tbody > .auto-login-info-tr > td > label > .delete-auto-login-histories:hover {
+    filter: brightness(95%);
 }

@@ -6,13 +6,14 @@
     <link th:href="@{/user/my-page/resources/stylesheets/memberAutoLoginManager.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <script defer th:src="@{/resources/scripts/myPageHeader.js}"></script>
 </head>
 <body>
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
 <main class="main">
     <section class="mypage-table">
-        <h1 class="title">현재 자동로그인을 사용하고 있지 않습니다.</h1>
+        <h1 class="title" hidden>현재 자동로그인을 사용하고 있지 않습니다.</h1>
         <table class="table-container">
             <thead>
             <tr>
@@ -21,9 +22,27 @@
                 <td>등록시점 IP</td>
                 <td>등록 시각</td>
                 <td>최종 자동로그인</td>
+                <td></td>
             </tr>
             </thead>
             <tbody>
+            <tr class="auto-login-info-tr">
+                <td rowspan="2">1</td>
+                <td>Mac OS X 10.15.7 Chrome 104</td>
+                <td>58.149.46.252</td>
+                <td>2022-08-13 12:34:38</td>
+                <td>2022-08-13 12:34:38</td>
+                <td rowspan="2">
+                    <label>
+                        <input class="delete-auto-login-histories" name="deleteAutoLoginHistories" type="submit" value="제거">
+                    </label>
+                </td>
+            </tr>
+            <tr class="user-agent-tr">
+                <td colspan="6">
+                    Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36
+                </td>
+            </tr>
             </tbody>
         </table>
     </section>
