@@ -7,11 +7,14 @@
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/myPageHeader.js}"></script>
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
 <body>
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
-<main class="main">
+<main class="main" id="main">
     <section class="mypage-table">
         <h1 class="title" hidden>현재 자동로그인을 사용하고 있지 않습니다.</h1>
         <table class="table-container">
