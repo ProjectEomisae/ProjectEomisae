@@ -10,10 +10,43 @@
             <div class="top-container">
                 <div class="menu-container">
                     <div class="logo-container">
-
+                        <div class="toggle-container" id="toggle-container">
+                            <div class="toggle-button">
+                                <div class="line one"></div>
+                                <div class="line two"></div>
+                                <div class="line three"></div>
+                            </div>
+                        </div>
                         <a th:href="@{/}">
                             <img alt="eomisae" class="logo" th:src="@{/resources/images/logo.png}">
                         </a>
+                        <div class="form-container-mobile">
+                            <form th:action="@{/#}" class="search-form" method="get">
+                                <div class="keyword-input-container">
+                                    <div class="input-container">
+                                        <div class="exit-box">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </div>
+                                        <label class="input">
+                                            <span hidden>검색어</span>
+                                            <input class="keyword-input" maxlength="50" name="keyword" placeholder="검색"
+                                                   type="text">
+                                        </label>
+                                        <button class="icon-search-button" type="submit">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="search-button">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </form>
+                            <div class="top-login-container">
+                                <a th:href="@{/#}" class="top-login-button-mobile">
+                                    <i class="fa-solid fa-right-to-bracket"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <ul class="menu-wrap">
                         <li class="item">
@@ -169,8 +202,308 @@
                             로그인
                         </a>
                     </div>
+                    <div class="login-only">
+                        <div class="top-login-container-user">
+                            <div class="message-button">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="message-container">
+                                <div class="box"></div>
+                                <div class="message-title">쪽지</div>
+                                <ul class="message">
+                                    <li>
+                                        <a th:href="@{/}">새 쪽지가 없습니다.</a>
+                                    </li>
+                                </ul>
+                                <div class="my-message">
+                                    <a th:href="@{/}">전체 쪽지 보기</a>
+                                    <i class="fa fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-info-container">
+                            <div class="user-profile">
+                                <div><img alt="프로필 이미지" th:src="@{/resources/images/profile.png}"></div>
+                            </div>
+                            <div class="menu-box">
+                                <div class="box"></div>
+                                <div class="user-info">
+                                    <h6>뮤지컬러풀</h6>
+                                    <span>dmchoi224@naver.com</span>
+                                </div>
+                                <div class="user-level">
+                                    <h6 class="level">Level. 3</h6>
+                                    <div class="graph">
+                                        <div class="graph-percent"></div>
+                                    </div>
+                                    <div>
+                                        <div class="point">2,638/3,000 P</div>
+                                        <div class="percent">82%</div>
+                                    </div>
+                                </div>
+                                <div class="notice">
+                                    <div>
+                                        <h6 class="level">글 미등록 차감 기간
+                                        </h6>
+                                        <a th:href="@{/}">[관련공지]</a>
+                                    </div>
+                                    <div class="graph">
+                                        <div class="graph-percent"></div>
+                                    </div>
+                                    <div>
+                                        <div class="period">17일 후 차감 (2022.08.30 00:00)</div>
+                                        <div class="point">-1000P</div>
+                                    </div>
+                                </div>
+                                <ul class="list">
+                                    <li>
+                                        <i class="fa-solid fa-user"></i>
+                                        <a th:href="@{/}">마이페이지</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-bookmark"></i>
+                                        <a th:href="@{/}">스크랩</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-book-open"></i>
+                                        <a th:href="@{/}">작성글</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-comments"></i>
+                                        <a th:href="@{/}">작성댓글</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <a th:href="@{/}">쪽지함</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-cloud-moon"></i>
+                                        <a th:href="@{/}">다크모드</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                        <a th:href="@{/}">로그아웃</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="toggle-menu-container" id="toggle-menu-container">
+        <div class="toggle-menu-box">
+            <div class="my-container">
+                <a class="content" th:href="@{#}">
+                    <div class="profile-image"><img alt="user" th:src="@{/resources/images/profile.png}"></div>
+                </a>
+                <div class="profile-content">
+                    <span>로그인 및 회원가입</span>
+                    <span>회원가입하세요!</span>
+                </div>
+                <div class="icon-box">
+                    <i class="fa-solid fa-angle-right"></i>
+                </div>
+            </div>
+            <div class="login-only">
+                <a th:href="@{/}">
+                    <div class="info">
+                        <i class="fa-solid fa-user"></i>
+                        <span>회원정보</span>
+                    </div>
+                </a>
+                <a th:href="@{/}">
+                    <div class="info">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>작성글</span>
+                    </div>
+                </a>
+                <a th:href="@{/}">
+                    <div class="info">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>로그아웃</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="item">
+                    <a class="link" th:href="@{/}">
+                        <span class="text">전체글</span>
+                    </a>
+                </li>
+                <li class="item">
+                    <div class="text-box">
+                        <a class="link" th:href="@{/fs}">
+                            <span class="text">쇼핑정보</span>
+                        </a>
+                        <div class="menu-button">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/fs}">인기정보</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/os}">패션정보</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/rt}">기타정보</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/dr}">래플정보</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ec}">이벤트정보</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <div class="text-box">
+                        <a class="link" th:href="@{/fe}">
+                            <span class="text">커뮤니티</span>
+                        </a>
+                        <div class="menu-button">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/fe}">자유게시판</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/fh}">패션게시판</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/qa}">직구 Q & A</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/chc}">코드:대리</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/jp}">공동구매</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ui}">가입인사</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <div class="text-box">
+                        <a class="link" th:href="@{/gl}">
+                            <span class="text">구매인증</span>
+                        </a>
+                        <div class="menu-button">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/gl}">패션구매</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ha}">기타구매</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <div class="text-box">
+                        <a class="link" th:href="@{/pot}">
+                            <span class="text">실사후기</span>
+                        </a>
+                        <div class="menu-button">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/pot}">패션후기</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/pop}">기타후기</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/gm}">소장품자랑</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <div class="text-box">
+                        <a class="link" th:href="@{/dl}">
+                            <span class="text">데일리룩</span>
+                        </a>
+                        <div class="menu-button">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/dl}">데일리룩</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ds}">데일리슈</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <div class="text-box">
+                        <a class="link" th:href="@{/jo}">
+                            <span class="text">플리마켓</span>
+                        </a>
+                        <div class="menu-button">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/jo}">판매</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/jo2}">구매</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/jo3}">교환</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <div class="text-box">
+                        <a class="link" th:href="@{/ms}">
+                            <span class="text">서비스</span>
+                        </a>
+                        <div class="menu-button">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/ms}">문화상품권</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <div class="text-box">
+                        <a class="link" th:href="@{/no}">
+                            <span class="text">운영관리</span>
+                        </a>
+                        <div class="menu-button">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+                    <ul class="list">
+                        <li>
+                            <a th:href="@{/no}">공지사항</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/ev}">이벤트</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/mail}">건의</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="shadow"></div>

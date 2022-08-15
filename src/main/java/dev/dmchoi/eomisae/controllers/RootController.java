@@ -13,4 +13,10 @@ public class RootController {
         modelAndView.setViewName("root/index");
         return modelAndView;
     }
+
+    @RequestMapping(value = "fs", method = RequestMethod.GET)
+    public ModelAndView getFs(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/fs");
+        return modelAndView;
+    }
 }

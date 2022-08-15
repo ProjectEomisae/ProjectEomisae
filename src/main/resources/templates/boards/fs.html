@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>인기정보 - 어미새</title>
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/boards/resources/stylesheets/fs.css}" rel="stylesheet">
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main id="main">
+<div class="nav-container">
+    <div class="nav-menu">
+        <ul class="list">
+            <li class="link">
+                <a th:href="@{/}">인기정보</a>
+            </li>
+            <li class="link">
+                <a th:href="@{/}">패션정보</a>
+            </li>
+            <li class="link">
+                <a th:href="@{/}">기타정보</a>
+            </li>
+            <li class="link">
+                <a th:href="@{/}">래플정보</a>
+            </li>
+            <li class="link">
+                <a th:href="@{/}">이벤트정보</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<section class="main-section">
+
+</section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

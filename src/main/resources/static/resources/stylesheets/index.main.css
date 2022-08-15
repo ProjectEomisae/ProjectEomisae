@@ -100,13 +100,18 @@
     float: right;
     height: 600px;
     width: 300px;
+    margin-right: 3rem;
     border-width: 1px;
     border-style: solid;
     border-color: rgb(230, 230, 230) rgb(230, 230, 230) rgb(230, 230, 225);
-    margin: 0px 44px 20px 20px;
+    /* margin: 0px 44px 20px 20px; */
     background-image: none;
     background-position: 0% 0%;
     position: relative;
+    margin-block: unset;
+    /* margin-inline: unset; */
+    padding-inline: unset;
+    padding-block: unset;
 }
 
 #main > .main-container > .side-empty-section > .empty-container > span {
@@ -230,7 +235,7 @@
     color: #333;
     font-weight: bold;
     font-size: 13px;
-    width: 11rem;
+    height: auto;
     position: absolute;
     overflow: hidden;
 }
@@ -347,6 +352,7 @@
 
     #main > .main-container {
         position: absolute;
+        height: auto;
     }
 
     #main > .main-container > .main-section {
@@ -369,7 +375,6 @@
 
     #main > .main-container > .side-empty-section {
         display: block;
-        right: 1rem;
         margin-inline: unset;
         padding-inline: unset;
         margin-block: unset;
@@ -389,17 +394,21 @@
 
 @media screen and (max-width: 760px){
     #main {
-        max-width: 760px;
-        width: 760px;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     #main > .main-container {
-        height: 1100px;
-        position: absolute;
+        height: auto;
+        top: 6rem;
+        width: calc(100% - 2.5rem);
     }
 
     #main > .main-container > .main-section > .board-info {
-        width: 300px;
+        width: auto;
         height: 260px;
         float: unset;
     }
@@ -420,6 +429,7 @@
 
     #main > .main-container > .side-section > .board-info {
         margin-left: 2rem;
+        width: auto;
     }
 
     #main > .main-container > .side-empty-section {
@@ -427,22 +437,18 @@
     }
 
 
-
-
-
     #main > .main-container > .image-section {
         margin-inline: unset;
         padding-inline: unset;
         position: relative;
-
+        top: unset;
     }
 
     #main > .main-container > .image-section > .board-container {
-        width: 300px;
-        float: unset;
-        height: 19rem;
-        position: absolute;
+        height: auto;
         top: 2rem;
+        position: relative;
+        width: calc(100% - 2.5rem);
     }
 
     #main > .main-container > .image-section > .board-container > .image-container {
@@ -450,21 +456,19 @@
     }
 
     #main > .main-container > .image-section > .board-container > .image-container > .article-list {
-        overflow: visible;
-        position: absolute;
+        position: relative;
         display: grid;
-        width: 40%;
         grid-template-rows: repeat(2, 1fr);
         grid-template-columns: repeat(2, 1fr);
         grid-gap: unset;
+        width: calc(100% - -2.5rem);
     }
 
     #main > .main-container > .image-section > .board-container > .image-container > .article-list > .articles {
         position: relative;
-        width: 100px;
         float: unset;
         margin-right: 28px;
-        margin-left: 0.5rem;
+        width: calc(100% - 2.5rem);
     }
 
     #main > .main-container > .image-section > .board-container > .image-container > .article-list > .articles > a {
@@ -479,10 +483,7 @@
     }
 
     #main > .main-container > .image-section > .board-container > .image-container > .article-list > .articles > .title {
-        width: 6rem;
-        position: absolute;
-        overflow: hidden;
-        line-height: unset;
+        width: calc(100% - 0.5rem);
     }
 
 }
