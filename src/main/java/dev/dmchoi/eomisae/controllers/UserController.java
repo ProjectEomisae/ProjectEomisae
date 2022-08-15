@@ -103,4 +103,31 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/my-page/memberModifyEmailAddress", method = RequestMethod.GET)
+    public ModelAndView getMemberModifyEmailAddressr(ModelAndView modelAndView) {
+        modelAndView.setViewName("user/my-page/memberModifyEmailAddress");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/my-page/memberModifyInfo", method = RequestMethod.GET)
+    public ModelAndView getMemberModifyInfo(ModelAndView modelAndView) {
+        modelAndView.setViewName("user/my-page/memberModifyInfo");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/my-page/memberModifyPassword", method = RequestMethod.GET)
+    public ModelAndView getMemberModifyPassword(ModelAndView modelAndView) {
+        modelAndView.setViewName("user/my-page/memberModifyPassword");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/my-page/memberLeave", method = RequestMethod.GET)
+    public ModelAndView getMemberLeave(ModelAndView modelAndView) {
+        modelAndView.setViewName("user/my-page/memberLeave");
+        return modelAndView;
+    }
+
+
+
+
 }

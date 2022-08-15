@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>어미새 회원가입</title>
+    <link th:href="@{/user/my-page/resources/stylesheets/memberModifyInfo.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main" id="main">
+    <form class="register-form" method="post">
+        <section class="register">
+            <h1 class="title">회원정보 조회/수정</h1>
+            <div class="label-container">
+                <label for="emailInput" class="control-label">
+                    <span>이메일 주소</span>
+                    <span class="star">*</span>
+                </label>
+                <label class="input-container">
+                    <span hidden>이메일 주소</span>
+                    <input required class="input input-email" id="emailInput" maxlength="50" name="email" type="email">
+                </label>
+            </div>
+            <div class="label-container">
+                <label for="idInput" class="control-label">
+                    <span>아이디</span>
+                </label>
+                <label class="input-container">
+                    <span hidden>아이디</span>
+                    <input class="input input-blue" id="idInput" maxlength="50" name="id" type="text">
+                </label>
+            </div>
+            <div class="label-container">
+                <label for="nickNameInput" class="control-label">
+                    <span class="star">*</span>
+                    <span>닉네임</span>
+                </label>
+                <label class="input-container">
+                    <span hidden>닉네임</span>
+                    <input class="input input-blue" id="nickNameInput" maxlength="12" name="nickname" type="text">
+                </label>
+            </div>
+            <div class="label-container">
+                <label for="profileUploadInput" class="control-label">
+                    <span>프로필 사진</span>
+                </label>
+                <div class="profile-upload-container">
+                    <label class="input-container">
+                        <span hidden>프로필 사진</span>
+                        <input class="input" id="profileUploadInput" maxlength="12" name="profileUpload" type="file">
+                        <div class="input-text">가로 제한 길이: 50px, 세로 제한 길이: 50px</div>
+                    </label>
+                </div>
+            </div>
+            <div class="label-container">
+                <label class="control-label">
+                    <span>메일링 가입</span>
+                </label>
+                <div class="permission-container">
+                    <label class="radio-container">
+                        <span hidden>메일링 가입 동의</span>
+                        <input checked class="input" name="mailing-agree" type="radio"><span>예</span>
+                    </label>
+                    <label class="radio-container">
+                        <span hidden>메일링 가입 미동의</span>
+                        <input class="input" name="mailing-agree" type="radio"><span>아니오</span>
+                    </label>
+                </div>
+            </div>
+            <div class="label-container">
+                <label class="control-label">
+                    <span>쪽지허용</span>
+                </label>
+                <div class="permission-container">
+                    <label class="radio-container">
+                        <span hidden>모두 허용</span>
+                        <input checked class="input" name="sendingMessage" type="radio"><span>모두 허용</span>
+                    </label>
+                    <label class="radio-container">
+                        <span hidden>등록된 친구들만 허용</span>
+                        <input class="input" name="sendingMessage" type="radio"><span>등록된 친구들만 허용</span>
+                    </label>
+                    <label class="radio-container">
+                        <span hidden>모두 금지</span>
+                        <input class="input" name="sendingMessage" type="radio"><span>모두 금지</span>
+                    </label>
+                </div>
+            </div>
+            <div class="submit-container">
+                <a class="button cancel-button" th:href="@{/}">취소</a>
+                <input class="button register-button" name="Registration" type="submit" value="등록">
+            </div>
+        </section>
+    </form>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

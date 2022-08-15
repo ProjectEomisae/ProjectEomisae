@@ -97,3 +97,13 @@ body > .main > .mypage-table > .count-container {
 body > .main > .mypage-table > .count-container > .page {
     margin-left: 0.2rem;
 }
+
+body > .mypage-header > .header-container > .header-nav > .list.cash-histories-selected {
+    background-color: rgb(var(--color-white));
+    border-top-right-radius: 0.3rem;
+    border-top-left-radius: 0.3rem;
+    border: 0.0625rem solid rgb(220, 220, 220);
+    border-bottom: unset;
+    color: rgb(85, 91, 97);
+    cursor: unset;
+}

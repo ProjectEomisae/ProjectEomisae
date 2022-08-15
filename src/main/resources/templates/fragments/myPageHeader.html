@@ -3,23 +3,25 @@
 <header class="mypage-header" th:fragment="content">
     <section class="header-container">
         <ul class="header-nav">
-            <li class="list selected"><a th:href="@{/user/my-page/memberInfo}">회원정보 보기</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberScrappedDocument}">스크랩 보기</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberSavedDocument}">저장함 보기</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberOwnDocument}">작성 글 보기</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberAutoLoginManager}">자동 로그인 관리</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberCommunicationMessages}">쪽지함 보기</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberLoginlogHistories}">로그인 기록</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberPointHistoryList}">포인트</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberOwnBlockList}">회원차단내역</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberCashSendLog}">캐시 선물 받은 내역</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberCashHistoryList}">캐시 사용 내역</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberOwnComment}">작성 댓글 보기</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberOwnVotePosting}">수정요청 내역</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberOwnVote}">샀어요</a></li>
-            <li class="list"><a th:href="@{/user/my-page/memberSnsManage}">SNS 관리</a></li>
+            <li class="list info-selected"><a class="link" th:href="@{/user/my-page/memberInfo}">회원정보 보기</a></li>
+            <li class="list scrapped-selected"><a class="link" th:href="@{/user/my-page/memberScrappedDocument}">스크랩 보기</a></li>
+            <li class="list saved-selected"><a class="link" th:href="@{/user/my-page/memberSavedDocument}">저장함 보기</a></li>
+            <li class="list own-document-selected"><a class="link" th:href="@{/user/my-page/memberOwnDocument}">작성 글 보기</a></li>
+            <li class="list auto-login-selected"><a class="link" th:href="@{/user/my-page/memberAutoLoginManager}">자동 로그인 관리</a></li>
+            <li class="list message-selected"><a class="link" th:href="@{/user/my-page/memberCommunicationMessages}">쪽지함 보기</a></li>
+            <li class="list login-log-selected"><a class="link" th:href="@{/user/my-page/memberLoginlogHistories}">로그인 기록</a></li>
+            <li class="list point-selected"><a class="link" th:href="@{/user/my-page/memberPointHistoryList}">포인트</a></li>
+            <li class="list block-list-selected"><a class="link" th:href="@{/user/my-page/memberOwnBlockList}">회원차단내역</a></li>
+            <li class="list cash-send-selected"><a class="link" th:href="@{/user/my-page/memberCashSendLog}">캐시 선물 받은 내역</a></li>
+            <li class="list cash-histories-selected"><a class="link" th:href="@{/user/my-page/memberCashHistoryList}">캐시 사용 내역</a></li>
+            <li class="list own-comment-selected"><a class="link" th:href="@{/user/my-page/memberOwnComment}">작성 댓글 보기</a></li>
+            <li class="list vote-post-selected"><a class="link" th:href="@{/user/my-page/memberOwnVotePosting}">수정요청 내역</a></li>
+            <li class="list own-vote-selected"><a class="link" th:href="@{/user/my-page/memberOwnVote}">샀어요</a></li>
+            <li class="list sns-selected"><a class="link" th:href="@{/user/my-page/memberSnsManage}">SNS 관리</a></li>
         </ul>
     </section>
 </header>
 </body>
 </html>
+
+<!--<li><a href="javascript:go_url('/front/bbs/boardList.do?bbsId=bsm_123');" class="tree" <% if ("bsm_123".equals(bbbsId)) { %>id="selected"<% } %>>메뉴</a></li>-->

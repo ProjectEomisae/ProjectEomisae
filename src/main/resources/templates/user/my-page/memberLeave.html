@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>어미새</title>
+    <link th:href="@{/user/my-page/resources/stylesheets/memberLeave.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <script defer th:src="@{/resources/scripts/myPageHeader.js}"></script>
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
+<main class="main" id="main">
+    <section class="info-deleting-container">
+        <h1 class="title">회원정보 삭제</h1>
+        <div class="warning-container">
+          <span>
+            이 작업은 로그인한 SNS 계정을 삭제하는 것이 아니라, 사이트에서 그 동안 사용했던 회원정보를 삭제하는 작업입니다.
+            <br>
+            사이트에서 '나'에 대한 모든정보가 삭제되며, 삭제후에는 복구가 불가능합니다.
+            <br><br>
+            !또한 이전에 작성했던 글에 대한 수정및 삭제 권한도 삭제됩니다. 삭제후에는 다시 권한을 획득하지못하니, 주의바랍니다.
+          </span>
+        </div>
+        <form class="info-deleting-form" method="post">
+            <label class="submit-container">
+                <input class="input user-email-input" id="userEmailInput" placeholder="이메일 주소 자리" name="email"
+                       type="email">
+            </label>
+            <label class="submit-container">
+                <input class="input delete-button-input" value="삭제" type="button">
+            </label>
+        </form>
+    </section>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>
