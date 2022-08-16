@@ -14,8 +14,6 @@
 #main > .main-container {
     padding-top: 40px;
     padding-bottom: 40px;
-    height: 100%;
-
 }
 
 #main > .main-container > .main-section {
@@ -387,19 +385,10 @@
     #main > .main-container > .image-section {
         position: relative;
         top: 10rem;
-
     }
-
 }
 
 @media screen and (max-width: 760px){
-    #main {
-        width: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
 
     #main > .main-container {
         height: auto;
