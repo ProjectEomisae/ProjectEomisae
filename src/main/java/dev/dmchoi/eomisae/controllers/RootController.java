@@ -16,7 +16,7 @@ public class RootController {
 
     @RequestMapping(value = "fs", method = RequestMethod.GET)
     public ModelAndView getFs(ModelAndView modelAndView) {
-        modelAndView.setViewName("boards/fs");
+        modelAndView.setViewName("boards/fs/fs");
         return modelAndView;
     }
 

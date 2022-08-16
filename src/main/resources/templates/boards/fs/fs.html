@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>인기정보 - 어미새</title>
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/boards/resources/stylesheets/fs.css}" rel="stylesheet">
+    <script defer th:src="@{/boards/resources/scripts/fs.js}"></script>
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main id="main">
+    <div class="nav-container">
+        <div class="nav-menu">
+            <ul class="list">
+                <li class="link">
+                    <a th:href="@{/static}">인기정보</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">패션정보</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">기타정보</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">래플정보</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">이벤트정보</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-container">
+        <section class="main-section">
+            <div class="empty-container">
+                <span></span>
+            </div>
+            <div class="title-container">
+                <div class="title-section">
+                    <h3 class="title">
+                        <a th:href="@{/static}">
+                            인기정보
+                        </a>
+                    </h3>
+                    <h5 class="sub-title">
+                        패션정보, 기타정보 게시판의 인기글을 모아 볼 수 있는 공간입니다.
+                    </h5>
+                </div>
+            </div>
+            <div class="menu-container">
+                <div class="menu-section">
+                    <div class="left">
+                        <div class="category">
+                            <a class="link">
+                                분류
+                                <i class="fa-solid fa-angle-down"></i>
+                            </a>
+                            <ul class="category-list">
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        전체
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        패션해외
+                                        <span>(6869)</span>
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        패션국내
+                                        <span>(3219)</span>
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        기타해외
+                                        <span>(95)</span>
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        기타국내
+                                        <span>(1218)</span>
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        기타정보
+                                        <span>(167)</span>
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        래플
+                                        <span>(122)</span>
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        이벤트
+                                        <span>(66)</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="align">
+                            <a class="link">
+                                정렬
+                                <i class="fa-solid fa-angle-down"></i>
+                            </a>
+                            <ul class="align-list">
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        최신순
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        조회순
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        추천순
+                                    </a>
+                                </li>
+                                <li class="list">
+                                    <a class="link" th:href="@{/static}">
+                                        댓글순
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="function">
+                            <a class="link" th:href="@{/static}">
+                                쓰기
+                            </a>
+                            <a class="link" th:href="@{/static}">
+                                검색
+                            </a>
+                            <a class="link" th:href="@{/static}">
+                                목록
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article-container">
+                <div class="article-section">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <span>공지</span>
+                            </td>
+                            <td class="title">
+                                <a th:href="@{/static}">세일정보 게시판 규정 (21.11.29추가)</a>
+                                <a class="comments" th:href="@{/static}">137</a>
+                                <span class="extra-images">
+                                <img alt="이미지" th:src="@{/boards/resources/images/file.gif}">
+                            </span>
+                            </td>
+                            <td class="user">
+                                <span>어미새</span>
+                                <div class="user-info">
+                                    <ul class="user-menu">
+                                        <li class="list">
+                                            <a class="link" th:href="@{/static}">Lv.14 (91.6%)</a>
+                                        </li>
+                                        <li class="list">
+                                            <a class="link" th:href="@{/static}">활동 내역 보기</a>
+                                        </li>
+                                        <li class="list">
+                                            <a class="link" th:href="@{/static}">회원 차단</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>17.12.02</td>
+                            <td>152910</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="image-article-container">
+                <div class="image-article-section">
+                    <div class="image-articles">
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/static}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/static}">
+                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="empty-container">
+                <span></span>
+            </div>
+            <div class="page-container">
+                <div class="page-section">
+                    <a th:href="@{/static}">&lt;</a>
+                    <a th:href="@{/static}">1</a>
+                    <span>-</span>
+                    <th:block th:href="@{/static}">
+                        <a th:href="@{/static}">1</a>
+                        <a th:href="@{/static}">2</a>
+                    </th:block>
+                    <span>-</span>
+                    <a th:href="@{/static}">20</a>
+                    <a th:href="@{/static}">&gt;</a>
+                </div>
+            </div>
+        </section>
+        <section class="side-section">
+            <div></div>
+            <div></div>
+        </section>
+    </div>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>
