@@ -19,4 +19,10 @@ public class RootController {
         modelAndView.setViewName("boards/fs");
         return modelAndView;
     }
+
+    @RequestMapping(value = "fs/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getFsBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/fs/boardWrite-fs");
+        return modelAndView;
+    }
 }

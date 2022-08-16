@@ -33,6 +33,10 @@ body > .mypage-header > .header-container > .header-nav > .list + .list {
     margin-bottom: -0.0625rem;
 }
 
+body > .mypage-header > .header-container > .header-nav > .list > .link {
+    display: block;
+}
+
 body > .mypage-header > .header-container > .header-nav > .list:hover {
     background-color: rgb(238, 238, 238);
     border-top-right-radius: 0.3rem;

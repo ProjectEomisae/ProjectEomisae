@@ -293,6 +293,10 @@ body > .header > .header-container > .top-bar > .top-container > .form-container
     border-left: 6px solid transparent;
 }
 
+body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > .list > li > a {
+    display: block;
+}
+
 body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > .user-info {
     padding: 15px;
     border-bottom: 1px solid #e8eaeb;
