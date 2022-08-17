@@ -22,7 +22,7 @@ public class RootController {
 
     @RequestMapping(value = "fs/boardWrite", method = RequestMethod.GET)
     public ModelAndView getFsBoardWrite(ModelAndView modelAndView) {
-        modelAndView.setViewName("boards/fs/boardWrite-fs");
+        modelAndView.setViewName("boardWrite-fe");
         return modelAndView;
     }
 }
