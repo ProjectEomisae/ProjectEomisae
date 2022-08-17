@@ -33,3 +33,13 @@ userButton.addEventListener('click', () => {
         userElement.querySelector('.user-info').classList.remove('on');
     };
 });
+
+const searchElement = window.document.querySelector('.search-container');
+const searchButton = window.document.querySelector('.link.search');
+searchButton.addEventListener('click', () => {
+    if(!searchElement.classList.contains('on')) {
+        searchElement.classList.add('on');
+    } else {
+        searchElement.classList.remove('on');
+    };
+});

@@ -8,8 +8,8 @@
     <title>인기정보 - 어미새</title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
-    <link th:href="@{/boards/resources/stylesheets/fs.css}" rel="stylesheet">
-    <script defer th:src="@{/boards/resources/scripts/fs.js}"></script>
+    <link th:href="@{/boards/fs/resources/stylesheets/fs.css}" rel="stylesheet">
+    <script defer th:src="@{/boards/fs/resources/scripts/fs.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
@@ -21,19 +21,19 @@
         <div class="nav-menu">
             <ul class="list">
                 <li class="link">
-                    <a th:href="@{/static}">인기정보</a>
+                    <a th:href="@{/}">인기정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/static}">패션정보</a>
+                    <a th:href="@{/}">패션정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/static}">기타정보</a>
+                    <a th:href="@{/}">기타정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/static}">래플정보</a>
+                    <a th:href="@{/}">래플정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/static}">이벤트정보</a>
+                    <a th:href="@{/}">이벤트정보</a>
                 </li>
             </ul>
         </div>
@@ -46,7 +46,7 @@
             <div class="title-container">
                 <div class="title-section">
                     <h3 class="title">
-                        <a th:href="@{/static}">
+                        <a th:href="@{/}">
                             인기정보
                         </a>
                     </h3>
@@ -65,48 +65,48 @@
                             </a>
                             <ul class="category-list">
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         전체
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         패션해외
                                         <span>(6869)</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         패션국내
                                         <span>(3219)</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         기타해외
                                         <span>(95)</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         기타국내
                                         <span>(1218)</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         기타정보
                                         <span>(167)</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         래플
                                         <span>(122)</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         이벤트
                                         <span>(66)</span>
                                     </a>
@@ -120,22 +120,22 @@
                             </a>
                             <ul class="align-list">
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         최신순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         조회순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         추천순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link" th:href="@{/}">
                                         댓글순
                                     </a>
                                 </li>
@@ -144,18 +144,32 @@
                     </div>
                     <div class="right">
                         <div class="function">
-                            <a class="link" th:href="@{/static}">
+                            <a class="link" th:href="@{/}">
                                 쓰기
                             </a>
-                            <a class="link" th:href="@{/static}">
+                            <a class="link search">
                                 검색
                             </a>
-                            <a class="link" th:href="@{/static}">
+                            <a class="link" th:href="@{/}">
                                 목록
                             </a>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="search-container">
+                <form class="search-form" method="get">
+                    <select class="criteria" name="criteria">
+                        <option value="title-content">제목+내용</option>
+                        <option value="title">제목</option>
+                        <option value="content">내용</option>
+                        <option value="comment">댓글</option>
+                        <option value="nickname">닉네임</option>
+                        <option value="tag">태그</option>
+                        <option value="link">링크</option>
+                    </select>
+                    <input class="keyword" type="text" name="keyword" placeholder="검색어를 입력하세요.">
+                </form>
             </div>
             <div class="article-container">
                 <div class="article-section">
@@ -166,10 +180,10 @@
                                 <span>공지</span>
                             </td>
                             <td class="title">
-                                <a th:href="@{/static}">세일정보 게시판 규정 (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/static}">137</a>
+                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)</a>
+                                <a class="comments" th:href="@{/}">137</a>
                                 <span class="extra-images">
-                                <img alt="이미지" th:src="@{/boards/resources/images/file.gif}">
+                                <img alt="이미지" th:src="@{/boards/fs/resources/images/file.gif}">
                             </span>
                             </td>
                             <td class="user">
@@ -177,13 +191,13 @@
                                 <div class="user-info">
                                     <ul class="user-menu">
                                         <li class="list">
-                                            <a class="link" th:href="@{/static}">Lv.14 (91.6%)</a>
+                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
                                         </li>
                                         <li class="list">
-                                            <a class="link" th:href="@{/static}">활동 내역 보기</a>
+                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
                                         </li>
                                         <li class="list">
-                                            <a class="link" th:href="@{/static}">회원 차단</a>
+                                            <a class="link" th:href="@{/}">회원 차단</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -200,7 +214,7 @@
                     <div class="image-articles">
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -212,8 +226,51 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">
+                                        <span>사용자</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    17
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    14
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    1920
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article">
+                            <div class="image">
+                                <a th:href="@{/}">
+                                    <img class="tmb"
+                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span>기타국내</span>
+                                    <span>22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -242,7 +299,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -254,8 +311,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -284,7 +341,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -296,8 +353,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -326,7 +383,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -338,8 +395,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -368,7 +425,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -380,8 +437,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -410,7 +467,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -422,8 +479,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -452,7 +509,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -464,8 +521,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -494,7 +551,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -506,8 +563,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -536,7 +593,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -548,8 +605,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -578,7 +635,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -590,8 +647,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -620,7 +677,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -632,8 +689,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -662,7 +719,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -674,8 +731,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -704,7 +761,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -716,8 +773,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -746,7 +803,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -758,8 +815,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -788,7 +845,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -800,8 +857,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -830,7 +887,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -842,8 +899,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -872,7 +929,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -884,8 +941,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -914,7 +971,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -926,8 +983,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -956,7 +1013,7 @@
                         </div>
                         <div class="article">
                             <div class="image">
-                                <a th:href="@{/static}">
+                                <a th:href="@{/}">
                                     <img class="tmb"
                                          src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
                                          alt="">
@@ -968,50 +1025,8 @@
                                     <span>22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
-                                    </a>
-                                </h3>
-                            </div>
-                            <div class="info">
-                                <img alt="profile" th:src="@{/resources/images/profile.png}">
-                                <span>
-                                    <div>
-                                        <img alt="3" th:src="@{/resources/images/3.gif}">사용자
-                                    </div>
-                                </span>
-                            </div>
-                            <div class="article-info">
-                                <span>
-                                    <i class="fa-solid fa-heart"></i>
-                                    17
-                                </span>
-                                <span>
-                                    <i class="fa-regular fa-comment"></i>
-                                    14
-                                </span>
-                                <span>
-                                    <i class="fa-regular fa-eye"></i>
-                                    1920
-                                </span>
-                            </div>
-                        </div>
-                        <div class="article">
-                            <div class="image">
-                                <a th:href="@{/static}">
-                                    <img class="tmb"
-                                         src="//img.eomisae.co.kr/files/thumbnails/796/865/092/190x190.crop.jpg?20220815141036"
-                                         alt="">
-                                </a>
-                            </div>
-                            <div class="content">
-                                <div class="article-category">
-                                    <span>기타국내</span>
-                                    <span>22.08.15</span>
-                                </div>
-                                <h3 class="title">
-                                    <a th:href="@{/static}">
-                                        광동 선착순 2종 5,900원 ghkgkjgjkgjkgkjgjk
+                                    <a th:href="@{/}">
+                                        광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
@@ -1046,22 +1061,102 @@
             </div>
             <div class="page-container">
                 <div class="page-section">
-                    <a th:href="@{/static}">&lt;</a>
-                    <a th:href="@{/static}">1</a>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </a>
+                    <a th:href="@{/}">1</a>
                     <span>-</span>
-                    <th:block th:href="@{/static}">
-                        <a th:href="@{/static}">1</a>
-                        <a th:href="@{/static}">2</a>
+                    <th:block th:href="@{/}">
+                        <a th:href="@{/}">1</a>
+                        <a th:href="@{/}">2</a>
                     </th:block>
                     <span>-</span>
-                    <a th:href="@{/static}">20</a>
-                    <a th:href="@{/static}">&gt;</a>
+                    <a th:href="@{/}">20</a>
+                    <a th:href="@{/}">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
                 </div>
             </div>
         </section>
         <section class="side-section">
-            <div></div>
-            <div></div>
+            <div class="popular-container">
+                <div class="popular-section">
+                    <div class="board-title">
+                        <h3>오늘의 인기글</h3>
+                    </div>
+                    <ul class="content">
+                        <li class="list">
+                            <span>1</span>
+                            <a class="link" th:href="@{/}">
+                                8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15
+                                네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트
+                            </a>
+                            <span>
+                                <a th:href="@{/}">78</a>
+                            </span>
+                        </li>
+                        <li class="list">
+                            <span>2</span>
+                            <a class="link" th:href="@{/}">
+                                나이키 프리미엄 에션셜 반팔
+                            </a>
+                            <span>
+                                <a th:href="@{/}">43</a>
+                            </span>
+                        </li>
+                        <li class="list">
+                            <span>3</span>
+                            <a class="link" th:href="@{/}">
+                                독일 COS 부클레 가디건 베이지
+                            </a>
+                            <span>
+                                <a th:href="@{/}">100</a>
+                            </span>
+                        </li>
+                        <li class="list">
+                            <span>4</span>
+                            <a class="link" th:href="@{/}">
+                                유니클로U 유라리 셔츠 외
+                            </a>
+                            <span>
+                                <a th:href="@{/}">58</a>
+                            </span>
+                        </li>
+                        <li class="list">
+                            <span>5</span>
+                            <a class="link" th:href="@{/}">
+                                광동 선착순 2종 5,900원 무료배송
+                            </a>
+                            <span>
+                                <a th:href="@{/}">188</a>
+                            </span>
+                        </li>
+                        <li class="list">
+                            <span>6</span>
+                            <a class="link" th:href="@{/}">
+                                신타6 46000원대
+                            </a>
+                            <span>
+                                <a th:href="@{/}">112</a>
+                            </span>
+                        </li>
+                        <li class="list">
+                            <span>7</span>
+                            <a class="link" th:href="@{/}">
+                                kith LVC X 클락스 왈라비 12만원
+                            </a>
+                            <span>
+                                <a th:href="@{/}">104</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="side-empty-section">
+                <div class="empty-container">
+                    <span></span>
+                </div>
+            </div>
         </section>
     </div>
 </main>

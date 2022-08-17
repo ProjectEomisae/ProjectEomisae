@@ -63,7 +63,11 @@
 
 #main > .main-container {
     padding-left: 30px;
-    padding-right: 30px
+    padding-right: 30px;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
 }
 
@@ -277,6 +281,43 @@
     transition: all 50ms;
 }
 
+#main > .main-container > .main-section > .menu-container > .menu-section > .right > .function > .link.search {
+    cursor: pointer;
+}
+
+#main > .main-container > .main-section > .search-container {
+    display: none;
+}
+
+#main > .main-container > .main-section > .search-container.on {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 0.875rem;
+}
+
+#main > .main-container > .main-section > .search-container > .search-form {
+    height: 44px;
+    line-height: 44px;
+    padding: 0 16px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+
+}
+
+#main > .main-container > .main-section > .search-container > .search-form > .criteria {
+    margin-left: 0.5rem;
+    padding-right: 0.5rem;
+    appearance: auto;
+}
+
+#main > .main-container > .main-section > .search-container > .search-form > .keyword {
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+
+}
+
 #main > .main-container > .main-section > .article-container {
     margin-top: 0.75rem;
 }
@@ -404,6 +445,8 @@
 }
 
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article {
+    width: 12rem;
+    height: 21rem;
     background: #FFF;
     box-shadow: 0 2px 3px rgb(0 0 0 / 10%);
 }
@@ -428,8 +471,9 @@
 }
 
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article > .content > .title {
-    width: 11rem;
+    width: 80%;
     height: 32px;
+    text-overflow: ellipsis;
     padding: 8px 8px;
     white-space: nowrap;
     line-height: 0;
@@ -464,11 +508,18 @@
     align-items: center;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
+    white-space: nowrap;
+    width: 85%;
 }
 
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article > .info > span > div > img {
     margin-right: 6px;
+}
+
+#main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article > .info > span > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article > .article-info {
@@ -479,9 +530,12 @@
     padding: 0 8px;
     font-size: 12px;
     margin-bottom: 0.5rem;
+    white-space: nowrap;
 }
 
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article > .article-info > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #aaa;
 }
 
@@ -493,27 +547,129 @@
 
 #main > .main-container > .main-section > .page-container {
     margin: 24px auto;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
+
 
 #main > .main-container > .main-section > .page-container > .page-section > a,
 #main > .main-container > .main-section > .page-container > .page-section > span {
     min-width: 36px;
-    padding: 0 4px;
     height: 36px;
     line-height: 36px;
     color: #444;
     text-decoration: none;
     display: inline-block;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+#main > .main-container > .main-section > .page-container > .page-section > a:active,
+#main > .main-container > .main-section > .page-container > .page-section > span:active {
+    background: #444;
+    color: #fff;
+    border-radius: 32px;
+}
+
+#main > .main-container > .main-section > .page-container > .page-section > a > i {
+    font-size: 0.65rem;
+}
+
+/* side-section */
+
+#main > .main-container > .side-section {
+    width: 20.625rem;
+    margin-left: 2rem;
+}
+
+#main > .main-container > .side-section > .popular-container {
+    background-color: #fff;
+    box-shadow: 0 1px 3px #eee;
+    border: 1px solid #dedede;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .board-title {
+    margin: 0;
+    height: 34px;
+    line-height: 34px;
+    background-color: #fff;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .board-title > h3 {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 6px 20px;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .content {
+    padding: 10px 10px;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .content > .list {
+    width: 80%;
+    margin: 0;
+    padding: 2px 5px;
+    list-style: none;
+    font-size: 0.8rem;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .content > .list > span:first-child {
+    background-color: #fff;
+    color: #606060;
+    font-weight: 600;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .content > .list > .link {
+    color: #363636;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 0.25rem;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .content > .list > .link:hover {
+    font-weight: 500;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .content > .list > span:last-child {
+    color: #ff1a1a;
+}
+
+#main > .main-container > .side-section > .popular-container > .popular-section > .content > .list > span:last-child:hover {
+    font-weight: 500;
 }
 
 
+#main > .main-container > .side-section > .side-empty-section {
+    height: 600px;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(230, 230, 230) rgb(230, 230, 230) rgb(230, 230, 225);
+    margin-top: 2rem;
+}
 
-
-
-
-
+#main > .main-container > .side-section > .side-empty-section > .empty-container > span {
+    height: 29.4rem;
+    padding: 4rem;
+    background-image: url("/resources/images/banner.png");
+    position: relative;
+    display: block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: rgb(var(--color-black-1));
+}
 
 
 
