@@ -755,6 +755,45 @@ body > .header > .toggle-menu-container {
     display: none;
 }
 
+body > .header > .scroll-arrow > .scroll-button {
+    visibility: hidden;
+    position: fixed;
+    opacity: 0;
+    right: 40px;
+    bottom: 40px;
+    padding: 14px 18px;
+    line-height: 1;
+    border-radius: 2em;
+    z-index: 100;
+    font-size: 1.25rem;
+    color: white;
+    background-color: #747cfd;
+    box-shadow: 0 3px 4px rgb(23 25 26 / 10%);
+    transition: all 0.2s;
+}
+
+body > .header > .scroll-arrow > .scroll-button.on {
+    cursor: pointer;
+    visibility: visible;
+    position: fixed;
+    opacity: 1;
+    right: 40px;
+    bottom: 40px;
+    padding: 14px 18px;
+    line-height: 1;
+    border-radius: 2em;
+    z-index: 100;
+    font-size: 1.25rem;
+    color: white;
+    background-color: #747cfd;
+    box-shadow: 0 3px 4px rgb(23 25 26 / 10%);
+    transition: all 0.2s;
+}
+
+
+
+
+
 @media screen and (max-width: 1250px) {
 
     body > .header > .header-container > .top-bar {

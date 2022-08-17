@@ -102,12 +102,10 @@
     border-width: 1px;
     border-style: solid;
     border-color: rgb(230, 230, 230) rgb(230, 230, 230) rgb(230, 230, 225);
-    /* margin: 0px 44px 20px 20px; */
     background-image: none;
     background-position: 0% 0%;
     position: relative;
     margin-block: unset;
-    /* margin-inline: unset; */
     padding-inline: unset;
     padding-block: unset;
 }

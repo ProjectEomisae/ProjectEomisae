@@ -24,16 +24,6 @@ alignButton.addEventListener('click', () => {
     };
 });
 
-const userElement = window.document.querySelector('.user');
-const userButton = userElement.querySelector('span');
-userButton.addEventListener('click', () => {
-    if(!userElement.querySelector('.user-info').classList.contains('on')) {
-        userElement.querySelector('.user-info').classList.add('on');
-    } else {
-        userElement.querySelector('.user-info').classList.remove('on');
-    };
-});
-
 const searchElement = window.document.querySelector('.search-container');
 const searchButton = window.document.querySelector('.link.search');
 searchButton.addEventListener('click', () => {
