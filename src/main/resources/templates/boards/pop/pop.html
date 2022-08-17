@@ -5,11 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>인기정보 - 어미새</title>
+    <title>기타후기 - 어미새</title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
-    <link th:href="@{/boards/resources/stylesheets/fs.css}" rel="stylesheet">
-    <script defer th:src="@{/boards/resources/scripts/fs.js}"></script>
+    <link th:href="@{/boards/resources/stylesheets/pop.css}" rel="stylesheet">
+    <script defer th:src="@{/boards/resources/scripts/pop.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
@@ -21,19 +21,13 @@
         <div class="nav-menu">
             <ul class="list">
                 <li class="link">
-                    <a th:href="@{/fs}">인기정보</a>
+                    <a th:href="@{/pot}">패션후기</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/os}">패션정보</a>
+                    <a th:href="@{/pop}">기타후기</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/rt}">기타정보</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/dr}">래플정보</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/ec}">이벤트정보</a>
+                    <a th:href="@{/gm}">소장품자랑</a>
                 </li>
             </ul>
         </div>
@@ -42,18 +36,6 @@
         <section class="main-section">
             <div class="empty-container">
                 <span></span>
-            </div>
-            <div class="title-container">
-                <div class="title-section">
-                    <h3 class="title">
-                        <a th:href="@{/}">
-                            인기정보
-                        </a>
-                    </h3>
-                    <h5 class="sub-title">
-                        패션정보, 기타정보 게시판의 인기글을 모아 볼 수 있는 공간입니다.
-                    </h5>
-                </div>
             </div>
             <div class="menu-container">
                 <div class="menu-section">
@@ -71,44 +53,14 @@
                                 </li>
                                 <li class="list">
                                     <a class="link" th:href="@{/}">
-                                        패션해외
-                                        <span>(6869)</span>
+                                        해외
+                                        <span>(227964)</span>
                                     </a>
                                 </li>
                                 <li class="list">
                                     <a class="link" th:href="@{/}">
-                                        패션국내
-                                        <span>(3219)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        기타해외
-                                        <span>(95)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        기타국내
-                                        <span>(1218)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        기타정보
-                                        <span>(167)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        래플
-                                        <span>(122)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        이벤트
-                                        <span>(66)</span>
+                                        국내
+                                        <span>(212600)</span>
                                     </a>
                                 </li>
                             </ul>

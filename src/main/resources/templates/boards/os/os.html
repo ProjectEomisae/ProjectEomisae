@@ -5,11 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>인기정보 - 어미새</title>
+    <title>패션정보 - 어미새</title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
-    <link th:href="@{/boards/resources/stylesheets/fs.css}" rel="stylesheet">
-    <script defer th:src="@{/boards/resources/scripts/fs.js}"></script>
+    <link th:href="@{/boards/resources/stylesheets/os.css}" rel="stylesheet">
+    <script defer th:src="@{/boards/resources/scripts/os.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
@@ -47,11 +47,12 @@
                 <div class="title-section">
                     <h3 class="title">
                         <a th:href="@{/}">
-                            인기정보
+                            패션정보
                         </a>
                     </h3>
                     <h5 class="sub-title">
-                        패션정보, 기타정보 게시판의 인기글을 모아 볼 수 있는 공간입니다.
+                        패션 쇼핑 정보를 공유하는 공간입니다. [세일 정보 게시판 규정]<br>
+                        일정 수 이상의 샀어요를 받은 정보글은 인기정보 게시판으로 이동됩니다.
                     </h5>
                 </div>
             </div>
@@ -71,44 +72,14 @@
                                 </li>
                                 <li class="list">
                                     <a class="link" th:href="@{/}">
-                                        패션해외
-                                        <span>(6869)</span>
+                                        해외
+                                        <span>(40178)</span>
                                     </a>
                                 </li>
                                 <li class="list">
                                     <a class="link" th:href="@{/}">
-                                        패션국내
-                                        <span>(3219)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        기타해외
-                                        <span>(95)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        기타국내
-                                        <span>(1218)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        기타정보
-                                        <span>(167)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        래플
-                                        <span>(122)</span>
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        이벤트
-                                        <span>(66)</span>
+                                        국내
+                                        <span>(11261)</span>
                                     </a>
                                 </li>
                             </ul>
@@ -170,44 +141,6 @@
                     </select>
                     <input class="keyword" type="text" name="keyword" placeholder="검색어를 입력하세요.">
                 </form>
-            </div>
-            <div class="article-container">
-                <div class="article-section">
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <span>공지</span>
-                            </td>
-                            <td class="title">
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                <img alt="이미지" th:src="@{/boards/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <span>어미새</span>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>17.12.02</td>
-                            <td>152910</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div class="image-article-container">
                 <div class="image-article-section">

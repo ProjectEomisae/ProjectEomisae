@@ -68,6 +68,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    position: relative;
 
 }
 
@@ -344,6 +345,7 @@
 
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > td {
     padding: 0 8px;
+    white-space: nowrap;
 
 }
 
@@ -671,7 +673,67 @@
     background-color: rgb(var(--color-black-1));
 }
 
+@media screen and (max-width: 1200px) {
+    #main {
+        width: calc(100% - 2.5rem);
+    }
 
+    #main > .main-container > .side-section {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 880px) {
+    #main > .main-container {
+        padding: 0;
+    }
+
+    #main > .main-container > .main-section {
+        position: relative;
+        width: 100%;
+    }
+
+    #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article {
+        width: auto;
+        height: auto;
+        background: #FFF;
+        box-shadow: 0 2px 3px rgb(0 0 0 / 10%);
+    }
+
+    #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > a:first-child{
+        width: 50%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    #main > .nav-container {
+        padding: unset;
+        overflow-x: scroll;
+    }
+
+    ::-webkit-scrollbar {
+        height: 2rem;  /* 가로축 스크롤바 길이 */
+    }
+
+    #main > .main-container {
+        width: 100%;
+        top: 0;
+    }
+
+    body > .footer {
+        /* top: 24rem; */
+        position: unset;
+    }
+
+    #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles {
+        grid-template-columns: repeat(2, 4fr);
+    }
+
+}
 
 
 
