@@ -10,7 +10,7 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 #main > .nav-container > .nav-menu {
@@ -85,6 +85,10 @@
     display: inline-block;
     width: 100%;
     height: 90px;
+}
+
+#main > .main-container > .main-section > .empty-container.down {
+    margin-top: 2rem;
 }
 
 #main > .main-container > .main-section > .title-container {
@@ -329,12 +333,40 @@
     border: 1px solid #e5e5e5;
     font-size: 12px;
     border-collapse: collapse;
+    background-repeat: no-repeat;
+    table-layout: fixed;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > thead > tr {
+    height: 2.75rem;
+    border-bottom: 1px solid #f1f1f1;
+    color: #333;
+    font-size: 0.6875rem;
+    background: #fff;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > thead > tr > th:not(.title) {
+    padding: 0 8px;
+    white-space: nowrap;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > thead > tr > .title {
+    width: 60%;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > .notice {
+    height: 2.75rem;
+    background: #516b820a;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > .notice > td:first-child {
+    padding: 0.5rem;
 }
 
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr {
     height: 2.75rem;
-    border: 1px solid #dedede;
-    background: #fff;
+    background: #ffffff;
+    border-bottom: 1px solid #f1f1f1;
 }
 
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > td:not(.title) {
@@ -346,7 +378,6 @@
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > td {
     padding: 0 8px;
     white-space: nowrap;
-
 }
 
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > td:first-child > span {
@@ -357,14 +388,47 @@
 }
 
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title {
-    width: 60%;
     font-weight: 500;
     font-size: 0.75rem;
     color: #000000;
 }
 
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > span:first-child {
+    margin-right: 6px;
+    font-size: 11px;
+    vertical-align: 0.28125rem;
+    padding: 2px 4px 3px;
+    color: #888;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > a:first-child{
+    width: 60%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > .user > .title > a:nth-child(2){
+    width: 60%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > a:first-child:hover {
     text-decoration: underline #e87a72;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > .comments {
+    vertical-align: top;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > .extra-images {
+    vertical-align: top;
+}
+
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .user {
+    overflow: hidden;
 }
 
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > .comments:hover {

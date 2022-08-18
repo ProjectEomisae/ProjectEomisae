@@ -52,13 +52,13 @@
     transition: all 150ms;
 }
 
-#main > .nav-container > .nav-menu > .list > .link:active > a {
-    color: #e87a72;
-    border-bottom: 2px solid #e87a72;
-}
-
 #main > .nav-container > .nav-menu > .list > .link:hover > a {
     color: #25282b;
+}
+
+#main > .nav-container > .nav-menu > .list > .link:nth-child(3) > a {
+    color: #e87a72;
+    border-bottom: 2px solid #e87a72;
 }
 
 #main > .main-container {
