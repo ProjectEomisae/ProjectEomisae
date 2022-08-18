@@ -63,6 +63,19 @@ public class RootController {
         return modelAndView;
     }
 
+    //   커뮤니티
+    @RequestMapping(value = "fe", method = RequestMethod.GET)
+    public ModelAndView getFe(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/fe/fe");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "fe/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getFeBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/fe/boardWrite-fe");
+        return modelAndView;
+    }
+
     //   구매인증
     @RequestMapping(value = "gl", method = RequestMethod.GET)
     public ModelAndView getGl(ModelAndView modelAndView) {
@@ -124,4 +137,67 @@ public class RootController {
         modelAndView.setViewName("boards/gm/boardWrite-gm");
         return modelAndView;
     }
+
+    //  데일리룩
+    @RequestMapping(value = "dl", method = RequestMethod.GET)
+    public ModelAndView getDl(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/dl/dl");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "dl/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getDlBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/dl/boardWrite-dl");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "ds", method = RequestMethod.GET)
+    public ModelAndView getDs(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/ds/ds");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "ds/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getDsBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/ds/boardWrite-ds");
+        return modelAndView;
+    }
+
+    //  플리마켓
+    @RequestMapping(value = "jo", method = RequestMethod.GET)
+    public ModelAndView getJo(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/jo/jo");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "jo/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getJoBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/jo/boardWrite-jo");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "jo2", method = RequestMethod.GET)
+    public ModelAndView getJo2(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/jo2/jo2");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "jo2/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getJo2BoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/jo2/boardWrite-jo2");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "jo3", method = RequestMethod.GET)
+    public ModelAndView getJo3(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/jo3/jo3");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "jo3/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getJo3BoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/jo3/boardWrite-jo3");
+        return modelAndView;
+    }
+
 }
