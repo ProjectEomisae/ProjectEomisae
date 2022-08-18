@@ -2,22 +2,17 @@
     overflow: hidden;
     max-width: 1250px;
     width: 1250px;
-    height: 1100px;
+    height: auto;
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
     padding-right: 15px;
     padding-left: 15px;
-
 }
 
 #main > .main-container {
     padding-top: 40px;
     padding-bottom: 40px;
-}
-
-#main > .main-container > .main-section {
-
 }
 
 #main > .main-container > .main-section > .board-info {
@@ -327,6 +322,7 @@
     #main {
         max-width: 960px;
         width: 960px;
+        height: auto;
     }
 
     #main > .main-container > .side-section > .board-info {
@@ -344,6 +340,7 @@
     #main {
         max-width: 880px;
         width: 880px;
+        height: 1100px;
     }
 
     #main > .main-container {
