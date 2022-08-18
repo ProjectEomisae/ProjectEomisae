@@ -21,11 +21,6 @@ public class RootController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "fs/boardWrite", method = RequestMethod.GET)
-    public ModelAndView getFsBoardWrite(ModelAndView modelAndView) {
-        modelAndView.setViewName("boardWrite-fe");
-        return modelAndView;
-    }
 
     @RequestMapping(value = "os", method = RequestMethod.GET)
     public ModelAndView getOs(ModelAndView modelAndView) {
@@ -124,4 +119,43 @@ public class RootController {
         modelAndView.setViewName("boards/gm/boardWrite-gm");
         return modelAndView;
     }
+
+    @RequestMapping(value = "fe/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getFeBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/fe/boardWrite-fe");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "fh/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getFhBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/fh/boardWrite-fh");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "qa/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getQaBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/qa/boardWrite-qa");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "chc/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getChcBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/chc/boardWrite-chc");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "ds/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getDsBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/ds/boardWrite-ds");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "dl/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getDlBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("boards/dl/boardWrite-dl");
+        return modelAndView;
+    }
+
+
+
 }

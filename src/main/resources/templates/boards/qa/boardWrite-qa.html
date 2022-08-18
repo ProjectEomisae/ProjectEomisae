@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>직구 Q&A - 어미새</title>
+    <link th:href="@{/boards/resources/stylesheets/boardWrite-qa.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
+    <script defer th:src="@{/boards/resources/scripts/boardWrite.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main class="main" id="main">
+    <div class="nav-container">
+        <div class="nav-menu">
+            <ul class="list">
+                <li class="link">
+                    <a th:href="@{/static}">자유게시판</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">패션게시판</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">직구 Q&A</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">코드:대리</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">공동구매</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/static}">가입인사</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <form class="write-form-container">
+        <div class="form-container">
+            <div class="form-head">
+                <select class="select option-category">
+                    <option>분류</option>
+                    <option>질문<span>(158763)</span></option>
+                </select>
+                <input class="input title-input" placeholder="제목" type="text">
+            </div>
+            <div class="form-head">
+                <input class="input tag-input" placeholder="태그 : 쉼표(,)를 이용하여 복수 등록" type="text">
+            </div>
+        </div>
+        <textarea class="editor" name="content" id="editor"></textarea>
+        <div class="file-upload-container">
+            <label for="imageUpload" class="image-upload"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</label>
+            <input id="imageUpload" class="image-upload-hidden" name="image" type="file" accept="image/png, image/jpeg, image/png, image/gif">
+            <span class="file-size-limit">파일 크기 제한 : 5.00MB (허용 확장자 : *.jpeg;*.jpg;*.png;*.gif;)</span>
+        </div>
+        <div class="form-bottom">
+            <div class="button-container">
+                <input class="button-input" type="button" value="돌아가기">
+                <input class="button-input" type="button" value="임시 저장">
+                <input class="button-input" type="button" value="불러오기">
+                <input class="button-input" type="button" value="미리 보기">
+            </div>
+            <input class="button-input submit-button" type="button" value="등록">
+        </div>
+    </form>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>
