@@ -200,27 +200,4 @@ public class RootController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "ec/boardWrite", method = RequestMethod.GET)
-    public ModelAndView getEcBoardWrite(ModelAndView modelAndView) {
-        modelAndView.setViewName("boards/ec/boardWrite-ec");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "fh/boardWrite", method = RequestMethod.GET)
-    public ModelAndView getFhBoardWrite(ModelAndView modelAndView) {
-        modelAndView.setViewName("boards/fh/boardWrite-fh");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "qa/boardWrite", method = RequestMethod.GET)
-    public ModelAndView getQaBoardWrite(ModelAndView modelAndView) {
-        modelAndView.setViewName("boards/qa/boardWrite-qa");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "chc/boardWrite", method = RequestMethod.GET)
-    public ModelAndView getChcBoardWrite(ModelAndView modelAndView) {
-        modelAndView.setViewName("boards/chc/boardWrite-chc");
-        return modelAndView;
-    }
 }
