@@ -8,16 +8,11 @@
     margin-right: auto;
     padding-right: 15px;
     padding-left: 15px;
-
 }
 
 #main > .main-container {
     padding-top: 40px;
     padding-bottom: 40px;
-}
-
-#main > .main-container > .main-section {
-
 }
 
 #main > .main-container > .main-section > .board-info {
@@ -345,6 +340,7 @@
     #main {
         max-width: 880px;
         width: 880px;
+        height: 1100px;
     }
 
     #main > .main-container {
