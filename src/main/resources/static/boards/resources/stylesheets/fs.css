@@ -1,7 +1,24 @@
 @charset "UTF-8";
 
 #main {
+    overflow: hidden;
+    max-width: 1250px;
+    width: 1250px;
     height: auto;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+#main > .main-container {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #main > .nav-container {
@@ -686,7 +703,7 @@
 
 @media screen and (max-width: 880px) {
     #main > .main-container {
-        padding: 0;
+        padding: 40px 0;
     }
 
     #main > .main-container > .main-section {
