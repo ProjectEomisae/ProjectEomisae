@@ -2,13 +2,14 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>데일리슈 - 어미새</title>
-    <link th:href="@{/boards/resources/stylesheets/boardWrite-ds.css}" rel="stylesheet">
+    <title>소지품자랑 - 어미새</title>
+    <link th:href="@{/boards/resources/stylesheets/boardWrite-gm.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
     <script defer th:src="@{/boards/resources/scripts/boardWrite.js}"></script>
+    <script defer th:src="@{/resources/scripts/common.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
@@ -19,10 +20,13 @@
         <div class="nav-menu">
             <ul class="list">
                 <li class="link">
-                    <a th:href="@{/dl}">데일리룩</a>
+                    <a th:href="@{/pot}">패션후기</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/ds}">데일리슈</a>
+                    <a th:href="@{/pop}">기타후기</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/gm}">소장품자랑</a>
                 </li>
             </ul>
         </div>
@@ -32,25 +36,41 @@
             <div class="form-head">
                 <select class="select option-category">
                     <option value="option">분류</option>
-                    <option value="option">발샷<span>(11853)</span></option>
+                    <option value="option">소장<span>(11853)</span></option>
                 </select>
                 <input class="input title-input" placeholder="제목" type="text">
             </div>
             <div class="form-head">
                 <input class="input tag-input" placeholder="태그 : 쉼표(,)를 이용하여 복수 등록" type="text">
             </div>
-            <!-- input 프로덕트 -->
             <div class="product-container">
-                <div class="product-col product-title">*신발</div>
+                <div class="product-col product-title">* 브랜드</div>
                 <div class="product-col product-input">
-                    <input class="input" name="shoes" type="text">
-                    <span class="refer-text">- 반드시 신발 착용 사진을 올려주세요.</span>
+                    <input class="input" name="brand" type="text">
+                </div>
+            </div>
+            <div class="product-container">
+                <div class="product-col product-title">* 제품명</div>
+                <div class="product-col product-input">
+                    <input class="input" name="productName" type="text">
+                </div>
+            </div>
+            <div class="product-container">
+                <div class="product-col product-title">가격</div>
+                <div class="product-col product-input option-input">
+                    <select class="currency-option">
+                        <option>₩(KRW)</option>
+                        <option>$(USD)</option>
+                        <option>£(GBP)</option>
+                        <option>€(EUR)</option>
+                    </select>
+                    <input class="input" name="price" type="text" onkeyup="inputNumberFormat(this)">
                 </div>
             </div>
         </div>
         <textarea class="editor" name="content" id="editor">
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <p>- 제품 정보, 개인 SNS 댓글로 좌표 요청 금지합니다 쪽지 사용해주세요.</p>
+            <br>
+            <p>&bull; 제품 이미지 (포장 개봉한 상품 이미지 2장 이상 첨부) :</p>
         </textarea>
         <div class="file-upload-container">
             <label for="imageUpload" class="image-upload"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</label>

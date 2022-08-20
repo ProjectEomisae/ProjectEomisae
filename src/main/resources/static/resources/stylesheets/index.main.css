@@ -2,7 +2,7 @@
     overflow: hidden;
     max-width: 1250px;
     width: 1250px;
-    height: 1100px;
+    height: auto;
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
@@ -327,6 +327,7 @@
     #main {
         max-width: 960px;
         width: 960px;
+        height: auto;
     }
 
     #main > .main-container > .side-section > .board-info {

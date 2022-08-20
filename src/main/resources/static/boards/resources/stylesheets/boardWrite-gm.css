@@ -3,7 +3,7 @@
 p {
     color: rgb(0, 0, 0);
     font-size: 0.8175rem;
-    line-height: 0.8175rem;
+    line-height: 0.6175rem;
 }
 
 #main {
@@ -67,7 +67,7 @@ p {
     color: #25282b;
 }
 
-#main > .nav-container > .nav-menu > .list > .link:first-child > a {
+#main > .nav-container > .nav-menu > .list > .link:nth-child(3) > a {
     color: #e87a72;
     border-bottom: 2px solid #e87a72;
 }
@@ -155,7 +155,7 @@ p {
 }
 
 #main > .write-form-container > .form-container > .product-container > .product-input > .input {
-    max-width: 18.75rem;
+    width: 18.75rem;
     height: 2rem;
     background-color: rgb(247, 247, 247);
     margin: 0.25rem 0;
@@ -165,6 +165,21 @@ p {
 #main > .write-form-container > .form-container > .product-container > .product-input > .refer-text {
     color: rgb(var(--color-black-66));
     font-weight: 300;
+    letter-spacing: -0.03rem;
+}
+
+#main > .write-form-container > .form-container > .product-container > .option-input {
+    display: flex;
+    flex-direction: row;
+}
+
+#main > .write-form-container > .form-container > .product-container > .option-input > .currency-option {
+    width: auto;
+    height: 2rem;
+    appearance: auto;
+    background-color: rgb(247, 247, 247);
+    margin: 0.25rem 0.2rem 0.25rem 0;
+    padding: 0 0.75rem;
 }
 
 #main > .write-form-container > .file-upload-container {

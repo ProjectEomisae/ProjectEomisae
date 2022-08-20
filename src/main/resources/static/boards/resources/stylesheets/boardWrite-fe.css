@@ -60,6 +60,12 @@
 #main > .nav-container > .nav-menu > .list > .link:hover > a {
     color: #25282b;
 }
+
+#main > .nav-container > .nav-menu > .list > .link:first-child > a {
+    color: #e87a72;
+    border-bottom: 2px solid #e87a72;
+}
+
 /* ------------- board write section ------------- */
 
 #main > .write-form-container {

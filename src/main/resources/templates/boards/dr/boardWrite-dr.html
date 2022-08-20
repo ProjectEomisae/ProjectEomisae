@@ -2,13 +2,14 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>데일리룩 - 어미새</title>
-    <link th:href="@{/boards/resources/stylesheets/boardWrite-dl.css}" rel="stylesheet">
+    <title>래플:드로우 - 어미새</title>
+    <link th:href="@{/boards/resources/stylesheets/boardWrite-dr.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
     <script defer th:src="@{/boards/resources/scripts/boardWrite.js}"></script>
+    <script defer th:src="@{/resources/scripts/common.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
@@ -19,10 +20,19 @@
         <div class="nav-menu">
             <ul class="list">
                 <li class="link">
-                    <a th:href="@{/dl}">데일리룩</a>
+                    <a th:href="@{/fs}">인기정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/ds}">데일리슈</a>
+                    <a th:href="@{/os}">패션정보</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/rt}">기타정보</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/dr}">래플정보</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/ec}">이벤트정보</a>
                 </li>
             </ul>
         </div>
@@ -31,59 +41,69 @@
         <div class="form-container">
             <div class="form-head">
                 <select class="select option-category">
-                    <option value="option">분류</option>
-                    <option value="option">착샷<span>(11853)</span></option>
+                    <option value="">분류</option>
+                    <option value="option">해외<span>(1185)</span></option>
+                    <option value="option">국내<span>(1153)</span></option>
                 </select>
                 <input class="input title-input" placeholder="제목" type="text">
             </div>
             <div class="form-head">
                 <input class="input tag-input" placeholder="태그 : 쉼표(,)를 이용하여 복수 등록" type="text">
             </div>
-            <!-- input 프로덕트 -->
             <div class="product-container">
-                <div class="product-col product-title">아우터</div>
-                <div class="product-col product-input">
-                    <input class="input" name="shoes" type="text">
+                <div class="product-col product-title">읽기레벨</div>
+                <div class="product-col option-container">
+                    <select class="level-option">
+                        <option>0</option>
+                        <option>3</option>
+                        <option>5</option>
+                        <option>7</option>
+                    </select>
+                    <span class="refer-text">- 글 작성자가 열람 가능 레벨을 설정할 수 있습니다. <1시간 뒤 전체 공개로 전환></span>
                 </div>
             </div>
             <div class="product-container">
-                <div class="product-col product-title">*상의</div>
+                <div class="product-col product-title">* 링크</div>
                 <div class="product-col product-input">
-                    <input class="input" name="top" type="text">
-                    <span class="refer-text">- 상/하의가 나오지 않거나 알아보기 보기 힘든 수준의 사진 등록 시 삭제 처리될 수 있습니다.</span>
+                    <input class="input" name="link" type="text">
+                    <span class="refer-text">- 단축, 변형 URL사용을 금지합니다.</span>
                 </div>
             </div>
             <div class="product-container">
-                <div class="product-col product-title">*하의</div>
-                <div class="product-col product-input">
-                    <input class="input" name="bottom" type="text">
-                    <span class="refer-text">- 전체적인 모습이 나오지 않거나 데일리룩으로 보기 어려운 경우 이동, 삭제될 수 있습니다.</span>
+                <div class="product-col product-title">할인 코드</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
                 </div>
             </div>
             <div class="product-container">
-                <div class="product-col product-title">*신발</div>
-                <div class="product-col product-input">
-                    <input class="input" name="shoes" type="text">
-                    <span class="refer-text">- 상/하의가 나오지 않거나 알아보기 보기 힘든 수준의 사진 등록 시 삭제 처리될 수 있습니다.</span>
+                <div class="product-col product-title">면세 범위</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
                 </div>
             </div>
             <div class="product-container">
-                <div class="product-col product-title">액세서리</div>
-                <div class="product-col product-input">
-                    <input class="input" name="acc" type="text">
+                <div class="product-col product-title">배송 정보</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
                 </div>
             </div>
             <div class="product-container">
-                <div class="product-col product-title">촬영 장소</div>
-                <div class="product-col product-input">
-                    <input class="input" name="location" type="text">
-                    <span class="refer-text">- 사진 촬영 장소 (선택 사항)</span>
+                <div class="product-col product-title">기타 사항</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
                 </div>
+            </div>
+            <div class="text-container">
+                <p>ㆍ본문과 관련없는 낚시성 제목으로 게시물 열람을 유도하는 행위를 금지합니다.<br>
+                    ㆍ단축 url 사용을 금지합니다. 모든 링크는 원 url로 등록바랍니다.<br>
+                    ㆍ게시글, 댓글로 샀어요, 추천을 유도하는 행위를 금지합니다.<br>
+                    ㆍ세일정보 게시판에서 불매 관련 언급을 금지합니다.</p>
             </div>
         </div>
         <textarea class="editor" name="content" id="editor">
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <p>- 제품 정보, 개인 SNS 댓글로 좌표 요청 금지합니다 쪽지 사용해주세요.</p>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <p>- 판매 업체에서 공지한 기간 전 선등록 금지</p>
+            <p>- 여러 업체 모음 글 등록 금지</p>
         </textarea>
         <div class="file-upload-container">
             <label for="imageUpload" class="image-upload"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</label>

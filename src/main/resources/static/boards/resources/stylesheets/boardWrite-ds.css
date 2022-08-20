@@ -3,7 +3,7 @@
 p {
     color: rgb(0, 0, 0);
     font-size: 0.8175rem;
-    line-height: 0.8175rem;
+    line-height: 0.6175rem;
 }
 
 #main {
@@ -67,10 +67,16 @@ p {
     color: #25282b;
 }
 
+#main > .nav-container > .nav-menu > .list > .link:nth-child(2) > a {
+    color: #e87a72;
+    border-bottom: 2px solid #e87a72;
+}
+
 /* ------------- board write section ------------- */
 
 #main > .write-form-container {
     padding: 2.5rem 1.875rem;
+    letter-spacing: -0.03rem;
 }
 
 #main > .write-form-container > .form-container {
