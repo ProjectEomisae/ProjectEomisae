@@ -7,8 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>구매 - 어미새</title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
-    <link th:href="@{/boards/resources/stylesheets/jo2.css}" rel="stylesheet">
-    <script defer th:src="@{/boards/resources/scripts/jo3.js}"></script>
+    <link th:href="@{/boards/resources/stylesheets/board-main-4.css}" rel="stylesheet">
+    <link th:href="@{/boards/resources/stylesheets/common.css}" rel="stylesheet">
+    <script defer th:src="@{/boards/resources/scripts/board-main-2.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
@@ -20,13 +21,13 @@
         <div class="nav-menu">
             <ul class="list">
                 <li class="link">
-                    <a th:href="@{/jo}">판매</a>
+                    <a th:href="@{/bbs/jo}">판매</a>
+                </li>
+                <li class="link" th:classappend="selected">
+                    <a th:href="@{/bbs/jo2}">구매</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/jo2}">구매</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/jo3}">교환</a>
+                    <a th:href="@{/bbs/jo3}">교환</a>
                 </li>
             </ul>
         </div>
@@ -991,86 +992,7 @@
                 </div>
             </div>
         </section>
-        <section class="side-section">
-            <div class="popular-container">
-                <div class="popular-section">
-                    <div class="board-title">
-                        <h3>오늘의 인기글</h3>
-                    </div>
-                    <ul class="content">
-                        <li class="list">
-                            <span>1</span>
-                            <a class="link" th:href="@{/}">
-                                8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트8/15
-                                네이버포인트8/15 네이버포인트8/15 네이버포인트8/15 네이버포인트
-                            </a>
-                            <span>
-                                <a th:href="@{/}">78</a>
-                            </span>
-                        </li>
-                        <li class="list">
-                            <span>2</span>
-                            <a class="link" th:href="@{/}">
-                                나이키 프리미엄 에션셜 반팔
-                            </a>
-                            <span>
-                                <a th:href="@{/}">43</a>
-                            </span>
-                        </li>
-                        <li class="list">
-                            <span>3</span>
-                            <a class="link" th:href="@{/}">
-                                독일 COS 부클레 가디건 베이지
-                            </a>
-                            <span>
-                                <a th:href="@{/}">100</a>
-                            </span>
-                        </li>
-                        <li class="list">
-                            <span>4</span>
-                            <a class="link" th:href="@{/}">
-                                유니클로U 유라리 셔츠 외
-                            </a>
-                            <span>
-                                <a th:href="@{/}">58</a>
-                            </span>
-                        </li>
-                        <li class="list">
-                            <span>5</span>
-                            <a class="link" th:href="@{/}">
-                                광동 선착순 2종 5,900원 무료배송
-                            </a>
-                            <span>
-                                <a th:href="@{/}">188</a>
-                            </span>
-                        </li>
-                        <li class="list">
-                            <span>6</span>
-                            <a class="link" th:href="@{/}">
-                                신타6 46000원대
-                            </a>
-                            <span>
-                                <a th:href="@{/}">112</a>
-                            </span>
-                        </li>
-                        <li class="list">
-                            <span>7</span>
-                            <a class="link" th:href="@{/}">
-                                kith LVC X 클락스 왈라비 12만원
-                            </a>
-                            <span>
-                                <a th:href="@{/}">104</a>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="side-empty-section">
-                <div class="empty-container">
-                    <span></span>
-                </div>
-            </div>
-        </section>
+        <th:block th:replace="~{boards/fragments/side-section.html :: side-section}"></th:block>
     </div>
 </main>
 <th:block th:replace="~{fragments/footer.html :: content}"></th:block>
