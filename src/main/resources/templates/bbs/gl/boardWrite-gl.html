@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>패션구매 - 어미새</title>
-    <link th:href="@{/boards/resources/stylesheets/boardWrite-gl.css}" rel="stylesheet">
+    <link th:href="@{/bbs/resources/stylesheets/boardWrite-gl.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
-    <script defer th:src="@{/boards/resources/scripts/boardWrite.js}"></script>
+    <script defer th:src="@{/bbs/resources/scripts/boardWrite.js}"></script>
     <script defer th:src="@{/resources/scripts/common.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
@@ -19,11 +19,11 @@
     <div class="nav-container">
         <div class="nav-menu">
             <ul class="list">
-                <li class="link">
-                    <a th:href="@{/gl}">패션구매</a>
+                <li class="link" th:classappend="selected">
+                    <a th:href="@{/bbs/gl}">패션구매</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/ha}">기타구매</a>
+                    <a th:href="@{/bbs/ha}">기타구매</a>
                 </li>
             </ul>
         </div>
