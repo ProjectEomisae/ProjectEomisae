@@ -97,7 +97,7 @@
                                 <li class="link" th:aria-selected="${#request.getRequestURI().contains('jp')}">
                                     <a th:href="@{/bbs/jp}">공동구매</a>
                                 </li>
-                                <li class="link">
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('ui')}">
                                     <a th:href="@{/bbs/ui}">가입인사</a>
                                 </li>
                             </ul>

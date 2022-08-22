@@ -949,7 +949,7 @@ body > .header > .scroll-arrow > .scroll-button.on {
         align-items: flex-start;
         display: flex;
         flex-direction: column;
-        justify-content: stretch;
+        justify-content: center;
     }
 
     body > .header > .header-container > .top-bar > .top-container > .menu-container > .menu-wrap > .item > .list {
@@ -977,7 +977,7 @@ body > .header > .scroll-arrow > .scroll-button.on {
         align-items: flex-start;
         display: flex;
         flex-direction: column;
-        justify-content: stretch;
+        justify-content: center;
         width: 100%;
     }
 

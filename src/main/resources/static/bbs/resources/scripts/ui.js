@@ -42,3 +42,9 @@ searchButton.addEventListener('click', () => {
         searchElement.classList.remove('on');
     };
 });
+
+const writeBox = window.document.querySelector('.write-box');
+writeBox.querySelector('textarea').addEventListener('focusin', () => {
+    writeBox.querySelector('textarea').innerText = '';
+});
+
