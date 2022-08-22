@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>건의 - 어미새</title>
+    <link th:href="@{/bbs/resources/stylesheets/mail.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/bbs/resources/stylesheets/common.css}" rel="stylesheet">
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
+    <script defer th:src="@{/bbs/resources/scripts/mail.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main class="main" id="main">
+    <div class="nav-container">
+        <div class="nav-menu">
+            <ul class="list">
+                <li class="link">
+                    <a th:href="@{/bbs/no}">공지사항</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/bbs/ev}">이벤트</a>
+                </li>
+                <li class="link" th:classappend="selected">
+                    <a th:href="@{/bbs/mail}">건의</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-container">
+        <form class="main-section">
+            <div class="title-container">
+                <span class="email-title">문의,건의 : EOMISAEMAIL@GMAIL.COM</span>
+                <span class="subtitle">답변은 메일로 전달됩니다.</span>
+            </div>
+            <div class="common-container basic-info-container">
+                <span class="info-text">Basic Info</span>
+                <div class="info-container">
+                    <span class="info-title">이름</span>
+                    <div class="input-container">
+                        <i class="icon fa-regular fa-user"></i>
+                        <input class="input" name="nickName" type="text" value="뮤지컬라풀" disabled="disabled">
+                    </div>
+                </div>
+                <div class="info-container">
+                    <span class="info-title">이메일</span>
+                    <div class="input-container">
+                        <i class="icon fa-regular fa-envelope"></i>
+                        <input class="input" name="nickName" type="text" value="dmchoi224@naver.com" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+            <div class="common-container suggestion-container">
+                <span class="info-text message">Message</span>
+                <span class="suggestion-title">내용</span>
+                <div class="editor-container">
+                    <textarea class="editor" name="content" id="editor"></textarea>
+                </div>
+            </div>
+            <div class="file-upload-container" id="fileUploadContainer">
+                <label for="imageUpload" class="image-upload"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</label>
+                <input id="imageUpload" class="image-upload-hidden" name="image" type="file" accept="image/png, image/jpeg, image/png, image/gif">
+                <span class="file-size-limit" id="hoverChangeText">여기에 파일을 끌어 놓거나 파일 첨부 버튼을 클릭하세요.</span>
+            </div>
+            <label class="label-container">
+                <input class="input" type="submit" value="보내기">
+            </label>
+        </form>
+        <th:block th:replace="~{bbs/fragments/side-section.html :: side-section}"></th:block>
+    </div>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

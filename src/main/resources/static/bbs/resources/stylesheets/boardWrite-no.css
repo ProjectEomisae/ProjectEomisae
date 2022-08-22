@@ -1,11 +1,5 @@
 @charset "UTF-8";
 
-p {
-    color: rgb(0, 0, 0);
-    font-size: 0.8175rem;
-    line-height: 0.6175rem;
-}
-
 #main {
     overflow: hidden;
     max-width: 1250px;
@@ -84,7 +78,7 @@ p {
     border-bottom: 2px solid #e87a72;
 }
 
-/* ------------- board write section ------------- */
+/* 관리자일 경우 */
 
 #main > .write-form-container {
     padding: 2.5rem 1.875rem;
@@ -119,7 +113,8 @@ p {
     color: rgb(145, 145, 145);
 }
 
-#main > .write-form-container > .form-container > .form-head > input::-moz-placeholder {
+#main > .write-form-container > .form-container > .form-head > input::-moz-placeholder
+{
     color: rgb(145, 145, 145);
 }
 
@@ -138,42 +133,6 @@ p {
 
 #main > .write-form-container > .form-container > .form-head > .tag-input {
     font-size: 0.75rem;
-}
-
-#main > .write-form-container > .file-upload-container {
-    background-color: rgb(247, 247, 247);
-    border-left: 0.0625rem solid rgb(241, 241, 241);
-    border-right: 0.0625rem solid rgb(241, 241, 241);
-    font-size: 0.75rem;
-    padding: 0.75rem;
-}
-
-#main > .write-form-container > .file-upload-container > .image-upload-hidden {
-    display: none;
-}
-
-#main > .write-form-container > .file-upload-container > .image-upload {
-    background: linear-gradient(to bottom, rgb(var(--color-white)) 5%, rgb(232, 232, 232) 100%);
-    background-color: rgb(var(--color-white));
-    border: 0.0625rem solid rgb(211, 211, 211);
-    border-radius: 0.1rem;
-    box-shadow: inset 0 0.0625rem 0 0 rgb(var(--color-white));
-    color: rgb(85, 91, 97);
-    cursor: pointer;
-    display: inline-block;
-    font-size: 0.75rem;
-    text-shadow: 0 0.0625rem 0 rgb(var(--color-white));
-    padding: 0.185rem 0.75rem;
-}
-
-#main > .write-form-container > .file-upload-container > .image-upload > i {
-    color: rgb(85, 91, 97);
-    font-size: 0.85rem;
-    margin-right: 0.2rem;
-}
-
-#main > .write-form-container > .file-upload-container > .file-size-limit {
-    margin-left: 0.5rem;
 }
 
 #main > .write-form-container > .form-bottom {
@@ -205,4 +164,59 @@ p {
     border-left: 0.0625rem solid rgb(241, 241, 241);
     cursor: pointer;
     padding: 1rem 0;
+}
+
+/* 관리자가 아닐 경우 main-container
+ display flex || none 으로 if 문 사용해 설정 필요 공간차지 x */
+
+#main > .main-container {
+    display: none;
+    padding-left: 30px;
+    padding-right: 30px;
+    align-items: flex-start;
+    /*display: flex;*/
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+
+}
+
+#main > .main-container > .main-section {
+    width: 53.4375rem;
+}
+
+#main > .main-container > .main-section > .no-permission-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20% 0;
+}
+
+#main > .main-container > .main-section > .no-permission-container > .icon {
+    color: rgb(221, 221, 221);
+    font-size: 7.5rem;
+    margin-bottom: 3rem;
+}
+
+#main > .main-container > .main-section > .no-permission-container > .no-permission-text {
+    color: rgb(var(--color-black-66));
+    font-size: 1.125rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+#main > .main-container > .main-section > .no-permission-container > .back-button {
+    background-color: unset;
+    border: 0.0625rem solid rgb(var(--color-black-66));
+    border-radius: 0.2rem;
+    color: rgb(255, 51, 49);
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+}
+
+#main > .main-container > .main-section > .no-permission-container > .back-button:hover {
+    background-color: rgb(var(--color-black-44));
+    color: rgb(var(--color-white));
 }

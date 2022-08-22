@@ -2,8 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>패션후기 - 어미새</title>
-    <link th:href="@{/bbs/resources/stylesheets/boardWrite-pot.css}" rel="stylesheet">
+    <title>구매 - 어미새</title>
+    <link th:href="@{/bbs/resources/stylesheets/boardWrite-jo.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
@@ -19,14 +19,14 @@
     <div class="nav-container">
         <div class="nav-menu">
             <ul class="list">
+                <li class="link">
+                    <a th:href="@{/bbs/jo}">판매</a>
+                </li>
                 <li class="link" th:classappend="selected">
-                    <a th:href="@{/bbs/pot}">패션후기</a>
+                    <a th:href="@{/bbs/jo2}">구매</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/bbs/pop}">기타후기</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/bbs/gm}">소장품자랑</a>
+                    <a th:href="@{/bbs/jo3}">교환</a>
                 </li>
             </ul>
         </div>
@@ -36,8 +36,8 @@
             <div class="form-head">
                 <select class="select option-category">
                     <option value="">분류</option>
-                    <option value="">국내<span>(11853)</span></option>
-                    <option value="">해외<span>(11853)</span></option>
+                    <option value="">구매<span>(11853)</span></option>
+                    <option value="">완료<span>(11853)</span></option>
                 </select>
                 <input class="input title-input" placeholder="제목" type="text">
             </div>
@@ -45,25 +45,15 @@
                 <input class="input tag-input" placeholder="태그 : 쉼표(,)를 이용하여 복수 등록" type="text">
             </div>
             <div class="product-container">
-                <div class="product-col product-title">* 구매인증</div>
-                <div class="purchase-verification-container">
-                    <select class="purchase-verification" id="selectBox" onchange="showText()">
-                        <option>선택해주세요</option>
-                        <option class="verification-option">
-                            <span class="one">mareve/</span>
-                            <span class="two">Wave01/</span>
-                            <span class="three">mareve/</span>
-                            <span class="five">179100원</span>
-                        </option>
-                        <option class="verification-option">mareve/Wave01/mareve/179100원</option>
-                        <option class="verification-option">mareve/Wave01/mareve/179100원</option>
-                    </select>
-                </div>
-            </div>
-            <div class="product-container">
-                <div class="product-col product-title">* 쇼핑몰</div>
-                <div class="product-col product-input">
-                    <input class="input" id="shopInput" name="mallName" type="text">
+                <div class="product-col product-title">* 연락처</div>
+                <div class="product-col product-input option-input">
+                    <div class="contact-row">
+                        <select class="allow-disclosure">
+                            <option>모두 공개 허용</option>
+                            <option>승인한 회원만 공개 허용</option>
+                        </select>
+                        <input class="input" name="contact" type="tel">
+                    </div>
                 </div>
             </div>
             <div class="product-container">
@@ -82,11 +72,21 @@
                 <div class="product-col product-title">* 사이즈</div>
                 <div class="textarea-container">
                     <textarea class="product-textarea"></textarea>
-                    <span class="refer-text">- 구매 제품 사이즈</span>
                 </div>
             </div>
             <div class="product-container">
-                <div class="product-col product-title">* 가격</div>
+                <div class="product-col product-title">* 거래 방법</div>
+                <div class="option-container">
+                    <select class="select-container">
+                        <option>선택해주세요</option>
+                        <option>택배(운포)</option>
+                        <option>직거래</option>
+                        <option>택배(운포), 직거래</option>
+                    </select>
+                </div>
+            </div>
+            <div class="product-container">
+                <div class="product-col product-title">* 구매 가격</div>
                 <div class="product-col product-input option-input">
                     <div class="price-row">
                         <select class="currency-option">
@@ -97,26 +97,12 @@
                         </select>
                         <input class="input" name="price" type="text" onkeyup="inputNumberFormat(this)">
                     </div>
-                    <span class="refer-text">- 배송비 등 최종 가격</span>
                 </div>
-            </div>
-            <div class="product-container">
-                <div class="product-col product-title">* 사이즈팁</div>
-                <div class="textarea-container">
-                    <textarea class="product-textarea"></textarea>
-                </div>
-            </div>
-            <div class="text-container">
-                <p>● 패션 후기 게시판 공지사항<br>
-                    <a href="https://eomisae.co.kr/pot/7382785">https://eomisae.co.kr/pot/7382785</a>
-                </p>
             </div>
         </div>
         <textarea class="editor" name="content" id="editor">
-            <br><br><br><br><br><br>
-            <p> &bull; 종합 후기</p>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <p> &bull; 제품 이미지 (포장 개봉한 상품 이미지 2장 이상 첨부) :</p>
+            <br><br>
+            <p>&bull; 판매/구매 행위에 관하여 최대한 신중히 하셔야 되시며 반드시 만약의 경우를 대비해주세요.</p>
         </textarea>
         <div class="file-upload-container">
             <label for="imageUpload" class="image-upload"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</label>

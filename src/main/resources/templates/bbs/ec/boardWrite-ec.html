@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>이벤트:쿠폰 - 어미새</title>
-    <link th:href="@{/boards/resources/stylesheets/boardWrite-ec.css}" rel="stylesheet">
+    <link th:href="@{/bbs/resources/stylesheets/boardWrite-ec.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
-    <script defer th:src="@{/boards/resources/scripts/boardWrite.js}"></script>
+    <script defer th:src="@{/bbs/resources/scripts/boardWrite.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
@@ -19,22 +19,19 @@
         <div class="nav-menu">
             <ul class="list">
                 <li class="link">
-                    <a th:href="@{/static}">자유게시판</a>
+                    <a th:href="@{/bbs/fs}">인기정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/static}">패션게시판</a>
+                    <a th:href="@{/bbs/os}">패션정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/static}">직구 Q&A</a>
+                    <a th:href="@{/bbs/rt}">기타정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/static}">코드:대리</a>
+                    <a th:href="@{/bbs/dr}">래플정보</a>
                 </li>
-                <li class="link">
-                    <a th:href="@{/static}">공동구매</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/static}">가입인사</a>
+                <li class="link" th:classappend="selected">
+                    <a th:href="@{/bbs/ec}">이벤트정보</a>
                 </li>
             </ul>
         </div>
@@ -56,7 +53,7 @@
             <div class="product-container">
                 <div class="product-col product-title">링크</div>
                 <div class="product-col product-input">
-                    <input class="input" name="link" type="text">
+                    <input class="input" name="link" type="url">
                     <span class="refer-text">- 단축, 변형 URL사용을 금지합니다.</span>
                 </div>
             </div>
@@ -68,7 +65,6 @@
             <p>&bull; 링크 모음 글 작성을 허용하고 일일 작성 가능한 게시글 수를 3개로 제한합니다.</p>
             <p>&bull; 동일 링크의 경우 기간에 관계없이 중복 처리됩니다.</p>
             <p>&bull; 갱신형의 경우 같은 페이지 내 동일한 링크가 있다면 중복 처리됩니다.</p>
-
         </textarea>
         <div class="file-upload-container">
             <label for="imageUpload" class="image-upload"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</label>

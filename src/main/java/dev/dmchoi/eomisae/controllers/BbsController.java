@@ -23,6 +23,12 @@ public class BbsController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "ec/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getEcBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("bbs/ec/boardWrite-ec");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "fs/boardWrite", method = RequestMethod.GET)
     public ModelAndView getFsBoardWrite(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/fs/boardWrite-fs");
@@ -268,6 +274,12 @@ public class BbsController {
     @RequestMapping(value = "ev/boardWrite", method = RequestMethod.GET)
     public ModelAndView getEvBoardWrite(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/ev/boardWrite-ev");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/mail", method = RequestMethod.GET)
+    public ModelAndView getMail(ModelAndView modelAndView) {
+        modelAndView.setViewName("bbs/mail/mail");
         return modelAndView;
     }
 

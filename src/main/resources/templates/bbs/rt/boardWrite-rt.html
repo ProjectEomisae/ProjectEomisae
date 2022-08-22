@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>기타정보 - 어미새</title>
-    <link th:href="@{/boards/resources/stylesheets/boardWrite-rt.css}" rel="stylesheet">
+    <link th:href="@{/bbs/resources/stylesheets/boardWrite-rt.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
-    <script defer th:src="@{/boards/resources/scripts/boardWrite.js}"></script>
+    <script defer th:src="@{/bbs/resources/scripts/boardWrite.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
@@ -19,19 +19,19 @@
         <div class="nav-menu">
             <ul class="list">
                 <li class="link">
-                    <a th:href="@{/fs}">인기정보</a>
+                    <a th:href="@{/bbs/fs}">인기정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/os}">패션정보</a>
+                    <a th:href="@{/bbs/os}">패션정보</a>
+                </li>
+                <li class="link" th:classappend="selected">
+                    <a th:href="@{/bbs/rt}">기타정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/rt}">기타정보</a>
+                    <a th:href="@{/bbs/dr}">래플정보</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/dr}">래플정보</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/ec}">이벤트정보</a>
+                    <a th:href="@{/bbs/ec}">이벤트정보</a>
                 </li>
             </ul>
         </div>
@@ -61,7 +61,7 @@
             <div class="product-container">
                 <div class="product-col product-title">* 링크</div>
                 <div class="product-col product-input">
-                    <input class="input" name="link" type="text">
+                    <input class="input" name="link" type="url">
                     <span class="refer-text">- 단축, 변형 URL사용을 금지합니다.</span>
                 </div>
             </div>

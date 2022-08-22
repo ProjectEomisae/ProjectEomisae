@@ -2,14 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>소지품자랑 - 어미새</title>
-    <link th:href="@{/bbs/resources/stylesheets/boardWrite-gm.css}" rel="stylesheet">
+    <title>공동구매 - 어미새</title>
+    <link th:href="@{/bbs/resources/stylesheets/boardWrite-jp.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
     <script defer th:src="@{/bbs/resources/scripts/boardWrite.js}"></script>
-    <script defer th:src="@{/resources/scripts/common.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
@@ -20,13 +19,22 @@
         <div class="nav-menu">
             <ul class="list">
                 <li class="link">
-                    <a th:href="@{/bbs/pot}">패션후기</a>
+                    <a th:href="@{/bbs/fe}">자유게시판</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/bbs/pop}">기타후기</a>
+                    <a th:href="@{/bbs/fh}">패션게시판</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/bbs/qa}">직구 Q&A</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/bbs/chc}">코드:대리</a>
                 </li>
                 <li class="link" th:classappend="selected">
-                    <a th:href="@{/bbs/gm}">소장품자랑</a>
+                    <a th:href="@{/bbs/jp}">공동구매</a>
+                </li>
+                <li class="link">
+                    <a th:href="@{/bbs/ui}">가입인사</a>
                 </li>
             </ul>
         </div>
@@ -36,7 +44,8 @@
             <div class="form-head">
                 <select class="select option-category">
                     <option value="option">분류</option>
-                    <option value="option">소장<span>(11853)</span></option>
+                    <option value="option">공구<span>(1185)</span></option>
+                    <option value="option">종료<span>(1153)</span></option>
                 </select>
                 <input class="input title-input" placeholder="제목" type="text">
             </div>
@@ -44,34 +53,26 @@
                 <input class="input tag-input" placeholder="태그 : 쉼표(,)를 이용하여 복수 등록" type="text">
             </div>
             <div class="product-container">
-                <div class="product-col product-title">* 브랜드</div>
-                <div class="product-col product-input">
-                    <input class="input" name="brand" type="text">
-                </div>
-            </div>
-            <div class="product-container">
-                <div class="product-col product-title">* 제품명</div>
-                <div class="product-col product-input">
-                    <input class="input" name="productName" type="text">
-                </div>
-            </div>
-            <div class="product-container">
-                <div class="product-col product-title">가격</div>
-                <div class="product-col product-input option-input">
-                    <select class="currency-option">
-                        <option>₩(KRW)</option>
-                        <option>$(USD)</option>
-                        <option>£(GBP)</option>
-                        <option>€(EUR)</option>
+                <div class="product-col product-title">읽기레벨</div>
+                <div class="product-col option-container">
+                    <select class="level-option">
+                        <option>0</option>
+                        <option>3</option>
+                        <option>5</option>
+                        <option>7</option>
                     </select>
-                    <input class="input" name="price" type="text" onkeyup="inputNumberFormat(this)">
+                    <span class="refer-text">- 글 작성자가 열람 가능 레벨을 설정할 수 있습니다. <1시간 뒤 전체 공개로 전환></span>
+                </div>
+            </div>
+            <div class="product-container">
+                <div class="product-col product-title">* 링크</div>
+                <div class="product-col product-input">
+                    <input class="input" name="link" type="text">
+                    <span class="refer-text">- 단축, 변형 URL사용을 금지합니다.</span>
                 </div>
             </div>
         </div>
-        <textarea class="editor" name="content" id="editor">
-            <br>
-            <p>&bull; 제품 이미지 (포장 개봉한 상품 이미지 2장 이상 첨부) :</p>
-        </textarea>
+        <textarea class="editor" name="content" id="editor"></textarea>
         <div class="file-upload-container">
             <label for="imageUpload" class="image-upload"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</label>
             <input id="imageUpload" class="image-upload-hidden" name="image" type="file"

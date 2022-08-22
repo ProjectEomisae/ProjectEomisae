@@ -2,10 +2,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>자유게시판 - 어미새</title>
-    <link th:href="@{/bbs/resources/stylesheets/boardWrite-fe.css}" rel="stylesheet">
-    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <title>이벤트 - 어미새</title>
+    <link th:href="@{/bbs/resources/stylesheets/boardWrite-ev.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/bbs/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
     <script defer th:src="@{/bbs/resources/scripts/boardWrite.js}"></script>
@@ -18,36 +18,25 @@
     <div class="nav-container">
         <div class="nav-menu">
             <ul class="list">
+                <li class="link">
+                    <a th:href="@{/bbs/no}">공지사항</a>
+                </li>
                 <li class="link" th:classappend="selected">
-                    <a th:href="@{/bbs/fe}">자유게시판</a>
+                    <a th:href="@{/bbs/ev}">이벤트</a>
                 </li>
                 <li class="link">
-                    <a th:href="@{/bbs/fh}">패션게시판</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/bbs/qa}">직구 Q&A</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/bbs/chc}">코드:대리</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/bbs/jp}">공동구매</a>
-                </li>
-                <li class="link">
-                    <a th:href="@{/bbs/ui}">가입인사</a>
+                    <a th:href="@{/bbs/mail}">건의</a>
                 </li>
             </ul>
         </div>
     </div>
+    <!-- 관리자일 경우 -->
     <form class="write-form-container">
         <div class="form-container">
             <div class="form-head">
                 <select class="select option-category">
                     <option value="option">분류</option>
-                    <option value="option">잡담<span>(158763)</span></option>
-                    <option value="option">투자<span>(704)</span></option>
-                    <option value="option">시사<span>(247)</span></option>
-                    <option value="option">정보<span>(11853)</span></option>
+                    <option value="option">이벤트<span>(704)</span></option>
                 </select>
                 <input class="input title-input" placeholder="제목" type="text">
             </div>
@@ -56,11 +45,6 @@
             </div>
         </div>
         <textarea class="editor" name="content" id="editor"></textarea>
-        <div class="file-upload-container">
-            <label for="imageUpload" class="image-upload"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</label>
-            <input id="imageUpload" class="image-upload-hidden" name="image" type="file" accept="image/png, image/jpeg, image/png, image/gif">
-            <span class="file-size-limit">파일 크기 제한 : 10.00MB (허용 확장자 : *.jpeg;*.jpg;*.png;*.gif;)</span>
-        </div>
         <div class="form-bottom">
             <div class="button-container">
                 <input class="button-input" type="button" value="돌아가기">
@@ -71,7 +55,35 @@
             <input class="button-input submit-button" type="button" value="등록">
         </div>
     </form>
+    <!-- Back : 관리자가 아닐 경우라는 가정을 걸어줘야함 -->
+    <div class="main-container">
+        <form class="main-section">
+            <div class="no-permission-container">
+                <i class="icon fa-solid fa-hand"></i>
+                <span class="no-permission-text">권한이 없습니다.</span>
+                <button class="back-button" type="button" onclick="history.back();">돌아가기</button>
+            </div>
+        </form>
+        <th:block th:replace="~{bbs/fragments/side-section.html :: side-section}"></th:block>
+    </div>
 </main>
 <th:block th:replace="~{fragments/footer.html :: content}"></th:block>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
