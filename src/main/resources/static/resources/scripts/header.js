@@ -1,3 +1,21 @@
+const menuWrap = window.document.querySelector('.menu-wrap');
+const menuItem = menuWrap.querySelectorAll('.item');
+menuItem.forEach(x => {
+    if (x.ariaSelected === 'true') {
+        x.classList.add('selected');
+    }
+});
+
+if (menuWrap.querySelectorAll('.link').forEach(ex => {
+    if (ex.ariaSelected === 'true') {
+        ex.parentNode.parentNode.classList.add('selected');
+    }
+}));
+
+// x.querySelectorAll(':scope > .list > li').forEach(ex => {
+//     if (ex.ariaSelected === 'true') ;
+//     x.querySelector('.item').classList.add('selected');
+
 const loginButton = document.querySelector('.top-login-button');
 
 loginButton.addEventListener('click', () => {
@@ -96,6 +114,7 @@ window.document.querySelector('.exit-box').addEventListener('click', () => {
 const messageContainer = window.document.querySelector('.message-container');
 
 window.document.querySelector('.message-button').addEventListener('click', () => {
+    userMenuButton.querySelector('.menu-box').classList.remove('on');
     if (!messageContainer.classList.contains('on')) {
         messageContainer.classList.add('on');
     } else {
@@ -106,7 +125,8 @@ window.document.querySelector('.message-button').addEventListener('click', () =>
 const userMenuButton = window.document.querySelector('.user-info-container');
 
 userMenuButton.addEventListener('click', () => {
-    if(!userMenuButton.querySelector('.menu-box').classList.contains('on')) {
+    messageContainer.classList.remove('on');
+    if (!userMenuButton.querySelector('.menu-box').classList.contains('on')) {
         userMenuButton.querySelector('.menu-box').classList.add('on');
     } else {
         userMenuButton.querySelector('.menu-box').classList.remove('on');
@@ -115,7 +135,7 @@ userMenuButton.addEventListener('click', () => {
 
 const scrollButton = window.document.querySelector('.scroll-button');
 window.addEventListener('scroll', () => {
-    if(document.documentElement.scrollTop > 500) {
+    if (document.documentElement.scrollTop > 500) {
         scrollButton.classList.add('on');
     } else {
         scrollButton.classList.remove('on');
@@ -133,11 +153,11 @@ function scrollTo(element, to, duration) {
         currentTime = 0,
         increment = 20;
 
-    let animateScroll = function(){
+    let animateScroll = function () {
         currentTime += increment;
         let val = Math.easeInOutQuad(currentTime, start, change, duration);
         element.scrollTop = val;
-        if(currentTime < duration) {
+        if (currentTime < duration) {
             setTimeout(animateScroll, increment);
         }
     };
@@ -149,8 +169,9 @@ function scrollTo(element, to, duration) {
 //c = change in value
 //d = duration
 Math.easeInOutQuad = function (t, b, c, d) {
-    t /= d/2;
-    if (t < 1) return c/2*t*t + b;
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t + b;
     t--;
-    return -c/2 * (t*(t-2) - 1) + b;
+    return -c / 2 * (t * (t - 2) - 1) + b;
 };
+
