@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class SystemExceptionLogEntity {
 
-    public static SystemActivityLogEntity build() {
-        return new SystemActivityLogEntity();
+    public static SystemExceptionLogEntity build() {
+        return new SystemExceptionLogEntity();
     }
     private long index;
     private Date createdAt;
