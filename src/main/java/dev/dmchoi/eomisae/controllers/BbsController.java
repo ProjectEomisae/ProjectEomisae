@@ -5,14 +5,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller(value = "dev.dmchoi.eomisae.controllers.BbsController")
 @RequestMapping(value = "/bbs")
 public class BbsController {
 
-//    @RequestMapping(value = "{bid}/detail/{aid}", method = RequestMethod.GET)
+    //    @RequestMapping(value = "{bid}/detail/{aid}", method = RequestMethod.GET)
     @RequestMapping(value = "detail", method = RequestMethod.GET)
     public ModelAndView getArticleDetail(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/detail/detail");
+        return modelAndView;
+    }
+
+    //    전체글
+    @RequestMapping(value = "al", method = RequestMethod.GET)
+    public ModelAndView getAl(ModelAndView modelAndView) {
+        modelAndView.setViewName("bbs/al/al");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "al/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getAlBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("bbs/al/boardWrite-al");
         return modelAndView;
     }
 
@@ -83,6 +98,7 @@ public class BbsController {
         modelAndView.setViewName("bbs/fe/boardWrite-fe");
         return modelAndView;
     }
+
     @RequestMapping(value = "fh", method = RequestMethod.GET)
     public ModelAndView getFh(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/fh/fh");
@@ -94,6 +110,7 @@ public class BbsController {
         modelAndView.setViewName("bbs/fh/boardWrite-fh");
         return modelAndView;
     }
+
     @RequestMapping(value = "qa", method = RequestMethod.GET)
     public ModelAndView getQa(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/qa/qa");
@@ -105,6 +122,7 @@ public class BbsController {
         modelAndView.setViewName("bbs/qa/boardWrite-qa");
         return modelAndView;
     }
+
     @RequestMapping(value = "chc", method = RequestMethod.GET)
     public ModelAndView getChc(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/chc/chc");
@@ -116,6 +134,7 @@ public class BbsController {
         modelAndView.setViewName("bbs/chc/boardWrite-chc");
         return modelAndView;
     }
+
     @RequestMapping(value = "jp", method = RequestMethod.GET)
     public ModelAndView getJp(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/jp/jp");
@@ -125,6 +144,17 @@ public class BbsController {
     @RequestMapping(value = "jp/boardWrite", method = RequestMethod.GET)
     public ModelAndView getJpBoardWrite(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/jp/boardWrite-jp");
+        return modelAndView;
+    }
+    @RequestMapping(value = "ui", method = RequestMethod.GET)
+    public ModelAndView getUi(ModelAndView modelAndView) {
+        modelAndView.setViewName("bbs/ui/ui");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "ui/boardWrite", method = RequestMethod.GET)
+    public ModelAndView getUiBoardWrite(ModelAndView modelAndView) {
+        modelAndView.setViewName("bbs/ui/boardWrite-ui");
         return modelAndView;
     }
 
@@ -265,6 +295,7 @@ public class BbsController {
         modelAndView.setViewName("bbs/no/boardWrite-no");
         return modelAndView;
     }
+
     @RequestMapping(value = "ev", method = RequestMethod.GET)
     public ModelAndView getEv(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/ev/ev");

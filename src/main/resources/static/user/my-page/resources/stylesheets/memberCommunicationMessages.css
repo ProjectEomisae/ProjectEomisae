@@ -83,6 +83,59 @@ body > .main > .mypage-table > .table-container tr > .writer {
     color: rgb(var(--color-pink));
 }
 
+body > .main > .mypage-table > .table-container > tbody > tr > .writer > .writer-name {
+    cursor: pointer;
+}
+
+    /* ------------------ */
+
+body > .main > .mypage-table > .table-container > tbody > tr > .writer > .user-info
+{
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    box-shadow: 0 0 1px 1px rgb(31 45 61 / 15%);
+    background: white;
+    min-width: 80px;
+}
+
+body > .main > .mypage-table > .table-container > tbody > tr > .writer > .user-info.on {
+    opacity: 1;
+    position: absolute;
+    pointer-events: auto;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid rgb(0,0,0);
+    font-size: 0.875rem;
+    box-shadow: 0 0 1px 1px rgb(31 45 61 / 15%);
+    background: white;
+    min-width: 80px;
+}
+
+body > .main > .mypage-table > .table-container > tbody > tr > .writer > .user-info.on > .user-menu > .list {
+    text-align: left;
+    padding: 6px 10px;
+    color: #25282b;
+    transition: all 150ms;
+}
+
+body > .main > .mypage-table > .table-container > tbody > tr > .writer > .user-info.on > .user-menu > .list:first-child {
+    border-bottom: 1px solid #aaa;
+}
+
+body > .main > .mypage-table > .table-container > tbody > tr > .writer > .user-info.on > .user-menu > .list:hover {
+    color: #e87a72;
+}
+
+
+/* ------------------ */
+
+
 body > .main > .mypage-table > .table-container label > .message-all-check,
 body > .main > .mypage-table > .table-container label > .message-checkbox {
     appearance: auto;

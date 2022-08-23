@@ -3,6 +3,7 @@
 const categoryElement = window.document.querySelector('.category');
 const categoryButton = categoryElement.querySelector('.link');
 categoryButton.addEventListener('click', () => {
+    alignElement.querySelector('.align-list').classList.remove('on');
     if(!categoryElement.querySelector('.category-list').classList.contains('on')) {
         categoryElement.querySelector('.category-list').classList.add('on');
     } else {
@@ -19,6 +20,7 @@ categoryButton.addEventListener('click', () => {
 const alignElement = window.document.querySelector('.align');
 const alignButton = alignElement.querySelector('.link');
 alignButton.addEventListener('click', () => {
+    categoryElement.querySelector('.category-list').classList.remove('on');
     if(!alignElement.querySelector('.align-list').classList.contains('on')) {
         alignElement.querySelector('.align-list').classList.add('on');
     } else {

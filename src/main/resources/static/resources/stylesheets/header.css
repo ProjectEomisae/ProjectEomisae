@@ -50,6 +50,7 @@ body > .header > .header-container > .top-bar > .top-container {
 }
 
 body > .header > .header-container > .top-bar > .top-container > .menu-container {
+    height: 3.75rem;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -73,6 +74,7 @@ body > .header > .header-container > .top-bar > .top-container > .menu-container
 }
 
 body > .header > .header-container > .top-bar > .top-container > .menu-container > .menu-wrap {
+    height: 100%;
     width: 100%;
     align-items: center;
     display: flex;
@@ -293,7 +295,7 @@ body > .header > .header-container > .top-bar > .top-container > .form-container
     border-left: 6px solid transparent;
 }
 
-body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > .list > li > a {
+body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > .list > .link > a {
     display: block;
 }
 
@@ -457,6 +459,12 @@ body > .header > .header-container > .top-bar > .top-container > .menu-container
 
 body > .header > .header-container > .top-bar > .top-container > .menu-container > .menu-wrap > .item:hover > .list {
     display: block;
+}
+
+body > .header > .header-container > .top-bar > .top-container > .menu-container > .menu-wrap > .item.selected > a {
+    color: #e87a72;
+    border-bottom: 2px solid #e87a72;
+    padding-bottom: 1.125rem;
 }
 
 body > .header > .header-container > .top-bar > .top-container > .menu-container > .menu-wrap > .item > .list > li:first-child {
@@ -808,6 +816,10 @@ body > .header > .scroll-arrow > .scroll-button.on {
         height: 100px;
     }
 
+    body > .header > .header-container > .top-bar > .top-container > .menu-container > .menu-wrap > .item.selected > a {
+        padding-bottom: 2.4rem;
+    }
+
     body > .header > .header-container > .top-bar > .top-container > .form-container > .search-form {
         background-color: rgba(255, 255, 255, 0.1);
         border-radius: 10rem;
@@ -927,6 +939,10 @@ body > .header > .scroll-arrow > .scroll-button.on {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
+    }
+
+    body > .header > .header-container > .top-bar > .top-container > .menu-container > .menu-wrap > .item.selected > a {
+        padding-bottom: 1.125rem;
     }
 
     body > .header > .header-container > .top-bar > .top-container > .menu-container {

@@ -1,0 +1,523 @@
+
+#main > .main-container > .main-section > .detail-container {
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    margin-top: 1.875rem;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .title-section > h2 {
+    padding: 1.25rem 1rem;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .title-section > h2 > span {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #ff5722;
+    font-size: 0.75rem;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .title-section > h2 > a {
+    color: #444;
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .title-section > h2 > a:hover {
+    text-decoration: underline;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section {
+    padding: 0.625rem 1rem 1.5625rem 1rem;
+    background: #fff;
+    font-size: 0.75rem;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user {
+    display: inline-block;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user > img {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    margin-right: 2px;
+    margin-top: -2px;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user > span {
+    margin-top: 0;
+    margin-bottom: 0.1875rem;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: #555;
+    cursor: pointer;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user > span:hover {
+    text-decoration: underline;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user > .user-info {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    box-shadow: 0 0 1px 1px rgb(31 45 61 / 15%);
+    background: white;
+    min-width: 80px;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user > .user-info.on {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 999;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user > .user-info.on > .user-menu > .list {
+    text-align: left;
+    padding: 6px 10px;
+    color: #25282b;
+    transition: all 150ms;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user > .user-info.on > .user-menu > .list:first-child {
+    border-bottom: 1px solid #aaa;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .user > .user-info.on > .user-menu > .list:hover {
+    color: #e87a72;
+}
+
+
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > span {
+    padding: 0;
+    font-size: 0.75rem;
+    color: #777;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > span > b {
+    color: #666;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .title-container > .user-section > .divider {
+    height: 0.5625rem;
+    width: 1px;
+    background: #d5d5d5;
+    margin: 0 1px 0;
+    display: inline-block;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .input-container > table {
+    border-top: 0px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 30px;
+    font-size: 0.75rem;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .input-container > table > tbody {
+    border-top: 1px solid #eee;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .input-container > table > tbody > tr > td:first-child {
+    background: #f7f7f7;
+    color: #777;
+    padding: 10px 0;
+    text-align: center;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .input-container > table > tbody > tr > td:nth-child(2) {
+    color: #333;
+    padding: 10px 20px;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .input-container > table > tbody > tr > td:nth-child(2):hover {
+    text-decoration: underline;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .alert-container {
+    margin: 15px;
+    padding: 25px 35px;
+    background: RGB(249,249,250);
+    border: 1px solid RGB(235,236,239);
+    font-size: 0.8125rem;
+    color: #323232;
+    line-height: 2;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .alert-container > a > span {
+    color:#3498db;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .alert-container > a > span:hover {
+    text-decoration: underline;
+    color: #e87a72;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .content-container {
+    margin: 15px;
+    font-size: 0.8125rem;
+    word-wrap: break-word;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .content-container > img {
+    width: 100%;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .function-container {
+    padding: 0 1rem 1rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .function-container > .down {
+    margin-top: 0.5rem;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .function-container > div > .button {
+    color: #fff;
+    background-color: #505050;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    padding: 9px 15px;
+    line-height: 1.4;
+    border: 1px solid #FFF;
+    user-select: none;
+    cursor: pointer;
+}
+
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .function-container > .top > .button.like > span > span {
+    color: red;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .scrap-container {
+    padding: 0 1rem 1rem;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .scrap-container > .line {
+    height: 1px;
+    background: #f1f1f1;
+    margin-bottom: 16px;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .scrap-container > .scrap {
+    padding: 0 4px;
+    text-align: right;
+    font-size: 25px;
+    color: #888;
+}
+
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .scrap-container > .scrap > i {
+    cursor: pointer;
+}
+
+#main > .main-container > .main-section > .page-container-article {
+    margin: 0.75rem 0;
+    padding: 0;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#main > .main-container > .main-section > .page-container-article > div > a {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 16px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #666;
+}
+
+#main > .main-container > .main-section > .page-container-article > div > a:hover {
+    text-decoration: underline;
+}
+
+#main > .main-container > .main-section > .page-container-article > .list {
+    display: flex;
+    flex: 1;
+}
+
+#main > .main-container > .main-section > .comment-container {
+    width: 100%;
+}
+
+#main > .main-container > .main-section > .comment-container > .title {
+    width: 100%;
+    line-height: 2.75rem;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    font-size: 0.8125rem;
+    height: 2.5rem;
+}
+
+#main > .main-container > .main-section > .comment-container > .title > span {
+    padding: 0 0 0 1rem;
+}
+
+#main > .main-container > .main-section > .comment-container > .title > b {
+    margin-left: 0.25rem;
+    color: #02b875;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-weight: bold;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-profile {
+    width: 2.5rem;
+    margin-right: 0.75rem;
+    padding: 0.75rem 0.5rem 1.375rem 0.5rem;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-profile > img {
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    border-radius: 50%;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content {
+    width: 100%;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.125rem;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > span:first-child {
+    font-size: 0.75rem;
+    color: #4b4b4b;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > span:first-child:hover {
+    text-decoration: underline;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > .divider {
+    height: 9px;
+    width: 1px;
+    background: #d5d5d5;
+    margin: 0 1px 0px;
+    display: inline-block;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > .user-info {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    box-shadow: 0 0 1px 1px rgb(31 45 61 / 15%);
+    background: white;
+    min-width: 80px;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > .user-info.on {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 999;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > .user-info.on > .user-menu > .list {
+    text-align: left;
+    padding: 6px 10px;
+    color: #25282b;
+    transition: all 150ms;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > .user-info.on > .user-menu > .list:first-child {
+    border-bottom: 1px solid #aaa;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > .user-info.on > .user-menu > .list:hover {
+    color: #e87a72;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user > .date {
+    font-size: 0.625rem;
+    color: #bbb;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function {
+    font-size: 0.7rem;
+    font-weight: 400;
+    padding: 0.375rem 0.8rem 0 0;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .comment > a {
+    cursor: pointer;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .comment > a:hover {
+    text-decoration: underline;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .like {
+    color: #ff5e59;
+    cursor: pointer;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .like:hover {
+    text-decoration: underline;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .menu {
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .menu-list {
+    width: 4.0625rem;
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+    background-color: rgba(255, 255, 255, 0.98);
+    min-width: 160px;
+    max-height: 650px;
+    overflow-y: auto;
+    transition: all 0.2s;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .menu-list.on {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .menu-list  > .list {
+    color: rgba(0, 0, 0, 0.87);
+    cursor: pointer;
+    min-height: 36px;
+    width: 100%;
+    text-align: left;
+    text-transform: none;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .menu-list  > .list > .link {
+    font-size: 0.75rem;
+    color: #777;
+    font-weight: normal;
+    display: block;
+    line-height: 36px;
+    padding: 0 0.75rem;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .menu-list  > .list > .link:hover {
+    font-size: 0.75rem;
+    color: #777;
+    font-weight: bold;
+    display: block;
+    line-height: 36px;
+    padding: 0 0.80rem;
+    background-color: #f9f9fa;
+    transition: all 50ms;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .down {
+    width: 100%;
+    font-size: 0.75rem;
+    padding: 0.5rem 0 0;
+    font-weight: 400;
+    line-height: 1.375rem
+}
+
+#main > .main-container > .main-section > .comment-container > .empty {
+    width: 100%;
+    line-height: 2.75rem;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    height: 2.5rem;
+}
+
+#main > .main-container > .main-section > .comment-container > .write-comment {
+    background: #fff;
+    padding: 0;
+    margin: 12px 0;
+}
+
+#main > .main-container > .main-section > .comment-container > .write-comment > .write-box {
+    width: 100%;
+    position: relative;
+    margin: 0;
+    border: 1px solid #e5e5e5;
+}
+
+#main > .main-container > .main-section > .comment-container > .write-comment > .write-box > .textarea {
+    display: block;
+    border: none;
+    min-height: 80px;
+    font-size: 14px;
+    padding: 16px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+#main > .main-container > .main-section > .comment-container > .write-comment > .write-box > .option {
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#main > .main-container > .main-section > .comment-container > .write-comment > .write-box > .option > .input {
+    width: 80px;
+    height: 44px;
+    color: #fff;
+    background: #383838;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    border: none;
+    border-left: 1px solid #f1f1f1;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+

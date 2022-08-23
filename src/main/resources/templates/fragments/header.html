@@ -49,29 +49,30 @@
                         </div>
                     </div>
                     <ul class="menu-wrap">
-                        <li class="item">
-                            <a class="link" th:href="@{/}">
+                        <li class="item" th:aria-selected="${#request.getRequestURI().contains('al')}">
+                            <a class="link" th:href="@{/bbs/al}">
                                 <span class="text">전체글</span>
                             </a>
                         </li>
-                        <li class="item">
+                        <li class="item"
+                            th:aria-selected="${#request.getRequestURI().contains('fs')}">
                             <a class="link" th:href="@{/bbs/fs}">
                                 <span class="text">쇼핑정보</span>
                             </a>
                             <ul class="list">
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('fs')}">
                                     <a th:href="@{/bbs/fs}">인기정보</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('os')}">
                                     <a th:href="@{/bbs/os}">패션정보</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('rt')}">
                                     <a th:href="@{/bbs/rt}">기타정보</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('dr')}">
                                     <a th:href="@{/bbs/dr}">래플정보</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('ec')}">
                                     <a th:href="@{/bbs/ec}">이벤트정보</a>
                                 </li>
                             </ul>
@@ -81,22 +82,22 @@
                                 <span class="text">커뮤니티</span>
                             </a>
                             <ul class="list">
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('fe')}">
                                     <a th:href="@{/bbs/fe}">자유게시판</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('fh')}">
                                     <a th:href="@{/bbs/fh}">패션게시판</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('qa')}">
                                     <a th:href="@{/bbs/qa}">직구 Q & A</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('chc')}">
                                     <a th:href="@{/bbs/chc}">코드:대리</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('jp')}">
                                     <a th:href="@{/bbs/jp}">공동구매</a>
                                 </li>
-                                <li>
+                                <li class="link">
                                     <a th:href="@{/bbs/ui}">가입인사</a>
                                 </li>
                             </ul>
@@ -106,10 +107,10 @@
                                 <span class="text">구매인증</span>
                             </a>
                             <ul class="list">
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('gl')}">
                                     <a th:href="@{/bbs/gl}">패션구매</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('ha')}">
                                     <a th:href="@{/bbs/ha}">기타구매</a>
                                 </li>
                             </ul>
@@ -119,13 +120,13 @@
                                 <span class="text">실사후기</span>
                             </a>
                             <ul class="list">
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('pot')}">
                                     <a th:href="@{/bbs/pot}">패션후기</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('pop')}">
                                     <a th:href="@{/bbs/pop}">기타후기</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('gm')}">
                                     <a th:href="@{/bbs/gm}">소장품자랑</a>
                                 </li>
                             </ul>
@@ -135,10 +136,10 @@
                                 <span class="text">데일리룩</span>
                             </a>
                             <ul class="list">
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('dl')}">
                                     <a th:href="@{/bbs/dl}">데일리룩</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('ds')}">
                                     <a th:href="@{/bbs/ds}">데일리슈</a>
                                 </li>
                             </ul>
@@ -148,13 +149,13 @@
                                 <span class="text">플리마켓</span>
                             </a>
                             <ul class="list">
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('jo')}">
                                     <a th:href="@{/bbs/jo}">판매</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('jo2')}">
                                     <a th:href="@{/bbs/jo2}">구매</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('jo3')}">
                                     <a th:href="@{/bbs/jo3}">교환</a>
                                 </li>
                             </ul>
@@ -164,7 +165,7 @@
                                 <span class="text">서비스</span>
                             </a>
                             <ul class="list">
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('ms')}">
                                     <a th:href="@{/bbs/ms}">문화상품권</a>
                                 </li>
                             </ul>
@@ -174,13 +175,13 @@
                                 <span class="text">운영관리</span>
                             </a>
                             <ul class="list">
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('no')}">
                                     <a th:href="@{/bbs/no}">공지사항</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('ev')}">
                                     <a th:href="@{/bbs/ev}">이벤트</a>
                                 </li>
-                                <li>
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('mail')}">
                                     <a th:href="@{/bbs/mail}">건의</a>
                                 </li>
                             </ul>

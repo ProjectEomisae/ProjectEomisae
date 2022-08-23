@@ -571,6 +571,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    white-space: nowrap;
 }
 
 
@@ -622,7 +623,6 @@
     }
 
     #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > a:first-child{
-        width: 50%;
         text-overflow: ellipsis;
         overflow: hidden;
         display: block;
@@ -655,6 +655,17 @@
 
     #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles {
         grid-template-columns: repeat(2, 4fr);
+    }
+
+    #main > .main-container > .main-section > .article-container > .article-section > table {
+        table-layout: fixed;
+    }
+
+    #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > td {
+        padding: 0;
+    }
+    #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title {
+        width: 35%;
     }
 
 }

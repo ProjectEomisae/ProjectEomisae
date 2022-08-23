@@ -2,12 +2,16 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>어미새</title>
     <link th:href="@{/user/my-page/resources/stylesheets/memberCommunicationMessages.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/myPageHeader.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script defer th:src="@{/user/my-page/resources/scripts/memberCommunicationMessages.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
@@ -15,7 +19,7 @@
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
 <main class="main" id="main">
-    <section class="mypage-table">
+    <section class="mypage-table" id="mypageTable">
         <div class="option-container">
             <form class="message-option-container">
                 <select class="message-option" name="messageOption">
@@ -49,7 +53,25 @@
             <tbody>
             <tr>
                 <td class="title"><a th:href="@{/}">공지사항 확인부탁드려요 :)</a></td>
-                <td class="writer"><a th:href="@{/}">어미새</a></td>
+                <td class="writer">
+                    <span class="writer-name" id="writerName">어미새</span>
+                    <div class="user-info" id="userInfo">
+                        <ul class="user-menu">
+                            <li class="list">
+                                <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
+                            </li>
+                            <li class="list">
+                                <a class="link" th:href="@{/}">활동 내역 보기</a>
+                            </li>
+                            <li class="list">
+                                <a class="link" th:href="@{/}">쪽지 보내기</a>
+                            </li>
+                            <li class="list">
+                                <a class="link" th:href="@{/}">회원 차단</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
                 <td>2022-08-10</td>
                 <td>2022-08-10 14:31</td>
                 <td>
@@ -58,18 +80,18 @@
                     </label>
                 </td>
             </tr>
-            <tr>
-                <td class="title"><a th:href="@{/}">공지사항 확인부탁드려요 :)</a></td>
-                <td class="writer"><a th:href="@{/}">어미새</a></td>
-                <td>2022-08-10</td>
-                <td>2022-08-10 14:31</td>
-                <td>
-                    <label>
-                        <input class="message-checkbox" name="messageSelect" type="checkbox">
-                    </label>
-                </td>
-            </tr>
-            </tbody>
+<!--            <tr>-->
+<!--                <td class="title"><a th:href="@{/}">공지사항 확인부탁드려요 :)</a></td>-->
+<!--                <td class="writer"><a th:href="@{/}">어미새</a></td>-->
+<!--                <td>2022-08-10</td>-->
+<!--                <td>2022-08-10 14:31</td>-->
+<!--                <td>-->
+<!--                    <label>-->
+<!--                        <input class="message-checkbox" name="messageSelect" type="checkbox">-->
+<!--                    </label>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
             <tfoot>
             <tr class="delete-button-tr">
                 <td colspan="5">

@@ -1,10 +1,5 @@
 @charset "UTF-8";
 
-p {
-    color: rgb(0, 0, 0);
-    font-size: 0.8175rem;
-    line-height: 0.8175rem;
-}
 #main {
     overflow: hidden;
     max-width: 1250px;
@@ -87,7 +82,6 @@ p {
 
 #main > .write-form-container {
     padding: 2.5rem 1.875rem;
-    letter-spacing: -0.03rem;
 }
 
 #main > .write-form-container > .form-container {
@@ -119,63 +113,18 @@ p {
     color: rgb(145, 145, 145);
 }
 
-#main > .write-form-container > .form-container > .form-head > input::-moz-placeholder {
+#main > .write-form-container > .form-container > .form-head > input::-moz-placeholder
+{
     color: rgb(145, 145, 145);
 }
 
-#main > .write-form-container > .form-container > .form-head > .option-category {
-    width: 6.25rem;
-    appearance: auto;
-    border-right: 0.0625rem solid rgb(241, 241, 241);
-    color: rgb(176, 176, 176);
-    font-size: 0.75rem;
-}
-
 #main > .write-form-container > .form-container > .form-head > .title-input {
-    width: calc(100% - 6.25rem);
+    width: 100%;
     font-size: 0.75rem;
 }
 
 #main > .write-form-container > .form-container > .form-head > .tag-input {
     font-size: 0.75rem;
-}
-
-#main > .write-form-container > .form-container > .product-container {
-    width: 100%;
-    align-items: center;
-    border-bottom: 0.0625rem solid rgb(241, 241, 241);
-    display: flex;
-    font-size: 0.75rem;
-    flex-direction: row;
-}
-
-#main > .write-form-container > .form-container > .product-container > .product-col {
-    padding: 0.5rem 0.75rem;
-}
-
-#main > .write-form-container > .form-container > .product-container > .product-title {
-    width: 15%;
-    color: rgb(145, 145, 145);
-    font-weight: 500;
-}
-
-#main > .write-form-container > .form-container > .product-container > .product-input {
-    width: 85%;
-    display: flex;
-    flex-direction: column;
-}
-
-#main > .write-form-container > .form-container > .product-container > .product-input > .input {
-    max-width: 18.75rem;
-    height: 2rem;
-    background-color: rgb(247, 247, 247);
-    margin: 0.25rem 0;
-    padding: 0 0.75rem;
-}
-
-#main > .write-form-container > .form-container > .product-container > .product-input > .refer-text {
-    color: rgb(var(--color-black-66));
-    font-weight: 300;
 }
 
 #main > .write-form-container > .file-upload-container {
