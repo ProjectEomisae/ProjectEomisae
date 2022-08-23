@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.dmchoi.eomisae.mappers.ISystemMapper">
+    <insert id="insertActivityLog"
+            parameterType="dev.dmchoi.eomisae.entities.system.SystemActivityLogEntity">
+        INSERT INTO `eomisae_system`.`activity_logs`(`created_at`, `client_ip`, `client_ua`, `request_uri`, `result`)
+        VALUES (#{createdAt},
+                #{clientIp},
+                SUBSTRING(#{clientUa}, 1, 500),
+                SUBSTRING(#{requestUri}, 1, 500),
+                #{result})
+    </insert>
+
+    <insert id="insertBannedIp"
+            parameterType="dev.dmchoi.eomisae.entities.system.SystemBannedIpEntity">
+        INSERT INTO `eomisae_system`.`banned_ips`(created_at, expires_at, expired_flag, ip)
+        VALUES (#{createdAt}, #{expiresAt}, #{isExpired}, #{ip})
+    </insert>
+
+    <insert id="insertExceptionLog"
+            parameterType="dev.dmchoi.eomisae.entities.system.SystemExceptionLogEntity">
+        INSERT INTO `eomisae_system`.`exception_logs`(created_at, message, stacktrace)
+        VALUES (#{createdAt},
+                SUBSTRING(#{message}, 1, 1000),
+                SUBSTRING(#{stacktrace}, 1, 10000))
+    </insert>
+
+    <select id="selectBadActivityCountByIp"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_system`.`activity_logs`
+        WHERE `client_ip` = #{ip}
+          AND `result` IN ('FAILURE', 'ILLEGAL')
+          AND `created_at` > DATE_SUB(NOW(), INTERVAL #{lookBackSeconds} SECOND)
+    </select>
+
+    <select id="selectBannedIpCountByIp"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_system`.`banned_ips`
+        WHERE `ip` = #{ip}
+          AND `expires_at` > NOW()
+          AND `expired_flag` = FALSE
+    </select>
+
+    <select id="selectBannedIpCountByIpAll"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_system`.`banned_ips`
+        WHERE `ip` = #{ip}
+    </select>
+</mapper>
