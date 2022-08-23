@@ -1,0 +1,57 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<Configuration status="info" monitorInterval="30">-->
+<!--    <Properties>-->
+<!--        <Property name="BASE_DIR">./logs</Property>-->
+<!--        <Property name="LOG_FORMAT">[%date{yyyy-MM-dd HH:mm:ss}] %level %logger{36}(%file:%line) - %msg%n</Property>-->
+<!--    </Properties>-->
+
+<!--    <appender name="DB" class="org.apache.log4j.jdbc.JDBCAppender">-->
+<!--        <param name="url" value="jdbc:mysql://34.64.186.19:3306"/>-->
+<!--        <param name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+<!--        <param name="user" value="daemon_dev"/>-->
+<!--        <param name="password" value="wjdehd5061!@"/>-->
+<!--        <param name="sql" value="INSERT INTO `eomisae_system`.`LOGS` VALUES('%x','%d','%C','%p','%m')"/>-->
+
+<!--        <layout class="org.apache.log4j.PatternLayout">-->
+<!--        </layout>-->
+<!--    </appender>-->
+
+<!--    <Appenders>-->
+<!--        <Console name="Console" target="SYSTEM_OUT" follow="true">-->
+<!--            <PatternLayout pattern="${LOG_FORMAT}"/>-->
+<!--        </Console>-->
+
+<!--        <RollingFile name="File"-->
+<!--                     fileName="${BASE_DIR}/logfile.log"-->
+<!--                     filePattern="${BASE_DIR}/logfile.%d{yyyyMMdd}.log">-->
+<!--            <PatternLayout pattern="${LOG_FORMAT}"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy/>-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy>-->
+<!--                <Delete basePath="${BASE_DIR}">-->
+<!--                    <IfFileName glob="*.log"/>-->
+<!--                    <IfLastModified age="30d"/>-->
+<!--                </Delete>-->
+<!--            </DefaultRolloverStrategy>-->
+<!--        </RollingFile>-->
+<!--    </Appenders>-->
+
+<!--    <Loggers>-->
+<!--        <Root level="INFO">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--            <AppenderRef ref="File"/>-->
+<!--        </Root>-->
+
+<!--        <Logger name="dev.dmchoi.eomisae.controllers" level="DEBUG" additivity="false">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--            <AppenderRef ref="DB"/>-->
+<!--        </Logger>-->
+<!--    </Loggers>-->
+<!--</Configuration>-->
+
+
+
+
+
+
