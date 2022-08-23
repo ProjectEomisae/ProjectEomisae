@@ -14,6 +14,12 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.POST)
+    public ModelAndView postMemberSignUpForm(ModelAndView modelAndView) {
+        modelAndView.setViewName("user/memberSignUpForm");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/my-page/memberInfo", method = RequestMethod.GET)
     public ModelAndView getMemberInfo(ModelAndView modelAndView) {
         modelAndView.setViewName("user/my-page/memberInfo");

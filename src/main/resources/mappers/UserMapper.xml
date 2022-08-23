@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.dmchoi.eomisae.mappers.IUserMapper">
+    <insert id="insertUser"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        INSERT INTO `eomisae_member`.`users` (`index`, `email`, `password`, `user_id`, `nickname`, `point`, `level`,
+                                              `created_at`, `find_password_index`, `find_password_answer`,
+                                              `terms_agreed_at`, `mail_received_at`, `message_reception_index`,
+                                              `email_verified_flag`, `profile_id`)
+        VALUES (#{index}, #{email}, #{password}, #{userId}, #{nickname}, #{point}, #{level}, #{createdAt},
+                #{findPasswrodIndex}, #{findPasswrodAnswer}, #{termsAgreedAt}, #{mailReveivedAt},
+                #{messageReceptionIndex}, #{emailVerifiedFlag}, #{profileId})
+
+    </insert>
+</mapper>

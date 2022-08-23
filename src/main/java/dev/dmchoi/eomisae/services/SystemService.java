@@ -4,6 +4,7 @@ import dev.dmchoi.eomisae.IResult;
 import dev.dmchoi.eomisae.entities.system.SystemActivityLogEntity;
 import dev.dmchoi.eomisae.entities.system.SystemBannedIpEntity;
 import dev.dmchoi.eomisae.entities.system.SystemExceptionLogEntity;
+import dev.dmchoi.eomisae.enums.member.user.RegisterResult;
 import dev.dmchoi.eomisae.mappers.ISystemMapper;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.time.DateUtils;
