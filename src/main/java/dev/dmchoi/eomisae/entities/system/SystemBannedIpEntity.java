@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class SystemBannedIpEntity {
 
-    public static SystemActivityLogEntity build() {
-        return new SystemActivityLogEntity();
+    public static SystemBannedIpEntity build() {
+        return new SystemBannedIpEntity();
     }
     private long index;
     private Date createdAt;
