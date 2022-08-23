@@ -13,4 +13,21 @@
                 #{messageReceptionIndex}, #{emailVerifiedFlag}, #{profileId})
 
     </insert>
+
+    <select id="selectUserCountByEmail"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_member`.`users`
+        WHERE `email` = #{email}
+    </select>
+
+    <select id="selectUserCountByNickname"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_member`.`users`
+        WHERE `nickname` = #{nickname}
+    </select>
+
 </mapper>
