@@ -10,7 +10,7 @@ if (menuWrap.querySelectorAll('.link').forEach(ex => {
     if (ex.ariaSelected === 'true') {
         ex.parentNode.parentNode.classList.add('selected');
     }
-}));
+})) ;
 
 // x.querySelectorAll(':scope > .list > li').forEach(ex => {
 //     if (ex.ariaSelected === 'true') ;
@@ -18,10 +18,18 @@ if (menuWrap.querySelectorAll('.link').forEach(ex => {
 
 const loginButton = document.querySelector('.top-login-button');
 
-loginButton.addEventListener('click', () => {
-    window.document.querySelector('.shadow').classList.add('visible');
-    window.document.querySelector('.login-form').classList.add('visible');
+if(loginButton != null) {
+    loginButton.addEventListener('click', () => {
+        window.document.querySelector('.shadow').classList.add('visible');
+        window.document.querySelector('.login-form').classList.add('visible');
+    });
+}
+
+window.document.querySelector('.login-close').addEventListener('click', () => {
+    window.document.querySelector('.shadow').classList.remove('visible');
+    window.document.querySelector('.login-form').classList.remove('visible');
 });
+
 
 window.document.querySelector('.shadow').addEventListener('click', () => {
     window.document.querySelector('.shadow').classList.remove('visible');
@@ -29,11 +37,13 @@ window.document.querySelector('.shadow').addEventListener('click', () => {
 });
 
 const loginButtonMobile = document.querySelector('.top-login-button-mobile');
+if(loginButtonMobile != null) {
+    loginButtonMobile.addEventListener('click', () => {
+        window.document.querySelector('.shadow').classList.add('visible');
+        window.document.querySelector('.login-form').classList.add('visible');
+    });
+}
 
-loginButtonMobile.addEventListener('click', () => {
-    window.document.querySelector('.shadow').classList.add('visible');
-    window.document.querySelector('.login-form').classList.add('visible');
-});
 
 window.onscroll = () => {
     myFunction();
@@ -91,12 +101,18 @@ window.document.querySelector('#main').addEventListener('click', () => {
     toggleBox.classList.remove('on');
 });
 
+if (toggleBox.querySelector('.my-container.non-member') != null) {
+    toggleBox.querySelector('.my-container.non-member').addEventListener('click', () => {
+        toggleBox.classList.remove('on');
+        document.querySelector('.shadow').classList.add('visible');
+        document.querySelector('.login-form').classList.add('visible');
+    });
+} else {
+    toggleBox.querySelector('.my-container').addEventListener('click', () => {
+        window.location.href = 'user/my-page/memberInfo';
+    });
+}
 
-toggleBox.querySelector('.my-container').addEventListener('click', () => {
-    toggleBox.classList.remove('on');
-    document.querySelector('.shadow').classList.add('visible');
-    document.querySelector('.login-form').classList.add('visible');
-});
 
 window.document.querySelector('.shadow').addEventListener('click', () => {
     window.document.querySelector('.shadow').classList.remove('visible');
@@ -113,25 +129,30 @@ window.document.querySelector('.exit-box').addEventListener('click', () => {
 
 const messageContainer = window.document.querySelector('.message-container');
 
-window.document.querySelector('.message-button').addEventListener('click', () => {
-    userMenuButton.querySelector('.menu-box').classList.remove('on');
-    if (!messageContainer.classList.contains('on')) {
-        messageContainer.classList.add('on');
-    } else {
-        messageContainer.classList.remove('on');
-    }
-});
+const loginOnly = window.document.querySelector('.login-only.message');
 
-const userMenuButton = window.document.querySelector('.user-info-container');
-
-userMenuButton.addEventListener('click', () => {
-    messageContainer.classList.remove('on');
-    if (!userMenuButton.querySelector('.menu-box').classList.contains('on')) {
-        userMenuButton.querySelector('.menu-box').classList.add('on');
-    } else {
+if(loginOnly != null) {
+    window.document.querySelector('.message-button').addEventListener('click', () => {
         userMenuButton.querySelector('.menu-box').classList.remove('on');
-    }
-});
+        if (!messageContainer.classList.contains('on')) {
+            messageContainer.classList.add('on');
+        } else {
+            messageContainer.classList.remove('on');
+        }
+    });
+    const userMenuButton = window.document.querySelector('.user-info-container');
+
+    userMenuButton.addEventListener('click', () => {
+        messageContainer.classList.remove('on');
+        if (!userMenuButton.querySelector('.menu-box').classList.contains('on')) {
+            userMenuButton.querySelector('.menu-box').classList.add('on');
+        } else {
+            userMenuButton.querySelector('.menu-box').classList.remove('on');
+        }
+    });
+}
+
+
 
 const scrollButton = window.document.querySelector('.scroll-button');
 window.addEventListener('scroll', () => {
@@ -175,3 +196,42 @@ Math.easeInOutQuad = function (t, b, c, d) {
     return -c / 2 * (t * (t - 2) - 1) + b;
 };
 
+const loginForm = window.document.querySelector('.login-form');
+loginForm.querySelector('.login-button').addEventListener('click', e => {
+    e.preventDefault();
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('email', loginForm.querySelector('[name=email]').value);
+    formData.append('password', loginForm.querySelector('[name=password]').value);
+    formData.append('autosign', loginForm.querySelector('[name=autosign]').checked);
+    xhr.open('POST', '/user/login');
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                const responseJson = JSON.parse(xhr.responseText);
+                const result = responseJson['result'];
+                switch (result) {
+                    case 'failure' :
+                        alert('이메일 혹은 비밀번호가 틀렸습니다.\n\n다시 시도해주세요.');
+                        break;
+                    case 'illegal' :
+                        window.location.href = '/';
+                        break;
+                    case 'email_not_verified' :
+                        alert('이메일 인증이 완료되지 않았습니다.');
+                        window.history.back();
+                        break;
+                    case 'success' :
+                        alert('로그인 성공!\n\n메인 페이지로 이동합니다.');
+                        window.location.reload();
+                        break;
+                    default :
+                        alert('알 수 없는 이유로 로그인하지 못했습니다.\n\n잠시 후 다시 시도해주시거나 고객센터를 통해 문의해주세요.');
+                }
+            } else {
+                alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해주시거나 고객센터를 통해 문의해주세요.');
+            }
+        }
+    };
+    xhr.send(formData);
+});

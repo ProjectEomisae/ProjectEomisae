@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="getNickname" type="dev.dmchoi.eomisae.entities.member.UserEntity"*/-->
 <body>
 <header class="header" th:fragment="content">
     <div class="progress-container">
@@ -41,8 +42,9 @@
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </div>
                             </form>
-                            <div class="top-login-container">
-                                <a th:href="@{/#}" class="top-login-button-mobile">
+                            <div class="top-login-container"
+                            th:if="${user == null}">
+                                <a class="top-login-button-mobile">
                                     <i class="fa-solid fa-right-to-bracket"></i>
                                 </a>
                             </div>
@@ -97,7 +99,7 @@
                                 <li class="link" th:aria-selected="${#request.getRequestURI().contains('jp')}">
                                     <a th:href="@{/bbs/jp}">공동구매</a>
                                 </li>
-                                <li class="link">
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('ui')}">
                                     <a th:href="@{/bbs/ui}">가입인사</a>
                                 </li>
                             </ul>
@@ -198,12 +200,14 @@
                             <i class="icon fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
-                    <div class="top-login-container">
-                        <a th:href="@{/#}" class="top-login-button">
+                    <div class="top-login-container"
+                    th:if="${user == null}">
+                        <a class="top-login-button">
                             로그인
                         </a>
                     </div>
-                    <div class="login-only">
+                    <div class="login-only message"
+                    th:if="${user != null}">
                         <div class="top-login-container-user">
                             <div class="message-button">
                                 <i class="fas fa-envelope"></i>
@@ -229,17 +233,20 @@
                             <div class="menu-box">
                                 <div class="box"></div>
                                 <div class="user-info">
-                                    <h6>뮤지컬러풀</h6>
-                                    <span>dmchoi224@naver.com</span>
+                                    <h6 th:text="${user.getNickname()}">뮤지컬러풀</h6>
+                                    <span th:text="${user.getEmail()}">dmchoi224@naver.com</span>
                                 </div>
                                 <div class="user-level">
-                                    <h6 class="level">Level. 3</h6>
+                                    <h6 class="level"
+                                    th:text="'Level. ' + ${user.getLevel()}">Level. 3</h6>
                                     <div class="graph">
                                         <div class="graph-percent"></div>
                                     </div>
                                     <div>
-                                        <div class="point">2,638/3,000 P</div>
-                                        <div class="percent">82%</div>
+                                        <div class="point"
+                                        th:text="${user.getPoint() + '/3,000 P'}">2,638/3,000 P</div>
+                                        <div class="percent"
+                                        th:text="${(user.getPoint() * 100) / 3000 + '%'}">82%</div>
                                     </div>
                                 </div>
                                 <div class="notice">
@@ -295,19 +302,23 @@
     </div>
     <div class="toggle-menu-container" id="toggle-menu-container">
         <div class="toggle-menu-box">
-            <div class="my-container">
-                <a class="content" th:href="@{/user/my-page/memberInfo}">
+            <div class="my-container"
+            th:classappend="${user == null} ? 'non-member'">
+                <a class="content">
                     <div class="profile-image"><img alt="user" th:src="@{/resources/images/profile.png}"></div>
                 </a>
                 <div class="profile-content">
-                    <span>로그인 및 회원가입</span>
-                    <span>회원가입하세요!</span>
+                    <span
+                    th:text="${user != null} ? ${user.getNickname()} : '로그인 및 회원가입'"></span>
+                    <span
+                    th:text="${user != null} ? ${user.getEmail()} : '회원가입하세요!'"></span>
                 </div>
                 <div class="icon-box">
                     <i class="fa-solid fa-angle-right"></i>
                 </div>
             </div>
-            <div class="login-only">
+            <div class="login-only user"
+            th:if="${user != null}">
                 <a th:href="@{/user/my-page/memberInfo}">
                     <div class="info">
                         <i class="fa-solid fa-user"></i>
@@ -514,14 +525,14 @@
                 <h5 class="login-text">
                     로그인
                 </h5>
-                <a class="login-close" th:href="@{/}">
+                <a class="login-close">
                     <div class="button-icon">
                         <i class="fa-solid fa-xmark"></i>
                     </div>
                 </a>
             </div>
             <div class="input-container">
-                <form th:action="@{/}" class="input-form" method="post">
+                <form th:action="@{/user/login(url=${#request.getRequestURL()})}" class="input-form" method="post">
                     <label class="input">
                         <input class="email" maxlength="50" type="email" name="email" placeholder=" ">
                         <span class="placeholder">이메일 주소</span>
@@ -539,9 +550,9 @@
                             <a th:href="@{/}">ID/PW 찾기</a>
                         </div>
                     </div>
-                    <div class="button-container">
-                        <input class="login-button" value="로그인" type="submit">
-                    </div>
+
+                    <button class="login-button" value="로그인" type="submit">로그인</button>
+
                 </form>
             </div>
             <div class="register-container">

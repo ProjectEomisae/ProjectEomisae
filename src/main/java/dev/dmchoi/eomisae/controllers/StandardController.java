@@ -15,6 +15,7 @@ public abstract class StandardController {
         this.systemService = systemService;
     }
 
+//   StandardController를 상속하는 모든 컨트롤러에서 발생하는, 혹은 그 이하 서비스나 모델에서 아니면 매퍼에서 발생하는 모든 예외는 이제 얘가 다 처리할 것
     @ExceptionHandler(value = Exception.class)
     protected ModelAndView handleException(Exception ex) {
         try {

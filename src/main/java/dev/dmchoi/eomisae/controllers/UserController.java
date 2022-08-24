@@ -1,15 +1,26 @@
 package dev.dmchoi.eomisae.controllers;
 
+import dev.dmchoi.eomisae.entities.member.SessionEntity;
+import dev.dmchoi.eomisae.enums.member.user.LoginResult;
 import dev.dmchoi.eomisae.services.SystemService;
+import dev.dmchoi.eomisae.services.UserService;
+import dev.dmchoi.eomisae.vos.member.user.LoginVo;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import dev.dmchoi.eomisae.services.UserService;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller(value = "dev.dmchoi.eomisae.controllers.UserController")
 @RequestMapping(value = "/user")
@@ -20,6 +31,47 @@ public class UserController extends StandardController{
     protected UserController(SystemService systemService, UserService userService) {
         super(systemService);
         this.userService = userService;
+        this.userService = userService;
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @ResponseBody
+    public String postLogin(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            LoginVo loginVo) {
+        loginVo.setResult(null);
+        this.userService.login(loginVo, request);
+        this.systemService.putActivityLog(request, loginVo);
+        if (loginVo.getResult() == LoginResult.SUCCESS) {
+            if (!loginVo.isAutosign()) {
+                Cookie sessionKeyCookie = new Cookie("loginCookie", loginVo.getSessionEntity().getKey());
+                sessionKeyCookie.setPath("/");
+                response.addCookie(sessionKeyCookie);
+            } else {
+                Cookie sessionKeyCookie = new Cookie("loginCookie", loginVo.getSessionEntity().getKey());
+                sessionKeyCookie.setPath("/");
+                response.addCookie(sessionKeyCookie);
+                Cookie autoLoginCookie = new Cookie("autoLoginCookie", loginVo.getSessionEntity().getKey());
+                autoLoginCookie.setPath("/");
+                response.addCookie(autoLoginCookie);
+            }
+        }
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("result", loginVo.getResult().name().toLowerCase());
+        return responseJson.toString();
+    }
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public ModelAndView getLogout(
+            HttpServletRequest request,
+            ModelAndView modelAndView) {
+        if (request.getAttribute("sessionEntity") instanceof SessionEntity) {
+            SessionEntity sessionEntity = (SessionEntity) request.getAttribute("sessionEntity");
+            this.userService.expireSession(sessionEntity);
+        }
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.GET)
