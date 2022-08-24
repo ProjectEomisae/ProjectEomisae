@@ -1,10 +1,9 @@
 package dev.dmchoi.eomisae.services;
 
-import dev.dmchoi.eomisae.IResult;
+import dev.dmchoi.eomisae.interfaces.IResult;
 import dev.dmchoi.eomisae.entities.system.SystemActivityLogEntity;
 import dev.dmchoi.eomisae.entities.system.SystemBannedIpEntity;
 import dev.dmchoi.eomisae.entities.system.SystemExceptionLogEntity;
-import dev.dmchoi.eomisae.enums.member.user.RegisterResult;
 import dev.dmchoi.eomisae.mappers.ISystemMapper;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -33,7 +32,11 @@ public class SystemService {
             int bannedTimes = this.systemMapper.selectBannedIpCountByIpAll(request.getRemoteAddr()) + 1;
             int banMinutes = (int) (BAN_MINUTES * Math.pow(bannedTimes, bannedTimes));
             if (banMinutes < BAN_MINUTES) {
-                banMinutes = Integer.MAX_VALUE;
+                banMinutes = Integer.MAX_VALUE; // 오버플로우 발생 방지
+//                초범 - 10 * (1 ^ 1) = 10 -> 10분차단
+//                2범 - 10 * (2 ^ 2) = 40 -> 40분차단
+//                3범 - 10 * (3 ^ 3) = 270 -> 270분차단
+//                4범 - 10 * (4 ^ 4) = 2560 -> 2560분차단
             }
             Date currentDate = new Date();
             SystemBannedIpEntity systemBannedIpEntity = SystemBannedIpEntity.build()
@@ -49,6 +52,9 @@ public class SystemService {
         return this.systemMapper.selectBannedIpCountByIp(request.getRemoteAddr()) > 0;
     }
 
+    public void putActivityLog(HttpServletRequest request, IResult<? extends Enum<?>> iResult) {
+        this.putActivityLog(request, iResult, true);
+    }
     public void putActivityLog(HttpServletRequest request, IResult<? extends Enum<?>> iResult, boolean checkPast) {
         Date currentDate = new Date();
         SystemActivityLogEntity systemActivityLogEntity = SystemActivityLogEntity.build()

@@ -1,6 +1,6 @@
 package dev.dmchoi.eomisae.vos.member.user;
 
-import dev.dmchoi.eomisae.IResult;
+import dev.dmchoi.eomisae.interfaces.IResult;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.enums.member.user.RegisterResult;
 

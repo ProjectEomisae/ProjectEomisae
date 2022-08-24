@@ -2,17 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dev.dmchoi.eomisae.mappers.IUserMapper">
+    <insert id="insertSession"
+            parameterType="dev.dmchoi.eomisae.entities.member.SessionEntity">
+        INSERT INTO `eomisae_member`.`sessions`(`created_at`, `updated_at`, `expires_at`, `expired_flag`, `user_index`,
+                                                `key`, `ua`)
+        VALUES (#{createdAt}, #{updatedAt}, #{expiresAt}, #{isExpired}, #{userIndex}, #{key}, #{ua})
+    </insert>
+
+    <select id="selectUser"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        SELECT `index`                   AS `index`,
+               `email`                   AS `email`,
+               `password`                AS `password`,
+               `user_id`                 AS `userId`,
+               `nickname`                AS `nickname`,
+               `point`                   AS `point`,
+               `level`                   AS `level`,
+               `created_at`              AS `createdAt`,
+               `find_password_index`     AS `findPasswordIndex`,
+               `find_password_answer`    AS `findPasswordAnswer`,
+               `terms_agreed_at`         AS `termsAgreedAt`,
+               `mail_received_at`        AS `mailReceivedAt`,
+               `terms_agreed_flag`       AS `isTermsAgreed`,
+               `mail_received_flag`      AS `isMailReceived`,
+               `message_reception_index` AS `messageReceptionIndex`,
+               `email_verified_flag`     AS `isEmailVerified`,
+               `profile_id`              AS `profileId`
+        FROM `eomisae_member`.`users`
+        WHERE `email` = #{email}
+          AND `password` = #{password}
+        LIMIT 1
+    </select>
+
     <insert id="insertUser"
             parameterType="dev.dmchoi.eomisae.entities.member.UserEntity">
         INSERT INTO `eomisae_member`.`users` (`index`, `email`, `password`, `user_id`, `nickname`, `point`, `level`,
                                               `created_at`, `find_password_index`, `find_password_answer`,
-                                              `terms_agreed_at`, `mail_received_at`, `message_reception_index`,
+                                              `terms_agreed_at`, `mail_received_at`, `terms_agreed_flag`,
+                                              `mail_received_flag`, `message_reception_index`,
                                               `email_verified_flag`, `profile_id`)
         VALUES (#{index}, #{email}, #{password}, #{userId}, #{nickname}, #{point}, #{level}, #{createdAt},
-                #{findPasswrodIndex}, #{findPasswrodAnswer}, #{termsAgreedAt}, #{mailReveivedAt},
-                #{messageReceptionIndex}, #{emailVerifiedFlag}, #{profileId})
-
+                #{findPasswordIndex}, #{findPasswordAnswer}, #{termsAgreedAt}, #{mailReceivedAt}, #{isTermsAgreed},
+                #{isMailReceived}, #{messageReceptionIndex}, #{isEmailVerified}, #{profileId})
     </insert>
+
+    <select id="selectUserByIndex"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        SELECT `index`                   AS `index`,
+               `email`                   AS `email`,
+               `password`                AS `password`,
+               `user_id`                 AS `userId`,
+               `nickname`                AS `nickname`,
+               `point`                   AS `point`,
+               `level`                   AS `level`,
+               `created_at`              AS `createdAt`,
+               `find_password_index`     AS `findPasswordIndex`,
+               `find_password_answer`    AS `findPasswordAnswer`,
+               `terms_agreed_at`         AS `termsAgreedAt`,
+               `mail_received_at`        AS `mailReceivedAt`,
+               `terms_agreed_flag`       AS `isTermsAgreed`,
+               `mail_received_flag`      AS `isMailReceived`,
+               `message_reception_index` AS `messageReceptionIndex`,
+               `email_verified_flag`     AS `isEmailVerified`,
+               `profile_id`              AS `profileId`
+        FROM `eomisae_member`.`users`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
 
     <select id="selectUserCountByEmail"
             parameterType="dev.dmchoi.eomisae.entities.member.UserEntity"
@@ -29,5 +86,39 @@
         FROM `eomisae_member`.`users`
         WHERE `nickname` = #{nickname}
     </select>
+
+    <select id="selectSessionByKey"
+            resultType="dev.dmchoi.eomisae.entities.member.SessionEntity">
+        SELECT `created_at`   AS `createdAt`,
+               `updated_at`   AS `updatedAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`,
+               `user_index`   AS `userIndex`,
+               `key`          AS `key`,
+               `ua`           AS `ua`
+        FROM `eomisae_member`.`sessions`
+        WHERE `key` = #{key}
+          AND `expires_at` > NOW()
+          AND `expired_flag` = FALSE
+        LIMIT 1
+    </select>
+
+    <update id="updateSession"
+            parameterType="dev.dmchoi.eomisae.entities.member.SessionEntity">
+        UPDATE `eomisae_member`.`sessions`
+        SET `updated_at`   = #{updatedAt},
+            `expires_at`   = #{expiresAt},
+            `expired_flag` = #{isExpired}
+        WHERE `key` = #{key}
+        LIMIT 1
+    </update>
+
+    <update id="updateSessionExpiredByUserIndex">
+        UPDATE `eomisae_member`.`sessions`
+        SET `expired_flag` = TRUE
+        WHERE `user_index` = #{userIndex}
+          AND `expires_at` > NOW()
+          AND `expired_flag` = FALSE
+    </update>
 
 </mapper>

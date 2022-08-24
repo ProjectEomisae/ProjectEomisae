@@ -1,8 +1,13 @@
 package dev.dmchoi.eomisae.entities.member;
 
-import java.util.Date;
+import dev.dmchoi.eomisae.interfaces.IEntity;
 
-public class UserEntity {
+import java.util.Date;
+import java.util.Objects;
+
+public class UserEntity implements IEntity<UserEntity> {
+    public static final String ATTRIBUTE_NAME = "user";
+
     public static UserEntity build() {
         return new UserEntity();
     }
@@ -19,8 +24,11 @@ public class UserEntity {
     private String findPasswordAnswer;
     private Date termsAgreedAt;
     private Date mailReceivedAt;
+
+    private boolean isTermsAgreed;
+    private boolean isMailReceived;
     private int messageReceptionIndex;
-    private boolean emailVerifiedFlag;
+    private boolean isEmailVerified;
     private String profileId;
 
     public int getIndex() {
@@ -140,12 +148,12 @@ public class UserEntity {
         return this;
     }
 
-    public boolean isEmailVerifiedFlag() {
-        return emailVerifiedFlag;
+    public boolean isEmailVerified() {
+        return isEmailVerified;
     }
 
-    public UserEntity setEmailVerifiedFlag(boolean emailVerifiedFlag) {
-        this.emailVerifiedFlag = emailVerifiedFlag;
+    public UserEntity setEmailVerified(boolean emailVerified) {
+        this.isEmailVerified = emailVerified;
         return this;
     }
 
@@ -156,5 +164,81 @@ public class UserEntity {
     public UserEntity setProfileId(String profileId) {
         this.profileId = profileId;
         return this;
+    }
+
+    public boolean isTermsAgreed() {
+        return isTermsAgreed;
+    }
+
+    public UserEntity setTermsAgreed(boolean termsAgreed) {
+        isTermsAgreed = termsAgreed;
+        return this;
+    }
+
+    public boolean isMailReceived() {
+        return isMailReceived;
+    }
+
+    public UserEntity setMailReceived(boolean mailReceived) {
+        isMailReceived = mailReceived;
+        return this;
+    }
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (!(obj instanceof UserEntity)) {
+            return false;
+        }
+        UserEntity userEntity = (UserEntity) obj;
+        return this.email.equals(userEntity.email);
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(email);
+    }
+
+    @Override
+    public UserEntity clone() {
+        UserEntity userEntity = new UserEntity();
+        userEntity.index = this.index;
+        userEntity.email = this.email;
+        userEntity.password = this.password;
+        userEntity.userId = this.userId;
+        userEntity.nickname = this.nickname;
+        userEntity.point = this.point;
+        userEntity.level = this.level;
+        userEntity.createdAt = (Date) this.createdAt.clone();
+        userEntity.findPasswordIndex = this.findPasswordIndex;
+        userEntity.findPasswordAnswer = this.findPasswordAnswer;
+        userEntity.termsAgreedAt = (Date) this.termsAgreedAt.clone();
+        userEntity.mailReceivedAt = (Date) this.mailReceivedAt.clone();
+        userEntity.isTermsAgreed = this.isTermsAgreed;
+        userEntity.isMailReceived = this.isMailReceived;
+        userEntity.messageReceptionIndex = this.messageReceptionIndex;
+        userEntity.isEmailVerified = this.isEmailVerified;
+        userEntity.profileId = this.profileId;
+        return userEntity;
+    }
+
+    @Override
+    public void copyValuesOf(UserEntity userEntity) {
+        this.index = userEntity.index;
+        this.email = userEntity.email;
+        this.password = userEntity.password;
+        this.userId = userEntity.userId;
+        this.nickname = userEntity.nickname;
+        this.point = userEntity.point;
+        this.level = userEntity.level;
+        this.createdAt = userEntity.createdAt;
+        this.findPasswordIndex = userEntity.findPasswordIndex;
+        this.findPasswordAnswer = userEntity.findPasswordAnswer;
+        this.termsAgreedAt = userEntity.termsAgreedAt;
+        this.mailReceivedAt = userEntity.mailReceivedAt;
+        this.isTermsAgreed = userEntity.isTermsAgreed;
+        this.isMailReceived = userEntity.isMailReceived;
+        this.messageReceptionIndex = userEntity.messageReceptionIndex;
+        this.isEmailVerified = userEntity.isEmailVerified;
+        this.profileId = userEntity.profileId;
     }
 }

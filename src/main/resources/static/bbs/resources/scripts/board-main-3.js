@@ -31,7 +31,7 @@ alignButton.addEventListener('click', () => {
 const userElement = window.document.querySelectorAll('.user');
 userElement.forEach(x => {
     x.querySelector('span').addEventListener('click', () => {
-        Array.from(userElement).filter(el => el !== x).forEach(e => e.querySelector(':scope > .user-info').classList.remove('on'));
+        Array.from(userElement).filter(el => el.querySelector('.user-info') !== x.parentNode.querySelector('.user-info')).forEach(e => e.querySelector('.user-info').classList.remove('on'));
         if(!x.querySelector('.user-info').classList.contains('on')) {
             x.querySelector('.user-info').classList.add('on');
         } else {

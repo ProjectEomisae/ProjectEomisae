@@ -81,7 +81,7 @@
                     </div>
                     <div class="right">
                         <div class="function">
-                            <a class="link" th:href="@{/bbs/ui/boardWrite}">
+                            <a class="link" th:href="@{/}">
                                 쓰기
                             </a>
                             <a class="link search">
@@ -111,12 +111,17 @@
             <div class="comment-container">
                 <form class="write-comment" method="post">
                     <div class="write-box">
-                            <input class="textarea" name="comment" type="text" placeholder="Write Here...">
-                        <div class="tag">
-
+                        <div>
+                            <textarea spellcheck="false">Write Here...
+                            </textarea>
                         </div>
+                        <ul class="tag">
+                            <li>
+                                <input class="lang-tag" type="text" placeholder="태그 : 엔터 또는 쉼표를 사용하여 추가 입력할 수 있습니다.">
+                            </li>
+                        </ul>
                         <div class="option">
-                            <input class="input" type="submit" value="댓글 달기">
+                            <input class="input" type="submit" value="게시">
                         </div>
                     </div>
                 </form>
@@ -125,126 +130,157 @@
                         <div class="top">
                             <div class="user-profile">
                                 <img alt="유저프로필" th:src="@{/resources/images/profile.png}">
-                            </div>
-                            <div class="user">
+                                <div class="user">
                                 <span>
                                     관리자
                                 </span>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">쪽지 보내기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
+                                    <div class="user-info">
+                                        <ul class="user-menu">
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">활동 내역 보기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">쪽지 보내기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">회원 차단</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="divider"></div>
-                                <span class="date">22.08.19</span>
                             </div>
                             <div class="function">
-                                <span class="comment">
-                                    <i class="fa-solid fa-comments"></i>
-                                    <a th:href="@{/}">
-                                        답글
-                                    </a>
+                                <span class="date">
+                                    51분 전
                                 </span>
-                                <a class="like" th:href="@{/}">
-                                    추천
-                                    <span>0</span>
-                                </a>
-                                <button class="menu" type="button">
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </button>
-                                <ul class="menu-list">
-                                    <li class="list">
-                                        <a class="link" th:href="@{/}">
-                                            답글
-                                        </a>
-                                    </li>
-                                    <li class="list">
-                                        <a class="link" th:href="@{/}">
-                                            신고
-                                        </a>
-                                    </li>
-                                </ul>
+                            </div>
+                        </div>
+                        <div class="middle">
+                            <div class="content">
+                                안녕하세요^^
                             </div>
                         </div>
                         <div class="down">
-                            <div class="content">
-                                좋은 정보 감사드립니다. ^^
+                            <div class="like">
+                                <i class="fa fa-heart"></i>
+                                <span>0</span>
                             </div>
+                            <input placeholder="이곳에 댓글을 입력하세요" type="text" maxlength="100">
+                            <button type="submit">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                            <button class="menu" type="button">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="comment">
-                    <div class="user-profile">
-                        <img alt="유저프로필" th:src="@{/resources/images/profile.png}">
-                    </div>
                     <div class="user-content">
                         <div class="top">
-                            <div class="user">
+                            <div class="user-profile">
+                                <img alt="유저프로필" th:src="@{/resources/images/profile.png}">
+                                <div class="user">
                                 <span>
-                                    관리자
+                                    고양이
                                 </span>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">쪽지 보내기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
+                                    <div class="user-info">
+                                        <ul class="user-menu">
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">활동 내역 보기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">쪽지 보내기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">회원 차단</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="divider"></div>
-                                <span class="date">22.08.19</span>
                             </div>
                             <div class="function">
-                                <span class="comment">
-                                    <i class="fa-solid fa-comments"></i>
-                                    <a th:href="@{/}">
-                                        답글
-                                    </a>
+                                <span class="date">
+                                    51분 전
                                 </span>
-                                <a class="like" th:href="@{/}">
-                                    추천
-                                    <span>0</span>
-                                </a>
-                                <button class="menu" type="button">
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </button>
-                                <ul class="menu-list">
-                                    <li class="list">
-                                        <a class="link" th:href="@{/}">
-                                            답글
-                                        </a>
-                                    </li>
-                                    <li class="list">
-                                        <a class="link" th:href="@{/}">
-                                            신고
-                                        </a>
-                                    </li>
-                                </ul>
+                            </div>
+                        </div>
+                        <div class="middle">
+                            <div class="content">
+                                안냐옹
                             </div>
                         </div>
                         <div class="down">
-                            <div class="content">
-                                좋은 정보 감사드립니다. ^^
+                            <div class="like">
+                                <i class="fa fa-heart"></i>
+                                <span>0</span>
                             </div>
+                            <input placeholder="이곳에 댓글을 입력하세요" type="text" maxlength="100">
+                            <button type="submit">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                            <button class="menu" type="button">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment">
+                    <div class="user-content">
+                        <div class="top">
+                            <div class="user-profile">
+                                <img alt="유저프로필" th:src="@{/resources/images/profile.png}">
+                                <div class="user">
+                                <span>
+                                    멍멍이
+                                </span>
+                                    <div class="user-info">
+                                        <ul class="user-menu">
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">활동 내역 보기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">쪽지 보내기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">회원 차단</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="function">
+                                <span class="date">
+                                    51분 전
+                                </span>
+                            </div>
+                        </div>
+                        <div class="middle">
+                            <div class="content">
+                                안멍멍
+                            </div>
+                        </div>
+                        <div class="down">
+                            <div class="like">
+                                <i class="fa fa-heart"></i>
+                                <span>0</span>
+                            </div>
+                            <input placeholder="이곳에 댓글을 입력하세요" type="text" maxlength="100">
+                            <button type="submit">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                            <button class="menu" type="button">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

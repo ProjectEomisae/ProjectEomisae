@@ -23,15 +23,18 @@
             <h1 class="title">회원 정보</h1>
             <dl class="info">
                 <dt class="list"><span class="star">*</span>이메일 주소</dt>
-                <dd class="personal-info">user01@sample.com</dd>
+                <dd class="personal-info"
+                th:text="${user.getEmail()}">user01@sample.com</dd>
             </dl>
             <dl class="info">
                 <dt class="list">아이디</dt>
-                <dd class="personal-info">user01</dd>
+                <dd class="personal-info"
+                th:text="${user.getUserId()}">user01</dd>
             </dl>
             <dl class="info">
                 <dt class="list"><span class="star">*</span>닉네임</dt>
-                <dd class="personal-info">쪼곰아기새</dd>
+                <dd class="personal-info"
+                th:text="${user.getNickname()}">쪼곰아기새</dd>
             </dl>
             <dl class="info">
                 <dt class="list">프로필 사진</dt>
@@ -39,11 +42,13 @@
             </dl>
             <dl class="info">
                 <dt class="list">포인트</dt>
-                <dd class="personal-info">30p</dd>
+                <dd class="personal-info"
+                th:text="${user.getPoint() + 'p'}">30p</dd>
             </dl>
             <dl class="info">
                 <dt class="list">레벨</dt>
-                <dd class="personal-info">Lv.1 (13%) / 17</dd>
+                <dd class="personal-info"
+                th:text="${'Lv.' + user.getLevel() + ' (' + (user.getPoint() * 100) / 3000 + '%) / ' + user.getPoint()}">Lv.1 (13%) / 17</dd>
             </dl>
             <dl class="info">
                 <dt class="list">회원 그룹</dt>
@@ -51,7 +56,8 @@
             </dl>
             <dl class="info">
                 <dt class="list">가입일</dt>
-                <dd class="personal-info">2022-08-01</dd>
+                <dd class="personal-info"
+                th:text="${#dates.format(user.getCreatedAt(), 'yyyy-MM-dd')}">2022-08-01</dd>
             </dl>
             <dl class="info">
                 <dt class="list">최근 로그인</dt>
