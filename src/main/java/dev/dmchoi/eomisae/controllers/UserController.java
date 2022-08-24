@@ -1,16 +1,25 @@
 package dev.dmchoi.eomisae.controllers;
 
 import dev.dmchoi.eomisae.services.SystemService;
+import dev.dmchoi.eomisae.services.UserService;
+import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.MessagingException;
+
 @Controller(value = "dev.dmchoi.eomisae.controllers.UserController")
 @RequestMapping(value = "/user")
 public class UserController extends StandardController{
-    protected UserController(SystemService systemService) {
+    private final UserService userService;
+
+    @Autowired
+    protected UserController(SystemService systemService, UserService userService) {
         super(systemService);
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.GET)
@@ -20,7 +29,11 @@ public class UserController extends StandardController{
     }
 
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.POST)
-    public ModelAndView postMemberSignUpForm(ModelAndView modelAndView) {
+    public ModelAndView postMemberSignUpForm(RegisterVo registerVo, ModelAndView modelAndView) throws MessagingException {
+        registerVo.setEmailVerified(false);
+        registerVo.setResult(null);
+        this.userService.register(registerVo);
+        modelAndView.addObject("registerVo", registerVo);
         modelAndView.setViewName("user/memberSignUpForm");
         return modelAndView;
     }

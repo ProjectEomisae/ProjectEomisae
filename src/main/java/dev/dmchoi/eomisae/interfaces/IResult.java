@@ -1,4 +1,4 @@
-package dev.dmchoi.eomisae;
+package dev.dmchoi.eomisae.interfaces;
 
 public interface IResult<T extends Enum<?>> {
 //    String ATTRIBUTE_NAME = "result"; // public static final
