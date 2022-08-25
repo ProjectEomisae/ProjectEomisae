@@ -549,6 +549,10 @@ body > .header > .login-form > .login-container > .login-header {
     justify-content: space-between;
 }
 
+body > .header > .login-form > .login-container > .login-header > .login-close {
+    cursor: pointer;
+}
+
 body > .header > .login-form > .login-container > .input-container {
     align-items: flex-start;
     display: flex;

@@ -93,6 +93,5 @@ public class UserService {
         loginVo.setSessionEntity(sessionEntity);
         System.out.println(loginVo.getSessionEntity());;
         loginVo.setResult(LoginResult.SUCCESS);
-
     }
 }
