@@ -1,6 +1,7 @@
 package dev.dmchoi.eomisae.mappers;
 
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
+import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,4 +30,13 @@ public interface IUserMapper {
     int updateSessionExpiredByUserIndex(
             @Param(value = "userIndex") int userIndex); // 인덱스로 사용자의 세션을 만료하기 위함.
     // 로그인을 시도하는, 얘가 가진 인덱스 기준으로 세션테이블에 그 인덱스와 동일한 모든 세션키의 expired를 true(만료)로 만드는게 목적. UPDATE
+
+    int insertUserEmailVerificationCode(UserEmailVerificationCodeEntity userEmailVerificationCodeEntity);
+
+//    UserEmailVerificationCodeEntity selectUserEmailVerificationCode(
+//            @Param(value = "code") String code,
+//            @Param(value = "salt") String salt);
+
+//    UserEmailVerificationCodeEntity selectUserByVerificationCode(
+//            @Param(value = "verificationCode") String verificationCode);
 }

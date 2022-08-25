@@ -19,7 +19,7 @@ public class UserEntity implements IEntity<UserEntity> {
     private String nickname;
     private int point;
     private int level;
-    private Date createdAt;
+    private Date createdAt = new Date();
     private int findPasswordIndex;
     private String findPasswordAnswer;
     private Date termsAgreedAt;

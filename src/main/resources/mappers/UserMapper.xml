@@ -35,15 +35,20 @@
     </select>
 
     <insert id="insertUser"
+            useGeneratedKeys="true"
+            keyProperty="index"
+            keyColumn="index"
             parameterType="dev.dmchoi.eomisae.entities.member.UserEntity">
-        INSERT INTO `eomisae_member`.`users` (`index`, `email`, `password`, `user_id`, `nickname`, `point`, `level`,
-                                              `created_at`, `find_password_index`, `find_password_answer`,
-                                              `terms_agreed_at`, `mail_received_at`, `terms_agreed_flag`,
-                                              `mail_received_flag`, `message_reception_index`,
-                                              `email_verified_flag`, `profile_id`)
-        VALUES (#{index}, #{email}, #{password}, #{userId}, #{nickname}, #{point}, #{level}, #{createdAt},
-                #{findPasswordIndex}, #{findPasswordAnswer}, #{termsAgreedAt}, #{mailReceivedAt}, #{isTermsAgreed},
-                #{isMailReceived}, #{messageReceptionIndex}, #{isEmailVerified}, #{profileId})
+        INSERT INTO `eomisae_member`.`users` (`email`, `password`, `user_id`, `nickname`,`created_at`, `find_password_index`, `find_password_answer`, `terms_agreed_at`, `mail_received_at`, `terms_agreed_flag`, `mail_received_flag`, `message_reception_index`, `email_verified_flag`, `profile_id`)
+        VALUES (#{email}, #{password}, #{userId}, #{nickname}, #{createdAt},
+                #{findPasswordIndex}, #{findPasswordAnswer}, #{termsAgreedAt}, #{mailReceivedAt}, #{isTermsAgreed}, #{isMailReceived}, #{messageReceptionIndex}, #{isEmailVerified}, #{profileId})
+    </insert>
+
+    <insert id="insertUserEmailVerificationCode"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity">
+        INSERT INTO `eomisae_member`.`user_email_verification_code`(`created_at`, `expires_at`, `expired_flag`,
+                                                                    `code`, `salt`, `user_index`)
+        VALUES (#{createdAt}, #{expiresAt}, #{isExpired}, #{code}, #{salt}, #{userIndex})
     </insert>
 
     <select id="selectUserByIndex"
