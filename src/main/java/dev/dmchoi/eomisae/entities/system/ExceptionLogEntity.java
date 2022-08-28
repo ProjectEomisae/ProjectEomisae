@@ -2,10 +2,10 @@ package dev.dmchoi.eomisae.entities.system;
 
 import java.util.Date;
 
-public class SystemExceptionLogEntity {
+public class ExceptionLogEntity {
 
-    public static SystemExceptionLogEntity build() {
-        return new SystemExceptionLogEntity();
+    public static ExceptionLogEntity build() {
+        return new ExceptionLogEntity();
     }
     private long index;
     private Date createdAt;
@@ -16,7 +16,7 @@ public class SystemExceptionLogEntity {
         return index;
     }
 
-    public SystemExceptionLogEntity setIndex(long index) {
+    public ExceptionLogEntity setIndex(long index) {
         this.index = index;
         return this;
     }
@@ -25,7 +25,7 @@ public class SystemExceptionLogEntity {
         return createdAt;
     }
 
-    public SystemExceptionLogEntity setCreatedAt(Date createdAt) {
+    public ExceptionLogEntity setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -34,7 +34,7 @@ public class SystemExceptionLogEntity {
         return message;
     }
 
-    public SystemExceptionLogEntity setMessage(String message) {
+    public ExceptionLogEntity setMessage(String message) {
         this.message = message;
         return this;
     }
@@ -43,7 +43,7 @@ public class SystemExceptionLogEntity {
         return stacktrace;
     }
 
-    public SystemExceptionLogEntity setStacktrace(String stacktrace) {
+    public ExceptionLogEntity setStacktrace(String stacktrace) {
         this.stacktrace = stacktrace;
         return this;
     }

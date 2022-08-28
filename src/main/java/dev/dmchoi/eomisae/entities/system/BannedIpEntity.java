@@ -2,10 +2,10 @@ package dev.dmchoi.eomisae.entities.system;
 
 import java.util.Date;
 
-public class SystemBannedIpEntity {
+public class BannedIpEntity {
 
-    public static SystemBannedIpEntity build() {
-        return new SystemBannedIpEntity();
+    public static BannedIpEntity build() {
+        return new BannedIpEntity();
     }
     private long index;
     private Date createdAt;
@@ -17,7 +17,7 @@ public class SystemBannedIpEntity {
         return index;
     }
 
-    public SystemBannedIpEntity setIndex(long index) {
+    public BannedIpEntity setIndex(long index) {
         this.index = index;
         return this;
     }
@@ -26,7 +26,7 @@ public class SystemBannedIpEntity {
         return createdAt;
     }
 
-    public SystemBannedIpEntity setCreatedAt(Date createdAt) {
+    public BannedIpEntity setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -35,7 +35,7 @@ public class SystemBannedIpEntity {
         return expiresAt;
     }
 
-    public SystemBannedIpEntity setExpiresAt(Date expiresAt) {
+    public BannedIpEntity setExpiresAt(Date expiresAt) {
         this.expiresAt = expiresAt;
         return this;
     }
@@ -44,7 +44,7 @@ public class SystemBannedIpEntity {
         return isExpired;
     }
 
-    public SystemBannedIpEntity setExpired(boolean expired) {
+    public BannedIpEntity setExpired(boolean expired) {
         isExpired = expired;
         return this;
     }
@@ -53,7 +53,7 @@ public class SystemBannedIpEntity {
         return ip;
     }
 
-    public SystemBannedIpEntity setIp(String ip) {
+    public BannedIpEntity setIp(String ip) {
         this.ip = ip;
         return this;
     }

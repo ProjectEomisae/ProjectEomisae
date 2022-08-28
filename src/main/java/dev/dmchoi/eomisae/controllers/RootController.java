@@ -16,7 +16,7 @@ public class RootController extends StandardController {
     private final UserService userService;
 
     @Autowired
-    protected RootController(SystemService systemService, UserService userService) {
+    private RootController(SystemService systemService, UserService userService) {
         super(systemService);
         this.userService = userService;
     }

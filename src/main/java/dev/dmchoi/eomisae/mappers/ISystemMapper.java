@@ -1,16 +1,19 @@
 package dev.dmchoi.eomisae.mappers;
 
-import dev.dmchoi.eomisae.entities.system.SystemActivityLogEntity;
-import dev.dmchoi.eomisae.entities.system.SystemBannedIpEntity;
-import dev.dmchoi.eomisae.entities.system.SystemExceptionLogEntity;
+import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
+import dev.dmchoi.eomisae.entities.system.BannedIpEntity;
+import dev.dmchoi.eomisae.entities.system.ExceptionLogEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ISystemMapper {
-    int insertActivityLog(SystemActivityLogEntity systemActivityLogEntity);
-    int insertBannedIp(SystemBannedIpEntity systemBannedIpEntity);
-    int insertExceptionLog(SystemExceptionLogEntity systemExceptionLogEntity);
+
+    int selectActivityCountTotalByUserIndex(
+            @Param(value = "userIndex") int userIndex);
+    int insertActivityLog(ActivityLogEntity activityLogEntity);
+    int insertBannedIp(BannedIpEntity bannedIpEntity);
+    int insertExceptionLog(ExceptionLogEntity exceptionLogEntity);
     int selectBadActivityCountByIp(
             @Param(value = "ip") String ip,
             @Param(value = "lookBackSeconds") int lookBackSeconds);
@@ -18,6 +21,10 @@ public interface ISystemMapper {
             @Param(value = "ip") String ip);
     int selectBannedIpCountByIpAll(
             @Param(value = "ip") String ip);
+    ActivityLogEntity[] selectActivityLog(
+            @Param(value = "userIndex") int userIndex,
+            @Param(value = "count") int count,
+            @Param(value = "offset") int offset);
 
 
 }

@@ -1,8 +1,10 @@
 package dev.dmchoi.eomisae.services;
 
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
+import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
+import dev.dmchoi.eomisae.enums.member.user.RegisterResult;
 import dev.dmchoi.eomisae.mappers.IUserMapper;
 import dev.dmchoi.eomisae.utils.CryptoUtils;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
@@ -144,7 +146,7 @@ public class UserService {
             this.javaMailSender.send(mimeMessage);
             registerVo.setResult(RegisterResult.SUCCESS);
         }
-
+    }
         // 세션 만료(로그아웃)
         public void expireSession (SessionEntity sessionEntity){
             sessionEntity.setExpired(true);
@@ -209,7 +211,6 @@ public class UserService {
             ;
             loginVo.setResult(LoginResult.SUCCESS);
         }
-
     }
 
 

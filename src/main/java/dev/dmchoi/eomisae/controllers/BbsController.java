@@ -1,27 +1,131 @@
 package dev.dmchoi.eomisae.controllers;
 
+import dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto;
+import dev.dmchoi.eomisae.models.PagingModel;
+import dev.dmchoi.eomisae.services.BbsService;
+import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
+import dev.dmchoi.eomisae.vos.bbs.BoardListVoForNo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Optional;
 
 @Controller(value = "dev.dmchoi.eomisae.controllers.BbsController")
 @RequestMapping(value = "/bbs")
 public class BbsController {
+    private final BbsService bbsService;
 
-    //    @RequestMapping(value = "{bid}/detail/{aid}", method = RequestMethod.GET)
-    @RequestMapping(value = "detail", method = RequestMethod.GET)
-    public ModelAndView getArticleDetail(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/detail/detail");
-        return modelAndView;
+    @Autowired
+    public BbsController(BbsService bbsService) {
+        this.bbsService = bbsService;
     }
 
-    //    전체글
-    @RequestMapping(value = "al", method = RequestMethod.GET)
-    public ModelAndView getAl(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/al/al");
+    //    @RequestMapping(value = "{bid}/detail/{aid}", method = RequestMethod.GET)
+//    @RequestMapping(value = "{urlName}", method = RequestMethod.GET)
+//    public ModelAndView getArticleDetail(ModelAndView modelAndView,
+//                                         @PathVariable(value = "urlName", required = true) String urlName,
+//                                         @RequestParam(name = "page") Optional<Integer> optionalPage,
+//                                         BoardListVo boardListVo) {
+//        int page = optionalPage.orElse(1);
+//        int totalRowCount;
+//        boardListVo.setUrlName(urlName);
+//        totalRowCount = this.bbsService.boardTotalCount(boardListVo);
+//        PagingModel paging = new PagingModel(totalRowCount, page);
+//        this.bbsService.listBoard(boardListVo, paging);
+//        modelAndView.addObject("paging", paging);
+//        modelAndView.addObject("boardListVo", boardListVo);
+//        modelAndView.setViewName("bbs/detail/detail");
+//        return modelAndView;
+//    }
+
+    @RequestMapping(value = "{urlName}", method = RequestMethod.GET)
+    public ModelAndView getBoardList(ModelAndView modelAndView,
+                                     @PathVariable(value = "urlName", required = true) String urlName,
+                                     @RequestParam(name = "page") Optional<Integer> optionalPage,
+                                     @RequestParam(name = "criteria", required = false) String criteria,
+                                     @RequestParam(name = "keyword", required = false) String keyword,
+                                     @RequestParam(name = "category", required = false) Optional<Integer> optionalCategory,
+                                     BoardListVo boardListVo,
+                                     BoardListVoForNo boardListVoForNo) {
+        int category = optionalCategory.orElse(0);
+        System.out.println("category 값 : " + category);
+        int page = optionalPage.orElse(1);
+        int totalRowCount;
+        int totalRowCount1;
+        boardListVo.setUrlName(urlName);
+        boardListVo.setResult(null);
+        if (criteria == null || keyword == null) {
+            totalRowCount = this.bbsService.boardTotalCount(boardListVo);
+        } else {
+            if (criteria.equals("title-content")) {
+                totalRowCount = this.bbsService.getCountByTitleContent(boardListVo, keyword);
+            } else if (criteria.equals("title")) {
+                totalRowCount = this.bbsService.getCountByTitle(boardListVo, keyword);
+            } else if (criteria.equals("content")) {
+                totalRowCount = this.bbsService.getCountByContent(boardListVo, keyword);
+            } else if (criteria.equals("comment")) {
+                totalRowCount = this.bbsService.getCountByComment(boardListVo, keyword);
+            } else if (criteria.equals("nickname")) {
+                totalRowCount = this.bbsService.getCountByNickname(boardListVo, keyword);
+            } else {
+                totalRowCount = this.bbsService.boardTotalCount(boardListVo);
+            }
+        }
+        PagingModel paging = new PagingModel(totalRowCount, page);
+        if (criteria == null || keyword == null) {
+            this.bbsService.listBoard(boardListVo, paging);
+        } else {
+            if (criteria.equals("title-content")) {
+                this.bbsService.searchByTitleContent(boardListVo, keyword, paging);
+            } else if (criteria.equals("title")) {
+                this.bbsService.searchByTitle(boardListVo, keyword, paging);
+            } else if (criteria.equals("content")) {
+                this.bbsService.searchByContent(boardListVo, keyword, paging);
+            } else if (criteria.equals("comment")) {
+                this.bbsService.searchByComment(boardListVo, keyword, paging);
+            } else if (criteria.equals("nickname")) {
+                this.bbsService.searchByNickname(boardListVo, keyword, paging);
+            } else {
+                this.bbsService.listBoard(boardListVo, paging);
+            }
+        }
+        if (category > 0) {
+            totalRowCount1 = this.bbsService.boardTotalCountByCategory(boardListVo, category);
+            paging = new PagingModel(totalRowCount1, page);
+            System.out.println(paging.totalRowCount);
+            this.bbsService.listBoardByCategory(boardListVo, paging, category);
+        }
+        System.out.println(category);
+        for (BoardListArticleDto article : boardListVo.getArticles()) {
+            System.out.println(article.getCategoryIndex());
+        }
+//            System.out.println(boardListVo.getArticles().size());
+
+//            List<BoardListArticleDto> boardListArticleDtoList = boardListVo.getArticles();
+//            boardListArticleDtoList = boardListArticleDtoList.stream().filter(x -> x.getCategoryIndex() == category).collect(Collectors.toList());
+//            boardListVo.setArticles(boardListArticleDtoList);
+//            System.out.println("boardListVo.getArticles() 값 " + boardListVo.getArticles().size());
+//            System.out.print(boardListVo.getArticles().size());
+//            System.out.println("boardListVo.getArticles() 값 " + boardListVo.getArticles().size());
+//            for (BoardListArticleDto article : boardListVo.getArticles()) {
+//                System.out.print(article.getIndex() + " ");
+//                System.out.print(article.getCategoryIndex() + " ");
+//            }
+        List<BoardListArticleDto> boardListVoForNoList = this.bbsService.getArticlesForNo();
+        boardListVoForNo.setArticles(boardListVoForNoList);
+        modelAndView.addObject("paging", paging);
+        modelAndView.addObject("boardListVo", boardListVo);
+        modelAndView.addObject("boardListVoForNo", boardListVoForNo);
+        modelAndView.addObject("categoryEntities", this.bbsService.getCategories());
+        modelAndView.addObject("title", boardListVo.getName());
+        modelAndView.addObject("nonImageMain", "bbs/fragments/non-image-main");
+        modelAndView.setViewName("bbs/board");
         return modelAndView;
     }
 
@@ -86,22 +190,9 @@ public class BbsController {
         return modelAndView;
     }
 
-    //   커뮤니티
-    @RequestMapping(value = "fe", method = RequestMethod.GET)
-    public ModelAndView getFe(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/fe/fe");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "fe/boardWrite", method = RequestMethod.GET)
     public ModelAndView getFeBoardWrite(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/fe/boardWrite-fe");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "fh", method = RequestMethod.GET)
-    public ModelAndView getFh(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/fh/fh");
         return modelAndView;
     }
 
@@ -111,21 +202,9 @@ public class BbsController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "qa", method = RequestMethod.GET)
-    public ModelAndView getQa(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/qa/qa");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "qa/boardWrite", method = RequestMethod.GET)
     public ModelAndView getQaBoardWrite(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/qa/boardWrite-qa");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "chc", method = RequestMethod.GET)
-    public ModelAndView getChc(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/chc/chc");
         return modelAndView;
     }
 
@@ -135,17 +214,12 @@ public class BbsController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "jp", method = RequestMethod.GET)
-    public ModelAndView getJp(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/jp/jp");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "jp/boardWrite", method = RequestMethod.GET)
     public ModelAndView getJpBoardWrite(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/jp/boardWrite-jp");
         return modelAndView;
     }
+
     @RequestMapping(value = "ui", method = RequestMethod.GET)
     public ModelAndView getUi(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/ui/ui");
@@ -282,29 +356,21 @@ public class BbsController {
         return modelAndView;
     }
 
-//  운영관리
-
-    @RequestMapping(value = "no", method = RequestMethod.GET)
-    public ModelAndView getNo(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/no/no");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "no/boardWrite", method = RequestMethod.GET)
     public ModelAndView getNoBoardWrite(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/no/boardWrite-no");
         return modelAndView;
     }
 
-    @RequestMapping(value = "ev", method = RequestMethod.GET)
-    public ModelAndView getEv(ModelAndView modelAndView) {
-        modelAndView.setViewName("bbs/ev/ev");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "ev/boardWrite", method = RequestMethod.GET)
     public ModelAndView getEvBoardWrite(ModelAndView modelAndView) {
         modelAndView.setViewName("bbs/ev/boardWrite-ev");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/ms", method = RequestMethod.GET)
+    public ModelAndView getMs(ModelAndView modelAndView) {
+        modelAndView.setViewName("bbs/ms/ms");
         return modelAndView;
     }
 

@@ -29,7 +29,7 @@
         window.location.href = '/';
     </script>
 </head>
-<body>
+<body th:if="${user == null}">
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <main class="main" id="main">
     <form class="register-form" method="post">

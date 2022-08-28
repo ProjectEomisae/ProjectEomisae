@@ -7,16 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>자유게시판 - 어미새</title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
-    <link th:href="@{/bbs/resources/stylesheets/board-main-5.css}" rel="stylesheet">
+    <link th:href="@{/bbs/resources/stylesheets/non-image-main.css}" rel="stylesheet">
     <link th:href="@{/bbs/resources/stylesheets/common.css}" rel="stylesheet">
-    <script defer th:src="@{/bbs/resources/scripts/board-main-3.js}"></script>
+    <script defer th:src="@{/bbs/resources/scripts/non-image-main.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
-<body>
+<body th:with="criteria=${#request.getParameter('criteria')}, keyword=${#request.getParameter('keyword')}">
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
-<main id="main">
+<main id="main" th:with="isSearch = ${criteria != null && keyword != null}">
     <div class="nav-container">
         <div class="nav-menu">
             <ul class="list">
@@ -145,15 +145,19 @@
             <div class="search-container">
                 <form class="search-form" method="get">
                     <select class="criteria" name="criteria">
-                        <option value="title-content">제목+내용</option>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                        <option value="comment">댓글</option>
-                        <option value="nickname">닉네임</option>
-                        <option value="tag">태그</option>
-                        <option value="link">링크</option>
+                        <span hidden>검색 기준</span>
+                        <option value="title-content" th:selected="${criteria == null || !criteria.equals('title-content')}">제목+내용</option>
+                        <option value="title" th:selected="${criteria != null && criteria.equals('title')}">제목</option>
+                        <option value="content" th:selected="${criteria != null && criteria.equals('content')}">내용</option>
+                        <option value="comment" th:selected="${criteria != null && criteria.equals('comment')}">댓글</option>
+                        <option value="nickname" th:selected="${criteria != null && criteria.equals('nickname')}">닉네임</option>
+                        <option value="tag" th:selected="${criteria != null && criteria.equals('tag')}">태그</option>
+                        <option value="link" th:selected="${criteria != null && criteria.equals('link')}">링크</option>
                     </select>
-                    <input class="keyword" type="text" name="keyword" placeholder="검색어를 입력하세요.">
+                    <label>
+                        <span hidden class="hint">검색어</span>
+                        <input class="keyword" type="text" th:value="${keyword}" name="keyword" placeholder="검색어를 입력하세요.">
+                    </label>
                 </form>
             </div>
             <div class="article-container">
@@ -167,7 +171,7 @@
                             <th class="date">날짜</th>
                             <th class="view">조회 수</th>
                             <th class="like">
-                            <span>추천 수</span>
+                                <span>추천 수</span>
                             </th>
                         </tr>
                         </thead>
@@ -186,7 +190,8 @@
                             </td>
                             <td class="user">
                                 <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
+                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
+                                         alt="profile" title="어미새">
                                     <span>어미새어미새어미새</span>
                                 </div>
                                 <div class="user-info">
@@ -221,7 +226,8 @@
                             </td>
                             <td class="user">
                                 <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
+                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
+                                         alt="profile" title="어미새">
                                     <span>어미새</span>
                                 </div>
                                 <div class="user-info">
@@ -257,7 +263,8 @@
                             </td>
                             <td class="user">
                                 <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
+                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
+                                         alt="profile" title="어미새">
                                     <span>어미새</span>
                                 </div>
                                 <div class="user-info">
@@ -292,7 +299,8 @@
                             </td>
                             <td class="user">
                                 <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
+                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
+                                         alt="profile" title="어미새">
                                     <span>어미새</span>
                                 </div>
                                 <div class="user-info">
@@ -327,7 +335,8 @@
                             </td>
                             <td class="user">
                                 <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
+                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
+                                         alt="profile" title="어미새">
                                     <span>어미새</span>
                                 </div>
                                 <div class="user-info">
@@ -348,16 +357,21 @@
                             <td>152910</td>
                             <td>20</td>
                         </tr>
-                        <tr class="user">
+                        <tr th:if="${boardListVo.getArticles().size() == 0}"> <!-- 조건하에 표시되는 요소 -->
+                            <td colspan="5" style="padding: 20px 0; text-align: center;">표시할 게시글이 없습니다.</td>
+                        </tr>
+                        <tr class="user"
+                            th:each="article : ${boardListVo.getArticles()}" th:object="${article}">
                             <td>
-                                <span>171585</span>
+                                <span th:text="${article.getIndex()}">171585</span>
                             </td>
                             <td class="title">
                                 <span>
                                 <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
+                                <a th:href="@{/}" th:text="${article.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
+                                    (21.11.29추가)세일정보 게시판 규정
                                     (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
+                                <a class="comments" th:href="@{/}" th:text="${article.getCommentCount()}">137</a>
                                 <span class="extra-images">
                                     <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
                                 <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
@@ -365,8 +379,9 @@
                             </td>
                             <td class="user">
                                 <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
+                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
+                                         alt="profile" title="어미새">
+                                    <span th:text="${article.getUserNickname()}">어미새</span>
                                 </div>
                                 <div class="user-info">
                                     <ul class="user-menu">
@@ -382,850 +397,9 @@
                                     </ul>
                                 </div>
                             </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="no-comment">
-                            <td colspan="6">
-                                답변을 받지 못한 질문 글입니다.
-                            </td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">질문 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">질문 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
-                        </tr>
-                        <tr class="user">
-                            <td>
-                                <span>171585</span>
-                            </td>
-                            <td class="title">
-                                <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">질문 </span>
-                                <a th:href="@{/}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
-                                    (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
-                            </span>
-                            </td>
-                            <td class="user">
-                                <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311" alt="profile" title="어미새">
-                                    <span>어미새</span>
-                                </div>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">Lv.14 (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>08.19</td>
-                            <td>152910</td>
-                            <td>20</td>
+                            <td th:text="${#dates.format(article.getWrittenAt(), 'MM.dd')}"></td>
+                            <td th:text="${article.getView()}">152910</td>
+                            <td th:text="${article.getLike()}">20</td>
                         </tr>
                         </tbody>
                     </table>
@@ -1234,24 +408,83 @@
             <div class="empty-container down">
                 <span></span>
             </div>
-            <div class="page-container">
-                <div class="page-section">
-                    <a th:href="@{/}">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </a>
-                    <a th:href="@{/}">1</a>
-                    <span>-</span>
-                    <th:block th:href="@{/}">
-                        <a th:href="@{/}">1</a>
-                        <a th:href="@{/}">2</a>
-                    </th:block>
-                    <span>-</span>
-                    <a th:href="@{/}">20</a>
-                    <a th:href="@{/}">
-                        <i class="fa-solid fa-angle-right"></i>
-                    </a>
-                </div>
-            </div>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="page-container">
+                            <div class="page-section" th:if="${!isSearch}">
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.requestPage - 1})}"
+                                   th:if="${paging.minPage < paging.requestPage}">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </a>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.minPage})}"
+                                   th:text="${paging.minPage}"
+                                   th:if="${paging.requestPage > 7}">
+                                </a>
+                                <span th:if="${paging.requestPage > 7}">-</span>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${page})}"
+                                   th:each="page : ${#numbers.sequence(paging.boundStartPage, paging.requestPage - 1)}"
+                                   th:text="${page}"
+                                   th:if="${paging.requestPage > paging.boundStartPage}">
+                                </a>
+                                <a th:text="${paging.requestPage}"
+                                   th:classappend="${paging.requestPage} ? 'selected'">
+                                </a>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${page})}"
+                                   th:each="page : ${#numbers.sequence(paging.requestPage + 1, paging.boundEndPage - 1)}"
+                                   th:text="${page}"
+                                   th:if="${paging.requestPage < paging.boundEndPage}">
+                                </a>
+                                <span th:if="${paging.requestPage != paging.maxPage}">-</span>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.maxPage})}"
+                                   th:text="${paging.maxPage}"
+                                   th:if="${paging.requestPage != paging.maxPage}">
+                                </a>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.requestPage + 1})}"
+                                   th:if="${paging.maxPage > paging.requestPage}">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </div>
+
+                            <div class="page-section" th:if="${isSearch}">
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.requestPage - 1}, criteria = ${criteria}, keyword = ${keyword})}"
+                                   th:if="${paging.minPage < paging.requestPage}">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </a>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.minPage}, criteria = ${criteria}, keyword = ${keyword})}"
+                                   th:text="${paging.minPage}"
+                                   th:if="${paging.requestPage > 7}">
+                                </a>
+                                <span th:if="${paging.requestPage > 7}">-</span>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${page}, criteria = ${criteria}, keyword = ${keyword})}"
+                                   th:each="page : ${#numbers.sequence(paging.boundStartPage, paging.requestPage - 1)}"
+                                   th:text="${page}"
+                                   th:if="${paging.requestPage > paging.boundStartPage}">
+                                </a>
+                                <a th:text="${paging.requestPage}"
+                                   th:classappend="${paging.requestPage} ? 'selected'">
+                                </a>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${page}, criteria = ${criteria}, keyword = ${keyword})}"
+                                   th:each="page : ${#numbers.sequence(paging.requestPage + 1, paging.boundEndPage - 1)}"
+                                   th:text="${page}"
+                                   th:if="${paging.requestPage < paging.boundEndPage}">
+                                </a>
+                                <span th:if="${paging.requestPage != paging.maxPage}">-</span>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.maxPage}, criteria = ${criteria}, keyword = ${keyword})}"
+                                   th:text="${paging.maxPage}"
+                                   th:if="${paging.requestPage != paging.maxPage}">
+                                </a>
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.requestPage + 1}, criteria = ${criteria}, keyword = ${keyword})}"
+                                   th:if="${paging.maxPage > paging.requestPage}">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </section>
         <th:block th:replace="~{bbs/fragments/side-section.html :: side-section}"></th:block>
     </div>

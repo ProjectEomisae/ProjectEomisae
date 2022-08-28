@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--/*@thymesVar id="equals" type="java.lang.String"*/-->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${title + ' - 어미새'}"></title>
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <link th:href="@{/bbs/resources/stylesheets/non-image-main.css}" rel="stylesheet">
+    <link th:href="@{/bbs/resources/stylesheets/common.css}" rel="stylesheet">
+    <script defer th:src="@{/bbs/resources/scripts/non-image-main.js}"></script>
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+</head>
+<body th:with="criteria=${#request.getParameter('criteria')}, keyword=${#request.getParameter('keyword')}, category=${#request.getParameter('category')}">
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main th:include="~{'/' + ${nonImageMain}}"></main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

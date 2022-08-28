@@ -2,12 +2,13 @@ package dev.dmchoi.eomisae.entities.system;
 
 import java.util.Date;
 
-public class SystemActivityLogEntity {
+public class ActivityLogEntity {
 
-    public static SystemActivityLogEntity build() {
-        return new SystemActivityLogEntity();
+    public static ActivityLogEntity build() {
+        return new ActivityLogEntity();
     }
     private long index;
+    private int userIndex;
     private Date createdAt;
     private String clientIp;
     private String clientUa;
@@ -18,8 +19,17 @@ public class SystemActivityLogEntity {
         return index;
     }
 
-    public SystemActivityLogEntity setIndex(long index) {
+    public ActivityLogEntity setIndex(long index) {
         this.index = index;
+        return this;
+    }
+
+    public int getUserIndex() {
+        return userIndex;
+    }
+
+    public ActivityLogEntity setUserIndex(int userIndex) {
+        this.userIndex = userIndex;
         return this;
     }
 
@@ -27,7 +37,7 @@ public class SystemActivityLogEntity {
         return createdAt;
     }
 
-    public SystemActivityLogEntity setCreatedAt(Date createdAt) {
+    public ActivityLogEntity setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -36,7 +46,7 @@ public class SystemActivityLogEntity {
         return clientIp;
     }
 
-    public SystemActivityLogEntity setClientIp(String clientIp) {
+    public ActivityLogEntity setClientIp(String clientIp) {
         this.clientIp = clientIp;
         return this;
     }
@@ -45,7 +55,7 @@ public class SystemActivityLogEntity {
         return clientUa;
     }
 
-    public SystemActivityLogEntity setClientUa(String clientUa) {
+    public ActivityLogEntity setClientUa(String clientUa) {
         this.clientUa = clientUa;
         return this;
     }
@@ -54,7 +64,7 @@ public class SystemActivityLogEntity {
         return requestUri;
     }
 
-    public SystemActivityLogEntity setRequestUri(String requestUri) {
+    public ActivityLogEntity setRequestUri(String requestUri) {
         this.requestUri = requestUri;
         return this;
     }
@@ -63,7 +73,7 @@ public class SystemActivityLogEntity {
         return result;
     }
 
-    public SystemActivityLogEntity setResult(String result) {
+    public ActivityLogEntity setResult(String result) {
         this.result = result;
         return this;
     }

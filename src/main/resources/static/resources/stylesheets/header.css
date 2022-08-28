@@ -403,7 +403,7 @@ body > .header > .header-container > .top-bar > .top-container > .form-container
     font-size: 0.675rem;
 }
 
-body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > ul li:not(:last-child) {
+body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > ul li:not(:last-child) > a {
     padding: 10px 15px;
     color: #25282b;
     font-size: 0.875rem;
@@ -413,7 +413,7 @@ body > .header > .header-container > .top-bar > .top-container > .form-container
     justify-content: flex-start;
 }
 
-body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > ul li:last-child {
+body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > ul li:last-child > a {
     padding: 10px 15px;
     color: #25282b;
     font-size: 0.875rem;
@@ -434,7 +434,6 @@ body > .header > .header-container > .top-bar > .top-container > .form-container
 }
 
 body > .header > .header-container > .top-bar > .top-container > .form-container > .login-only > .user-info-container > .menu-box > ul li:last-child {
-    padding: 0.675rem;
     text-align: center;
     color: #868e96;
     background-color: #f9f9fa;

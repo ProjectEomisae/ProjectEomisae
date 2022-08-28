@@ -4,12 +4,16 @@ const categoryElement = window.document.querySelector('.category');
 const categoryButton = categoryElement.querySelector('.link');
 categoryButton.addEventListener('click', () => {
     alignElement.querySelector('.align-list').classList.remove('on');
-    if(!categoryElement.querySelector('.category-list').classList.contains('on')) {
+    if (!categoryElement.querySelector('.category-list').classList.contains('on')) {
         categoryElement.querySelector('.category-list').classList.add('on');
     } else {
         categoryElement.querySelector('.category-list').classList.remove('on');
-    };
+    }
+    ;
 });
+// if (categoryElement.querySelector('.link').className.includes(1)) {
+//     categoryElement.querySelector('.link').innerText = '잡담';
+// }
 
 // window.document.querySelector('#main').addEventListener('click', () => {
 //     if(categoryElement.querySelector('.category-list').classList.contains('on')) {
@@ -21,22 +25,24 @@ const alignElement = window.document.querySelector('.align');
 const alignButton = alignElement.querySelector('.link');
 alignButton.addEventListener('click', () => {
     categoryElement.querySelector('.category-list').classList.remove('on');
-    if(!alignElement.querySelector('.align-list').classList.contains('on')) {
+    if (!alignElement.querySelector('.align-list').classList.contains('on')) {
         alignElement.querySelector('.align-list').classList.add('on');
     } else {
         alignElement.querySelector('.align-list').classList.remove('on');
-    };
+    }
+    ;
 });
 
 const userElement = window.document.querySelectorAll('.user');
 userElement.forEach(x => {
     x.querySelector('span').addEventListener('click', () => {
-        Array.from(userElement).filter(el => el.querySelector('.user-info') !== x.parentNode.querySelector('.user-info')).forEach(e => e.querySelector('.user-info').classList.remove('on'));
-        if(!x.querySelector('.user-info').classList.contains('on')) {
+        Array.from(userElement).filter(el => el.querySelector('.user-info') !== x.querySelector('.user-info')).forEach(e => e.classList.remove('on'));
+        if (!x.querySelector('.user-info').classList.contains('on')) {
             x.querySelector('.user-info').classList.add('on');
         } else {
             x.querySelector('.user-info').classList.remove('on');
-        };
+        }
+        ;
         const main = window.document.getElementById('mainContainer');
 //Hide modal
         window.addEventListener('mouseup', (e) => {
@@ -57,9 +63,14 @@ userElement.forEach(x => {
 const searchElement = window.document.querySelector('.search-container');
 const searchButton = window.document.querySelector('.link.search');
 searchButton.addEventListener('click', () => {
-    if(!searchElement.classList.contains('on')) {
+    if (!searchElement.classList.contains('on')) {
         searchElement.classList.add('on');
     } else {
         searchElement.classList.remove('on');
-    };
+    }
+    ;
 });
+if (searchElement.querySelector('.keyword').value !== '') {
+    searchElement.classList.add('on');
+}
+

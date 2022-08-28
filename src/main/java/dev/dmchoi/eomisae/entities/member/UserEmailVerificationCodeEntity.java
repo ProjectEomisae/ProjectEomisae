@@ -1,8 +1,10 @@
 package dev.dmchoi.eomisae.entities.member;
 
+import dev.dmchoi.eomisae.interfaces.IEntity;
+
 import java.util.Date;
 
-public class UserEmailVerificationCodeEntity {
+public class UserEmailVerificationCodeEntity implements IEntity<UserEmailVerificationCodeEntity> {
 
     public static UserEmailVerificationCodeEntity build() {
         return new UserEmailVerificationCodeEntity();
@@ -76,5 +78,29 @@ public class UserEmailVerificationCodeEntity {
     public UserEmailVerificationCodeEntity setUserIndex(int userIndex) {
         this.userIndex = userIndex;
         return this;
+    }
+
+    @Override
+    public UserEmailVerificationCodeEntity clone() {
+        UserEmailVerificationCodeEntity userEmailVerificationCodeEntity = new UserEmailVerificationCodeEntity();
+        userEmailVerificationCodeEntity.index = this.index;
+        userEmailVerificationCodeEntity.createdAt = this.createdAt;
+        userEmailVerificationCodeEntity.expiresAt = this.expiresAt;
+        userEmailVerificationCodeEntity.isExpired = this.isExpired;
+        userEmailVerificationCodeEntity.code = this.code;
+        userEmailVerificationCodeEntity.salt = this.salt;
+        userEmailVerificationCodeEntity.userIndex = this.userIndex;
+        return userEmailVerificationCodeEntity;
+    }
+
+    @Override
+    public void copyValuesOf(UserEmailVerificationCodeEntity userEmailVerificationCodeEntity) {
+        this.index = userEmailVerificationCodeEntity.index;
+        this.createdAt = userEmailVerificationCodeEntity.createdAt;
+        this.expiresAt = userEmailVerificationCodeEntity.expiresAt;
+        this.isExpired = userEmailVerificationCodeEntity.isExpired;
+        this.code = userEmailVerificationCodeEntity.code;
+        this.salt = userEmailVerificationCodeEntity.salt;
+        this.userIndex = userEmailVerificationCodeEntity.userIndex;
     }
 }

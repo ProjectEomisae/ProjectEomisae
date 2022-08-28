@@ -2,10 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dev.dmchoi.eomisae.mappers.ISystemMapper">
+    <select id="selectActivityCountTotalByUserIndex"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_system`.`activity_logs`
+        WHERE `user_index` = #{userIndex}
+    </select>
+
     <insert id="insertActivityLog"
-            parameterType="dev.dmchoi.eomisae.entities.system.SystemActivityLogEntity">
-        INSERT INTO `eomisae_system`.`activity_logs`(`created_at`, `client_ip`, `client_ua`, `request_uri`, `result`)
-        VALUES (#{createdAt},
+            parameterType="dev.dmchoi.eomisae.entities.system.ActivityLogEntity">
+        INSERT INTO `eomisae_system`.`activity_logs`(`user_index`, `created_at`, `client_ip`, `client_ua`,
+                                                     `request_uri`, `result`)
+        VALUES (#{userIndex},
+                #{createdAt},
                 #{clientIp},
                 SUBSTRING(#{clientUa}, 1, 500),
                 SUBSTRING(#{requestUri}, 1, 500),
@@ -13,18 +22,35 @@
     </insert>
 
     <insert id="insertBannedIp"
-            parameterType="dev.dmchoi.eomisae.entities.system.SystemBannedIpEntity">
+            parameterType="dev.dmchoi.eomisae.entities.system.BannedIpEntity">
         INSERT INTO `eomisae_system`.`banned_ips`(created_at, expires_at, expired_flag, ip)
         VALUES (#{createdAt}, #{expiresAt}, #{isExpired}, #{ip})
     </insert>
 
     <insert id="insertExceptionLog"
-            parameterType="dev.dmchoi.eomisae.entities.system.SystemExceptionLogEntity">
+            parameterType="dev.dmchoi.eomisae.entities.system.ExceptionLogEntity">
         INSERT INTO `eomisae_system`.`exception_logs`(created_at, message, stacktrace)
         VALUES (#{createdAt},
                 SUBSTRING(#{message}, 1, 1000),
                 SUBSTRING(#{stacktrace}, 1, 10000))
     </insert>
+
+    <select id="selectActivityLog"
+            resultType="dev.dmchoi.eomisae.entities.system.ActivityLogEntity">
+        select `index`       AS `index`,
+               `user_index`  AS `userIndex`,
+               `created_at`  AS `createdAt`,
+               `client_ip`   AS `clientIp`,
+               `client_ua`   AS `clientUa`,
+               `request_uri` AS `requestUri`,
+               `result`      AS `result`
+        FROM `eomisae_system`.`activity_logs`
+        WHERE `user_index` = #{userIndex}
+        GROUP BY `index`
+        ORDER BY `index` DESC
+        LIMIT #{count} OFFSET #{offset}
+
+    </select>
 
     <select id="selectBadActivityCountByIp"
             resultType="_int">
