@@ -7,7 +7,7 @@ th:each="articleForNo : ${boardListVoForNo.getArticles()}">
         <span>공지</span>
     </td>
     <td class="title">
-        <a th:href="@{/}" th:text="${articleForNo.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
+        <a th:href="@{'/bbs/' + ${boardListVoForNo.getUrlName()} + '/'+ ${articleForNo.getIndex()}}" th:text="${articleForNo.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
             (21.11.29추가)</a>
         <a class="comments" th:href="@{/}" th:text="${articleForNo.getCommentCount()}">137</a>
         <span class="extra-images">

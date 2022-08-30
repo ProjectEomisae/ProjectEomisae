@@ -264,17 +264,18 @@
                             <td th:text="${article.getView()}">152910</td>
                             <td th:text="${article.getLike()}">20</td>
                         </tr>
-                        <tr class="no-comment" th:if="${paging.requestPage == 1}">
+                        <tr class="no-comment" th:if="${paging.requestPage == 1 && (boardListVo.getUrlName.contains('al') || boardListVo.getUrlName.contains('fe'))}">
                             <td colspan="6">
                                 답변을 받지 못한 질문 글입니다.
                             </td>
                         </tr>
-                        <tr th:if="${boardListVo.getArticles().size() == 0}"> <!-- 조건하에 표시되는 요소 -->
+                        <tr th:if="${boardListVo.getArticles().size() == 0 && (boardListVo.getUrlName.contains('al') || boardListVo.getUrlName.contains('fe'))}"> <!-- 조건하에 표시되는 요소 -->
                             <td colspan="6" style="padding: 20px 0; text-align: center;">표시할 게시글이 없습니다.</td>
                         </tr>
                         <!--/*@thymesVar id="article" type="dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto"*/-->
                         <tr class="user" th:each="article, index : ${boardListVo.getArticles()}"
-                        th:if="${article.getCommentCount() == 0 && index.index < 3 + (article.getCommentCount() != 0 ? 0 : 3) && paging.requestPage == 1}" th:with="num=${1}">
+                        th:if="${article.getCommentCount() == 0 && index.index < 3 + (article.getCommentCount() != 0 ? 0 : 3) && paging.requestPage == 1 && (boardListVo.getUrlName.contains('al') || boardListVo.getUrlName.contains('fe'))}"
+                            th:with="num=${1}">
                             <td>
                                 <span th:text="${article.getIndex()}">171585</span>
                             </td>

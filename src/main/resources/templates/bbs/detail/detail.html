@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title th:text="${boardListVo.getName() + ' - 어미새'}"></title>
+    <title th:text="${articleReadVo.getTitle() + ' - ' + boardListVo.getName() + ' - 어미새'}"></title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <!--    <link th:href="@{/bbs/resources/stylesheets/board-main-1.css}" rel="stylesheet">-->
     <link th:href="@{/bbs/resources/stylesheets/detail.css}" rel="stylesheet">
