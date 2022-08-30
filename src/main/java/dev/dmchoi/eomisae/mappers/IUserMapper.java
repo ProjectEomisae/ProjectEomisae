@@ -1,17 +1,19 @@
 package dev.dmchoi.eomisae.mappers;
 
+import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.context.annotation.Profile;
 
 @Mapper
 public interface IUserMapper {
     int insertSession(SessionEntity sessionEntity); // 세션 INSERT
 
     UserEntity selectUserByIndex(
-            @Param(value = "index") int index); // email로 유저 SELECT
+            @Param(value = "index") int index); // index로 유저 SELECT
     UserEntity selectUser(
             @Param(value = "email") String email,
             @Param(value = "password") String password);
@@ -19,16 +21,19 @@ public interface IUserMapper {
 
     int selectUserCountByNickname(String nickname);
 
+    int selectUserCountById(String userId);
+
     int insertUser(UserEntity user);
     int insertUserEmailVerificationCode(UserEmailVerificationCodeEntity userEmailVerificationCodeEntity);
 
-//    UserEmailVerificationCodeEntity selectUserEmailVerificationCode(
-//            @Param(value = "code") String code,
-//            @Param(value = "salt") String salt);
+    int insertProfileImage(ProfileImageEntity profileImageEntity);
 
-//    UserEmailVerificationCodeEntity selectUserByVerificationCode(
-//            @Param(value = "verificationCode") String verificationCode);
+    UserEmailVerificationCodeEntity selectUserEmailVerificationCode(
+            @Param(value = "code") String code,
+            @Param(value = "salt") String salt);
+    int updateUser(UserEntity user);
 
+    int updateUserEmailVerificationCode(UserEmailVerificationCodeEntity userEmailVerificationCodeEntity);
     SessionEntity selectSessionByKey(
             @Param(value = "key") String key); // 유효한 세션을 가져올 것. SELECT
 

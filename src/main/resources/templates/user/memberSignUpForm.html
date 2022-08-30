@@ -10,6 +10,7 @@
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script defer th:src="@{/user/resources/scripts/memberSignUpForm.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
     <script th:if="${registerVo != null && registerVo.getResult().name().equals('FAILURE_DUPLICATE_EMAIL')}">
@@ -32,9 +33,15 @@
 <body>
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <main class="main" id="main">
-    <form class="register-form" method="post">
+    <form class="register-form" method="post" id="registerForm" enctype="multipart/form-data"
+    th:action="@{/user/memberSignUpForm}">
         <section class="register">
             <h1 class="title">회원가입</h1>
+            <div class="hidden-warning">
+                <div class="warning-container">
+                    <span class="warning">닉네임의 값이 한글(2-5), 영문 또는 숫자(4-10) 에 맞지 않습니다.</span>
+                </div>
+            </div>
             <div class="terms-of-use-container">
                 <div class="terms-of-use-text">
                     <h1>이용약관 안내</h1>
@@ -374,7 +381,8 @@
                 <div class="dotted-line"></div>
                 <div class="confirm">
                     <label class="agree">
-                        <input class="agree-check" name="isTermsAgreed" type="checkbox">
+                        <input class="agree-check" id="isTermsAgreed" name="termsAgreed" type="checkbox">
+                        <input class="agree-check" id="isTermsAgreedHidden" name="_termsAgreed" type="hidden">
                         <span>약관을 모두 읽었으며 동의합니다.</span>
                     </label>
                 </div>
@@ -389,6 +397,7 @@
                     <input required class="input input-email input-red" id="emailInput" maxlength="50" name="email" type="email">
                     <div class="input-text">회원등록후 1시간이내에 메일인증을 하지못하면 회원가입이 취소됩니다.</div>
                     <div class="input-text">naver.co.kr,naver.com 에서만 메일인증을 할 수 있습니다.</div>
+                    <span class="warning email-warning">이미 존재하는 메일 주소입니다. 다른 메일 주소를 입력해주세요.</span>
                 </label>
             </div>
             <div class="label-container">
@@ -398,8 +407,8 @@
                 </label>
                 <label class="input-container">
                     <span hidden>비밀번호</span>
-                    <input class="input input-password input-red" placeholder=" " id="passwordInput" maxlength="50" name="password"
-                           type="password" pattern="[A-Za-z0-9]{6,100}">
+                    <input required class="input input-password input-red" placeholder=" " id="passwordInput" maxlength="50" name="password"
+                           type="password">
                     <div class="input-text">비밀번호는 6자리 이상이어야 하며 영문과 숫자를 반드시 포함해야 합니다.</div>
                 </label>
             </div>
@@ -410,8 +419,8 @@
                 </label>
                 <label class="input-container">
                     <span hidden>비밀번호 확인</span>
-                    <input class="input input-password input-red" placeholder=" " id="passwordCheckInput" maxlength="50" name="passwordCheck"
-                           type="password" pattern="[A-Za-z0-9]{6,100}">
+                    <input required class="input input-password input-red" placeholder=" " id="passwordCheckInput" maxlength="50" name="passwordCheck"
+                           type="password">
                 </label>
             </div>
             <div class="label-container">
@@ -421,6 +430,7 @@
                 <label class="input-container">
                     <span hidden>아이디</span>
                     <input class="input input-blue" placeholder=" " id="idInput" maxlength="50" name="userId" type="text">
+                    <span class="warning id-warning">이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.</span>
                 </label>
             </div>
             <div class="label-container">
@@ -431,6 +441,7 @@
                 <label class="input-container">
                     <span hidden>닉네임</span>
                     <input class="input input-blue" placeholder=" " id="nickNameInput" maxlength="12" name="nickname" type="text">
+                    <span class="warning nickname-warning">이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.</span>
                 </label>
             </div>
             <div class="label-container">
@@ -463,7 +474,8 @@
                 <div class="profile-upload-container">
                     <label class="input-container">
                         <span hidden>프로필 사진</span>
-                        <input class="input" id="profileUploadInput" maxlength="12" name="profileId" type="file">
+                        <input hidden type="text" name="profileId">
+                        <input class="input" id="profileUploadInput" name="profileImage" type="file" accept="image/png, image/jpeg, image/jpg, image/gif">
                         <div class="input-text">가로 제한 길이: 50px, 세로 제한 길이: 50px</div>
                     </label>
                 </div>
@@ -475,11 +487,11 @@
                 <div class="permission-container">
                     <label class="radio-container">
                         <span hidden>메일링 가입 동의</span>
-                        <input checked class="input" name="isMailReceived" value="1" type="radio"><span>예</span>
+                        <input checked class="input" name="mailReceived" type="radio" value="1"><span>예</span>
                     </label>
                     <label class="radio-container">
                         <span hidden>메일링 가입 미동의</span>
-                        <input class="input" name="isMailReceived" value="0" type="radio"><span>아니오</span>
+                        <input class="input" name="mailReceived" type="radio" value="0"><span>아니오</span>
                     </label>
                 </div>
             </div>
@@ -504,7 +516,7 @@
             </div>
             <div class="submit-container">
                 <a class="button cancel-button" th:href="@{/}">취소</a>
-                <input class="button register-button" type="submit" value="등록">
+                <input class="button register-button" id="submitButton" type="submit" value="등록">
             </div>
         </section>
     </form>
