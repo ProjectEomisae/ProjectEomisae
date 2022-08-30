@@ -2,12 +2,11 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="name" type="java.lang.String"*/-->
 <!--/*@thymesVar id="email" type="java.lang.String"*/-->
-<!--/*@thymesVar id="code" type="java.lang.String"*/-->
-<!--/*@thymesVar id="salt" type="java.lang.String"*/-->
 <head>
     <meta charset="UTF-8">
 </head>
 <body>
+<body th:with="url=@{http://127.0.0.1:8080/user/verify-email(code=${userEmailVerificationCodeEntity.getCode()}, salt=${userEmailVerificationCodeEntity.getSalt()})}">
 <div style="align-items: stretch;
             display: flex;
             font-size: 0.825rem;
@@ -23,7 +22,7 @@
         <li>닉네임 : <span th:text="${name}"></span></li>
     </ul>
     <span>아래 링크를 클릭하면 가입 인증이 이루어집니다.</span>
-    <code th:text="${'http://localhost:8080/user/verify-email?code=' + code + '?salt=' + salt}"></code>
+    <code th:text="${url}"></code>
 </div>
 </body>
 </html>

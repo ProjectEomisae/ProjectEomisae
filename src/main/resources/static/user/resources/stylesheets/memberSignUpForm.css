@@ -19,13 +19,35 @@ body > .main > .register-form > .register > .title {
     color: rgb(var(--color-black-33));
     font-size: 1.375rem;
     font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+body > .main > .register-form > .register > .hidden-warning  {
+    display: none;
+}
+
+body > .main > .register-form > .register > .hidden-warning.show {
+    display: block;
+}
+
+body > .main > .register-form > .register > .hidden-warning > .warning-container  {
+    width: 100%;
+    background-color: rgb(242, 222, 222);
+    border: 0.0625rem solid rgb(238, 211, 215);
+    border-radius: 0.25rem;
+    color: rgb(185, 74, 72);
+    margin-bottom: 0.8rem;
+    padding: 0.8rem 0;
+}
+
+body > .main > .register-form > .register > .hidden-warning > .warning-container > .warning {
+    margin-left: 1rem;
 }
 
 body > .main > .register-form > .register > .terms-of-use-container {
     border: 0.0625rem solid #ccc;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     font-size: 0.8125rem;
-    margin-top: 1.5rem;
     padding: 1rem 1rem 0 1rem;
 }
 
@@ -73,20 +95,20 @@ body > .main > .register-form > .register > .label-container > .input-container 
     box-shadow: unset;
 }
 
-body > .main > .register-form > .register > .label-container > .input-container > .input-red:focus{
+body > .main > .register-form > .register > .label-container > .input-container > .input-red:focus {
     border-color: rgb(233, 50, 45);
     box-shadow: 0 0 0.375rem rgb(248, 185, 183);
     color: rgb(233, 50, 45);
 }
 
-body > .main > .register-form > .register > .label-container > .input-container > .input-red:not(:placeholder-shown):valid  {
+body > .main > .register-form > .register > .label-container > .input-container > .input-red:not(:placeholder-shown):valid {
     border-color: rgb(82, 168, 236);
     box-shadow: 0 0 0.375rem rgb(125, 194, 248);
     color: unset;
 }
 
 body > .main > .register-form > .register > .label-container > .controls > .input-container > .input-blue:not(:placeholder-shown):valid,
-body > .main > .register-form > .register > .label-container > .input-container > .input-blue:not(:placeholder-shown):valid  {
+body > .main > .register-form > .register > .label-container > .input-container > .input-blue:not(:placeholder-shown):valid {
     border-color: rgb(82, 168, 236);
     box-shadow: 0 0 0.375rem rgb(125, 194, 248);
 }
@@ -94,6 +116,12 @@ body > .main > .register-form > .register > .label-container > .input-container 
 body > .main > .register-form > .register > .label-container > .input-container > .input-text {
     display: inline-block;
     margin-left: 0.5rem;
+}
+
+body > .main > .register-form > .register > .label-container > .input-container > .warning {
+    color: rgb(255, 0, 0);
+    display: none;
+    margin-top: 0.3rem;
 }
 
 body > .main > .register-form > .register > .label-container > .control-label {

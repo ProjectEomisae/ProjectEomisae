@@ -1,6 +1,9 @@
 package dev.dmchoi.eomisae.controllers;
 
+import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
+import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
+import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
@@ -8,18 +11,35 @@ import dev.dmchoi.eomisae.models.PagingModel;
 import dev.dmchoi.eomisae.services.bbs.BoardListService;
 import dev.dmchoi.eomisae.services.SystemService;
 import dev.dmchoi.eomisae.services.UserService;
+import dev.dmchoi.eomisae.utils.CryptoUtils;
+import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
 import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import dev.dmchoi.eomisae.services.UserService;
+import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.mail.MessagingException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 import javax.mail.MessagingException;
 import java.util.Optional;
@@ -36,6 +56,26 @@ public class UserController extends StandardController {
         super(systemService);
         this.userService = userService;
         this.boardListService = boardListService;
+    }
+
+    @RequestMapping(value = "check-email", method = RequestMethod.POST)
+    @ResponseBody
+    public String postCheckEmail(UserEntity user) {
+
+        return String.valueOf(this.userService.getUserCountByEmail(user));
+    }
+
+    @RequestMapping(value = "check-user-id", method = RequestMethod.POST)
+    @ResponseBody
+    public String postCheckUserId(UserEntity user) {
+        return String.valueOf(this.userService.getUserCountById(user));
+    }
+
+    @RequestMapping(value = "check-nickname", method = RequestMethod.POST)
+    @ResponseBody
+    public String postCheckNickname(UserEntity user) {
+        return String.valueOf(this.userService.getUserCountByNickname(user));
+
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -89,14 +129,69 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.POST)
-    public ModelAndView postMemberSignUpForm(RegisterVo registerVo, ModelAndView modelAndView) throws MessagingException {
+    public ModelAndView postMemberSignUpForm(RegisterVo registerVo,
+                                             ModelAndView modelAndView,
+                                             @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws MessagingException, IOException {
         registerVo.setEmailVerified(false);
         registerVo.setResult(null);
+        if (registerVo.getUserId() == null || registerVo.getUserId().equals("")) {
+            String tempUserId = UUID.randomUUID().toString().replace("-", "");
+            tempUserId = tempUserId.substring(0, 6);
+            registerVo.setUserId(tempUserId);
+        }
+
+        System.out.println(profileImage);
+        String id = String.format("%s%f%f", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()),
+                Math.random(),
+                Math.random());
+        id = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, id);
+        ProfileImageEntity profileImageEntity = ProfileImageEntity.build()
+                .setId(id)
+                .setData(profileImage.getBytes());
+        registerVo.setProfileId(id); // String
+        System.out.println("set한 id : " + id);
+        this.userService.putProfileImage(profileImageEntity);
         this.userService.register(registerVo);
+        modelAndView.addObject("profileId", id);
         modelAndView.addObject("registerVo", registerVo);
         modelAndView.setViewName("user/memberSignUpForm");
         return modelAndView;
     }
+
+    @RequestMapping(value = "verify-email", method = RequestMethod.GET)
+    public ModelAndView getVerifyEmail(ModelAndView modelAndView,
+                                       EmailVerifyVo emailVerifyVo,
+                                       @RequestParam(name = "code", required = true) String code,
+                                       @RequestParam(name = "salt", required = true) String salt) {
+        emailVerifyVo.setIndex(0);
+        emailVerifyVo.setResult(null);
+        emailVerifyVo.setCode(code);
+        emailVerifyVo.setSalt(salt);
+        this.userService.emailVerify(emailVerifyVo);
+        modelAndView.addObject("emailVerifyVo", emailVerifyVo);
+        modelAndView.setViewName("user/verifyEmail");
+        return modelAndView;
+    }
+
+    // @RequestMapping(value = "memberSignUpForm/profile/add", method = RequestMethod.POST)
+    // public ModelAndView postProfileImageAdd(ModelAndView modelAndView,
+    //                                         @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws IOException {
+    //     System.out.println(profileImage);
+    //     String id = String.format("%s%f%f", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()),
+    //             Math.random(),
+    //             Math.random());
+    //     id = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, id);
+    //     ProfileImageEntity profileImageEntity = ProfileImageEntity.build()
+    //             .setId(id)
+    //             .setData(profileImage.getBytes());
+    //     System.out.println("set한 id : " + id);
+    //     this.userService.putProfileImage(profileImageEntity);
+    //     modelAndView.addObject("hashingId", profileImageEntity.getId());
+    //     modelAndView.setViewName("redirect:/user/login");
+    //     return modelAndView;
+    // }
+
+
 
     @RequestMapping(value = "/my-page/memberInfo", method = RequestMethod.GET)
     public ModelAndView getMemberInfo(ModelAndView modelAndView) {

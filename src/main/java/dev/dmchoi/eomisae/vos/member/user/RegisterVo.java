@@ -6,8 +6,8 @@ import dev.dmchoi.eomisae.enums.member.user.RegisterResult;
 
 public class RegisterVo extends UserEntity implements IResult<RegisterResult> {
     private RegisterResult result;
-    @Override
-    public RegisterResult getResult() {
+
+    @Override public RegisterResult getResult() {
         return result;
     }
 
