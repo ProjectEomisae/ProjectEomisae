@@ -109,7 +109,7 @@ if (toggleBox.querySelector('.my-container.non-member') != null) {
     });
 } else {
     toggleBox.querySelector('.my-container').addEventListener('click', () => {
-        window.location.href = 'user/my-page/memberInfo';
+        window.location.href = '/user/my-page/memberInfo';
     });
 }
 
@@ -222,7 +222,6 @@ loginForm.querySelector('.login-button').addEventListener('click', e => {
                         window.history.back();
                         break;
                     case 'success' :
-                        alert('로그인 성공!\n\n메인 페이지로 이동합니다.');
                         window.location.reload();
                         break;
                     default :
@@ -235,3 +234,9 @@ loginForm.querySelector('.login-button').addEventListener('click', e => {
     };
     xhr.send(formData);
 });
+
+window.document.querySelector('.link.ms').addEventListener('click', e => {
+    e.preventDefault();
+    alert('준비 중인 페이지입니다.');
+    window.location.href = '/';
+})

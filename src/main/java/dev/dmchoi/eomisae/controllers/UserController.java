@@ -4,11 +4,16 @@ import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
 import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
+import dev.dmchoi.eomisae.entities.member.UserEntity;
+import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
+import dev.dmchoi.eomisae.models.PagingModel;
+import dev.dmchoi.eomisae.services.bbs.BoardListService;
 import dev.dmchoi.eomisae.services.SystemService;
 import dev.dmchoi.eomisae.services.UserService;
 import dev.dmchoi.eomisae.utils.CryptoUtils;
 import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
+import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,12 +21,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import dev.dmchoi.eomisae.services.UserService;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
@@ -29,6 +36,9 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.mail.MessagingException;
+import java.util.Optional;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,10 +47,12 @@ import java.util.UUID;
 @Controller(value = "dev.dmchoi.eomisae.controllers.UserController")
 @RequestMapping(value = "/user")
 public class UserController extends StandardController {
+
     private final UserService userService;
+    private final BoardListService boardListService;
 
     @Autowired
-    protected UserController(SystemService systemService, UserService userService) {
+    protected UserController(SystemService systemService, UserService userService, BoardListService boardListService) {
         super(systemService);
         this.userService = userService;
     }
@@ -62,6 +74,7 @@ public class UserController extends StandardController {
     @ResponseBody
     public String postCheckNickname(UserEntity user) {
         return String.valueOf(this.userService.getUserCountByNickname(user));
+        this.boardListService = boardListService;
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -72,7 +85,7 @@ public class UserController extends StandardController {
             LoginVo loginVo) {
         loginVo.setResult(null);
         this.userService.login(loginVo, request);
-        this.systemService.putActivityLog(request, loginVo);
+        this.systemService.putActivityLog(loginVo.getIndex(), request, loginVo);
         if (loginVo.getResult() == LoginResult.SUCCESS) {
             if (!loginVo.isAutosign()) {
                 Cookie sessionKeyCookie = new Cookie("loginCookie", loginVo.getSessionEntity().getKey());
@@ -105,7 +118,11 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.GET)
-    public ModelAndView getMemberSignUpForm(ModelAndView modelAndView) {
+    public ModelAndView getMemberSignUpForm(ModelAndView modelAndView,
+                                            @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user != null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/memberSignUpForm");
         return modelAndView;
     }
@@ -194,7 +211,20 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberOwnDocument", method = RequestMethod.GET)
-    public ModelAndView getMemberOwnDocument(ModelAndView modelAndView) {
+    public ModelAndView getMemberOwnDocument(ModelAndView modelAndView,
+                                             @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                             @RequestParam(name = "page") Optional<Integer> optionalPage,
+                                             BoardListVo boardListVo) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/user/login");
+        }
+        int page = optionalPage.orElse(1);
+        int totalRowCount;
+        totalRowCount = this.boardListService.boardTotalCountByUserIndex(user.getIndex());
+        PagingModel paging = new PagingModel(totalRowCount, page);
+        boardListVo.setArticles(this.boardListService.listBoardByUserIndex(user.getIndex(), paging));
+        modelAndView.addObject("paging", paging);
+        modelAndView.addObject("boardListVo", boardListVo);
         modelAndView.setViewName("user/my-page/memberOwnDocument");
         return modelAndView;
     }
@@ -211,9 +241,22 @@ public class UserController extends StandardController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/my-page/memberLoginlogHistories", method = RequestMethod.GET)
-    public ModelAndView getMemberLoginlogHistories(ModelAndView modelAndView) {
-        modelAndView.setViewName("user/my-page/memberLoginlogHistories");
+    @RequestMapping(value = "/my-page/memberLoginLogHistories", method = RequestMethod.GET)
+    public ModelAndView getMemberLoginLogHistories(ModelAndView modelAndView,
+                                                   @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                                   @RequestParam(name = "page") Optional<Integer> optionalPage) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/user/login");
+        }
+        int page = optionalPage.orElse(1);
+        int totalRowCount;
+        totalRowCount = this.systemService.activityLogTotalCountByUserIndex(user.getIndex());
+        PagingModel paging = new PagingModel(totalRowCount, page);
+        ActivityLogEntity[] activityLogEntities = this.systemService.getActivityLog(user.getIndex(), paging);
+        System.out.println(activityLogEntities.length);
+        modelAndView.addObject("paging", paging);
+        modelAndView.addObject("activityLogEntities", activityLogEntities);
+        modelAndView.setViewName("user/my-page/memberLoginLogHistories");
         return modelAndView;
     }
 
@@ -288,6 +331,8 @@ public class UserController extends StandardController {
         modelAndView.setViewName("user/my-page/memberLeave");
         return modelAndView;
     }
+
+
 
 
 }

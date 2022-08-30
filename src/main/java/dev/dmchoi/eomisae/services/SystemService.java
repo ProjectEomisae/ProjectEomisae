@@ -1,10 +1,11 @@
 package dev.dmchoi.eomisae.services;
 
 import dev.dmchoi.eomisae.interfaces.IResult;
-import dev.dmchoi.eomisae.entities.system.SystemActivityLogEntity;
-import dev.dmchoi.eomisae.entities.system.SystemBannedIpEntity;
-import dev.dmchoi.eomisae.entities.system.SystemExceptionLogEntity;
+import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
+import dev.dmchoi.eomisae.entities.system.BannedIpEntity;
+import dev.dmchoi.eomisae.entities.system.ExceptionLogEntity;
 import dev.dmchoi.eomisae.mappers.ISystemMapper;
+import dev.dmchoi.eomisae.models.PagingModel;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,12 @@ public class SystemService {
 //                4범 - 10 * (4 ^ 4) = 2560 -> 2560분차단
             }
             Date currentDate = new Date();
-            SystemBannedIpEntity systemBannedIpEntity = SystemBannedIpEntity.build()
+            BannedIpEntity bannedIpEntity = BannedIpEntity.build()
                     .setCreatedAt(currentDate)
                     .setExpiresAt(DateUtils.addMinutes(currentDate, banMinutes))
                     .setExpired(false)
                     .setIp(request.getRemoteAddr());
-            this.systemMapper.insertBannedIp(systemBannedIpEntity);
+            this.systemMapper.insertBannedIp(bannedIpEntity);
         }
     }
 
@@ -52,23 +53,32 @@ public class SystemService {
         return this.systemMapper.selectBannedIpCountByIp(request.getRemoteAddr()) > 0;
     }
 
-    public void putActivityLog(HttpServletRequest request, IResult<? extends Enum<?>> iResult) {
-        this.putActivityLog(request, iResult, true);
+    public void putActivityLog(int index, HttpServletRequest request, IResult<? extends Enum<?>> iResult) {
+        this.putActivityLog(index, request, iResult, true);
     }
-    public void putActivityLog(HttpServletRequest request, IResult<? extends Enum<?>> iResult, boolean checkPast) {
+    public void putActivityLog(int index, HttpServletRequest request, IResult<? extends Enum<?>> iResult, boolean checkPast) {
         Date currentDate = new Date();
-        SystemActivityLogEntity systemActivityLogEntity = SystemActivityLogEntity.build()
+        ActivityLogEntity activityLogEntity = ActivityLogEntity.build()
+                .setUserIndex(index)
                 .setCreatedAt(currentDate)
                 .setClientIp(request.getRemoteAddr())
                 .setClientUa(request.getHeader("User-Agent"))
                 .setRequestUri(request.getRequestURI())
                 .setResult(iResult.getResult().name());
-        this.systemMapper.insertActivityLog(systemActivityLogEntity);
+        this.systemMapper.insertActivityLog(activityLogEntity);
         if (checkPast) {
             this.checkActivityAndBan(request);
         }
     }
 
+    public int activityLogTotalCountByUserIndex(int index) {
+        return this.systemMapper.selectActivityCountTotalByUserIndex(index);
+    }
+    public ActivityLogEntity[] getActivityLog(int index, PagingModel pagingModel) {
+        return this.systemMapper.selectActivityLog(index,
+                pagingModel.rowCountPerPage,
+                (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+    }
     public void putExceptionLog(Exception ex) {
         String message = ex.getMessage();
         String stacktrace = ExceptionUtils.getStackTrace(ex);
@@ -76,10 +86,10 @@ public class SystemService {
             message = "";
         }
         Date currentDate = new Date();
-        SystemExceptionLogEntity systemExceptionLogEntity = SystemExceptionLogEntity.build()
+        ExceptionLogEntity exceptionLogEntity = ExceptionLogEntity.build()
                 .setCreatedAt(currentDate)
                 .setMessage(message)
                 .setStacktrace(stacktrace);
-        this.systemMapper.insertExceptionLog(systemExceptionLogEntity);
+        this.systemMapper.insertExceptionLog(exceptionLogEntity);
     }
 }

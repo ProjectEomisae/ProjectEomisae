@@ -3,6 +3,7 @@ package dev.dmchoi.eomisae.mappers;
 import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
+import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<tr class="notice" th:fragment="board-no"
+th:each="articleForNo : ${boardListVoForNo.getArticles()}">
+    <td>
+        <span>공지</span>
+    </td>
+    <td class="title">
+        <a th:href="@{/}" th:text="${articleForNo.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
+            (21.11.29추가)</a>
+        <a class="comments" th:href="@{/}" th:text="${articleForNo.getCommentCount()}">137</a>
+        <span class="extra-images">
+                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
+                                <img alt="업데이트" th:src="@{/bbs/resources/images/update.gif}">
+                            </span>
+    </td>
+    <td class="user">
+        <div class="user-name">
+            <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
+                 alt="profile" title="어미새">
+            <span th:text="${articleForNo.getUserNickname()}">어미새어미새어미새</span>
+        </div>
+        <div class="user-info">
+            <ul class="user-menu">
+                <li class="list">
+                    <a class="link" th:href="@{/}"
+                       th:text="${'Lv.' + articleForNo.getLevel() + ' (' + (articleForNo.getPoint() * 100) / 3000 + '%)'}">Lv.14 (91.6%)</a>
+                </li>
+                <li class="list">
+                    <a class="link" th:href="@{/}">활동 내역 보기</a>
+                </li>
+                <li class="list">
+                    <a class="link" th:href="@{/}">회원 차단</a>
+                </li>
+            </ul>
+        </div>
+    </td>
+    <td th:text="${#dates.format(articleForNo.getWrittenAt(), 'MM.dd')}"></td>
+    <td th:text="${articleForNo.getView()}">152910</td>
+    <td th:text="${articleForNo.getLike()}">20</td>
+</tr>

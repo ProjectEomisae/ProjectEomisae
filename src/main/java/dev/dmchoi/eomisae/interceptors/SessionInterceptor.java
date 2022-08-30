@@ -55,8 +55,9 @@ public class SessionInterceptor implements HandlerInterceptor {
                     this.userService.extendSession(sessionEntity);
                     request.setAttribute("sessionEntity", sessionEntity);
                     request.setAttribute(UserEntity.ATTRIBUTE_NAME, userEntity);
-                    long limitTime = 60 * 60 * 24 * 90; // 7776000 90일
-                    autoLoginCookie.setMaxAge((int) limitTime);
+                    int limitTime = 60 * 60 * 24 * 90; // 7776000 90일
+                    autoLoginCookie.setMaxAge( limitTime);
+                    response.addCookie(autoLoginCookie);
                     System.out.println("로그인이 되어있는 상태 -> autoLoginCookie MaxAge : "  + autoLoginCookie.getMaxAge());
                 }
             }

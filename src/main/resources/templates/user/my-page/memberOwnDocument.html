@@ -23,12 +23,12 @@
     <table class="table-container">
       <div class="count-container">
         <div class="total-count">
-          <span>Total : </span>
-          <span>0,</span>
+          <span th:text="${'Total : ' + boardListVo.getArticles().size() + ','}">Total : </span>
+
         </div>
         <div class="page">
           <span>Page : </span>
-          <span>1/1</span>
+          <span th:text="${paging.requestPage + '/' + paging.maxPage }">1/1</span>
         </div>
       </div>
       <thead>
@@ -41,28 +41,42 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>2</td>
-        <td class="title"><a th:href="@{/}">작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.</a></td>
-        <td>2022-08-10</td>
-        <td>10</td>
-        <td>8</td>
+      <tr th:each="article : ${boardListVo.getArticles()}">
+        <td th:text="${article.getIndex()}">2</td>
+        <td class="title"><a th:href="@{/}" th:text="${article.getTitle()}">작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.</a>
+        <a th:href="@{/}"><span th:text="'[' + ${article.getCommentCount()} + ']'"></span></a> </td>
+        <td th:text="${#dates.format(article.getWrittenAt(), 'yyyy-MM-dd')}">2022-08-10</td>
+        <td th:text="${article.getView()}">10</td>
+        <td th:text="${article.getLike()}">8</td>
       </tr>
-      <tr>
-        <td>1</td>
-        <td class="title"><a th:href="@{/}">작성 글 1번입니다.</a></td>
-        <td>2022-08-08</td>
-        <td>7</td>
-        <td>2</td>
-      </tr>
-
       </tbody>
       <tfoot>
       <tr class="page-tr">
         <td colspan="5">
-          <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
-          <a class="page-button page selected" th:href="@{/}">1</a>
-          <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+          <a class="page-button prev-button"
+             th:href="@{'/user/my-page/memberOwnDocument' (page=${paging.minPage})}">
+            « 첫 페이지
+          </a>
+          <a class="page-button page"
+                  th:href="@{'/user/my-page/memberOwnDocument' (page=${page})}"
+             th:each="page : ${#numbers.sequence(paging.boundStartPage, paging.requestPage - 1)}"
+             th:text="${page}"
+             th:if="${paging.requestPage > paging.boundStartPage}">
+          </a>
+          <a class="page-button page selected"
+                  th:text="${paging.requestPage}"
+             th:classappend="${paging.requestPage} ? 'selected'">
+          </a>
+          <a class="page-button page"
+                  th:href="@{'/user/my-page/memberOwnDocument' (page=${page})}"
+             th:each="page : ${#numbers.sequence(paging.requestPage + 1, paging.boundEndPage)}"
+             th:text="${page}"
+             th:if="${paging.requestPage < paging.boundEndPage && page != paging.requestPage }">
+          </a>
+          <a class="page-button next-button"
+                  th:href="@{'/user/my-page/memberOwnDocument' (page=${paging.maxPage})}">
+            끝 페이지 »
+          </a>
         </td>
       </tr>
       </tfoot>

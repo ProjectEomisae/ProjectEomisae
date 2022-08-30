@@ -3,9 +3,11 @@ package dev.dmchoi.eomisae.models;
 public class PagingModel {
     public static final int DEFAULT_PAGINATION_COUNT = 10; // paginationCount 기본값
     public static final int DEFAULT_ROW_COUNT_PER_PAGE = 10; // rowCountPerPage 기본값
+
+    public static final int PAGE_RANGE_FACTOR = 5;
     public final int paginationCount; // 페이지 하단에 표시할 페이지 버튼의 개수 (기본값 DEFAULT_PAGINATION_COUNT)
     public final int rowCountPerPage; // 한 페이지에 표시할 게시글의 개수 (기본값 DEFAULT_ROW_COUNT_PER_PAGE)
-    public final int totalRowCount; // 진짜 전체 게시글의 개수
+    public int totalRowCount; // 진짜 전체 게시글의 개수
     public final int requestPage; // 현재 클라이언트가 보겠다고 요청한 페이지 번호
 
     public final int maxPage; // 이동할 수 있는 최대 페이지 번호 (총 게시글 개수에 따라 달라짐)
@@ -35,8 +37,10 @@ public class PagingModel {
             requestPage = this.minPage;
         }
         this.requestPage = requestPage;
-        this.boundStartPage = (this.requestPage / this.paginationCount) * this.paginationCount + 1;
-        this.boundEndPage = Math.min(this.maxPage, (this.requestPage / this.paginationCount) * this.paginationCount + this.paginationCount);
+//        this.boundStartPage = (this.requestPage / this.paginationCount) * this.paginationCount + 1;
+        this.boundStartPage = Math.max(minPage, requestPage - PAGE_RANGE_FACTOR);
+//        this.boundEndPage = Math.min(this.maxPage, (this.requestPage / this.paginationCount) * this.paginationCount + this.paginationCount);
         // 계산해서 나온 값과 내가 가진 최대 페이지 중 작은 것
+        this.boundEndPage = Math.min(maxPage, requestPage + PAGE_RANGE_FACTOR);
     }
 }
