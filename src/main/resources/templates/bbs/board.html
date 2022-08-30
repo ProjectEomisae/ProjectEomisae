@@ -18,6 +18,9 @@
 <body th:with="criteria=${#request.getParameter('criteria')}, keyword=${#request.getParameter('keyword')}, category=${#request.getParameter('category')}">
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <main th:include="~{'/' + ${nonImageMain}}"></main>
+<!--th:if="${!urlName.contains('al')}"></main>-->
+<!--<main th:include="~{'/' + ${al}}"-->
+<!--th:if="${urlName.contains('al')}"></main>-->
 <th:block th:replace="~{fragments/footer.html :: content}"></th:block>
 </body>
 </html>

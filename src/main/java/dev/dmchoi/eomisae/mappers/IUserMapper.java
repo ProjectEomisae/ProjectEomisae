@@ -11,7 +11,7 @@ public interface IUserMapper {
     int insertSession(SessionEntity sessionEntity); // 세션 INSERT
 
     UserEntity selectUserByIndex(
-            @Param(value = "index") int index); // email로 유저 SELECT
+            @Param(value = "index") int index); // index로 유저 SELECT
     UserEntity selectUser(
             @Param(value = "email") String email,
             @Param(value = "password") String password);

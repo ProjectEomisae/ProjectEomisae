@@ -5,7 +5,7 @@ import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
 import dev.dmchoi.eomisae.models.PagingModel;
-import dev.dmchoi.eomisae.services.BbsService;
+import dev.dmchoi.eomisae.services.bbs.BoardListService;
 import dev.dmchoi.eomisae.services.SystemService;
 import dev.dmchoi.eomisae.services.UserService;
 import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
@@ -29,13 +29,13 @@ import java.util.Optional;
 public class UserController extends StandardController {
 
     private final UserService userService;
-    private final BbsService bbsService;
+    private final BoardListService boardListService;
 
     @Autowired
-    protected UserController(SystemService systemService, UserService userService, BbsService bbsService) {
+    protected UserController(SystemService systemService, UserService userService, BoardListService boardListService) {
         super(systemService);
         this.userService = userService;
-        this.bbsService = bbsService;
+        this.boardListService = boardListService;
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -126,9 +126,9 @@ public class UserController extends StandardController {
         }
         int page = optionalPage.orElse(1);
         int totalRowCount;
-        totalRowCount = this.bbsService.boardTotalCountByUserIndex(user.getIndex());
+        totalRowCount = this.boardListService.boardTotalCountByUserIndex(user.getIndex());
         PagingModel paging = new PagingModel(totalRowCount, page);
-        boardListVo.setArticles(this.bbsService.listBoardByUserIndex(user.getIndex(), paging));
+        boardListVo.setArticles(this.boardListService.listBoardByUserIndex(user.getIndex(), paging));
         modelAndView.addObject("paging", paging);
         modelAndView.addObject("boardListVo", boardListVo);
         modelAndView.setViewName("user/my-page/memberOwnDocument");

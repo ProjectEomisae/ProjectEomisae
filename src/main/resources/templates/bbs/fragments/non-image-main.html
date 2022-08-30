@@ -1,4 +1,7 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <main id="main" th:with="isSearch = ${criteria != null && keyword != null}">
+<!--/*@thymesVar id="articleReadVo" type="dev.dmchoi.eomisae.entities.bbs.ArticleEntity"*/-->
     <div class="nav-container">
         <div class="nav-menu">
             <ul class="list" th:if="${boardListVo.getId().equals('커뮤니티')}">
@@ -86,9 +89,9 @@
                                     </a>
                                 </li>
                                 <li class="list"
-                                    th:if="${!isSearch}">
+                                    th:if="${!isSearch && !boardListVo.getUrlName().contains('al')}">
                                     <!--                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()} ,criteria = ${criteria}, keyword = ${keyword})}"-->
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()})}"
+                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
                                        th:each="category : ${categoryEntities}"
                                        th:text="${category.getName()}"
                                        th:if="${boardListVo.getIndex() == category.getBoardIndex()}">
@@ -97,12 +100,32 @@
                                     </a>
                                 </li>
                                 <li class="list"
-                                    th:if="${isSearch}">
+                                    th:if="${isSearch && !boardListVo.getUrlName().contains('al')}">
                                      <!--                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()} ,criteria = ${criteria}, keyword = ${keyword})}"-->
                                     <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
                                        th:each="category : ${categoryEntities}"
                                        th:text="${category.getName()}"
                                        th:if="${boardListVo.getIndex() == category.getBoardIndex()}">
+                                        잡담
+                                        <span>(158819)</span>
+                                    </a>
+                                </li>
+                                <li class="list"
+                                    th:if="${!isSearch && boardListVo.getUrlName().contains('al')}">
+                                    <!--                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()} ,criteria = ${criteria}, keyword = ${keyword})}"-->
+                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
+                                       th:each="category : ${categoryEntities}"
+                                       th:text="${category.getName()}">
+                                        잡담
+                                        <span>(158819)</span>
+                                    </a>
+                                </li>
+                                <li class="list"
+                                    th:if="${isSearch && boardListVo.getUrlName().contains('al')}">
+                                    <!--                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()} ,criteria = ${criteria}, keyword = ${keyword})}"-->
+                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
+                                       th:each="category : ${categoryEntities}"
+                                       th:text="${category.getName()}">
                                         잡담
                                         <span>(158819)</span>
                                     </a>
@@ -200,13 +223,76 @@
                             </td>
                             <td class="title">
                                 <span>
-                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}">잡담 </span>
-                                <a th:href="@{/static}" th:text="${article.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
+                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}"
+                                     th:each="category : ${categoryEntities}"
+                                     th:text="${category.getName()}"
+                                     th:if="${article.getCategoryIndex() == category.getIndex()}"></span>
+                                <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${article.getIndex()}}" th:text="${article.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
                                     (21.11.29추가)세일정보 게시판 규정
                                     (21.11.29추가)</a>
-                                <a class="comments" th:href="@{/static}" th:text="${article.getCommentCount()}">137</a>
-                                <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
+                                <a class="comments" th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${article.getIndex()}}" th:text="${article.getCommentCount()}">137</a>
+                                <span class="extra-images" th:with="dt=${#dates.createNow()}">
+                                    <img alt="최신글"
+                                         th:with="limit = ${T(org.apache.commons.lang3.time.DateUtils).addDays(dt, -3)}"
+                                         th:if="${#dates.format(limit) < #dates.format(article.getWrittenAt())}"
+                                         th:src="@{/bbs/resources/images/new.gif}">
+                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
+                            </span>
+                            </td>
+                            <td class="user">
+                                <div class="user-name">
+                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
+                                         alt="profile" title="어미새">
+                                    <span th:text="${article.getUserNickname()}">어미새</span>
+                                </div>
+                                <div class="user-info">
+                                    <ul class="user-menu">
+                                        <li class="list">
+                                            <a class="link" th:href="@{/static}"
+                                               th:text="${'Lv.' + article.getLevel() + ' (' + (article.getPoint() * 100) / 3000 + '%)'}">Lv.14 (91.6%)</a>
+                                        </li>
+                                        <li class="list">
+                                            <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역 보기</a>
+                                        </li>
+                                        <li class="list">
+                                            <a class="link" th:href="@{/static}">회원 차단</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td th:text="${#dates.format(article.getWrittenAt(), 'MM.dd')}"></td>
+                            <td th:text="${article.getView()}">152910</td>
+                            <td th:text="${article.getLike()}">20</td>
+                        </tr>
+                        <tr class="no-comment" th:if="${paging.requestPage == 1}">
+                            <td colspan="6">
+                                답변을 받지 못한 질문 글입니다.
+                            </td>
+                        </tr>
+                        <tr th:if="${boardListVo.getArticles().size() == 0}"> <!-- 조건하에 표시되는 요소 -->
+                            <td colspan="6" style="padding: 20px 0; text-align: center;">표시할 게시글이 없습니다.</td>
+                        </tr>
+                        <!--/*@thymesVar id="article" type="dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto"*/-->
+                        <tr class="user" th:each="article, index : ${boardListVo.getArticles()}"
+                        th:if="${article.getCommentCount() == 0 && index.index < 3 + (article.getCommentCount() != 0 ? 0 : 3) && paging.requestPage == 1}" th:with="num=${1}">
+                            <td>
+                                <span th:text="${article.getIndex()}">171585</span>
+                            </td>
+                            <td class="title">
+                                <span>
+                                <img alt="•" th:src="@{/bbs/resources/images/1x1.png}"
+                                     th:each="category : ${categoryEntities}"
+                                     th:text="${category.getName()}"
+                                     th:if="${article.getCategoryIndex() == category.getIndex()}"> </span>
+                                <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${article.getIndex()}}" th:text="${article.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
+                                    (21.11.29추가)세일정보 게시판 규정
+                                    (21.11.29추가)</a>
+                                <a class="comments" th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${article.getIndex()}}" th:text="${article.getCommentCount()}">137</a>
+                                <span class="extra-images" th:with="dt=${#dates.createNow()}">
+                                    <img alt="최신글"
+                                         th:with="limit = ${T(org.apache.commons.lang3.time.DateUtils).addDays(dt, -3)}"
+                                         th:if="${#dates.format(limit) < #dates.format(article.getWrittenAt())}"
+                                         th:src="@{/bbs/resources/images/new.gif}">
                                 <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
                             </span>
                             </td>
@@ -248,16 +334,16 @@
                     <td>
                         <div class="page-container">
                             <div class="page-section" th:if="${!isSearch}">
-                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.requestPage - 1}, category=${category})}"
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.requestPage - 1})}"
                                    th:if="${paging.minPage < paging.requestPage}">
                                     <i class="fa-solid fa-angle-left"></i>
                                 </a>
-                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.minPage}, category=${category}))}"
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.minPage})}"
                                    th:text="${paging.minPage}"
                                    th:if="${paging.requestPage > 7}">
                                 </a>
                                 <span th:if="${paging.requestPage > 7}">-</span>
-                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${page}, category=${category})}"
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${page})}"
                                    th:each="page : ${#numbers.sequence(paging.boundStartPage, paging.requestPage - 1)}"
                                    th:text="${page}"
                                    th:if="${paging.requestPage > paging.boundStartPage}">
@@ -265,17 +351,17 @@
                                 <a th:text="${paging.requestPage}"
                                    th:classappend="${paging.requestPage} ? 'selected'">
                                 </a>
-                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${page}, category=${category})}"
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${page})}"
                                    th:each="page : ${#numbers.sequence(paging.requestPage + 1, paging.boundEndPage - 1)}"
                                    th:text="${page}"
                                    th:if="${paging.requestPage < paging.boundEndPage && paging.boundEndPage > page && page != paging.requestPage }">
                                 </a>
                                 <span th:if="${paging.requestPage != paging.maxPage}">-</span>
-                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.maxPage}, category=${category})} "
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.maxPage})} "
                                    th:text="${paging.maxPage}"
                                    th:if="${paging.requestPage != paging.maxPage}">
                                 </a>
-                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.requestPage + 1}, category=${category})}"
+                                <a th:href="@{'./' + ${boardListVo.getUrlName()} (page=${paging.requestPage + 1})}"
                                    th:if="${paging.maxPage > paging.requestPage}">
                                     <i class="fa-solid fa-angle-right"></i>
                                 </a>
