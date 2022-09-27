@@ -2,6 +2,75 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dev.dmchoi.eomisae.mappers.bbs.IArticleReadMapper">
+    <delete id="deleteArticle"
+            parameterType="dev.dmchoi.eomisae.entities.bbs.ArticleEntity">
+        DELETE
+        FROM `eomisae_article`.`articles`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+    <!--    <delete id="deleteArticleComment"-->
+    <!--            parameterType="dev.dmchoi.eomisae.entities.bbs.CommentEntity">-->
+    <!--        DELETE-->
+    <!--        FROM `eomisae_comment`.`comments`-->
+    <!--        WHERE `index` = #{index}-->
+    <!--        LIMIT 1-->
+    <!--    </delete>-->
+    <insert id="insertImage"
+            parameterType="dev.dmchoi.eomisae.entities.bbs.ImageEntity">
+        INSERT INTO `eomisae_article`.`images` (`id`, `created_at`, `file_name`, `file_type`, `data`)
+        VALUES (#{id}, #{createdAt}, #{fileName}, #{fileType}, #{data})
+    </insert>
+
+    <insert id="insertArticle"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="dev.dmchoi.eomisae.entities.bbs.ArticleEntity">
+        INSERT INTO `eomisae_article`.`articles` (`user_index`, `board_index`, `board_urlName`, `written_at`, `title`,
+                                                  `tag`,
+                                                  `url`,
+                                                  `content`, `view`, `like`, `buy`, `category_index`, `blind_status`)
+        VALUES (#{userIndex}, #{boardIndex}, #{boardUrlName}, #{writtenAt}, #{title}, #{tag}, #{url}, #{content},
+                #{view},
+                #{like}, #{buy}, #{categoryIndex}, #{blindStatus})
+    </insert>
+
+    <insert id="insertComment"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="dev.dmchoi.eomisae.vos.bbs.ArticleCommentWriteVo">
+        INSERT INTO `eomisae_comment`.`comments`(`article_index`, `user_index`, `content`, `written_at`, `parent_index`,
+                                                 `parent_user_index`, `depth`, `like`, `deleted_flag`)
+        VALUES (#{articleIndex}, #{userIndex}, #{content}, #{writtenAt}, #{parentIndex}, #{parentUserIndex}, #{depth},
+                #{like},
+                #{isDeleted})
+    </insert>
+
+    <insert id="insertJoinComment"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="dev.dmchoi.eomisae.vos.bbs.JoinCommentWriteVo">
+        INSERT INTO `eomisae_comment`.`join_comments`(`user_index`, `board_index`, `content`, `written_at`,
+                                                      `parent_index`, `depth`, `like`,
+                                                      `deleted_flag`)
+        VALUES (#{userIndex}, 9, #{content}, #{writtenAt}, #{parentIndex}, #{depth}, #{like},
+                #{isDeleted})
+    </insert>
+
+    <select id="selectImage"
+            resultType="dev.dmchoi.eomisae.entities.bbs.ImageEntity">
+        SELECT `id`         AS `id`,
+               `created_at` AS `createdAt`,
+               `file_name`  AS `fileName`,
+               `file_type`  AS `fileType`,
+               `data`       AS `data`
+        FROM `eomisae_article`.`images`
+        WHERE `id` = #{id}
+        LIMIT 1
+    </select>
     <select id="selectArticleByIndex"
             resultType="dev.dmchoi.eomisae.entities.bbs.ArticleEntity">
         SELECT `index`          AS `index`,
@@ -9,29 +78,79 @@
                `board_index`    AS `boardIndex`,
                `written_at`     AS `writtenAt`,
                `title`          AS `title`,
+               `tag`            AS `tag`,
                `url`            AS `url`,
                `content`        AS `content`,
                `view`           AS `view`,
                `like`           AS `like`,
                `buy`            AS `buy`,
                `category_index` AS `categoryIndex`,
-               `blind_status`   AS `blind_status`
+               `blind_status`   AS `blindStatus`
         FROM `eomisae_article`.`articles`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectArticleCommentByIndex"
+            resultType="dev.dmchoi.eomisae.entities.bbs.CommentEntity">
+        SELECT `index`             AS `index`,
+               `article_index`     AS `articleIndex`,
+               `user_index`        AS `userIndex`,
+               `content`           AS `content`,
+               `written_at`        AS `writtenAt`,
+               `parent_index`      AS `parentIndex`,
+               `parent_user_index` AS `parentUserIndex`,
+               `depth`             AS `depth`,
+               `like`              AS `like`,
+               `deleted_flag`      AS `isDeleted`
+        FROM `eomisae_comment`.`comments`
         WHERE `index` = #{index}
         LIMIT 1
     </select>
 
     <select id="selectCommentsForArticleRead"
             resultType="dev.dmchoi.eomisae.dtos.bbs.ArticleReadCommentDto">
-        SELECT `comment`.`index`         AS `index`,
-               `comment`.`user_index`    AS `userIndex`,
-               `comment`.`article_index` AS `articleIndex`,
-               `comment`.`written_at`    AS `writtenAt`,
-               `comment`.`content`       AS `content`,
-               `user`.`nickname`         AS `nickname`
+        SELECT `comment`.`index`             AS `index`,
+               `comment`.`user_index`        AS `userIndex`,
+               `comment`.`article_index`     AS `articleIndex`,
+               `comment`.`written_at`        AS `writtenAt`,
+               `comment`.`content`           AS `content`,
+               `comment`.`parent_index`      AS `parentIndex`,
+               `comment`.`parent_user_index` AS `parentUserIndex`,
+               `comment`.`depth`             AS `depth`,
+               `comment`.`like`              AS `like`,
+               `comment`.`deleted_flag`      AS `isDeleted`,
+               `user`.`nickname`             AS `nickname`
         FROM `eomisae_comment`.`comments` AS `comment`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON `comment`.`user_index` = `user`.`index`
         WHERE `comment`.`article_index` = ${aid}
         ORDER BY `comment`.`index`
     </select>
+
+    <update id="updateArticle"
+            parameterType="dev.dmchoi.eomisae.vos.bbs.ArticleWriteVo">
+        UPDATE `eomisae_article`.`articles`
+        SET `user_index`     = #{userIndex},
+            `board_index`    = #{boardIndex},
+            `written_at`     = #{writtenAt},
+            `title`          = #{title},
+            `tag`            = #{tag},
+            `url`            = #{url},
+            `content`        = #{content},
+            `view`           = #{view},
+            `like`           = #{like},
+            `buy`            = #{buy},
+            `category_index` = #{categoryIndex},
+            `blind_status`   = #{blindStatus}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateForDeletingArticleComment"
+            parameterType="dev.dmchoi.eomisae.entities.bbs.CommentEntity">
+        UPDATE `eomisae_comment`.`comments`
+        SET `deleted_flag` = true
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
 </mapper>

@@ -129,82 +129,17 @@
                             <h5 class="board-title"><i class="fa-solid fa-cart-shopping"></i>전체글</h5>
                             <table class="article-content">
                                 <tbody>
-                                <tr>
+                                <tr th:each="article : ${boardListVo.getArticles()}" th:object="${article}">
                                     <td class="title">
                                         <div class="title-content">
                                             <a th:href="@{/}">
                                                 <strong>판매</strong>
                                             </a>
-                                            <a class="content" th:href="@{/}"> COS /브이넥 니티드 베스트 / S</a>
+                                            <a class="content" th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}" th:text="${article.getTitle()}"></a>
                                         </div>
                                     </td>
                                     <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>교환</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">루이비통 로고 맨투맨 L -> XL 사이즈 교환</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>구매</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">우영우 고래 시계 구합니다</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>질문</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}"> 대학생이 신기 좋은 발 편한 로퍼 없을까요?</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>잡담</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">오늘 폭염주의보라네요..</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>질문</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">휴고보스 전쟁용 흰티 3장 2발대</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
+                                        <span class="date" th:text="${#dates.format(article.getWrittenAt(), 'MM-dd')}">08-08</span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -230,14 +165,14 @@
                                     src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
                             </a>
                             <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 ghjghjghjghghj블랙 후기</a>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
                         </li>
                         <li class="articles">
                             <a th:href="@{/}"><img
                                     src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
                             </a>
                             <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 ghjghjghjghghj블랙 후기</a>
+                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
                         </li>
                         <li class="articles">
                             <a th:href="@{/}"><img
@@ -322,70 +257,18 @@
                     <h5 class="board-title">공지사항</h5>
                     <table class="article-content">
                         <tbody>
-                        <tr>
+                        <tr th:each="articleForNo : ${boardListVoForNo.getArticles()}">
                             <td class="title">
                                 <div class="title-content">
                                     <a th:href="@{/}">
                                     <strong>공지사항</strong>
                                     </a>
-                                    <a class="content" th:href="@{/}">[완료]서버 하드웨어 교체 및 점검 안내 / 22.08.02 (화) 오전
+                                    <a class="content" th:href="@{'/bbs/' + ${articleForNo.getBoardUrlName()} + '/'+ ${articleForNo.getIndex()}}" th:text="${articleForNo.getTitle()}">[완료]서버 하드웨어 교체 및 점검 안내 / 22.08.02 (화) 오전
                                         08시~10시</a>
                                 </div>
                             </td>
                             <td class="time">
-                                <span class="date">08-08</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="title">
-                                <div class="title-content">
-                                    <a th:href="@{/}">
-                                        <strong>공지사항</strong>
-                                    </a>
-                                    <a class="content" th:href="@{/}">모바일앱 안정성 개선을 위한 업데이트</a>
-                                </div>
-                            </td>
-                            <td class="time">
-                                <span class="date">07-15</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="title">
-                                <div class="title-content">
-                                    <a th:href="@{/}">
-                                        <strong>공지사항</strong>
-                                    </a>
-                                    <a class="content" th:href="@{/}">[처리완료] iOS, Android 푸시 알림 문제 관련</a>
-                                </div>
-                            </td>
-                            <td class="time">
-                                <span class="date">02-18</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="title">
-                                <div class="title-content">
-                                    <a th:href="@{/}">
-                                        <strong>공지사항</strong>
-                                    </a>
-                                    <a class="content" th:href="@{/}">규정 미준수 게시글 삭제 유예 기간 적용 안내</a>
-                                </div>
-                            </td>
-                            <td class="time">
-                                <span class="date">01-29</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="title">
-                                <div class="title-content">
-                                    <a th:href="@{/}">
-                                        <strong>공지사항</strong>
-                                    </a>
-                                    <a class="content" th:href="@{/}">규정 미준수 게시글 삭제 유예 기간 적용 안내</a>
-                                </div>
-                            </td>
-                            <td class="time">
-                                <span class="date">01-29</span>
+                                <span class="date" th:text="${#dates.format(articleForNo.getWrittenAt(), 'MM-dd')}">08-08</span>
                             </td>
                         </tr>
                         </tbody>
@@ -398,18 +281,17 @@
                     <h5 class="board-title">이벤트</h5>
                     <table class="article-content">
                         <tbody>
-                        <tr>
+                        <tr th:each="articleForEv : ${boardListVoForEv.getArticles()}">
                             <td class="title">
                                 <div class="title-content">
                                     <a th:href="@{/}">
                                         <strong>이벤트</strong>
                                     </a>
-                                    <a class="content event" th:href="@{/}">세일정보 문화상품권 이벤트 당첨자 [06월 30일 ~ 07월
-                                        20일]</a>
+                                    <a class="content" th:href="@{'/bbs/' + ${articleForEv.getBoardUrlName()} + '/'+ ${articleForEv.getIndex()}}" th:text="${articleForEv.getTitle()}"></a>
                                 </div>
                             </td>
                             <td class="time">
-                                <span class="date">08-08</span>
+                                <span class="date" th:text="${#dates.format(articleForEv.getWrittenAt(), 'MM-dd')}">08-08</span>
                             </td>
                         </tr>
                         <tr>

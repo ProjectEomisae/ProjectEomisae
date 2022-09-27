@@ -12,8 +12,10 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
     private int index;
     private int userIndex;
     private int boardIndex;
+    private String boardUrlName;
     private Date writtenAt;
     private String title;
+    private String tag;
     private String url;
     private String content;
     private int view;
@@ -49,6 +51,15 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
         return this;
     }
 
+    public String getBoardUrlName() {
+        return boardUrlName;
+    }
+
+    public ArticleEntity setBoardUrlName(String boardUrlName) {
+        this.boardUrlName = boardUrlName;
+        return this;
+    }
+
     public Date getWrittenAt() {
         return writtenAt;
     }
@@ -64,6 +75,15 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
 
     public ArticleEntity setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public ArticleEntity setTag(String tag) {
+        this.tag = tag;
         return this;
     }
 
@@ -136,8 +156,10 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
         articleEntity.index = this.index;
         articleEntity.userIndex = this.userIndex;
         articleEntity.boardIndex = this.boardIndex;
+        articleEntity.boardUrlName = this.boardUrlName;
         articleEntity.writtenAt = this.writtenAt;
         articleEntity.title = this.title;
+        articleEntity.tag = this.tag;
         articleEntity.url = this.url;
         articleEntity.content = this.content;
         articleEntity.view = this.view;
@@ -153,8 +175,10 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
         this.index = articleEntity.index;
         this.userIndex = articleEntity.userIndex;
         this.boardIndex = articleEntity.boardIndex;
+        this.boardUrlName = articleEntity.boardUrlName;
         this.writtenAt = articleEntity.writtenAt;
         this.title = articleEntity.title;
+        this.tag = articleEntity.tag;
         this.url = articleEntity.url;
         this.content = articleEntity.content;
         this.view = articleEntity.view;

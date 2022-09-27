@@ -14,7 +14,7 @@
 }
 
 #main > .main-container > .side-section > .popular-container > .popular-section {
-    height: 17rem;
+    max-height: 17rem;
     overflow: hidden;
 }
 

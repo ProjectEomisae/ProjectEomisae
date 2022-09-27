@@ -2,8 +2,6 @@ package dev.dmchoi.eomisae.controllers;
 
 import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
-import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
-import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
@@ -15,11 +13,7 @@ import dev.dmchoi.eomisae.utils.CryptoUtils;
 import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
 import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import dev.dmchoi.eomisae.services.UserService;
-import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.stereotype.Controller;
@@ -41,7 +35,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.mail.MessagingException;
 import java.util.Optional;
 
 @Controller(value = "dev.dmchoi.eomisae.controllers.UserController")
@@ -61,7 +54,6 @@ public class UserController extends StandardController {
     @RequestMapping(value = "check-email", method = RequestMethod.POST)
     @ResponseBody
     public String postCheckEmail(UserEntity user) {
-
         return String.valueOf(this.userService.getUserCountByEmail(user));
     }
 
@@ -86,6 +78,9 @@ public class UserController extends StandardController {
             LoginVo loginVo) {
         loginVo.setResult(null);
         this.userService.login(loginVo, request);
+        if(loginVo.getIndex() == 0) {
+            loginVo.setIndex(0);
+        }
         this.systemService.putActivityLog(loginVo.getIndex(), request, loginVo);
         if (loginVo.getResult() == LoginResult.SUCCESS) {
             if (!loginVo.isAutosign()) {

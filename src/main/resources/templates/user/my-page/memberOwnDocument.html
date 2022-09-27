@@ -43,8 +43,8 @@
       <tbody>
       <tr th:each="article : ${boardListVo.getArticles()}">
         <td th:text="${article.getIndex()}">2</td>
-        <td class="title"><a th:href="@{/}" th:text="${article.getTitle()}">작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.</a>
-        <a th:href="@{/}"><span th:text="'[' + ${article.getCommentCount()} + ']'"></span></a> </td>
+        <td class="title"><a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}" th:text="${article.getTitle()}">작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.작성 글 2번입니다.</a>
+        <a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}"><span th:text="'[' + ${article.getCommentCount()} + ']'"></span></a> </td>
         <td th:text="${#dates.format(article.getWrittenAt(), 'yyyy-MM-dd')}">2022-08-10</td>
         <td th:text="${article.getView()}">10</td>
         <td th:text="${article.getLike()}">8</td>

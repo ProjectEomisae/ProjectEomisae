@@ -6,39 +6,27 @@ import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
 import dev.dmchoi.eomisae.entities.member.*;
 import dev.dmchoi.eomisae.enums.member.user.RegisterResult;
-import dev.dmchoi.eomisae.entities.member.UserEntity;
-import dev.dmchoi.eomisae.enums.member.user.LoginResult;
 import dev.dmchoi.eomisae.enums.member.user.UserEmailVerifyResult;
 import dev.dmchoi.eomisae.mappers.IUserMapper;
-import dev.dmchoi.eomisae.mappers.IUserMapper;
 import dev.dmchoi.eomisae.utils.CryptoUtils;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
-import dev.dmchoi.eomisae.utils.CryptoUtils;
-import dev.dmchoi.eomisae.utils.CryptoUtils;
 import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
-import dev.dmchoi.eomisae.vos.member.user.LoginVo;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
 
 @Service(value = "dev.dmchoi.eomisae.services.UserService")
 public class UserService {
@@ -73,30 +61,29 @@ public class UserService {
         this.javaMailSender = javaMailSender;
         this.springTemplateEngine = springTemplateEngine;
     }
-<<<<<<<<< Temporary merge branch 1
-=========
 
     // 세션 만료(로그아웃)
     public void expireSession(SessionEntity sessionEntity) {
         sessionEntity.setExpired(true);
         this.userMapper.updateSession(sessionEntity);
     }
+
     // 세션 연장
     public void extendSession(SessionEntity sessionEntity) {
         sessionEntity.setUpdatedAt(new Date());
         sessionEntity.setExpiresAt(DateUtils.addMinutes(sessionEntity.getUpdatedAt(), SESSION_LIFE_TIME));
         this.userMapper.updateSession(sessionEntity);
     }
+
     // 만료일자가 지금보다 미래이고 만료되지 않은 세션만. SELECT
     public SessionEntity getSession(String key) {
         return this.userMapper.selectSessionByKey(key);
     }
+
     // 세션에 유저 전달하기 위함
     public UserEntity getUser(int index) {
         return this.userMapper.selectUserByIndex(index);
     }
-    public void register(RegisterVo registerVo) {
->>>>>>>>> Temporary merge branch 2
 
     public int getUserCountByEmail(UserEntity user) {
         if (!UserService.checkEmail(user.getEmail())) {
@@ -242,49 +229,6 @@ public class UserService {
         System.out.println("emailVerify : " + emailVerifyVo.getResult());
 
     }
-        // 세션 만료(로그아웃)
-        public void expireSession (SessionEntity sessionEntity){
-            sessionEntity.setExpired(true);
-            this.userMapper.updateSession(sessionEntity);
-        }
-        // 세션 연장
-        public void extendSession (SessionEntity sessionEntity){
-            sessionEntity.setUpdatedAt(new Date());
-            sessionEntity.setExpiresAt(DateUtils.addMinutes(sessionEntity.getUpdatedAt(), SESSION_LIFE_TIME));
-            this.userMapper.updateSession(sessionEntity);
-        }
-        // 만료일자가 지금보다 미래이고 만료되지 않은 세션만. SELECT
-        public SessionEntity getSession (String key){
-            return this.userMapper.selectSessionByKey(key);
-        }
-        // 세션에 유저 전달하기 위함
-        public UserEntity getUser ( int index){
-            return this.userMapper.selectUserByIndex(index);
-        }
-
-    // 세션 만료(로그아웃)
-    public void expireSession(SessionEntity sessionEntity) {
-        sessionEntity.setExpired(true);
-        this.userMapper.updateSession(sessionEntity);
-    }
-
-    // 세션 연장
-    public void extendSession(SessionEntity sessionEntity) {
-        sessionEntity.setUpdatedAt(new Date());
-        sessionEntity.setExpiresAt(DateUtils.addMinutes(sessionEntity.getUpdatedAt(), SESSION_LIFE_TIME));
-        this.userMapper.updateSession(sessionEntity);
-    }
-
-    // 만료일자가 지금보다 미래이고 만료되지 않은 세션만. SELECT
-    public SessionEntity getSession(String key) {
-        return this.userMapper.selectSessionByKey(key);
-    }
-
-    // 세션에 유저 전달하기 위함
-    public UserEntity getUser(int index) {
-        return this.userMapper.selectUserByIndex(index);
-    }
-
 
     public void login(LoginVo loginVo, HttpServletRequest request) {
         loginVo.setPassword(CryptoUtils.hash(CryptoUtils.Hash.SHA_512, loginVo.getPassword()));
@@ -311,25 +255,25 @@ public class UserService {
                 Math.random(),
                 Math.random());
 
-            String userAgent = request.getHeader("User-Agent");
-            Date currentDate = new Date();
-            // 사용자를 별도로 인식하기 위한 키
-            sessionKey = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, sessionKey); // 해싱까지 완료
-            SessionEntity sessionEntity = SessionEntity.build()
-                    .setCreatedAt(currentDate)
-                    .setUpdatedAt(currentDate)
-                    .setExpiresAt(DateUtils.addMinutes(currentDate, SESSION_LIFE_TIME))
-                    .setExpired(false)
-                    .setUserIndex(loginVo.getIndex())
-                    .setKey(sessionKey)
-                    .setUa(userAgent);
-            System.out.println("세션키의 만료시간 : " + sessionEntity.getExpiresAt());
-            this.userMapper.insertSession(sessionEntity);
-            loginVo.setSessionEntity(sessionEntity);
-            System.out.println(loginVo.getSessionEntity());
-            ;
-            loginVo.setResult(LoginResult.SUCCESS);
-        }
+        String userAgent = request.getHeader("User-Agent");
+        Date currentDate = new Date();
+        // 사용자를 별도로 인식하기 위한 키
+        sessionKey = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, sessionKey); // 해싱까지 완료
+        SessionEntity sessionEntity = SessionEntity.build()
+                .setCreatedAt(currentDate)
+                .setUpdatedAt(currentDate)
+                .setExpiresAt(DateUtils.addMinutes(currentDate, SESSION_LIFE_TIME))
+                .setExpired(false)
+                .setUserIndex(loginVo.getIndex())
+                .setKey(sessionKey)
+                .setUa(userAgent);
+        System.out.println("세션키의 만료시간 : " + sessionEntity.getExpiresAt());
+        this.userMapper.insertSession(sessionEntity);
+        loginVo.setSessionEntity(sessionEntity);
+        System.out.println(loginVo.getSessionEntity());
+        ;
+        loginVo.setResult(LoginResult.SUCCESS);
+    }
 
     public void putProfileImage(ProfileImageEntity profileImageEntity) {
         System.out.println("서비스" + profileImageEntity);
