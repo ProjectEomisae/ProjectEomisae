@@ -550,8 +550,10 @@
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles {
     width: 100%;
     display: grid;
-    grid-template-rows: repeat(5, 5fr);
+    /*grid-template-rows: repeat(5, 5fr);*/
+    grid-auto-rows: 1fr;
     grid-template-columns: repeat(4, 4fr);
+
     gap: 1rem;
 }
 
