@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="userModifyVo" type="dev.dmchoi.eomisae.vos.member.user.UserModifyVo"*/-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,8 +12,21 @@
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/myPageHeader.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script defer th:src="@{/user/my-page/resources/scripts/memberModifyEmailAddress.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+    <script th:if="${userModifyVo != null && userModifyVo.getResult().name().equals('FAILURE_DUPLICATE_USER_EMAIL')}">
+        alert('해당 이메일은 이미 사용중입니다. 다른 이메일을 입력해주세요.');
+        window.history.back();
+    </script>
+    <script th:if="${userModifyVo != null && userModifyVo.getResult().name().equals('FAILURE')}">
+        alert('알 수 없는 이유로 이메일 수정에 실패하였습니다.\n\n잠시 후 다시 시도해 주세요.');
+        window.history.back();
+    </script>
+    <script th:if="${userModifyVo != null && userModifyVo.getResult().name().equals('SUCCESS')}">
+        alert('입력하신 이메일로 이메일 재설정 인증과 관련된 내용이 전송되었습니다.\n\n해당 메일을 통해 5분이내에 이메일 재설정을 완료해주세요.\n\n5분 이내에 이메일 변경을 하지 않으면 기존 이메일을 사용합니다.');
+        window.location.href = '/user/my-page/memberModifyEmailAddress ';
+    </script>
 </head>
 <body>
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
@@ -20,15 +34,22 @@
 <main class="main" id="main">
     <section class="email-modify-container">
         <h1 class="title">이메일 주소 변경</h1>
+        <div class="hidden-warning" id="hiddenWarning">
+            <div class="warning-container">
+                <span class="warning" id="warning"></span>
+            </div>
+        </div>
         <span class="subtitle">사용하는 이메일 주소를 변경할 수 있습니다.</span>
-        <form class="email-modify-form" method="post">
+        <form class="email-modify-form" id="emailModifyForm" method="post"
+              th:action="@{/user/my-page/memberModifyEmailAddress}">
             <label class="input-container">
                 <span hidden>이메일 주소 변경</span>
-                <input class="email-modify-input" id="emailModifyInput" placeholder="이메일 주소" maxlength="50" name="email" type="email">
+                <input class="email-modify-input" id="emailModifyInput" placeholder="이메일 주소" maxlength="50" name="email"
+                       type="email">
             </label>
             <label class="input-container">
                 <span hidden>신규 메일 주소로 인증 메일 발송</span>
-                <input class="send-email-button" value="신규 메일 주소로 인증 메일 발송" type="button">
+                <input class="send-email-button" value="신규 메일 주소로 인증 메일 발송" type="submit">
             </label>
         </form>
     </section>

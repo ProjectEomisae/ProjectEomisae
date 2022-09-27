@@ -38,6 +38,11 @@ body > .main > .mypage-table > .table-container tr > td {
     padding: 0.5rem;
 }
 
+body > .main > .mypage-table > .table-container tr > .number,
+body > .main > .mypage-table > .table-container tr > .result {
+    width: 4rem;
+}
+
 body > .main > .mypage-table > .table-container tbody tr:hover {
     background-color: rgb(243, 243, 243);
 }
@@ -113,4 +118,14 @@ body > .mypage-header > .header-container > .header-nav > .list.login-log-select
     border-bottom: unset;
     color: rgb(85, 91, 97);
     cursor: unset;
+}
+
+@media screen and (max-width: 760px) {
+    body > .main > .mypage-table {
+        width: calc(100% - 5%);
+    }
+    body > .main > .mypage-table > .table-container tr > .number,
+    body > .main > .mypage-table > .table-container tr > .result {
+        width: 4rem;
+    }
 }

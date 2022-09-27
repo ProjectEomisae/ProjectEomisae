@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="emailVerifyVo" type="dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo"*/-->
+<head>
+    <meta charset="UTF-8">
+    <title>이메일 재설정 메일 인증 - 어미새</title>
+    <script th:if="${emailVerifyVo != null && emailVerifyVo.getResult().name().equals('EXPIRED')}">
+        alert('해당 링크는 이미 사용되었거나 만료되었습니다.');
+        window.close();
+    </script>
+    <script th:if="${emailVerifyVo != null && emailVerifyVo.getResult().name().equals('FAILURE')}">
+        alert('인증 링크가 잘못되었거나 일시적인 오류로 인증을 완료하지 못하였습니다.\n\n잠시 후 다시 시도하시거나 해당 문제가 지속된다면 관리자에게 문의해주세요.')
+        window.close();
+    </script>
+    <script th:if="${emailVerifyVo != null && emailVerifyVo.getResult().name().equals('SUCCESS')}">
+        alert('이메일 주소가 정상적으로 변경되었습니다.\n\n변경된 이메일 주소로 로그인 가능합니다.')
+        window.location.href = '/';
+    </script>
+</head>
+</html>

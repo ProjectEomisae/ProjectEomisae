@@ -10,6 +10,7 @@ body > .main {
 
 body > .main > .user-info {
     width: 100%;
+    text-align: left;
     max-width: 74.375rem;
     padding: 1rem;
 }
@@ -41,7 +42,14 @@ body > .main > .user-info > .info-container > .info > .personal-info {
     margin-left: 1.25rem;
 }
 
+body > .main > .user-info > .info-container > .info > .profile-image > img {
+    width: 3.125rem;
+    height: 3.125rem;
+    object-fit: cover;
+}
+
 body > .main > .user-info > .button-container {
+    width: 100%;
     display: flex;
     margin: 2rem 0 2rem 0;
 }
@@ -55,6 +63,7 @@ body > .main > .user-info > .button-container > .button {
     cursor: pointer;
     display: inline-block;
     font-size: 0.75rem;
+    text-align: center;
     text-shadow: 0 0.0625rem 0 rgb(var(--color-white));
     padding: 0.185rem 0.75rem;
 }
@@ -85,4 +94,14 @@ body > .mypage-header > .header-container > .header-nav > .list.info-selected {
     border-bottom: unset;
     color: rgb(85, 91, 97);
     cursor: unset;
+}
+
+@media screen and (max-width: 760px) {
+    body > .main > .user-info > .info-container > .info > .list {
+        width: 8.5rem;
+    }
+
+    body > .main > .user-info > .button-container {
+        width: 100%;
+    }
 }

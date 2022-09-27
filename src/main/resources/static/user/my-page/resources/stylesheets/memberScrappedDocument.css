@@ -38,6 +38,10 @@ body > .main > .mypage-table > .table-container tr > td {
     padding: 0.5rem;
 }
 
+body > .main > .mypage-table > .table-container tr > .number {
+    width: 1.5rem;
+}
+
 body > .main > .mypage-table > .table-container tr > .title ,
 body > .main > .mypage-table > .table-container tr > .writer {
     color: rgb(var(--color-pink));
