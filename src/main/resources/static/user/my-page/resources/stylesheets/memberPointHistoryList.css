@@ -34,6 +34,12 @@ body > .main > .mypage-table > .table-container tr td {
     border-top: 0.0625rem solid rgb(220, 220, 220);
 }
 
+body > .main > .mypage-table > .table-container tr > th:nth-child(2),
+body > .main > .mypage-table > .table-container tr > th:nth-child(4)
+{
+    width: 2.5rem;
+}
+
 body > .main > .mypage-table > .table-container tr > th,
 body > .main > .mypage-table > .table-container tr > td {
     padding: 0.5rem;

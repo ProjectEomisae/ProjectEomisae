@@ -36,8 +36,7 @@ body > .main > .mypage-table > .table-container > thead > tr {
 }
 
 body > .main > .mypage-table > .table-container tr > td {
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
+    padding: 0.5rem;
 }
 
 body > .main > .mypage-table > .table-container tbody {
@@ -48,6 +47,7 @@ body > .main > .mypage-table > .table-container tbody {
 body > .main > .mypage-table > .table-container tbody > .auto-login-info-tr > td {
     border-top: 0.0625rem solid rgb(187, 187, 187);
 }
+
 body > .main > .mypage-table > .table-container tbody > .user-agent-tr {
     color: rgb(153, 153, 153);
     font-size: 0.75rem;
@@ -78,4 +78,10 @@ body > .mypage-header > .header-container > .header-nav > .list.auto-login-selec
     border-bottom: unset;
     color: rgb(85, 91, 97);
     cursor: unset;
+}
+
+@media screen and (max-width: 760px) {
+    body > .main > .mypage-table {
+        width: auto;
+    }
 }

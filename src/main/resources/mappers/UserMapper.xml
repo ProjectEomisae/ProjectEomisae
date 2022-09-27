@@ -2,13 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dev.dmchoi.eomisae.mappers.IUserMapper">
-    <insert id="insertSession"
-            parameterType="dev.dmchoi.eomisae.entities.member.SessionEntity">
-        INSERT INTO `eomisae_member`.`sessions`(`created_at`, `updated_at`, `expires_at`, `expired_flag`, `user_index`,
-                                                `key`, `ua`)
-        VALUES (#{createdAt}, #{updatedAt}, #{expiresAt}, #{isExpired}, #{userIndex}, #{key}, #{ua})
-    </insert>
-
     <select id="selectUser"
             resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
         SELECT `index`                   AS `index`,
@@ -33,6 +26,135 @@
           AND `password` = #{password}
         LIMIT 1
     </select>
+
+    <select id="selectUserByIndex"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        SELECT `index`                   AS `index`,
+               `email`                   AS `email`,
+               `password`                AS `password`,
+               `user_id`                 AS `userId`,
+               `nickname`                AS `nickname`,
+               `point`                   AS `point`,
+               `level`                   AS `level`,
+               `created_at`              AS `createdAt`,
+               `find_password_index`     AS `findPasswordIndex`,
+               `find_password_answer`    AS `findPasswordAnswer`,
+               `terms_agreed_at`         AS `termsAgreedAt`,
+               `mail_received_at`        AS `mailReceivedAt`,
+               `terms_agreed_flag`       AS `isTermsAgreed`,
+               `mail_received_flag`      AS `isMailReceived`,
+               `message_reception_index` AS `messageReceptionIndex`,
+               `email_verified_flag`     AS `isEmailVerified`,
+               `profile_id`              AS `profileId`
+        FROM `eomisae_member`.`users`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserEmailByIndex"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        SELECT `index` AS `index`,
+               `email` AS `email`
+        FROM `eomisae_member`.`users`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserPasswordByIndex"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        SELECT `index`    AS `index`,
+               `password` AS `password`
+        FROM `eomisae_member`.`users`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectProfileImage"
+            resultType="dev.dmchoi.eomisae.entities.member.ProfileImageEntity">
+        SELECT `id`   AS `id`,
+               `data` AS `data`
+        FROM `eomisae_member`.`profile_images`
+        WHERE `id` = #{id}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserEmailVerificationCode"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity">
+        SELECT `index`        AS `index`,
+               `created_at`   AS `createdAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`,
+               `code`         AS `code`,
+               `salt`         AS `salt`,
+               `user_index`   AS `userIndex`
+        FROM `eomisae_member`.`user_email_verification_code`
+        WHERE `code` = #{code}
+          AND `salt` = #{salt}
+        LIMIT 1;
+    </select>
+
+    <select id="selectUserModifyEmailVerificationCode"
+            resultType="dev.dmchoi.eomisae.entities.member.ModifyUserEmailVerificationCodeEntity">
+        SELECT `index`        AS `index`,
+               `created_at`   AS `createdAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`,
+               `code`         AS `code`,
+               `salt`         AS `salt`,
+               `user_index`   AS `userIndex`,
+               `modify_email` AS `modifyEmail`
+        FROM `eomisae_member`.`modify_user_email_verification_code`
+        WHERE `code` = #{code}
+          AND `salt` = #{salt}
+        LIMIT 1;
+    </select>
+
+    <select id="selectUserCountById"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_member`.`users`
+        WHERE `user_id` = #{userId}
+    </select>
+
+    <select id="selectUserCountByNickname"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_member`.`users`
+        WHERE `nickname` = #{nickname}
+    </select>
+
+    <select id="selectSessionByKey"
+            resultType="dev.dmchoi.eomisae.entities.member.SessionEntity">
+        SELECT `created_at`   AS `createdAt`,
+               `updated_at`   AS `updatedAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`,
+               `user_index`   AS `userIndex`,
+               `key`          AS `key`,
+               `ua`           AS `ua`
+        FROM `eomisae_member`.`sessions`
+        WHERE `key` = #{key}
+          AND `expires_at` > NOW()
+          AND `expired_flag` = FALSE
+        LIMIT 1
+    </select>
+
+    <delete id="deleteProfileImage"
+            parameterType="dev.dmchoi.eomisae.entities.member.ProfileImageEntity">
+        DELETE
+        FROM `eomisae_member`.`profile_images`
+        WHERE `id` = #{id}
+        LIMIT 1
+    </delete>
+
+    <insert id="insertSession"
+            parameterType="dev.dmchoi.eomisae.entities.member.SessionEntity">
+        INSERT INTO `eomisae_member`.`sessions`(`created_at`, `updated_at`, `expires_at`, `expired_flag`, `user_index`,
+                                                `key`, `ua`)
+        VALUES (#{createdAt}, #{updatedAt}, #{expiresAt}, #{isExpired}, #{userIndex}, #{key}, #{ua})
+    </insert>
 
     <insert id="insertProfileImage"
             parameterType="dev.dmchoi.eomisae.entities.member.ProfileImageEntity">
@@ -63,44 +185,12 @@
         VALUES (#{createdAt}, #{expiresAt}, #{isExpired}, #{code}, #{salt}, #{userIndex})
     </insert>
 
-    <select id="selectUserEmailVerificationCode"
-            resultType="dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity">
-        SELECT `index`        AS `index`,
-               `created_at`   AS `createdAt`,
-               `expires_at`   AS `expiresAt`,
-               `expired_flag` AS `isExpired`,
-               `code`         AS `code`,
-               `salt`         AS `salt`,
-               `user_index`   AS `userIndex`
-        FROM `eomisae_member`.`user_email_verification_code`
-        WHERE `code` = #{code}
-          AND `salt` = #{salt}
-        LIMIT 1;
-    </select>
-
-    <select id="selectUserByIndex"
-            resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
-        SELECT `index`                   AS `index`,
-               `email`                   AS `email`,
-               `password`                AS `password`,
-               `user_id`                 AS `userId`,
-               `nickname`                AS `nickname`,
-               `point`                   AS `point`,
-               `level`                   AS `level`,
-               `created_at`              AS `createdAt`,
-               `find_password_index`     AS `findPasswordIndex`,
-               `find_password_answer`    AS `findPasswordAnswer`,
-               `terms_agreed_at`         AS `termsAgreedAt`,
-               `mail_received_at`        AS `mailReceivedAt`,
-               `terms_agreed_flag`       AS `isTermsAgreed`,
-               `mail_received_flag`      AS `isMailReceived`,
-               `message_reception_index` AS `messageReceptionIndex`,
-               `email_verified_flag`     AS `isEmailVerified`,
-               `profile_id`              AS `profileId`
-        FROM `eomisae_member`.`users`
-        WHERE `index` = #{index}
-        LIMIT 1
-    </select>
+    <insert id="insertUserModifyEmailVerificationCode"
+            parameterType="dev.dmchoi.eomisae.entities.member.ModifyUserEmailVerificationCodeEntity">
+        INSERT INTO `eomisae_member`.`modify_user_email_verification_code`(`created_at`, `expires_at`, `expired_flag`,
+                                                                           `code`, `salt`, `user_index`, `modify_email`)
+        VALUES (#{createdAt}, #{expiresAt}, #{isExpired}, #{code}, #{salt}, #{userIndex}, #{modifyEmail})
+    </insert>
 
     <update id="updateUser"
             parameterType="dev.dmchoi.eomisae.entities.member.UserEntity">
@@ -138,6 +228,12 @@
         LIMIT 1
     </update>
 
+    <update id="updateUserModifyEmailVerificationCode"
+            parameterType="dev.dmchoi.eomisae.entities.member.ModifyUserEmailVerificationCodeEntity">
+        UPDATE `eomisae_member`.`modify_user_email_verification_code`
+        SET `expired_flag` = true
+        WHERE `user_index` = #{userIndex}
+    </update>
 
     <select id="selectUserCountByEmail"
             parameterType="dev.dmchoi.eomisae.entities.member.UserEntity"
@@ -145,38 +241,6 @@
         SELECT COUNT(0)
         FROM `eomisae_member`.`users`
         WHERE `email` = #{email}
-    </select>
-
-    <select id="selectUserCountById"
-            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity"
-            resultType="_int">
-        SELECT COUNT(0)
-        FROM `eomisae_member`.`users`
-        WHERE `user_id` = #{userId}
-    </select>
-
-    <select id="selectUserCountByNickname"
-            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity"
-            resultType="_int">
-        SELECT COUNT(0)
-        FROM `eomisae_member`.`users`
-        WHERE `nickname` = #{nickname}
-    </select>
-
-    <select id="selectSessionByKey"
-            resultType="dev.dmchoi.eomisae.entities.member.SessionEntity">
-        SELECT `created_at`   AS `createdAt`,
-               `updated_at`   AS `updatedAt`,
-               `expires_at`   AS `expiresAt`,
-               `expired_flag` AS `isExpired`,
-               `user_index`   AS `userIndex`,
-               `key`          AS `key`,
-               `ua`           AS `ua`
-        FROM `eomisae_member`.`sessions`
-        WHERE `key` = #{key}
-          AND `expires_at` > NOW()
-          AND `expired_flag` = FALSE
-        LIMIT 1
     </select>
 
     <update id="updateSession"
@@ -196,5 +260,53 @@
           AND `expires_at` > NOW()
           AND `expired_flag` = FALSE
     </update>
+
+    <update id="updateProfile"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        UPDATE `eomisae_member`.`users`
+        SET `email`                   = #{email},
+            `password`                = #{password},
+            `user_id`                 = #{userId},
+            `nickname`                = #{nickname},
+            `point`                   = #{point},
+            `level`                   = #{level},
+            `created_at`              = #{createdAt},
+            `find_password_index`     = #{findPasswordIndex},
+            `find_password_answer`    = #{findPasswordAnswer},
+            `terms_agreed_at`         = #{termsAgreedAt},
+            `mail_received_at`        = #{mailReceivedAt},
+            `terms_agreed_flag`       = #{isTermsAgreed},
+            `mail_received_flag`      = #{isMailReceived},
+            `message_reception_index` = #{messageReceptionIndex},
+            `email_verified_flag`     = #{isEmailVerified},
+            `profile_id`              = #{profileId}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateModifyEmail"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        UPDATE `eomisae_member`.`users`
+        SET `email`               = #{email},
+            `email_verified_flag` = #{isEmailVerified}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateModifyUserPassword"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        UPDATE `eomisae_member`.`users`
+        SET `password` = #{password}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <delete id="deleteUserByEmail"
+            parameterType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        DELETE
+        FROM `eomisae_member`.`users`
+        WHERE `email` = #{email}
+        LIMIT 1;
+    </delete>
 
 </mapper>

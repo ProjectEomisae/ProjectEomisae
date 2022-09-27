@@ -7,16 +7,21 @@ import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
+import dev.dmchoi.eomisae.enums.member.user.ModifyResult;
+import dev.dmchoi.eomisae.interfaces.IResult;
 import dev.dmchoi.eomisae.models.PagingModel;
 import dev.dmchoi.eomisae.services.bbs.BoardListService;
 import dev.dmchoi.eomisae.services.SystemService;
 import dev.dmchoi.eomisae.services.UserService;
 import dev.dmchoi.eomisae.utils.CryptoUtils;
-import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
+import dev.dmchoi.eomisae.vos.member.user.*;
 import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import dev.dmchoi.eomisae.services.UserService;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +41,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.mail.MessagingException;
 import java.util.Optional;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -53,7 +57,7 @@ public class UserController extends StandardController {
     private final BoardListService boardListService;
 
     @Autowired
-    protected UserController(SystemService systemService, UserService userService, BoardListService boardListService) {
+    protected UserController(SystemService systemService, UserService userService, BoardListService boardListService, BoardListService boardListService1) {
         super(systemService);
         this.userService = userService;
         this.boardListService = boardListService;
@@ -62,6 +66,12 @@ public class UserController extends StandardController {
     @RequestMapping(value = "check-email", method = RequestMethod.POST)
     @ResponseBody
     public String postCheckEmail(UserEntity user) {
+        return String.valueOf(this.userService.getUserCountByEmail(user));
+    }
+
+    @RequestMapping(value = "/my-page/check-email", method = RequestMethod.POST)
+    @ResponseBody
+    public String postMyPageCheckEmail(UserEntity user) {
         return String.valueOf(this.userService.getUserCountByEmail(user));
     }
 
@@ -130,6 +140,7 @@ public class UserController extends StandardController {
         return modelAndView;
     }
 
+    // TODO:  이메일 변경 인증 메일 submit 후 warning 띄우기
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.POST)
     public ModelAndView postMemberSignUpForm(RegisterVo registerVo,
                                              ModelAndView modelAndView,
@@ -141,23 +152,37 @@ public class UserController extends StandardController {
             tempUserId = tempUserId.substring(0, 6);
             registerVo.setUserId(tempUserId);
         }
-
-        System.out.println(profileImage);
-        String id = String.format("%s%f%f", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()),
-                Math.random(),
-                Math.random());
-        id = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, id);
-        ProfileImageEntity profileImageEntity = ProfileImageEntity.build()
-                .setId(id)
-                .setData(profileImage.getBytes());
-        registerVo.setProfileId(id); // String
-        System.out.println("set한 id : " + id);
-        this.userService.putProfileImage(profileImageEntity);
+        if (!profileImage.isEmpty()) {
+            String profileId = String.format("%s%f%f", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()),
+                    Math.random(),
+                    Math.random());
+            profileId = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, profileId);
+            ProfileImageEntity profileImageEntity = ProfileImageEntity.build()
+                    .setId(profileId)
+                    .setData(profileImage.getBytes());
+            registerVo.setProfileId(profileId); // 프로필 이미지 user 에 set
+            this.userService.putProfileImage(profileImageEntity); // 프로필 이미지 테이블에 insert
+            modelAndView.addObject("profileId", profileId);
+        }
         this.userService.register(registerVo);
-        modelAndView.addObject("profileId", id);
         modelAndView.addObject("registerVo", registerVo);
         modelAndView.setViewName("user/memberSignUpForm");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "profile-id", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getProfileId(@RequestParam(value = "id", required = true) String id,
+                                               HttpServletResponse response) {
+        ProfileImageEntity profileImageEntity = this.userService.getProfileImage(id);
+        if (profileImageEntity == null) {
+            response.setStatus(404);
+            return null;
+        }
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus status = HttpStatus.OK;
+        headers.add("Content-Length", String.valueOf(profileImageEntity.getData().length));
+        headers.add("Content-Type", "image/png");
+        return new ResponseEntity<>(profileImageEntity.getData(), headers, status);
     }
 
     @RequestMapping(value = "verify-email", method = RequestMethod.GET)
@@ -165,7 +190,6 @@ public class UserController extends StandardController {
                                        EmailVerifyVo emailVerifyVo,
                                        @RequestParam(name = "code", required = true) String code,
                                        @RequestParam(name = "salt", required = true) String salt) {
-        emailVerifyVo.setIndex(0);
         emailVerifyVo.setResult(null);
         emailVerifyVo.setCode(code);
         emailVerifyVo.setSalt(salt);
@@ -175,25 +199,19 @@ public class UserController extends StandardController {
         return modelAndView;
     }
 
-    // @RequestMapping(value = "memberSignUpForm/profile/add", method = RequestMethod.POST)
-    // public ModelAndView postProfileImageAdd(ModelAndView modelAndView,
-    //                                         @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws IOException {
-    //     System.out.println(profileImage);
-    //     String id = String.format("%s%f%f", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()),
-    //             Math.random(),
-    //             Math.random());
-    //     id = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, id);
-    //     ProfileImageEntity profileImageEntity = ProfileImageEntity.build()
-    //             .setId(id)
-    //             .setData(profileImage.getBytes());
-    //     System.out.println("set한 id : " + id);
-    //     this.userService.putProfileImage(profileImageEntity);
-    //     modelAndView.addObject("hashingId", profileImageEntity.getId());
-    //     modelAndView.setViewName("redirect:/user/login");
-    //     return modelAndView;
-    // }
-
-
+    @RequestMapping(value = "verify-modify-email", method = RequestMethod.GET)
+    public ModelAndView getVerifyModifyEmail(ModelAndView modelAndView,
+                                             EmailVerifyVo emailVerifyVo,
+                                             @RequestParam(name = "code", required = true) String code,
+                                             @RequestParam(name = "salt", required = true) String salt) {
+        emailVerifyVo.setResult(null);
+        emailVerifyVo.setCode(code);
+        emailVerifyVo.setSalt(salt);
+        this.userService.modifyEmailVerify(emailVerifyVo);
+        modelAndView.addObject("emailVerifyVo", emailVerifyVo);
+        modelAndView.setViewName("user/verifyModifyEmail");
+        return modelAndView;
+    }
 
     @RequestMapping(value = "/my-page/memberInfo", method = RequestMethod.GET)
     public ModelAndView getMemberInfo(ModelAndView modelAndView) {
@@ -312,16 +330,90 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberModifyEmailAddress", method = RequestMethod.GET)
-    public ModelAndView getMemberModifyEmailAddressr(ModelAndView modelAndView) {
+    public ModelAndView getMemberModifyEmailAddress(ModelAndView modelAndView) {
+
+        modelAndView.setViewName("user/my-page/memberModifyEmailAddress");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/my-page/memberModifyEmailAddress", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView postMemberModifyEmailAddress(ModelAndView modelAndView,
+                                                     @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                                     UserModifyVo userModifyVo,
+                                                     @RequestParam(value = "email", required = false) String tempEmail) throws MessagingException {
+        user.setEmail(tempEmail);
+        user.setEmailVerified(false);
+        this.userService.modifyEmail(user, userModifyVo);
+        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
+        modelAndView.addObject("userModifyVo", userModifyVo);
         modelAndView.setViewName("user/my-page/memberModifyEmailAddress");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberModifyInfo", method = RequestMethod.GET)
     public ModelAndView getMemberModifyInfo(ModelAndView modelAndView) {
+
         modelAndView.setViewName("user/my-page/memberModifyInfo");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/my-page/memberModifyInfo", method = RequestMethod.POST)
+    public ModelAndView postMemberModifyInfo(HttpServletResponse response,
+                                             @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                             ModelAndView modelAndView, UserModifyVo userModifyVo,
+                                             @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws IOException {
+        userModifyVo.setResult(null);
+        if (user == null) {
+            response.setStatus(404);
+            return null;
+        }
+        if (userModifyVo.getUserId() == null || userModifyVo.getUserId().equals("")) {
+            String tempUserId = UUID.randomUUID().toString().replace("-", "");
+            tempUserId = tempUserId.substring(0, 6);
+            userModifyVo.setUserId(tempUserId);
+        }
+        if (!profileImage.isEmpty()) {
+            String profileId = String.format("%s%f%f", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()),
+                    Math.random(),
+                    Math.random());
+            profileId = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, profileId);
+            ProfileImageEntity profileImageEntity = ProfileImageEntity.build()
+                    .setId(profileId)
+                    .setData(profileImage.getBytes());
+            user.setProfileId(profileId);
+            this.userService.putProfileImage(profileImageEntity);
+            modelAndView.addObject("profileId", profileId);
+        }
+        this.userService.modifyProfile(user, userModifyVo);
+        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
+        modelAndView.addObject("userModifyVo", userModifyVo);
+        modelAndView.setViewName("user/my-page/memberInfo");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/my-page/memberModifyInfo/delete", method = RequestMethod.GET)
+    public ModelAndView getProfileImageDelete(HttpServletResponse response,
+                                              @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                              ModelAndView modelAndView,
+                                              @RequestParam(value = "id", required = true) String profileId,
+                                              @RequestParam(value = "uid", required = true) int userIndex) {
+
+        if (user == null) {
+            response.setStatus(404);
+            return null;
+        }
+        UserEntity userEntity = new UserEntity();
+        ProfileImageEntity profileImageEntity = new ProfileImageEntity();
+        userEntity.setIndex(userIndex);
+        profileImageEntity.setId(profileId);
+        System.out.println(userEntity.getIndex());
+        System.out.println(profileImageEntity.getId());
+        this.userService.deleteProfileImage(userEntity, profileImageEntity);
+        modelAndView.setViewName("/user/my-page/memberModifyInfo");
+        return modelAndView;
+    }
+
 
     @RequestMapping(value = "/my-page/memberModifyPassword", method = RequestMethod.GET)
     public ModelAndView getMemberModifyPassword(ModelAndView modelAndView) {
@@ -329,11 +421,53 @@ public class UserController extends StandardController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/my-page/memberModifyPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public String postMemberModifyPassword(
+            @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+            UserModifyVo userModifyVo,
+            @RequestParam(value = "modifyPassword", required = false) String modifyPassword,
+            @RequestParam(value = "modifyPasswordCheck", required = false) String modifyPasswordCheck) {
+        JSONObject responseJson = new JSONObject();
+        this.userService.modifyPassword(user, userModifyVo, modifyPassword, modifyPasswordCheck);
+        responseJson.put("result", userModifyVo.getResult().name().toLowerCase());
+        return responseJson.toString();
+    }
+
     @RequestMapping(value = "/my-page/memberLeave", method = RequestMethod.GET)
     public ModelAndView getMemberLeave(ModelAndView modelAndView) {
         modelAndView.setViewName("user/my-page/memberLeave");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/my-page/memberLeave", method = RequestMethod.POST)
+    @ResponseBody
+    public String postMemberLeave(@RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                  DeleteUserVo deleteUserVo) {
+        JSONObject responseJson = new JSONObject();
+        this.userService.deleteUser(user, deleteUserVo);
+        responseJson.put("result", deleteUserVo.getResult().name().toLowerCase());
+        return responseJson.toString();
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

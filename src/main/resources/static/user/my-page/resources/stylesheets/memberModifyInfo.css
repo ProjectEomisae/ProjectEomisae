@@ -4,20 +4,19 @@ body > .main {
     width: 100%;
 }
 
-body > .main > .register-form > .register {
-    width: 100%;
+body > .main > .modify-profile-form > .modify-profile {
     max-width: 74.375rem;
     font-size: 0.8125rem;
     padding: 1rem;
 }
 
-body > .main > .register-form > .register > .title {
+body > .main > .modify-profile-form > .modify-profile > .title {
     font-size: 1.375rem;
     font-weight: 300;
     margin-bottom: 1.25rem;
 }
 
-body > .main > .register-form > .register > .label-container {
+body > .main > .modify-profile-form > .modify-profile > .label-container {
     align-items: flex-start;
     display: flex;
     flex-direction: row;
@@ -25,76 +24,134 @@ body > .main > .register-form > .register > .label-container {
     margin: 1.5rem 1.5rem 1.5rem 0;
 }
 
-body > .main > .register-form > .register > .label-container > .input-container {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .input-container {
     padding-left: 1.25rem;
 }
 
-body > .main > .register-form > .register > .label-container > .input-container > .input {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .input-container > .input {
     width: 12.875rem;
-    border: 0.0625rem solid #ccc;
+    border: 0.0625rem solid rgb(204, 204, 204);
     border-radius: 0.2rem;
     padding: 0 0.425rem;
     box-shadow: unset;
 }
 
-body > .main > .register-form > .register > .label-container > .input-container > .input-text {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .input-container > .input-email {
+    background-color: rgb(238, 238, 238);
+    cursor: not-allowed;
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .input-container > .input.input-profile-image {
+    width: 12.875rem;
+    border: 0.0625rem solid rgb(204, 204, 204);
+    border-radius: 0.2rem;
+    padding: 0 0.425rem;
+    box-shadow: unset;
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .input-container > .input-text {
     display: inline-block;
     margin-left: 0.5rem;
 }
 
-body > .main > .register-form > .register > .label-container > .control-label {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container > .image-container > .image {
+    width: 3.125rem;
+    height: 3.125rem;
+    object-fit: cover;
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .control-label {
     width: 10rem;
     text-align: right;
     flex-shrink: 0;
 }
 
-body > .main > .register-form > .register > .label-container > .control-label > .star {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .control-label > .star {
     color: rgb(var(--color-red));
 }
 
-body > .main > .register-form > .register > .label-container > .profile-upload-container > .input-container {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container {
+    align-items: flex-end;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding-left: 1.25rem;
 }
 
-body > .main > .register-form > .register > .label-container > .profile-upload-container > .input-container > .input {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container > .image-container {
+    display: inherit;
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-text {
+    margin-left: 1.25rem;
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container > .input {
     margin-bottom: 0.625rem;
 }
 
-body > .main > .register-form > .register > .label-container > .permission-container {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .input-container > .input-blue:focus {
+    border-color: rgb(82, 168, 236);
+    box-shadow: 0 0 0.375rem rgb(125, 194, 248);
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container > .file-upload {
+    width: 100%;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container > .file-upload > .delete-button {
+    width: 1.5rem;
+    background-color: rgb(239, 239, 239);
+    border-radius: 0.15rem;
+    border: 0.0625rem solid rgb(110, 110, 110);
+    color: rgb(0,0,0);
+    cursor: default;
+    text-align: center;
+    padding: 0 0.375rem 0.025rem 0.375rem;
+    margin: 0 0.3rem 0 0.5rem;
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container > .file-upload > .delete-button:hover {
+    background-color: rgb(224, 224, 224);
+    border: 0.0625rem solid rgb(70, 70, 70);
+}
+
+body > .main > .modify-profile-form > .modify-profile > .label-container > .permission-container {
     display: flex;
     flex-direction: column;
 }
 
-body > .main > .register-form > .register > .label-container > .permission-container > .radio-container {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .permission-container > .radio-container {
     padding-left: 1.25rem;
     margin-bottom: 0.425rem;
 }
 
-body > .main > .register-form > .register > .label-container > .permission-container > .radio-container > .input {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .permission-container > .radio-container > .input {
     appearance: auto;
-
 }
 
-body > .main > .register-form > .register > .label-container > .permission-container > .radio-container > span {
+body > .main > .modify-profile-form > .modify-profile > .label-container > .permission-container > .radio-container > span {
     margin-left: 0.225rem;
 }
 
-body > .main > .register-form > .register > .submit-container {
+body > .main > .modify-profile-form > .modify-profile > .submit-container {
+    width: 100%;
     align-items: stretch;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border-top: 0.0625rem solid #ccc;
+    border-top: 0.0625rem solid rgb(204, 204, 204);
     margin-bottom: 3rem;
 }
 
-body > .main > .register-form > .register > .submit-container > .button {
+body > .main > .modify-profile-form > .modify-profile > .submit-container > .button {
     margin-top: 0.725rem;
 }
 
-body > .main > .register-form > .register > .submit-container > .button.cancel-button {
+body > .main > .modify-profile-form > .modify-profile > .submit-container > .button.cancel-button {
     background: linear-gradient(to bottom, rgb(var(--color-white)) 5%, rgb(232, 232, 232) 100%);
     background-color: rgb(var(--color-white));
     border: 0.0625rem solid rgb(211, 211, 211);
@@ -106,11 +163,11 @@ body > .main > .register-form > .register > .submit-container > .button.cancel-b
     padding: 0.185rem 0.75rem;
 }
 
-body > .main > .register-form > .register > .submit-container > .button.cancel-button:hover {
+body > .main > .modify-profile-form > .modify-profile > .submit-container > .button.cancel-button:hover {
     filter: brightness(95%);
 }
 
-body > .main > .register-form > .register > .submit-container > .button.register-button {
+body > .main > .modify-profile-form > .modify-profile > .submit-container > .button.register-button {
     background-color: rgb(87, 87, 87);
     background: linear-gradient(to bottom, rgb(87, 87, 87) 5%, rgb(0, 0, 0) 100%);
     border-radius: 0.3rem;
@@ -123,7 +180,21 @@ body > .main > .register-form > .register > .submit-container > .button.register
     padding: 0.185rem 0.75rem;
 }
 
-body > .main > .register-form > .register > .submit-container > .button.register-button:hover {
+body > .main > .modify-profile-form > .modify-profile > .submit-container > .button.register-button:hover {
     background: linear-gradient(to bottom, rgb(38, 38, 38) 1%, rgb(0, 0, 0) 100%);
     color: rgb(var(--color-white));
+}
+
+@media screen and (max-width: 760px) {
+    body > .main > .modify-profile-form > .modify-profile > .label-container > .control-label {
+        width: 5rem;
+    }
+
+    body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container > .file-upload {
+        flex-direction: column;
+    }
+
+    body > .main > .modify-profile-form > .modify-profile > .label-container > .profile-upload-container > .input-container > .file-upload > .input-profile-image.on {
+        margin: 0.3rem 0.3rem 0 0.5rem;
+    }
 }

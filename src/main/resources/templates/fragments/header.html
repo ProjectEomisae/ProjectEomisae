@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="getNickname" type="dev.dmchoi.eomisae.entities.member.UserEntity"*/-->
+<!--/*@thymesVar id="user" type="dev.dmchoi.eomisae.entities.member.UserEntity"*/-->
 <body>
 <header class="header" th:fragment="content">
     <div class="progress-container">
@@ -228,7 +229,11 @@
                         </div>
                         <div class="user-info-container">
                             <div class="user-profile">
-                                <div><img alt="프로필 이미지" th:src="@{/resources/images/profile.png}"></div>
+                                <div>
+                                    <img th:if="${user.getProfileId() != null && user.getProfileId() != ''}"
+                                         th:src="@{'/user/profile-id?id=' + ${user.getProfileId()}}">
+                                    <img alt="프로필 이미지" th:if="${user.getProfileId() == null || user.getProfileId() == ''}" th:src="@{/resources/images/profile.png}">
+                                </div>
                             </div>
                             <div class="menu-box">
                                 <div class="box"></div>

@@ -20,77 +20,77 @@
 <main class="main" id="main">
     <section class="mypage-table">
         <h1 class="title">회원차단내역</h1>
-        <table class="table-container">
-            <div class="count-container">
-                <div class="total-count">
-                    <span>Total : </span>
-                    <span>0,</span>
+            <table class="table-container">
+                <div class="count-container">
+                    <div class="total-count">
+                        <span>Total : </span>
+                        <span>0,</span>
+                    </div>
+                    <div class="page">
+                        <span>Page : </span>
+                        <span>1/1</span>
+                    </div>
                 </div>
-                <div class="page">
-                    <span>Page : </span>
-                    <span>1/1</span>
-                </div>
-            </div>
-            <thead>
-            <tr>
-                <th>번호</th>
-                <th>차단한 회원</th>
-                <th>차단된 회원</th>
-                <th>차단일</th>
-                <th>만료일</th>
-                <th>최근 활동</th>
-                <th>
-                    <label>
-                        <input class="user-all-check" name="userAllSelect" type="checkbox">
-                    </label>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>2</td>
-                <td>뮤지컬러풀</td>
-                <td>사리</td>
-                <td>22.08.12 16:01:36</td>
-                <td>23.08.12 16.01.36</td>
-                <td>22.08.12 12:54</td>
-                <td>
-                    <label>
-                        <input class="user-checkbox" name="userSelect" type="checkbox">
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>뮤지컬러풀</td>
-                <td>사리</td>
-                <td>22.08.12 16:01:36</td>
-                <td>23.08.12 16.01.36</td>
-                <td>22.08.12 12:54</td>
-                <td>
-                    <label>
-                        <input class="user-checkbox" name="messageSelect" type="checkbox">
-                    </label>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr class="delete-button-tr">
-                <td colspan="7">
-                    <label>
-                        <input class="delete-button" name="deleteMessage" type="submit" value="삭제">
-                    </label>
-                </td>
-            </tr>
-            <tr class="page-tr">
-                <td colspan="7">
-                    <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
-                    <a class="page-button page selected" th:href="@{/}">1</a>
-                    <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>차단한 회원</th>
+                    <th>차단된 회원</th>
+                    <th>차단일</th>
+                    <th>만료일</th>
+                    <th>최근 활동</th>
+                    <th>
+                        <label>
+                            <input class="user-all-check" name="userAllSelect" type="checkbox">
+                        </label>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td data-label="번호">2</td>
+                    <td data-label="차단한 회원">뮤지컬러풀</td>
+                    <td data-label="차단된 회원">사리</td>
+                    <td data-label="차단일">22.08.12 16:01:36</td>
+                    <td data-label="만료일">23.08.12 16.01.36</td>
+                    <td data-label="최근 활동">22.08.12 12:54</td>
+                    <td>
+                        <label>
+                            <input class="user-checkbox" name="userSelect" type="checkbox">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="번호">1</td>
+                    <td data-label="차단한 회원">뮤지컬러풀</td>
+                    <td data-label="차단된 회원">사리</td>
+                    <td data-label="차단일">22.08.12 16:01:36</td>
+                    <td data-label="만료일">23.08.12 16.01.36</td>
+                    <td data-label="최근 활동">22.08.12 12:54</td>
+                    <td>
+                        <label>
+                            <input class="user-checkbox" name="messageSelect" type="checkbox">
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr class="delete-button-tr">
+                    <td colspan="7">
+                        <label>
+                            <input class="delete-button" name="deleteMessage" type="submit" value="삭제">
+                        </label>
+                    </td>
+                </tr>
+                <tr class="page-tr">
+                    <td colspan="7">
+                        <a class="page-button prev-button" th:href="@{/}">« 첫 페이지</a>
+                        <a class="page-button page selected" th:href="@{/}">1</a>
+                        <a class="page-button next-button" th:href="@{/}">끝 페이지 »</a>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
     </section>
 </main>
 <th:block th:replace="~{fragments/footer.html :: content}"></th:block>
