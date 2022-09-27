@@ -2,6 +2,8 @@ package dev.dmchoi.eomisae.controllers;
 
 import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
+import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
+import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
@@ -14,6 +16,9 @@ import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
 import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import dev.dmchoi.eomisae.services.UserService;
+import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.stereotype.Controller;
@@ -30,6 +35,9 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.mail.MessagingException;
+import java.util.Optional;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -67,7 +75,6 @@ public class UserController extends StandardController {
     @ResponseBody
     public String postCheckNickname(UserEntity user) {
         return String.valueOf(this.userService.getUserCountByNickname(user));
-
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
