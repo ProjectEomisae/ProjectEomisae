@@ -13,6 +13,7 @@ public class ArticleReadVo extends ArticleEntity implements IResult<ArticleReadR
     private int level;
     private int point;
     private List<ArticleReadCommentDto> comments;
+    private List<String> tags;
 
     public String getUserNickname() {
         return userNickname;
@@ -47,6 +48,15 @@ public class ArticleReadVo extends ArticleEntity implements IResult<ArticleReadR
 
     public ArticleReadVo setComments(List<ArticleReadCommentDto> comments) {
         this.comments = comments;
+        return this;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public ArticleReadVo setTags(List<String> tags) {
+        this.tags = tags;
         return this;
     }
 

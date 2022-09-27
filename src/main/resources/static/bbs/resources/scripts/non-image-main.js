@@ -74,3 +74,9 @@ if (searchElement.querySelector('.keyword').value !== '') {
     searchElement.classList.add('on');
 }
 
+window.document.querySelector('.link.write').addEventListener('click', x => {
+    if (!window.document.querySelector('.link.write').classList.contains('on')) {
+        x.preventDefault();
+        alert('권한이 없습니다.');
+    }
+});

@@ -22,7 +22,7 @@ public class BoardListVoForNo extends BoardEntity implements IResult<BoardListRe
 
     @Override
     public BoardListResult getResult() {
-        return this.result;
+        return result;
     }
 
     @Override

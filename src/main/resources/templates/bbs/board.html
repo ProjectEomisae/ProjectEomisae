@@ -8,19 +8,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title th:text="${title + ' - 어미새'}"></title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
-    <link th:href="@{/bbs/resources/stylesheets/non-image-main.css}" rel="stylesheet">
     <link th:href="@{/bbs/resources/stylesheets/common.css}" rel="stylesheet">
-    <script defer th:src="@{/bbs/resources/scripts/non-image-main.js}"></script>
+    <link th:href="@{/bbs/resources/stylesheets/non-image-main.css}" rel="stylesheet"
+          th:if="${boardListVo.getId().equals('전체글') || boardListVo.getId().equals('커뮤니티') || boardListVo.getId().equals('운영관리')}">
+    <link th:href="@{/bbs/resources/stylesheets/image-main.css}" rel="stylesheet"
+          th:if="${boardListVo.getId().equals('쇼핑정보') || boardListVo.getId().equals('구매인증') || boardListVo.getId().equals('실사후기') || boardListVo.getId().equals('데일리룩') || boardListVo.getId().equals('플리마켓')}">
+    <script defer th:src="@{/bbs/resources/scripts/non-image-main.js}"
+            th:if="${boardListVo.getId().equals('전체글') || boardListVo.getId().equals('커뮤니티') || boardListVo.getId().equals('운영관리')}"></script>
+    <script defer th:src="@{/bbs/resources/scripts/image-main.js}"
+            th:if="${boardListVo.getId().equals('쇼핑정보') || boardListVo.getId().equals('구매인증') || boardListVo.getId().equals('실사후기') || boardListVo.getId().equals('데일리룩') || boardListVo.getId().equals('플리마켓')}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
-<body th:with="criteria=${#request.getParameter('criteria')}, keyword=${#request.getParameter('keyword')}, category=${#request.getParameter('category')}">
+<body th:with="criteria=${#request.getParameter('criteria')}, keyword=${#request.getParameter('keyword')}, category=${#request.getParameter('category')}, alignment=${#request.getParameter('alignment')}">
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
-<main th:include="~{'/' + ${nonImageMain}}"></main>
-<!--th:if="${!urlName.contains('al')}"></main>-->
-<!--<main th:include="~{'/' + ${al}}"-->
-<!--th:if="${urlName.contains('al')}"></main>-->
+<main th:include="~{${nonImageMain}}"
+th:if="${boardListVo.getId().equals('전체글') || boardListVo.getId().equals('커뮤니티') || boardListVo.getId().equals('운영관리')}"></main>
+<main th:include="~{${imageMain}}"
+th:if="${boardListVo.getId().equals('쇼핑정보') || boardListVo.getId().equals('구매인증') || boardListVo.getId().equals('실사후기') || boardListVo.getId().equals('데일리룩') || boardListVo.getId().equals('플리마켓')}"></main>
 <th:block th:replace="~{fragments/footer.html :: content}"></th:block>
 </body>
 </html>

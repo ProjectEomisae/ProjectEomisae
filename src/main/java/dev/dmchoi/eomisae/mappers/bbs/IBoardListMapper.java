@@ -1,8 +1,11 @@
 package dev.dmchoi.eomisae.mappers.bbs;
 
+import dev.dmchoi.eomisae.dtos.bbs.ArticleReadCommentDto;
 import dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto;
-import dev.dmchoi.eomisae.entities.bbs.BoardEntity;
-import dev.dmchoi.eomisae.entities.bbs.CategoryEntity;
+import dev.dmchoi.eomisae.dtos.bbs.BoardReadCommentDto;
+import dev.dmchoi.eomisae.entities.bbs.*;
+import dev.dmchoi.eomisae.vos.bbs.ArticleWriteVo;
+import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,11 +13,18 @@ import java.util.List;
 
 @Mapper
 public interface IBoardListMapper {
+    int selectPageByBoardIndex(
+            @Param(value = "boardIndex") int boardIndex,
+            @Param(value = "prev") int prev,
+            @Param(value = "next") int next);
     int selectArticleCountTotal();     // 전체 게시판 게시글 갯수 불러오기
     int selectArticleCountTotalByUserIndex(     // 유저 별 작성한 게시글 갯수 불러오기
             @Param(value = "userIndex") int userIndex);
     int selectArticleCountTotalByBoardIndex(     // 게시판 별 총 게시글 갯수 불러오기
             @Param(value = "boardIndex") int boardIndex);
+
+    int selectCommentCountTotalByBoardIndex(     // 게시판 댓글 갯수 불러오기
+                                                 @Param(value = "boardIndex") int boardIndex);
     int selectArticleCountTotalByCriteria(    //  모든 게시판 총 게시글 갯수 불러오기
            @Param(value = "keyword") String keyword);
     int selectArticleCountTotalByBoardIndexAndCriteria(    // 게시판 별 총 게시글 갯수 불러오기
@@ -64,6 +74,19 @@ public interface IBoardListMapper {
             @Param(value = "boardIndex") int boardIndex,
             @Param(value = "keyword") String keyword);
 
+    int getCommentCountByContent(     // 해당 게시판의 검색기준 내용 별 댓글 개수
+                               @Param(value = "boardIndex") int boardIndex,
+                               @Param(value = "keyword") String keyword);
+
+    int getCommentCountByComment(     // 해당 게시판의 검색기준 댓글 별 댓글 개수
+                               @Param(value = "boardIndex") int boardIndex,
+                               @Param(value = "keyword") String keyword);
+
+    int getCommentCountByNickname(     // 해당 게시판의 검색기준 닉네임 별 댓글 개수
+                                @Param(value = "boardIndex") int boardIndex,
+                                @Param(value = "keyword") String keyword);
+
+
 
     int getCountByTitleContentAndCategoryAll(  // 모든 게시판의 검색기준 제목+내용 별 && 카테고리 별 게시글 개수
             @Param(value = "categoryIndex") int categoryIndex,
@@ -109,6 +132,7 @@ public interface IBoardListMapper {
             @Param(value = "boardIndex") int boardIndex,
             @Param(value = "categoryIndex") int categoryIndex,
             @Param(value = "keyword") String keyword);
+
 
     List<BoardListArticleDto> searchByTitleContentAll( // 해당 게시판의 검색기준 제목+내용 별 게시글 불러오기
             @Param(value = "count") int count,
@@ -164,6 +188,24 @@ public interface IBoardListMapper {
             @Param(value = "count") int count,
             @Param(value = "offset") int offset,
             @Param(value = "keyword") String keyword);
+
+    List<BoardReadCommentDto> searchCommentByContent( // 해당 게시판의 검색기준 내용 별 댓글 불러오기
+                                               @Param(value = "boardIndex") int boardIndex,
+                                               @Param(value = "count") int count,
+                                               @Param(value = "offset") int offset,
+                                               @Param(value = "keyword") String keyword);
+
+    List<BoardReadCommentDto> searchCommentByComment( // 해당 게시판의 검색기준 댓글 별 댓글 불러오기
+                                               @Param(value = "boardIndex") int boardIndex,
+                                               @Param(value = "count") int count,
+                                               @Param(value = "offset") int offset,
+                                               @Param(value = "keyword") String keyword);
+
+    List<BoardReadCommentDto> searchCommentByNickname( // 해당 게시판의 검색기준 닉네임 별 댓글 불러오기
+                                                @Param(value = "boardIndex") int boardIndex,
+                                                @Param(value = "count") int count,
+                                                @Param(value = "offset") int offset,
+                                                @Param(value = "keyword") String keyword);
 
     List<BoardListArticleDto> searchByTitleContentAndCategoryAll(  // 해당 게시판의 검색기준 제목+내용 별 && 카테고리 별 게시글 개수
             @Param(value = "categoryIndex") int categoryIndex,
@@ -230,8 +272,47 @@ public interface IBoardListMapper {
             @Param(value = "offset") int offset,
             @Param(value = "keyword") String keyword);
 
+    List<BoardListArticleDto> searchByTitleContentAndAlignment(  // 해당 게시판의 검색기준 제목+내용 별 && 카테고리 별 게시글 개수
+                                                                @Param(value = "boardIndex") int boardIndex,
+                                                                @Param(value = "keyword") String keyword,
+                                                                @Param(value = "alignment") int alignment,
+                                                                @Param(value = "count") int count,
+                                                                @Param(value = "offset") int offset);
+
+    List<BoardListArticleDto> searchByTitleAndAlignment( // 해당 게시판의 검색기준 제목 별 && 카테고리 별 게시글 개수
+                                                         @Param(value = "boardIndex") int boardIndex,
+                                                         @Param(value = "keyword") String keyword,
+                                                         @Param(value = "alignment") int alignment,
+                                                         @Param(value = "count") int count,
+                                                         @Param(value = "offset") int offset);
+
+    List<BoardListArticleDto> searchByContentAndAlignment( // 해당 게시판의 검색기준 내용 별 && 카테고리 별 게시글 개수
+                                                           @Param(value = "boardIndex") int boardIndex,
+                                                           @Param(value = "keyword") String keyword,
+                                                           @Param(value = "alignment") int alignment,
+                                                           @Param(value = "count") int count,
+                                                           @Param(value = "offset") int offset);
+
+    List<BoardListArticleDto> searchByCommentAndAlignment( // 해당 게시판의 검색기준 댓글 별 && 카테고리 별 게시글 개수
+                                                           @Param(value = "boardIndex") int boardIndex,
+                                                           @Param(value = "keyword") String keyword,
+                                                           @Param(value = "alignment") int alignment,
+                                                           @Param(value = "count") int count,
+                                                           @Param(value = "offset") int offset);
+
+    List<BoardListArticleDto> searchByNicknameAndAlignment( // 해당 게시판의 검색기준 닉네임 별 && 카테고리 별 게시글 개수
+                                                            @Param(value = "boardIndex") int boardIndex,
+                                                            @Param(value = "keyword") String keyword,
+                                                            @Param(value = "alignment") int alignment,
+                                                            @Param(value = "count") int count,
+                                                            @Param(value = "offset") int offset);
+
     List<BoardListArticleDto> selectArticlesForAll();// 모든 게시판의 모든 게시글 불러오기
+    List<BoardListArticleDto> selectNewArticlesForAll();// 모든 게시판의 최신 게시글 6개 불러오기
     List<BoardListArticleDto> selectArticlesForNo(); // 공지사항 게시판 용 게시글 불러오기
+    List<BoardListArticleDto> selectNewArticlesForNo(); // 공지사항 게시판 용 최신 게시글 불러오기
+    List<BoardListArticleDto> selectNewArticlesForEv(); // 이벤트 게시판 용 최신 게시글 불러오기
+    List<BoardListArticleDto> selectNewArticlesForFavorite(); // 인기글 게시판 용 최신 게시글 불러오기
 
     List<BoardListArticleDto> selectArticlesForUserIndex( // 유저 별 작성한 전체 게시글 불러오기
             @Param(value = "index") int index,
@@ -242,6 +323,11 @@ public interface IBoardListMapper {
             @Param(value = "boardIndex") int boardIndex,
             @Param(value = "count") int count,
             @Param(value = "offset") int offset);
+
+    List<BoardReadCommentDto> selectJoinComments( // 게시판 별 댓글 불러오기
+                                                          @Param(value = "boardIndex") int boardIndex,
+                                                          @Param(value = "count") int count,
+                                                          @Param(value = "offset") int offset);
 
     List<BoardListArticleDto> selectArticlesForBoardListAll( // 게시판&&카테고리 별 게시글 불러오기
             @Param(value = "count") int count,
@@ -270,4 +356,55 @@ public interface IBoardListMapper {
     BoardEntity selectBoardByUrlName( // urlName 에 해당하는 게시판 불러오기
                                       @Param(value = "urlName") String urlName);
 
+    List<BoardReadCommentDto> selectJoinComments();
+
+    int deleteJoinComment(JoinCommentEntity joinCommentEntity);
+
+    ArticleEntity selectArticle(
+            @Param(value = "bid") int bid,
+            @Param(value = "aid") int aid);
+    CommentEntity selectComment(
+            @Param(value = "aid") int aid,
+            @Param(value = "cid") int cid);
+
+    JoinCommentEntity selectJoinComment(
+            @Param(value = "cid") int cid);
+
+    ArticleBuyEntity selectArticleBuyByUser(
+            @Param(value = "userIndex") int userIndex,
+            @Param(value = "boardIndex") int boardIndex,
+            @Param(value = "articleIndex") int articleIndex);
+    ArticleLikeEntity selectArticleLikeByUser(
+            @Param(value = "userIndex") int userIndex,
+            @Param(value = "boardIndex") int boardIndex,
+            @Param(value = "articleIndex") int articleIndex);
+    CommentLikeEntity selectCommentLikeByUser(
+            @Param(value = "userIndex") int userIndex,
+            @Param(value = "articleIndex") int articleIndex,
+            @Param(value = "commentIndex") int commentIndex);
+
+    JoinCommentLikeEntity selectJoinCommentLikeByUser(
+            @Param(value = "userIndex") int userIndex,
+            @Param(value = "commentIndex") int commentIndex);
+    int insertArticleBuy(ArticleBuyEntity articleBuy);
+    int insertArticleLike(ArticleLikeEntity articleLike);
+    int insertCommentLike(CommentLikeEntity commentLike);
+    int insertJoinCommentLike(JoinCommentLikeEntity joinCommentLike);
+
+    int updateArticleForBuy(
+            @Param(value = "buy") int buy,
+            @Param(value = "bid") int bid,
+            @Param(value = "aid") int aid);
+    int updateArticleForLike(
+            @Param(value = "like") int like,
+            @Param(value = "bid") int bid,
+            @Param(value = "aid") int aid);
+
+    int updateComment(
+            @Param(value = "like") int like,
+            @Param(value = "aid") int aid,
+            @Param(value = "cid") int cid);
+    int updateJoinComment(
+            @Param(value = "like") int like,
+            @Param(value = "cid") int cid);
 }

@@ -1,16 +1,26 @@
 package dev.dmchoi.eomisae.services.bbs;
 
+import dev.dmchoi.eomisae.dtos.bbs.ArticleReadCommentDto;
 import dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto;
-import dev.dmchoi.eomisae.entities.bbs.BoardEntity;
-import dev.dmchoi.eomisae.entities.bbs.CategoryEntity;
+import dev.dmchoi.eomisae.dtos.bbs.BoardReadCommentDto;
+import dev.dmchoi.eomisae.entities.bbs.*;
+import dev.dmchoi.eomisae.entities.member.UserEntity;
+import dev.dmchoi.eomisae.enums.bbs.ArticleDeleteResult;
+import dev.dmchoi.eomisae.enums.bbs.ArticleReadResult;
 import dev.dmchoi.eomisae.enums.bbs.BoardListResult;
+import dev.dmchoi.eomisae.enums.bbs.JoinCommentDeleteResult;
 import dev.dmchoi.eomisae.mappers.bbs.IBoardListMapper;
 import dev.dmchoi.eomisae.mappers.IUserMapper;
 import dev.dmchoi.eomisae.models.PagingModel;
+import dev.dmchoi.eomisae.vos.bbs.ArticleDeleteVo;
+import dev.dmchoi.eomisae.vos.bbs.ArticleReadVo;
 import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
+import dev.dmchoi.eomisae.vos.bbs.JoinCommentDeleteVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "dev.dmchoi.eomisae.services.bbs.BoardListService")
@@ -24,6 +34,95 @@ public class BoardListService {
         this.userMapper = userMapper;
     }
 
+    public void addArticleBuy(BoardListVo boardListVo, ArticleBuyEntity articleBuy) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        ArticleBuyEntity articleBuyEntity = this.boardListMapper.selectArticleBuyByUser(articleBuy.getUserIndex(), articleBuy.getBoardIndex() , articleBuy.getArticleIndex());
+        if (articleBuyEntity != null) {
+            boardListVo.setResult(BoardListResult.NOT_ALLOWED);
+            return;
+        }
+        articleBuy.setChecked(true);
+        this.boardListMapper.insertArticleBuy(articleBuy);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+        ArticleEntity articleEntity = this.boardListMapper.selectArticle(articleBuy.getBoardIndex(), articleBuy.getArticleIndex());
+        articleEntity.setBuy(articleEntity.getBuy() + 1);
+        this.boardListMapper.updateArticleForBuy(articleEntity.getBuy(), articleEntity.getBoardIndex(), articleEntity.getIndex());
+    }
+
+    public void addArticleLike(BoardListVo boardListVo, ArticleLikeEntity articleLike) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        ArticleLikeEntity articleLikeEntity = this.boardListMapper.selectArticleLikeByUser(articleLike.getUserIndex(), articleLike.getBoardIndex() , articleLike.getArticleIndex());
+        if (articleLikeEntity != null) {
+            boardListVo.setResult(BoardListResult.NOT_ALLOWED);
+            return;
+        }
+        articleLike.setChecked(true);
+        this.boardListMapper.insertArticleLike(articleLike);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+        ArticleEntity articleEntity = this.boardListMapper.selectArticle(articleLike.getBoardIndex(), articleLike.getArticleIndex());
+        articleEntity.setLike(articleEntity.getLike() + 1);
+        this.boardListMapper.updateArticleForLike(articleEntity.getLike(), articleEntity.getBoardIndex(), articleEntity.getIndex());
+    }
+
+    public void addCommentLike(BoardListVo boardListVo, CommentLikeEntity commentLike) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        CommentLikeEntity commentLikeEntity = this.boardListMapper.selectCommentLikeByUser(commentLike.getUserIndex(), commentLike.getArticleIndex() , commentLike.getCommentIndex());
+        if (commentLikeEntity != null) {
+            boardListVo.setResult(BoardListResult.NOT_ALLOWED);
+            return;
+        }
+        commentLike.setChecked(true);
+        this.boardListMapper.insertCommentLike(commentLike);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+        CommentEntity commentEntity = this.boardListMapper.selectComment(commentLike.getArticleIndex(), commentLike.getCommentIndex());
+        commentEntity.setLike(commentEntity.getLike() + 1);
+        this.boardListMapper.updateJoinComment(commentEntity.getLike(), commentEntity.getIndex());
+    }
+
+    public void addJoinCommentLike(BoardListVo boardListVo, JoinCommentLikeEntity joinCommentLike) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        JoinCommentLikeEntity joinCommentLikeEntity = this.boardListMapper.selectJoinCommentLikeByUser(joinCommentLike.getUserIndex(), joinCommentLike.getCommentIndex());
+        if (joinCommentLikeEntity != null) {
+            boardListVo.setResult(BoardListResult.NOT_ALLOWED);
+            return;
+        }
+        joinCommentLike.setChecked(true);
+        this.boardListMapper.insertJoinCommentLike(joinCommentLike);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+        JoinCommentEntity joinCommentEntity = this.boardListMapper.selectJoinComment(joinCommentLike.getCommentIndex());
+//        System.out.println("joinCommentEntity 전 : " + joinCommentEntity.getLike());
+        joinCommentEntity.setLike(joinCommentEntity.getLike() + 1);
+//        System.out.println("joinCommentEntity 후 : " + joinCommentEntity.getLike());
+        this.boardListMapper.updateJoinComment(joinCommentEntity.getLike(), joinCommentEntity.getIndex());
+    }
+
+    public void deleteComment(UserEntity user, JoinCommentDeleteVo joinCommentDeleteVo) {
+        JoinCommentEntity joinCommentEntity = this.boardListMapper.selectJoinComment(joinCommentDeleteVo.getIndex());
+        if (user.getIndex() != joinCommentEntity.getUserIndex()) {
+            System.out.println("삭제 불가");
+            joinCommentDeleteVo.setResult(JoinCommentDeleteResult.FAILURE);
+            return;
+        }
+        joinCommentDeleteVo.setResult(JoinCommentDeleteResult.SUCCESS);
+        this.boardListMapper.deleteJoinComment(joinCommentEntity);
+    }
+
     public CategoryEntity[] getCategories() {
         return this.boardListMapper.selectCategories();
     }
@@ -33,12 +132,32 @@ public class BoardListService {
         return this.boardListMapper.selectArticlesForAll();
     }
 
+    // 모든 게시판 최신 게시글 6개 불러오기
+    public List<BoardListArticleDto> getNewArticlesForAll() {
+        return this.boardListMapper.selectNewArticlesForAll();
+    }
+
     // 공지사항 게시판용
     public List<BoardListArticleDto> getArticlesForNo() {
         return this.boardListMapper.selectArticlesForNo();
     }
 
-    // 게시판 별 게시글 리스트
+    // 공지사항 게시판 최신글 용
+    public List<BoardListArticleDto> getNewArticlesForNo() {
+        return this.boardListMapper.selectNewArticlesForNo();
+    }
+
+    // 이벤트 게시판 최신글 용
+    public List<BoardListArticleDto> getNewArticlesForEv() {
+        return this.boardListMapper.selectNewArticlesForEv();
+    }
+
+    // 인기글 게시판 최신글 용
+    public List<BoardListArticleDto> getNewArticlesForFavorite() {
+        return this.boardListMapper.selectNewArticlesForFavorite();
+    }
+
+    // 모든 게시글 리스트
     public void listBoardAll(BoardListVo boardListVo, PagingModel pagingModel) {
         List<BoardListArticleDto> boardListArticleDtoList = this.boardListMapper.selectArticlesForAll();
         if (boardListArticleDtoList == null || boardListArticleDtoList.size() == 0) {
@@ -65,6 +184,25 @@ public class BoardListService {
                 boardEntity.getIndex(), pagingModel.rowCountPerPage, (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
         boardListVo.setArticles(articles);
         boardListVo.setResult(BoardListResult.SUCCESS);
+    }
+
+    public void readComment(BoardListVo boardListVo, PagingModel pagingModel) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        boardListVo.copyValuesOf(boardEntity);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+        List<BoardReadCommentDto> boardReadCommentDtos = this.boardListMapper.selectJoinComments(
+                boardEntity.getIndex(), pagingModel.rowCountPerPage, (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+        for (BoardReadCommentDto boardReadCommentDto : boardReadCommentDtos) {
+            UserEntity tempUser = this.userMapper.selectUserByIndex(boardReadCommentDto.getUserIndex());
+            boardReadCommentDto.setProfileId(tempUser.getProfileId());
+            boardReadCommentDto.setLevel(tempUser.getLevel());
+            boardReadCommentDto.setPoint(tempUser.getPoint());
+        }
+        boardListVo.setJoinComments(boardReadCommentDtos);
     }
 
     // 유저의 게시글 전체 불러오기
@@ -168,6 +306,48 @@ public class BoardListService {
                         keyword);
         }
         boardListVo.setArticles(articles);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+    }
+
+    // 검색기준 별 댓글 불러오기. default에 전체도 포함.
+    public void listBoardCommentByCriteria(BoardListVo boardListVo, PagingModel pagingModel, String criteria, String keyword) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        boardListVo.copyValuesOf(boardEntity);
+        List<BoardReadCommentDto> joinComments;
+        switch (criteria) {
+            case "content":
+                joinComments = this.boardListMapper.searchCommentByContent(
+                        boardEntity.getIndex(),
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
+                        keyword);
+            case "comment":
+                joinComments = this.boardListMapper.searchCommentByComment(
+                        boardEntity.getIndex(),
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
+                        keyword);
+            case "nickname":
+                joinComments = this.boardListMapper.searchCommentByNickname(
+                        boardEntity.getIndex(),
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
+                        keyword);
+            default:
+                joinComments = this.boardListMapper.searchCommentByContent(
+                        boardEntity.getIndex(),
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
+                        keyword);
+        }
+        boardListVo.setJoinComments(joinComments);
+        for (BoardReadCommentDto joinComment : boardListVo.getJoinComments()) {
+            System.out.println(joinComment.getUserNickname());
+        }
         boardListVo.setResult(BoardListResult.SUCCESS);
     }
 
@@ -279,6 +459,63 @@ public class BoardListService {
         boardListVo.setResult(BoardListResult.SUCCESS);
     }
 
+    // 정렬&&검색기준 별 게시글 불러오기. default에 전체도 포함.
+    public void listBoardByAlignment(BoardListVo boardListVo, PagingModel pagingModel, int alignment, String criteria, String keyword) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        boardListVo.copyValuesOf(boardEntity);
+        List<BoardListArticleDto> articles;
+        switch (criteria) {
+            case "title-content":
+                articles = this.boardListMapper.searchByTitleContentAndAlignment(
+                        boardEntity.getIndex(),
+                        keyword,
+                        alignment,
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+            case "title":
+                articles = this.boardListMapper.searchByTitleAndAlignment(
+                        boardEntity.getIndex(),
+                        keyword,
+                        alignment,
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+            case "content":
+                articles = this.boardListMapper.searchByContentAndAlignment(
+                        boardEntity.getIndex(),
+                        keyword,
+                        alignment,
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+            case "comment":
+                articles = this.boardListMapper.searchByCommentAndAlignment(
+                        boardEntity.getIndex(),
+                        keyword,
+                        alignment,
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+            case "nickname":
+                articles = this.boardListMapper.searchByNicknameAndAlignment(
+                        boardEntity.getIndex(),
+                        keyword,
+                        alignment,
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+            default:
+                articles = this.boardListMapper.searchByTitleContentAndAlignment(
+                        boardEntity.getIndex(),
+                        keyword,
+                        alignment,
+                        pagingModel.rowCountPerPage,
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+        }
+        boardListVo.setArticles(articles);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+    }
+
     // 모든 게시판 게시글 불러오기
     public int boardTotalCount() {
         return this.boardListMapper.selectArticleCountTotal();
@@ -294,6 +531,18 @@ public class BoardListService {
         BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
         return this.boardListMapper.selectArticleCountTotalByBoardIndex(boardEntity.getIndex());
     }
+
+    // 게시판의 댓글 총 갯수 불러오기
+    public int commentTotalCountByBoardIndex(BoardListVo boardListVo) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        return this.boardListMapper.selectCommentCountTotalByBoardIndex(boardEntity.getIndex());
+    }
+
+    // 게시판 별 게시글 불러오기
+    public BoardEntity boardByUrlName(BoardListVo boardListVo) {
+        return this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+    }
+
 
     // 모든 게시판 검색기준 별 게시글 갯수 불러오기. default에 전체도 포함.
     public int boardTotalCountAllByCriteria(String criteria, String keyword) {
@@ -375,6 +624,29 @@ public class BoardListService {
                         keyword);
             default:
                 return this.boardListMapper.selectArticleCountTotalByBoardIndexAndCriteria(
+                        boardEntity.getIndex(),
+                        keyword);
+        }
+    }
+
+    // 검색기준 별 댓글 갯수 불러오기. default에 전체도 포함.
+    public int CommentTotalCountByCriteria(BoardListVo boardListVo, String criteria, String keyword) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        switch (criteria) {
+            case "content":
+                return this.boardListMapper.getCommentCountByContent(
+                        boardEntity.getIndex(),
+                        keyword);
+            case "comment":
+                return this.boardListMapper.getCommentCountByComment(
+                        boardEntity.getIndex(),
+                        keyword);
+            case "nickname":
+                return this.boardListMapper.getCommentCountByNickname(
+                        boardEntity.getIndex(),
+                        keyword);
+            default:
+                return this.boardListMapper.getCommentCountByContent(
                         boardEntity.getIndex(),
                         keyword);
         }

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="articleWriteVo" type="dev.dmchoi.eomisae.vos.bbs.ArticleWriteVo"*/-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${title + ' - 어미새'}"></title>
+    <link th:href="@{/bbs/resources/stylesheets/add.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
+    <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
+    <script th:if="${articleWriteVo != null && articleWriteVo.getResult() == T(dev.dmchoi.eomisae.enums.bbs.ArticleWriteResult).NOT_FOUND}">
+        alert('존재하지 않는 게시판입니다.');
+        window.history.back();
+    </script>
+    <script th:if="${articleWriteVo != null && articleWriteVo.getResult() == T(dev.dmchoi.eomisae.enums.bbs.ArticleWriteResult).NOT_ALLOWED}">
+        alert('레벨 조건이 맞지 않아 작성할 수 없는 게시판입니다.');
+        window.history.back();
+    </script>
+    <script th:if="${articleWriteVo != null && articleWriteVo.getResult() == T(dev.dmchoi.eomisae.enums.bbs.ArticleWriteResult).SUCCESS}">
+        alert('게시글이 성공적으로 작성되었습니다.');
+        window.location.href = '/';
+    </script>
+    <script th:if="${#request.getAttribute('user') == null}">
+        alert('작성할 수 있는 권한이 없습니다.');
+        window.history.back();
+    </script>
+    <!--/*@thymesVar id="boardListVo" type="dev.dmchoi.eomisae.vos.bbs.BoardListVo"*/-->
+    <script th:if="${#request.getAttribute('user') != null && user.getLevel() < boardListVo.getWriteLevel()}">
+        alert('레벨 조건이 맞지 않아 작성할 수 없는 게시판입니다.');
+        window.history.back();
+    </script>
+    <script defer th:src="@{/resources/scripts/header.js}"></script>
+    <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
+    <script defer th:src="@{/bbs/resources/scripts/boardWrite.js}"></script>
+    <script defer th:src="@{/resources/scripts/common.js}"></script>
+    <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
+</head>
+<body>
+<th:block th:replace="~{fragments/header.html :: content}"></th:block>
+<main class="main" id="main">
+    <div class="nav-container">
+        <div class="nav-menu">
+            <ul class="list" th:if="${boardListVo.getId().equals('쇼핑정보')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '커뮤니티')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('fs')} ? 'selected'">
+                    <a th:href="@{/bbs/fs}">인기정보</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('os')} ? 'selected'">
+                    <a th:href="@{/bbs/os}">패션정보</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('rt')} ? 'selected'">
+                    <a th:href="@{/bbs/rt}">기타정보</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('dr')} ? 'selected'">
+                    <a th:href="@{/bbs/dr}">래플정보</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('ec')} ? 'selected'">
+                    <a th:href="@{/bbs/ec}">이벤트정보</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('커뮤니티')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '커뮤니티')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('fe')} ? 'selected'">
+                    <a th:href="@{/bbs/fe}">자유게시판</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('fh')} ? 'selected'">
+                    <a th:href="@{/bbs/fh}">패션게시판</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('qa')} ? 'selected'">
+                    <a th:href="@{/bbs/qa}">직구 Q&A</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('chc')} ? 'selected'">
+                    <a th:href="@{/bbs/chc}">코드:대리</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('jp')} ? 'selected'">
+                    <a th:href="@{/bbs/jp}">공동구매</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('ui')} ? 'selected'">
+                    <a th:href="@{/bbs/ui}">가입인사</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('구매인증')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('gl')} ? 'selected'">
+                    <a th:href="@{/bbs/gl}">패션구매</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('ha')} ? 'selected'">
+                    <a th:href="@{/bbs/ha}">기타구매</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('실사후기')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('pot')} ? 'selected'">
+                    <a th:href="@{/bbs/pot}">패션후기</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('pop')} ? 'selected'">
+                    <a th:href="@{/bbs/pop}">기타후기</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('gm')} ? 'selected'">
+                    <a th:href="@{/bbs/gm}">소장품자랑</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('데일리룩')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('dl')} ? 'selected'">
+                    <a th:href="@{/bbs/dl}">데일리룩</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('ds')} ? 'selected'">
+                    <a th:href="@{/bbs/ds}">데일리슈</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('플리마켓')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${title.equals('판매')} ? 'selected'">
+                    <a th:href="@{/bbs/jo}">판매</a>
+                </li>
+                <li class="link" th:classappend="${title.equals('구매')} ? 'selected'">
+                    <a th:href="@{/bbs/jo2}">구매</a>
+                </li>
+                <li class="link" th:classappend="${title.equals('교환')} ? 'selected'">
+                    <a th:href="@{/bbs/jo3}">교환</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('운영관리')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('no')} ? 'selected'">
+                    <a th:href="@{/bbs/no}">공지사항</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('ev')} ? 'selected'">
+                    <a th:href="@{/bbs/ev}">이벤트</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('mail')} ? 'selected'">
+                    <a th:href="@{/bbs/mail}">건의</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <form class="write-form-container" method="post">
+        <div class="form-container">
+            <div class="form-head">
+                <select class="select option-category" name="categoryIndex">
+                    <option value="option">분류<span></span></option>
+                    <option th:value="${category.getIndex()}" th:each="category : ${categoryEntities}"
+                            th:text="${category.getName()}"
+                            th:if="${boardListVo.getIndex() == category.getBoardIndex()}">
+                    </option>
+                </select>
+                <input class="input title-input" name="title" placeholder="제목" type="text">
+            </div>
+            <div class="form-head">
+                <input class="input tag-input" name="tag" placeholder="태그 : 쉼표(,)를 이용하여 복수 등록" type="text">
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('jp') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('rt') || #request.getRequestURI().contains('dr') || #request.getRequestURI().contains('ec')}">
+                <div class="product-col product-title">* 링크</div>
+                <div class="product-col product-input">
+                    <input class="input" name="link" type="text">
+                    <span class="refer-text">- 단축, 변형 URL사용을 금지합니다.</span>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('dr')}">
+                <div class="product-col product-title">할인 코드</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('dr')}">
+                <div class="product-col product-title">면세 범위</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('dr')}">
+                <div class="product-col product-title">배송 정보</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('dr')}">
+                <div class="product-col product-title">기타 사항</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+<!--            -->
+            <div class="product-container" th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha')}">
+                <div class="product-col product-title">* 주문날짜</div>
+                <div class="product-col product-input">
+                    <div class="input-row">
+                        <input id="date" class="input" name="date" type="date" min="" max="" placeholder=" ">
+                        <input class="input button-input" name="delete" type="button" value="삭제">
+                    </div>
+                    <span class="refer-text">- 3일이 지난 구매건은 등록할 수 없고 인보이스에 주문 날짜가 포함되어야 합니다.</span>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop')}">
+                <div class="product-col product-title">* 구매인증</div>
+                <div class="purchase-verification-container">
+                    <select class="purchase-verification" id="selectBox" onchange="showText()">
+                        <option>선택해주세요</option>
+                        <option class="verification-option">
+                            <span class="one">mareve/</span>
+                            <span class="two">Wave01/</span>
+                            <span class="three">mareve/</span>
+                            <span class="five">179100원</span>
+                        </option>
+                        <option class="verification-option">mareve/Wave01/mareve/179100원</option>
+                        <option class="verification-option">mareve/Wave01/mareve/179100원</option>
+                    </select>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop')}">
+                <div class="product-col product-title">* 쇼핑몰</div>
+                <div class="product-col product-input">
+                    <input class="input" name="productName" type="text">
+<!--                    <span class="refer-text">- 국내 구매 제품은 기타구매 게시판에 등록할 수 없습니다.</span>-->
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('판매') || title.equals('구매') || title.equals('교환')}">
+                <div class="product-col product-title">* 연락처</div>
+                <div class="product-col product-input option-input">
+                    <div class="contact-row">
+                        <select class="allow-disclosure">
+                            <option>모두 공개 허용</option>
+                            <option>승인한 회원만 공개 허용</option>
+                        </select>
+                        <input class="input" name="contact" type="tel">
+                    </div>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || #request.getRequestURI().contains('gm') || title.equals('판매') || title.equals('구매') || title.equals('교환')}">
+                <div class="product-col product-title">* 브랜드</div>
+                <div class="product-col product-input">
+                    <input class="input" name="productName" type="text">
+<!--                    <span class="refer-text">- 레벨 제한 중인 정보글을 보고 구매한 경우, 해당 글 레벨 제한이 끝난 이후에 작성해 주세요.</span>-->
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('gm')}">
+                <div class="product-col product-title">* 제품명</div>
+                <div class="product-col product-input">
+                    <input class="input" name="productName" type="text">
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || title.equals('판매') || title.equals('구매') || title.equals('교환')}">
+                <div class="product-col product-title">* 상품명</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('교환')}">
+                <div class="product-col product-title">* 본인 사이즈</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('교환')}">
+                <div class="product-col product-title">* 교환 사이즈</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || title.equals('판매') || title.equals('구매')}">
+                <div class="product-col product-title">* 사이즈</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="product-container" th:if="${title.equals('판매')}">
+                <div class="product-col product-title">* 성별</div>
+                <div class="option-container">
+                    <select class="select-container">
+                        <option>선택해주세요</option>
+                        <option>남녀공용</option>
+                        <option>남성용</option>
+                        <option>여성용</option>
+                    </select>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('판매')}">
+                <div class="product-col product-title">* 제품 상태</div>
+                <div class="option-container">
+                    <select class="select-container">
+                        <option>선택해주세요</option>
+                        <option>새상품</option>
+                        <option>중고품</option>
+                    </select>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('판매')}">
+                <div class="product-col product-title">* 제품 하자</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('판매') || title.equals('구매') || title.equals('교환')}">
+                <div class="product-col product-title">* 거래 방법</div>
+                <div class="option-container">
+                    <select class="select-container">
+                        <option>선택해주세요</option>
+                        <option>택배</option>
+                        <option>직거래</option>
+                        <option>택배, 직거래</option>
+                    </select>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('판매') || title.equals('구매')}">
+                <div class="product-col product-title">* 구매 가격</div>
+                <div class="product-col product-input option-input">
+                    <div class="price-row">
+                        <select class="currency-option">
+                            <option>₩(KRW)</option>
+                            <option>$(USD)</option>
+                            <option>£(GBP)</option>
+                            <option>€(EUR)</option>
+                        </select>
+                        <input class="input" name="price" type="text" onkeyup="inputNumberFormat(this)">
+                    </div>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('판매')}">
+                <div class="product-col product-title">* 판매 가격</div>
+                <div class="product-col product-input option-input">
+                    <div class="price-row">
+                        <select class="currency-option">
+                            <option>₩(KRW)</option>
+                            <option>$(USD)</option>
+                            <option>£(GBP)</option>
+                            <option>€(EUR)</option>
+                        </select>
+                        <input class="input" name="price" type="text" onkeyup="inputNumberFormat(this)">
+                    </div>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('판매')}">
+                <div class="product-col product-title">* 운송비</div>
+                <div class="product-col product-input option-input">
+                    <div class="price-row">
+                        <select class="currency-option">
+                            <option>₩(KRW)</option>
+                            <option>$(USD)</option>
+                            <option>£(GBP)</option>
+                            <option>€(EUR)</option>
+                        </select>
+                        <input class="input" name="price" type="text" onkeyup="inputNumberFormat(this)">
+                    </div>
+                </div>
+            </div>
+            <div class="product-container" th:if="${title.equals('판매')}">
+                <div class="product-col product-title">기타사항</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="product-container" th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || #request.getRequestURI().contains('gm')}">
+                <div class="product-col product-title">* 가격</div>
+                <div class="product-col product-input option-input">
+                    <div class="price-row">
+                        <select class="currency-option">
+                            <option>₩(KRW)</option>
+                            <option>$(USD)</option>
+                            <option>£(GBP)</option>
+                            <option>€(EUR)</option>
+                        </select>
+                        <input class="input" name="price" type="text" onkeyup="inputNumberFormat(this)">
+                    </div>
+                    <span class="refer-text">- 배송비 포함 최종 가격</span>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop')}">
+                <div class="product-col product-title">* 사이즈팁</div>
+                <div class="textarea-container">
+                    <textarea class="product-textarea"></textarea>
+                </div>
+            </div>
+<!--            -->
+            <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
+                <div class="product-col product-title">아우터</div>
+                <div class="product-col product-input">
+                    <input class="input" name="shoes" type="text">
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
+                <div class="product-col product-title">*상의</div>
+                <div class="product-col product-input">
+                    <input class="input" name="top" type="text">
+                    <span class="refer-text">- 상/하의가 나오지 않거나 알아보기 보기 힘든 수준의 사진 등록 시 삭제 처리될 수 있습니다.</span>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
+                <div class="product-col product-title">*하의</div>
+                <div class="product-col product-input">
+                    <input class="input" name="bottom" type="text">
+                    <span class="refer-text">- 전체적인 모습이 나오지 않거나 데일리룩으로 보기 어려운 경우 이동, 삭제될 수 있습니다.</span>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('ds')}">
+                <div class="product-col product-title">*신발</div>
+                <div class="product-col product-input">
+                    <input class="input" name="shoes" type="text">
+                    <span class="refer-text">- 반드시 신발 착용 사진을 올려주세요.</span>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
+                <div class="product-col product-title">*신발</div>
+                <div class="product-col product-input">
+                    <input class="input" name="shoes" type="text">
+                    <span class="refer-text">- 상/하의가 나오지 않거나 알아보기 보기 힘든 수준의 사진 등록 시 삭제 처리될 수 있습니다.</span>
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
+                <div class="product-col product-title">액세서리</div>
+                <div class="product-col product-input">
+                    <input class="input" name="acc" type="text">
+                </div>
+            </div>
+            <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
+                <div class="product-col product-title">촬영 장소</div>
+                <div class="product-col product-input">
+                    <input class="input" name="location" type="text">
+                    <span class="refer-text">- 사진 촬영 장소 (선택 사항)</span>
+                </div>
+            </div>
+            <div class="text-container" th:if="${#request.getRequestURI().contains('os') || #request.getRequestURI().contains('rt') || #request.getRequestURI().contains('dr')}">
+                <p>ㆍ본문과 관련없는 낚시성 제목으로 게시물 열람을 유도하는 행위를 금지합니다.<br>
+                    ㆍ단축 url 사용을 금지합니다. 모든 링크는 원 url로 등록바랍니다.<br>
+                    ㆍ일부 링크는 어미새 제휴 마케팅이 적용되어 커미션이 지급될 수 있습니다.<br>
+                    ㆍ게시글, 댓글로 샀어요, 추천을 유도하는 행위를 금지합니다.<br>
+                    ㆍ세일정보 게시판에서 불매 관련 언급을 금지합니다.</p>
+            </div>
+            <div class="text-container" th:if="${#request.getRequestURI().contains('gl')}">
+                <p>● 패션 구매 게시판 공지사항<br>
+                    <a href="https://eomisae.co.kr/gl/3846059">https://eomisae.co.kr/gl/3846059</a>
+                </p>
+            </div>
+            <div class="text-container" th:if="${#request.getRequestURI().contains('ha')}">
+                <p>● 기타 구매 게시판 공지사항<br>
+                    <a href="https://eomisae.co.kr/gl/3846059">https://eomisae.co.kr/gl/3846059</a>
+                </p>
+            </div>
+            <div class="text-container" th:if="${#request.getRequestURI().contains('pot')}">
+                <p>● 패션 후기 게시판 공지사항<br>
+                    <a href="https://eomisae.co.kr/gl/3846059">https://eomisae.co.kr/gl/3846059</a>
+                </p>
+            </div>
+            <div class="text-container" th:if="${#request.getRequestURI().contains('pop')}">
+                <p>● 기타 후기 게시판 공지사항<br>
+                    <a href="https://eomisae.co.kr/gl/3846059">https://eomisae.co.kr/gl/3846059</a>
+                </p>
+            </div>
+        </div>
+        <textarea class="editor" name="content" id="editor"></textarea>
+<!--        <input type="hidden" name="thumbnailId" th:value="${}">-->
+        <div class="file-upload-container" id="fileUpload">
+            <div class="image-upload" id="imageUploadButton"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</div>
+            <span class="file-size-limit">파일 크기 제한 : 10.00MB (허용 확장자 : *.jpeg;*.jpg;*.png;*.gif;)</span>
+        </div>
+        <div class="image-function">
+            <div class="result">
+                <span class="file_count">1</span>
+                개 첨부 됨 (
+                <span class="attached_size">2.8KB</span>
+                /
+                <span class="allowed_attach_size">10.00MB</span>
+                )
+            </div>
+            <div class="input">
+                <input class="add-editor" type="button" value="본문 삽입">
+                <input class="delete-editor" type="button" value="선택 삭제">
+            </div>
+        </div>
+        <div class="image-components">
+            <div class="title-image-text">
+                <h2>리스트 대표이미지 선택</h2>
+                리스트용 이미지는 첨부된 이미지 중 하나를 추출하므로, 본문 작성 또는 수정이 끝난 후 선택하면 편리합니다.
+                <br>
+                대표이미지를 선택하지 않을 경우 제일 처음으로 첨부한 이미지를 대표이미지로 설정합니다.
+            </div>
+            <div class="list-images">
+                <ul class="list">
+                    <li>
+                        <strong class="file-name"></strong>
+                        <span class="file-info">
+                            <span class="file-size"></span>
+                            <span>
+                                <img src="http://127.0.0.1:8080/bbs/download-image?id=85890cb010a08cf982a712a543aa238cee8b9432d5e9dd45fd99a76f97195214edbd44f3c22386860e7298389ff34596c8835aa541805cf9a384a4693fc1451a">
+                            </span>
+                            <span class="checkbox">
+                                <input type="checkbox">
+                            </span>
+                            <button class="button" title="커버이미지로 선택">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                        </span>
+                    </li>
+                    <li>
+                        <strong class="file-name"></strong>
+                        <span class="file-info">
+                            <span class="file-size"></span>
+                            <span>
+                                <img src="http://127.0.0.1:8080/bbs/download-image?id=85890cb010a08cf982a712a543aa238cee8b9432d5e9dd45fd99a76f97195214edbd44f3c22386860e7298389ff34596c8835aa541805cf9a384a4693fc1451a">
+                            </span>
+                            <span class="checkbox">
+                                <input type="checkbox">
+                            </span>
+                            <button class="button" title="커버이미지로 선택">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-bottom">
+            <div class="button-container">
+                <input class="button-input" type="button" value="돌아가기"
+                       onclick="if (confirm('정말로 돌아갈까요? 작성하신 정보가 모두 유실됩니다.')) {window.history.back();}">
+                <input class="button-input" type="button" value="임시 저장">
+                <input class="button-input" type="button" value="불러오기">
+                <input class="button-input" type="button" value="미리 보기">
+            </div>
+            <input type="hidden" name="boardIndex" th:value="${boardListVo.getIndex()}">
+            <input class="button-input submit-button" type="submit" value="등록">
+        </div>
+    </form>
+</main>
+<th:block th:replace="~{fragments/footer.html :: content}"></th:block>
+</body>
+</html>

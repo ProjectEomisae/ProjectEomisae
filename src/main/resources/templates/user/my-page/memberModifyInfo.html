@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="user" type="dev.dmchoi.eomisae.entities.member.UserEntity"*/-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,14 +12,15 @@
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
+    <script defer th:src="@{/user/my-page/resources/scripts/memberModifyInfo.js}"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
 <body>
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <th:block th:replace="~{fragments/myPageHeader.html :: content}"></th:block>
 <main class="main" id="main">
-    <form class="register-form" method="post">
-        <section class="register">
+    <form class="modify-profile-form" id="modifyProfileForm" method="post" action="/user/my-page/memberModifyInfo">
+        <section class="modify-profile">
             <h1 class="title">회원정보 조회/수정</h1>
             <div class="label-container">
                 <label for="emailInput" class="control-label">
@@ -27,7 +29,8 @@
                 </label>
                 <label class="input-container">
                     <span hidden>이메일 주소</span>
-                    <input required class="input input-email" id="emailInput" maxlength="50" name="email" type="email">
+                    <input required class="input input-email" id="emailInput" maxlength="50" name="email" type="email"
+                           th:value="${user.getEmail()}" readonly>
                 </label>
             </div>
             <div class="label-container">
@@ -36,7 +39,7 @@
                 </label>
                 <label class="input-container">
                     <span hidden>아이디</span>
-                    <input class="input input-blue" id="idInput" maxlength="50" name="id" type="text">
+                    <input class="input input-blue" id="idInput" maxlength="50" name="id" type="text" th:value="${user.getUserId()}">
                 </label>
             </div>
             <div class="label-container">
@@ -46,7 +49,8 @@
                 </label>
                 <label class="input-container">
                     <span hidden>닉네임</span>
-                    <input class="input input-blue" id="nickNameInput" maxlength="12" name="nickname" type="text">
+                    <input class="input input-blue" id="nickNameInput" maxlength="12" name="nickname" type="text"
+                           th:value="${user.getNickname()}">
                 </label>
             </div>
             <div class="label-container">
@@ -56,9 +60,17 @@
                 <div class="profile-upload-container">
                     <label class="input-container">
                         <span hidden>프로필 사진</span>
-                        <input class="input" id="profileUploadInput" maxlength="12" name="profileUpload" type="file">
-                        <div class="input-text">가로 제한 길이: 50px, 세로 제한 길이: 50px</div>
+                        <div class="image-container">
+                            <img class="image" th:if="${user.getProfileId() != ''}"
+                                 th:src="@{'/user/profile-id?id=' + ${user.getProfileId()}}">
+                        </div>
+                        <div class="file-upload">
+                            <input th:if="${user.getProfileId() != ''}" class="input delete-button" value="삭제" type="button">
+                            <input class="input input-profile-image" id="profileUploadInput"
+                                   name="profileUpload" type="file">
+                        </div>
                     </label>
+                    <div class="input-text">가로 제한 길이: 50px, 세로 제한 길이: 50px</div>
                 </div>
             </div>
             <div class="label-container">
@@ -68,11 +80,11 @@
                 <div class="permission-container">
                     <label class="radio-container">
                         <span hidden>메일링 가입 동의</span>
-                        <input checked class="input" name="mailing-agree" type="radio"><span>예</span>
+                        <input class="input" name="mailing-agree" type="radio" th:checked="${user.isMailReceived() == true}"><span>예</span>
                     </label>
                     <label class="radio-container">
                         <span hidden>메일링 가입 미동의</span>
-                        <input class="input" name="mailing-agree" type="radio"><span>아니오</span>
+                        <input class="input" name="mailing-agree" type="radio" th:checked="${user.isMailReceived() == false}"><span>아니오</span>
                     </label>
                 </div>
             </div>
@@ -83,15 +95,15 @@
                 <div class="permission-container">
                     <label class="radio-container">
                         <span hidden>모두 허용</span>
-                        <input checked class="input" name="sendingMessage" type="radio"><span>모두 허용</span>
+                        <input class="input" name="sendingMessage" type="radio" th:checked="${user.getMessageReceptionIndex() == 1}"><span>모두 허용</span>
                     </label>
                     <label class="radio-container">
                         <span hidden>등록된 친구들만 허용</span>
-                        <input class="input" name="sendingMessage" type="radio"><span>등록된 친구들만 허용</span>
+                        <input class="input" name="sendingMessage" type="radio" th:checked="${user.getMessageReceptionIndex() == 2}"><span>등록된 친구들만 허용</span>
                     </label>
                     <label class="radio-container">
                         <span hidden>모두 금지</span>
-                        <input class="input" name="sendingMessage" type="radio"><span>모두 금지</span>
+                        <input class="input" name="sendingMessage" type="radio" th:checked="${user.getMessageReceptionIndex() == 3}"><span>모두 금지</span>
                     </label>
                 </div>
             </div>

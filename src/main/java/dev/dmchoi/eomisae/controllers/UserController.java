@@ -15,7 +15,6 @@ import dev.dmchoi.eomisae.utils.CryptoUtils;
 import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
 import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import dev.dmchoi.eomisae.services.UserService;
@@ -44,6 +43,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import java.util.Optional;
+
 @Controller(value = "dev.dmchoi.eomisae.controllers.UserController")
 @RequestMapping(value = "/user")
 public class UserController extends StandardController {
@@ -55,12 +56,12 @@ public class UserController extends StandardController {
     protected UserController(SystemService systemService, UserService userService, BoardListService boardListService) {
         super(systemService);
         this.userService = userService;
+        this.boardListService = boardListService;
     }
 
     @RequestMapping(value = "check-email", method = RequestMethod.POST)
     @ResponseBody
     public String postCheckEmail(UserEntity user) {
-
         return String.valueOf(this.userService.getUserCountByEmail(user));
     }
 
@@ -75,6 +76,7 @@ public class UserController extends StandardController {
     public String postCheckNickname(UserEntity user) {
         return String.valueOf(this.userService.getUserCountByNickname(user));
         this.boardListService = boardListService;
+
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -85,6 +87,9 @@ public class UserController extends StandardController {
             LoginVo loginVo) {
         loginVo.setResult(null);
         this.userService.login(loginVo, request);
+        if(loginVo.getIndex() == 0) {
+            loginVo.setIndex(0);
+        }
         this.systemService.putActivityLog(loginVo.getIndex(), request, loginVo);
         if (loginVo.getResult() == LoginResult.SUCCESS) {
             if (!loginVo.isAutosign()) {

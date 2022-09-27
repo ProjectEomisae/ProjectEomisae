@@ -8,6 +8,11 @@ public class ArticleReadCommentDto extends ArticleEntity {
     private int point;
     private String profileId;
     private int commentCount;
+    private int depth;
+    private int parentIndex;
+    private int parentUserIndex;
+    private String parentUserNickname;
+    private boolean isDeleted;
 
     public String getUserNickname() {
         return userNickname;
@@ -51,6 +56,51 @@ public class ArticleReadCommentDto extends ArticleEntity {
 
     public ArticleReadCommentDto setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+        return this;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public ArticleReadCommentDto setDepth(int depth) {
+        this.depth = depth;
+        return this;
+    }
+
+    public int getParentIndex() {
+        return parentIndex;
+    }
+
+    public ArticleReadCommentDto setParentIndex(int parentIndex) {
+        this.parentIndex = parentIndex;
+        return this;
+    }
+
+    public int getParentUserIndex() {
+        return parentUserIndex;
+    }
+
+    public ArticleReadCommentDto setParentUserIndex(int parentUserIndex) {
+        this.parentUserIndex = parentUserIndex;
+        return this;
+    }
+
+    public String getParentUserNickname() {
+        return parentUserNickname;
+    }
+
+    public ArticleReadCommentDto setParentUserNickname(String parentUserNickname) {
+        this.parentUserNickname = parentUserNickname;
+        return this;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public ArticleReadCommentDto setDeleted(boolean deleted) {
+        isDeleted = deleted;
         return this;
     }
 }

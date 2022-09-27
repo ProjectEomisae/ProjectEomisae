@@ -5,14 +5,14 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title th:text="${boardListVo.getName() + ' - 어미새'}"></title>
+    <title th:text="${articleReadVo.getTitle() + ' - ' + boardListVo.getName() + ' - 어미새'}"></title>
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
-    <!--    <link th:href="@{/bbs/resources/stylesheets/board-main-1.css}" rel="stylesheet">-->
+    <!--    <link th:href="@{/bbs/resources/stylesheets/image-main.css}" rel="stylesheet">-->
     <link th:href="@{/bbs/resources/stylesheets/detail.css}" rel="stylesheet">
     <link th:href="@{/bbs/resources/stylesheets/common.css}" rel="stylesheet">
     <link th:href="@{/bbs/resources/stylesheets/non-image-main.css}" rel="stylesheet">
     <script defer th:src="@{/bbs/resources/scripts/non-image-main.js}"></script>
-    <!--    <script defer th:src="@{/bbs/resources/scripts/borad-main-1.js}"></script>-->
+    <!--    <script defer th:src="@{/bbs/resources/scripts/image-main.js}"></script>-->
     <script defer th:src="@{/bbs/resources/scripts/detail.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
@@ -93,10 +93,12 @@
                                                 <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역
                                                     보기</a>
                                             </li>
-                                            <li class="list">
+                                            <li class="list"
+                                                th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() != #request.getAttribute('user').getIndex()}">
                                                 <a class="link" th:href="@{/}">쪽지 보내기</a>
                                             </li>
-                                            <li class="list">
+                                            <li class="list"
+                                                th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() != #request.getAttribute('user').getIndex()}">
                                                 <a class="link" th:href="@{/}">회원 차단</a>
                                             </li>
                                         </ul>
@@ -108,7 +110,7 @@
                                     <b th:text="${articleReadVo.getView()}">3745</b>
                                 </span>
                                 <div class="divider"></div>
-                                <span class="like">
+                                <span class="like-count">
                                     추천 수
                                     <b th:text="${articleReadVo.getLike()}">8</b>
                                 </span>
@@ -132,7 +134,8 @@
                                         <i class="fa-solid fa-circle-question"></i>
                                     </td>
                                     <td>
-                                        <a th:text="${articleReadVo.getUrl()}"></a>
+                                        <a target="_blank" th:href="@{${articleReadVo.getUrl()}}"
+                                           th:text="${articleReadVo.getUrl()}"></a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -150,30 +153,46 @@
                             공동구매 :
                             <a th:href="@{/bbs/jp}"><span>공구 게시판</span></a>
                         </div>
-                        <div class="content-container" th:text="${articleReadVo.getContent()}">
+                        <div class="content-container" th:utext="${articleReadVo.getContent()}">
                             <img alt="B1EDA1CF-6889-4521-A844-C24C50483451.jpeg"
                                  src="//img.eomisae.co.kr/files/attach/images/138/678/108/093/b15a8ce825fb29d045c7bdc34a74a2f9.jpeg"
                                  rel="xe_gallery" style="cursor: pointer;">
                         </div>
                         <div class="function-container">
                             <div class="top">
-                                <button class="button like" type="button">
+                                <button class="button like-article" type="button"
+                                        th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != articleReadVo.getUserIndex()} ? 'on'"
+                                        onclick="if(!classList.contains('on')) {return false}">
+                                    <input class="boardIndex" type="hidden"
+                                           th:value="${articleReadVo.getBoardIndex()}">
+                                    <input class="articleIndex" type="hidden"
+                                           th:value="${articleReadVo.getIndex()}">
+                                    <input class="urlName" type="hidden" th:value="${urlName}">
                                 <span>
                                     <span>
                                     <i class="fa fa-heart"></i>
                                     </span>
-                                    추천 수
+                                    <span>
+                                        추천 수
+                                    </span>
                                 </span>
-                                    <span th:text="${articleReadVo.getLike()}">16</span>
+                                    <span class="like-count" th:text="${articleReadVo.getLike()}">16</span>
                                 </button>
-                                <button class="button buy" type="button">
+                                <button class="button buy-article" type="button"
+                                        th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != articleReadVo.getUserIndex()} ? 'on'"
+                                        onclick="if(!classList.contains('on')) {return false}">
+                                    <input class="boardIndex" type="hidden"
+                                           th:value="${articleReadVo.getBoardIndex()}">
+                                    <input class="articleIndex" type="hidden"
+                                           th:value="${articleReadVo.getIndex()}">
+                                    <input class="urlName" type="hidden" th:value="${urlName}">
                                 <span>
                                     <span>
                             <i class="fas fa-shopping-cart"></i>
                                     </span>
                                     샀어요
                                 </span>
-                                    <span th:text="${articleReadVo.getBuy()}">7</span>
+                                    <span class="buy-count" th:text="${articleReadVo.getBuy()}">7</span>
                                 </button>
                             </div>
                             <div class="down">
@@ -203,10 +222,71 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="tag-container">
+                            <ul class="list">
+                                <li class="link" th:each="tag : ${articleReadVo.getTags()}">
+                                    <a th:href="@{'/bbs/' + ${urlName} (criteria = ${criteria}, keyword = ${tag})}"
+                                       class="tag" th:text="'#' + ${tag}"></a>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="scrap-container">
                             <div class="line"></div>
-                            <div class="scrap">
-                                <i class="fa-solid fa-paste"></i>
+                            <div class="function">
+                                <div class="left">
+                                    <div class="scrap" title="scrap">
+                                        <i class="fa-solid fa-clipboard"></i>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="export">
+                                        <i class="fa-solid fa-share-from-square"></i>
+                                    </div>
+                                    <div class="export-info">
+                                        <ul class="export-menu">
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">
+                                                    <img alt="link" th:src="@{/bbs/resources/images/link.png}">
+                                                    주소 복사
+                                                </a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">
+                                                    <img alt="facebook" th:src="@{/bbs/resources/images/facebook.png}">페이스북으로
+                                                    공유</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">
+                                                    <img alt="twitter" th:src="@{/bbs/resources/images/twitter.png}">트위터로
+                                                    공유</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="modify">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </div>
+                                    <div class="modify-info">
+                                        <ul class="modify-menu">
+                                            <li class="list"
+                                                th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() == #request.getAttribute('user').getIndex()}">
+                                                <a class="link" th:href="@{${#request.getRequestURI()} + '/modify'}">
+                                                    수정
+                                                </a>
+                                            </li>
+                                            <li class="list"
+                                                th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() == #request.getAttribute('user').getIndex()}">
+                                                <a onclick="return confirm('정말로 삭제할까요? 삭제한 게시글은 다시 복구할 수 없습니다.')"
+                                                   class="link"
+                                                   th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/delete'}">
+                                                    삭제</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">
+                                                    신고</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -220,11 +300,11 @@
                     </a>
                 </div>
                 <div class="page">
-                    <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getIndex() - 1}}">
+                    <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getIndex() + 1}}">
                         <i class="fa-solid fa-angle-left"></i>
                         이전 글
                     </a>
-                    <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getIndex() + 1}}">
+                    <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getIndex() - 1}}">
                         다음 글
                         <i class="fa-solid fa-angle-right"></i>
                     </a>
@@ -238,82 +318,404 @@
                     <span>댓글</span>
                     <b th:text="${articleReadVo.getComments().size()}">10</b>
                 </div>
-                <div class="comment" th:each="comment : ${articleReadVo.getComments()}">
-                    <div class="user-profile">
-                        <img alt="유저프로필"
-                             th:src="@{/resources/images/profile.png (profildId=${comment.getProfileId()})}">
-                    </div>
-                    <div class="user-content">
-                        <div class="top">
-                            <div class="user">
+                <div class="comment" th:each="comment : ${articleReadVo.getComments()}"
+                     th:if="${comment.getDepth() == 0}">
+                    <div class="comment-box">
+                        <div class="user-profile">
+                            <img alt="유저프로필"
+                                 th:src="@{/resources/images/profile.png (profildId=${comment.getProfileId()})}">
+                        </div>
+                        <div class="user-content">
+                            <div class="top">
+                                <div class="user">
                                 <span th:text="${comment.getUserNickname()}">
                                     관리자
                                 </span>
-                                <div class="user-info">
-                                    <ul class="user-menu">
-                                        <li class="list">
-                                            <a class="link" th:href="@{/static}"
-                                               th:text="${'Lv.' + comment.getLevel() + ' (' + (comment.getPoint() * 100) / 3000 + '%)'}">Lv.14
-                                                (91.6%)</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역 보기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">쪽지 보내기</a>
-                                        </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">회원 차단</a>
-                                        </li>
-                                    </ul>
+                                    <div class="user-info">
+                                        <ul class="user-menu">
+                                            <li class="list">
+                                                <a class="link" th:href="@{/static}"
+                                                   th:text="${'Lv.' + comment.getLevel() + ' (' + (comment.getPoint() * 100) / 3000 + '%)'}">Lv.14
+                                                    (91.6%)</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역
+                                                    보기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">쪽지 보내기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">회원 차단</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <span class="date">22.08.19</span>
+                                    <span class="writer-article"
+                                          th:if="${articleReadVo.getUserIndex() == comment.getUserIndex()}">
+                                    글 작성자
+                                </span>
                                 </div>
-                                <div class="divider"></div>
-                                <span class="date">22.08.19</span>
-                            </div>
-                            <div class="function">
+                                <div class="function">
                                 <span class="comment">
                                     <i class="fa-solid fa-comments"></i>
-                                    <a th:href="@{/}">
+                                    <a class="link answer">
                                         답글
                                     </a>
                                 </span>
-                                <a class="like" th:href="@{/}">
-                                    추천
-                                    <span>0</span>
-                                </a>
-                                <button class="menu" type="button">
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </button>
-                                <ul class="menu-list">
-                                    <li class="list">
-                                        <a class="link" th:href="@{/}">
-                                            답글
-                                        </a>
-                                    </li>
-                                    <li class="list">
-                                        <a class="link" th:href="@{/}">
-                                            신고
-                                        </a>
-                                    </li>
-                                </ul>
+                                    <a class="like"
+                                       th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != comment.getUserIndex()} ? 'on'"
+                                       onclick="if(!classList.contains('on')) {return false} ">
+                                        추천
+                                        <span class="like-count" th:text="${comment.getLike()}">0</span>
+                                        <input class="articleIndex" type="hidden"
+                                               th:value="${articleReadVo.getIndex()}">
+                                        <input class="commentIndex" type="hidden" th:value="${comment.getIndex()}">
+                                        <input class="urlName" type="hidden" th:value="${urlName}">
+                                    </a>
+                                    <button class="menu" type="button">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="menu-list">
+                                        <li class="list">
+                                            <a class="link answer">
+                                                답글
+                                            </a>
+                                        </li>
+                                        <li class="list"
+                                            th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == comment.getUserIndex()}">
+                                            <a class="link" th:href="@{/}">
+                                                수정
+                                            </a>
+                                        </li>
+                                        <li class="list"
+                                            th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == comment.getUserIndex()}">
+                                            <a class="link"
+                                               onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')"
+                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${comment.getIndex()} + '/delete'}">
+                                                삭제
+                                            </a>
+                                        </li>
+                                        <li class="list">
+                                            <a class="link" th:href="@{/}">
+                                                신고
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="down">
+                                <div class="content" th:text="${comment.getContent()}"
+                                     th:if="${comment.isDeleted() != true}">
+                                    좋은 정보 감사드립니다. ^^
+                                </div>
+                                <div class="content delete" th:if="${comment.isDeleted() == true}">
+                                    삭제된 댓글입니다.
+                                </div>
+                            </div>
+                            <div class="write-comment" th:classappend="${#request.getAttribute('user') == null} ? 'on'">
+                                <div class="close-box visible">
+                                    <span class="close-button">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </span>
+                                </div>
+                                <div class="write-box">
+                                    <form class="comment-form" method="post">
+                                        <div class="textarea">
+                                            <label>
+                                                <span hidden>댓글</span>
+                                                <textarea th:if="${#request.getAttribute('user') != null}"
+                                                          spellcheck="false" name="content"></textarea>
+                                                <input hidden name="parentIndex" th:value="${comment.getIndex()}">
+                                                <input hidden name="depth" th:value=1>
+                                                <input hidden name="parentUserIndex"
+                                                       th:value="${comment.getUserIndex()}">
+                                            </label>
+                                        </div>
+                                        <div class="option">
+                                            <input class="input" type="submit" value="댓글 달기">
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                        <div class="down">
-                            <div class="content" th:text="${comment.getContent()}">
-                                좋은 정보 감사드립니다. ^^
+                    </div>
+                    <!--                    대댓글-->
+                    <div class="recomment" th:each="recomment : ${articleReadVo.getComments()}"
+                         th:if="${recomment.getDepth() == 1 && recomment.getParentIndex() == comment.getIndex()}">
+                        <div class="recomment-image">
+                            <img class="image" alt="" th:src="@{/bbs/resources/images/recomment.png}">
+                        </div>
+                        <div class="user-profile">
+                            <img alt="유저프로필"
+                                 th:src="@{/resources/images/profile.png (profildId=${recomment.getProfileId()})}">
+                        </div>
+                        <div class="user-content">
+                            <div class="top">
+                                <div class="user">
+                                <span th:text="${recomment.getUserNickname()}">
+                                    관리자
+                                </span>
+                                    <div class="user-info">
+                                        <ul class="user-menu">
+                                            <li class="list">
+                                                <a class="link" th:href="@{/static}"
+                                                   th:text="${'Lv.' + recomment.getLevel() + ' (' + (recomment.getPoint() * 100) / 3000 + '%)'}">Lv.14
+                                                    (91.6%)</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역
+                                                    보기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">쪽지 보내기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">회원 차단</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <span class="date">22.08.19</span>
+                                    <span class="writer-article"
+                                          th:if="${articleReadVo.getUserIndex() == recomment.getUserIndex()}">
+                                    글 작성자
+                                </span>
+                                </div>
+                                <div class="function">
+                                <span class="comment">
+                                    <i class="fa-solid fa-comments"></i>
+                                    <a class="link answer">
+                                        답글
+                                    </a>
+                                </span>
+                                    <a class="like"
+                                       th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != recomment.getUserIndex()} ? 'on'"
+                                       onclick="if(!classList.contains('on')) {return false} ">
+                                        추천
+                                        <span class="like-count" th:text="${recomment.getLike()}">0</span>
+                                        <input class="articleIndex" type="hidden"
+                                               th:value="${articleReadVo.getIndex()}">
+                                        <input class="commentIndex" type="hidden" th:value="${recomment.getIndex()}">
+                                        <input class="urlName" type="hidden" th:value="${urlName}">
+                                    </a>
+                                    <button class="menu" type="button">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="menu-list">
+                                        <li class="list">
+                                            <a class="link answer">
+                                                답글
+                                            </a>
+                                        </li>
+                                        <li class="list"
+                                            th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == recomment.getUserIndex()}">
+                                            <a class="link" th:href="@{/}">
+                                                수정
+                                            </a>
+                                        </li>
+                                        <li class="list"
+                                            th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == recomment.getUserIndex()}">
+                                            <a class="link"
+                                               onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')"
+                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${recomment.getIndex()} + '/delete'}">
+                                                삭제
+                                            </a>
+                                        </li>
+                                        <li class="list">
+                                            <a class="link" th:href="@{/}">
+                                                신고
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="down">
+                                <span class="tag-parent-name" th:text="${'@' + comment.getUserNickname()}">
+                                </span>
+                                <div class="content" th:text="${recomment.getContent()}"
+                                     th:if="${recomment.isDeleted() != true}">
+                                    좋은 정보 감사드립니다. ^^
+                                </div>
+                                <div class="content delete" th:if="${recomment.isDeleted() == true}">
+                                    삭제된 댓글입니다.
+                                </div>
+                            </div>
+                            <div class="write-comment" th:classappend="${#request.getAttribute('user') == null} ? 'on'">
+                                <div class="close-box visible">
+                                    <span class="close-button">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </span>
+                                </div>
+                                <div class="write-box">
+                                    <form class="comment-form" method="post">
+                                        <div class="textarea">
+                                            <label>
+                                                <span hidden>댓글</span>
+                                                <textarea th:if="${#request.getAttribute('user') != null}"
+                                                          spellcheck="false" name="content"></textarea>
+                                                <input hidden name="parentIndex" th:value="${comment.getIndex()}">
+                                                <input hidden name="depth" th:value=2>
+                                                <input hidden name="parentUserIndex"
+                                                       th:value="${recomment.getUserIndex()}">
+                                            </label>
+                                        </div>
+                                        <div class="option">
+                                            <input class="input" type="submit" value="댓글 달기">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re-recomment" th:each="rerecomment : ${articleReadVo.getComments()}"
+                         th:if="${rerecomment.getDepth() == 2 && rerecomment.getParentIndex() == comment.getIndex()}">
+                        <div class="re-recomment-image">
+                            <img class="image" alt="" th:src="@{/bbs/resources/images/recomment.png}">
+                        </div>
+                        <div class="user-profile">
+                            <img alt="유저프로필"
+                                 th:src="@{/resources/images/profile.png (profildId=${comment.getProfileId()})}">
+                        </div>
+                        <div class="user-content">
+                            <div class="top">
+                                <div class="user">
+                                <span th:text="${rerecomment.getUserNickname()}">
+                                    관리자
+                                </span>
+                                    <div class="user-info">
+                                        <ul class="user-menu">
+                                            <li class="list">
+                                                <a class="link" th:href="@{/static}"
+                                                   th:text="${'Lv.' + rerecomment.getLevel() + ' (' + (rerecomment.getPoint() * 100) / 3000 + '%)'}">Lv.14
+                                                    (91.6%)</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역
+                                                    보기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">쪽지 보내기</a>
+                                            </li>
+                                            <li class="list">
+                                                <a class="link" th:href="@{/}">회원 차단</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <span class="date">22.08.19</span>
+                                    <span class="writer-article"
+                                          th:if="${articleReadVo.getUserIndex() == rerecomment.getUserIndex()}">
+                                    글 작성자
+                                </span>
+                                </div>
+                                <div class="function">
+                                <span class="comment">
+                                    <i class="fa-solid fa-comments"></i>
+                                    <a class="link answer">
+                                        답글
+                                    </a>
+                                </span>
+                                    <a class="like"
+                                       th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != rerecomment.getUserIndex()} ? 'on'"
+                                       onclick="if(!classList.contains('on')) {return false} ">
+                                        추천
+                                        <span class="like-count" th:text="${rerecomment.getLike()}">0</span>
+                                        <input class="articleIndex" type="hidden"
+                                               th:value="${articleReadVo.getIndex()}">
+                                        <input class="commentIndex" type="hidden" th:value="${rerecomment.getIndex()}">
+                                        <input class="urlName" type="hidden" th:value="${urlName}">
+                                    </a>
+                                    <button class="menu" type="button">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="menu-list">
+                                        <li class="list">
+                                            <a class="link answer">
+                                                답글
+                                            </a>
+                                        </li>
+                                        <li class="list"
+                                            th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == rerecomment.getUserIndex()}">
+                                            <a class="link" th:href="@{/}">
+                                                수정
+                                            </a>
+                                        </li>
+                                        <li class="list"
+                                            th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == rerecomment.getUserIndex()}">
+                                            <a class="link"
+                                               onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')"
+                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${rerecomment.getIndex()} + '/delete'}">
+                                                삭제
+                                            </a>
+                                        </li>
+                                        <li class="list">
+                                            <a class="link" th:href="@{/}">
+                                                신고
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="down">
+                                <span class="tag-parent-name" th:text="${'@' + rerecomment.getParentUserNickname()}">
+                                </span>
+                                <div class="content" th:text="${rerecomment.getContent()}"
+                                     th:if="${rerecomment.isDeleted() != true}">
+                                    좋은 정보 감사드립니다. ^^
+                                </div>
+                                <div class="content delete" th:if="${rerecomment.isDeleted() == true}">
+                                    삭제된 댓글입니다.
+                                </div>
+                            </div>
+                            <div class="write-comment" th:classappend="${#request.getAttribute('user') == null} ? 'on'">
+                                <div class="close-box visible">
+                                    <span class="close-button">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </span>
+                                </div>
+                                <div class="write-box">
+                                    <form class="comment-form" method="post">
+                                        <div class="textarea">
+                                            <label>
+                                                <span hidden>댓글</span>
+                                                <textarea th:if="${#request.getAttribute('user') != null}"
+                                                          spellcheck="false" name="content"></textarea>
+                                                <input hidden name="parentIndex" th:value="${comment.getIndex()}">
+                                                <input hidden name="depth" th:value=2>
+                                                <input hidden name="parentUserIndex"
+                                                       th:value="${rerecomment.getUserIndex()}">
+                                            </label>
+                                        </div>
+                                        <div class="option">
+                                            <input class="input" type="submit" value="댓글 달기">
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="empty"></div>
                 <div class="write-comment">
                     <div class="write-box">
-                        <div class="textarea">
+                        <div class="textarea" th:if="${#request.getAttribute('user') == null}">
                             <span>댓글 쓰기 권한이 없습니다.</span>
                         </div>
-                        <div class="option">
-                            <input class="input" type="button" value="댓글 달기">
-                        </div>
+                        <form class="comment-form" method="post">
+                            <div class="textarea">
+                                <label>
+                                    <span hidden>댓글</span>
+                                    <textarea class="textarea content" th:if="${#request.getAttribute('user') != null}"
+                                              spellcheck="false" name="content"></textarea>
+                                    <input hidden name="parentUserIndex" th:value=0>
+                                </label>
+                            </div>
+                            <div class="option">
+                                <input class="input comment" type="submit" value="댓글 달기"
+                                       th:classappend="${#request.getAttribute('user') != null} ? 'on'">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -440,7 +842,8 @@
                     </div>
                     <div class="right">
                         <div class="function">
-                            <a class="link" th:href="@{/bbs/fe/boardWrite}">
+                            <a class="link write" th:href="@{'/bbs/' + ${boardListVo.getUrlName() + '/add'}}"
+                               th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getLevel() > boardListVo.getWriteLevel()} ? 'on'">
                                 쓰기
                             </a>
                             <a class="link search">
@@ -489,7 +892,7 @@
                             <th class="name">글쓴이</th>
                             <th class="date">날짜</th>
                             <th class="view">조회 수</th>
-                            <th class="like">
+                            <th class="like-count">
                                 <span>추천 수</span>
                             </th>
                         </tr>
@@ -515,8 +918,11 @@
                                    th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${article.getIndex()}}"
                                    th:text="${article.getCommentCount()}">137</a>
                                 <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
+                                    <img alt="최신글"
+                                         th:if="${T(org.apache.commons.lang3.time.DateUtils).addDays(#dates.createNow(), -3) < article.getWrittenAt()}"
+                                         th:src="@{/bbs/resources/images/new.gif}">
+                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}"
+                                     th:if="${article.getContent().contains('download-image')}">
                             </span>
                             </td>
                             <td class="user">
@@ -571,8 +977,11 @@
                                    th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${article.getIndex()}}"
                                    th:text="${article.getCommentCount()}">137</a>
                                 <span class="extra-images">
-                                    <img alt="최신글" th:src="@{/bbs/resources/images/new.gif}">
-                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}">
+                                    <img alt="최신글"
+                                         th:if="${T(org.apache.commons.lang3.time.DateUtils).addDays(#dates.createNow(), -3) < article.getWrittenAt()}"
+                                         th:src="@{/bbs/resources/images/new.gif}">
+                                <img alt="이미지" th:src="@{/bbs/resources/images/file.gif}"
+                                     th:if="${article.getContent().contains('download-image')}">
                             </span>
                             </td>
                             <td class="user">
