@@ -7,7 +7,7 @@ th:each="articleForNo : ${boardListVoForNo.getArticles()}">
         <span>공지</span>
     </td>
     <td class="title">
-        <a th:href="@{'/bbs/' + ${boardListVoForNo.getUrlName()} + '/'+ ${articleForNo.getIndex()}}" th:text="${articleForNo.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
+        <a th:href="@{'/bbs/no/'+ ${articleForNo.getIndex()}}" th:text="${articleForNo.getTitle()}">세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정 (21.11.29추가)세일정보 게시판 규정
             (21.11.29추가)</a>
         <a class="comments" th:href="@{/}" th:text="${articleForNo.getCommentCount()}">137</a>
         <span class="extra-images">
@@ -15,7 +15,7 @@ th:each="articleForNo : ${boardListVoForNo.getArticles()}">
                                 <img alt="업데이트" th:src="@{/bbs/resources/images/update.gif}">
                             </span>
     </td>
-    <td class="user">
+    <td class="user box">
         <div class="user-name">
             <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
                  alt="profile" title="어미새">
@@ -28,7 +28,7 @@ th:each="articleForNo : ${boardListVoForNo.getArticles()}">
                        th:text="${'Lv.' + articleForNo.getLevel() + ' (' + (articleForNo.getPoint() * 100) / 3000 + '%)'}">Lv.14 (91.6%)</a>
                 </li>
                 <li class="list">
-                    <a class="link" th:href="@{/}">활동 내역 보기</a>
+                    <a class="link my-page" th:href="@{/user/my-page/memberOwnDocument}" th:classappend="${#request.getAttribute('user') != null && articleForNo.getUserIndex() == #request.getAttribute('user').getIndex()} ? 'on'">활동 내역 보기</a>
                 </li>
                 <li class="list">
                     <a class="link" th:href="@{/}">회원 차단</a>

@@ -56,22 +56,17 @@
                             </a>
                             <ul class="align-list">
                                 <li class="list">
-                                    <a class="link" th:href="@{/}">
+                                    <a class="link" th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${1})}">
                                         최신순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/}">
-                                        조회순
-                                    </a>
-                                </li>
-                                <li class="list">
-                                    <a class="link" th:href="@{/}">
+                                    <a class="link" th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${3})}">
                                         추천순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/}">
+                                    <a class="link" th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${4})}">
                                         댓글순
                                     </a>
                                 </li>
@@ -145,8 +140,7 @@
                                                     (91.6%)</a>
                                             </li>
                                             <li class="list">
-                                                <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역
-                                                    보기</a>
+                                                <a class="link my-page" th:href="@{/user/my-page/memberOwnDocument}" th:classappend="${#request.getAttribute('user') != null && comment.getUserIndex() == #request.getAttribute('user').getIndex()} ? 'on'">활동 내역 보기</a>
                                             </li>
                                             <li class="list">
                                                 <a class="link" th:href="@{/}">쪽지 보내기</a>

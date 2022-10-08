@@ -16,8 +16,8 @@ public class CommentEntity implements IEntity<CommentEntity> {
     private int parentIndex;
     private int parentUserIndex;
     private int depth;
-
     private int like;
+    private int blindStatus;
     private boolean isDeleted;
 
     public int getIndex() {
@@ -101,6 +101,15 @@ public class CommentEntity implements IEntity<CommentEntity> {
         return this;
     }
 
+    public int getBlindStatus() {
+        return blindStatus;
+    }
+
+    public CommentEntity setBlindStatus(int blindStatus) {
+        this.blindStatus = blindStatus;
+        return this;
+    }
+
     public boolean isDeleted() {
         return isDeleted;
     }
@@ -122,6 +131,7 @@ public class CommentEntity implements IEntity<CommentEntity> {
         commentEntity.parentUserIndex = this.parentUserIndex;
         commentEntity.depth = this.depth;
         commentEntity.like = this.like;
+        commentEntity.blindStatus = this.blindStatus;
         commentEntity.isDeleted = this.isDeleted;
         return commentEntity;
     }
@@ -137,6 +147,7 @@ public class CommentEntity implements IEntity<CommentEntity> {
         this.parentUserIndex = commentEntity.parentUserIndex;
         this.depth = commentEntity.depth;
         this.like = commentEntity.like;
+        this.blindStatus = commentEntity.blindStatus;
         this.isDeleted = commentEntity.isDeleted;
     }
 }

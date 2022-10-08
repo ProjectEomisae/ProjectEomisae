@@ -44,9 +44,7 @@ import java.util.Date;
 @Service(value = "dev.dmchoi.eomisae.services.UserService")
 public class UserService {
 
-    // TODO: 회원탈퇴까지 완료. 유저 이미지 삭제할 때 프로필 수정에서 삭제 되면 바로 위에 삭제 되는거 체크해야함
     public static final int SESSION_LIFE_TIME = 60;
-
     public static final int EMAIL_VALID_MINUTES = 5;
     public static final int CODE_VALID_MINUTES = 30;
     public static final int CODE_HASH_ITERATION_COUNT = 10;
@@ -283,26 +281,6 @@ public class UserService {
         System.out.println(loginVo.getSessionEntity());
         loginVo.setResult(LoginResult.SUCCESS);
     }
-        String userAgent = request.getHeader("User-Agent");
-        Date currentDate = new Date();
-        // 사용자를 별도로 인식하기 위한 키
-        sessionKey = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, sessionKey); // 해싱까지 완료
-        SessionEntity sessionEntity = SessionEntity.build()
-                .setCreatedAt(currentDate)
-                .setUpdatedAt(currentDate)
-                .setExpiresAt(DateUtils.addMinutes(currentDate, SESSION_LIFE_TIME))
-                .setExpired(false)
-                .setUserIndex(loginVo.getIndex())
-                .setKey(sessionKey)
-                .setUa(userAgent);
-        System.out.println("세션키의 만료시간 : " + sessionEntity.getExpiresAt());
-        this.userMapper.insertSession(sessionEntity);
-        loginVo.setSessionEntity(sessionEntity);
-        System.out.println(loginVo.getSessionEntity());
-        ;
-        loginVo.setResult(LoginResult.SUCCESS);
-
-        }
 
     public void putProfileImage(ProfileImageEntity profileImageEntity) {
         this.userMapper.insertProfileImage(profileImageEntity);

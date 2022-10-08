@@ -140,7 +140,6 @@ public class UserController extends StandardController {
         return modelAndView;
     }
 
-    // TODO:  이메일 변경 인증 메일 submit 후 warning 띄우기
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.POST)
     public ModelAndView postMemberSignUpForm(RegisterVo registerVo,
                                              ModelAndView modelAndView,
@@ -449,25 +448,5 @@ public class UserController extends StandardController {
         responseJson.put("result", deleteUserVo.getResult().name().toLowerCase());
         return responseJson.toString();
     }
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}

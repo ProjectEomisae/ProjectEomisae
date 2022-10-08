@@ -1,26 +1,20 @@
 package dev.dmchoi.eomisae.services.bbs;
 
-import dev.dmchoi.eomisae.dtos.bbs.ArticleReadCommentDto;
 import dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto;
 import dev.dmchoi.eomisae.dtos.bbs.BoardReadCommentDto;
 import dev.dmchoi.eomisae.entities.bbs.*;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
-import dev.dmchoi.eomisae.enums.bbs.ArticleDeleteResult;
-import dev.dmchoi.eomisae.enums.bbs.ArticleReadResult;
 import dev.dmchoi.eomisae.enums.bbs.BoardListResult;
 import dev.dmchoi.eomisae.enums.bbs.JoinCommentDeleteResult;
 import dev.dmchoi.eomisae.mappers.bbs.IBoardListMapper;
 import dev.dmchoi.eomisae.mappers.IUserMapper;
 import dev.dmchoi.eomisae.models.PagingModel;
-import dev.dmchoi.eomisae.vos.bbs.ArticleDeleteVo;
-import dev.dmchoi.eomisae.vos.bbs.ArticleReadVo;
 import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
 import dev.dmchoi.eomisae.vos.bbs.JoinCommentDeleteVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "dev.dmchoi.eomisae.services.bbs.BoardListService")
@@ -53,6 +47,32 @@ public class BoardListService {
         this.boardListMapper.updateArticleForBuy(articleEntity.getBuy(), articleEntity.getBoardIndex(), articleEntity.getIndex());
     }
 
+    @Transactional
+    public void addArticleView(BoardListVo boardListVo, ArticleViewEntity articleView) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        ArticleViewEntity articleViewEntity = this.boardListMapper.selectArticleViewByUser(articleView.getUserIndex(), boardEntity.getIndex() , articleView.getArticleIndex());
+        UserEntity user = this.userMapper.selectUserByIndex(articleView.getUserIndex());
+        if (articleViewEntity != null || user.getLevel() < boardEntity.getReadLevel()) {
+            boardListVo.setResult(BoardListResult.NOT_ALLOWED);
+            return;
+        }
+        if (user == null) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        articleView.setChecked(true);
+        articleView.setBoardIndex(boardEntity.getIndex());
+        this.boardListMapper.insertArticleView(articleView);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+        ArticleEntity articleEntity = this.boardListMapper.selectArticle(boardEntity.getIndex(), articleView.getArticleIndex());
+        articleEntity.setView(articleEntity.getView() + 1);
+        this.boardListMapper.updateArticleForView(articleEntity.getView(), boardEntity.getIndex(), articleEntity.getIndex());
+    }
+    @Transactional
     public void addArticleLike(BoardListVo boardListVo, ArticleLikeEntity articleLike) {
         BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
         if (boardEntity == null || boardEntity.getIndex() == 0) {
@@ -72,6 +92,26 @@ public class BoardListService {
         this.boardListMapper.updateArticleForLike(articleEntity.getLike(), articleEntity.getBoardIndex(), articleEntity.getIndex());
     }
 
+    @Transactional
+    public void addArticleReport(BoardListVo boardListVo, ArticleReportEntity articleReport) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        ArticleReportEntity articleReportEntity = this.boardListMapper.selectArticleReportByUser(articleReport.getUserIndex(), articleReport.getBoardIndex() , articleReport.getArticleIndex());
+        if (articleReportEntity != null) {
+            boardListVo.setResult(BoardListResult.NOT_ALLOWED);
+            return;
+        }
+        articleReport.setChecked(true);
+        this.boardListMapper.insertArticleReport(articleReport);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+        ArticleEntity articleEntity = this.boardListMapper.selectArticle(articleReport.getBoardIndex(), articleReport.getArticleIndex());
+        articleEntity.setBlindStatus(articleEntity.getBlindStatus() + 1);
+        this.boardListMapper.updateArticleForReport(articleEntity.getBlindStatus(), articleEntity.getBoardIndex(), articleEntity.getIndex());
+    }
+    @Transactional
     public void addCommentLike(BoardListVo boardListVo, CommentLikeEntity commentLike) {
         BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
         if (boardEntity == null || boardEntity.getIndex() == 0) {
@@ -88,7 +128,27 @@ public class BoardListService {
         boardListVo.setResult(BoardListResult.SUCCESS);
         CommentEntity commentEntity = this.boardListMapper.selectComment(commentLike.getArticleIndex(), commentLike.getCommentIndex());
         commentEntity.setLike(commentEntity.getLike() + 1);
-        this.boardListMapper.updateJoinComment(commentEntity.getLike(), commentEntity.getIndex());
+        this.boardListMapper.updateCommentForLike(commentEntity.getLike(), commentEntity.getArticleIndex() , commentEntity.getIndex());
+    }
+
+    @Transactional
+    public void addCommentReport(BoardListVo boardListVo, CommentReportEntity commentReport) {
+        BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
+        if (boardEntity == null || boardEntity.getIndex() == 0) {
+            boardListVo.setResult(BoardListResult.NOT_FOUND);
+            return;
+        }
+        CommentReportEntity commentReportEntity = this.boardListMapper.selectCommentReportByUser(commentReport.getUserIndex(), commentReport.getArticleIndex() , commentReport.getCommentIndex());
+        if (commentReportEntity != null) {
+            boardListVo.setResult(BoardListResult.NOT_ALLOWED);
+            return;
+        }
+        commentReport.setChecked(true);
+        this.boardListMapper.insertCommentReport(commentReport);
+        boardListVo.setResult(BoardListResult.SUCCESS);
+        CommentEntity commentEntity = this.boardListMapper.selectComment(commentReport.getArticleIndex(), commentReport.getCommentIndex());
+        commentEntity.setBlindStatus(commentEntity.getBlindStatus() + 1);
+        this.boardListMapper.updateCommentForReport(commentEntity.getBlindStatus(), commentEntity.getArticleIndex() , commentEntity.getIndex());
     }
 
     public void addJoinCommentLike(BoardListVo boardListVo, JoinCommentLikeEntity joinCommentLike) {
@@ -225,34 +285,39 @@ public class BoardListService {
         switch (criteria) {
             case "title-content":
                 articles = this.boardListMapper.searchByTitleContentAll(
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "title":
                 articles = this.boardListMapper.searchByTitleAll(
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "content":
                 articles = this.boardListMapper.searchByContentAll(
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "comment":
                 articles = this.boardListMapper.searchByCommentAll(
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "nickname":
                 articles = this.boardListMapper.searchByNicknameAll(
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             default:
                 articles = this.boardListMapper.selectArticlesForBoardListAllByCriteria(
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
         }
         boardListVo.setArticles(articles);
         boardListVo.setResult(BoardListResult.SUCCESS);
@@ -271,39 +336,44 @@ public class BoardListService {
             case "title-content":
                 articles = this.boardListMapper.searchByTitleContent(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "title":
                 articles = this.boardListMapper.searchByTitle(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "content":
                 articles = this.boardListMapper.searchByContent(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "comment":
                 articles = this.boardListMapper.searchByComment(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "nickname":
                 articles = this.boardListMapper.searchByNickname(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             default:
                 articles = this.boardListMapper.selectArticlesForBoardListByCriteria(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
         }
         boardListVo.setArticles(articles);
         boardListVo.setResult(BoardListResult.SUCCESS);
@@ -322,27 +392,30 @@ public class BoardListService {
             case "content":
                 joinComments = this.boardListMapper.searchCommentByContent(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "comment":
                 joinComments = this.boardListMapper.searchCommentByComment(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "nickname":
                 joinComments = this.boardListMapper.searchCommentByNickname(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             default:
                 joinComments = this.boardListMapper.searchCommentByContent(
                         boardEntity.getIndex(),
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
         }
         boardListVo.setJoinComments(joinComments);
         for (BoardReadCommentDto joinComment : boardListVo.getJoinComments()) {
@@ -364,39 +437,44 @@ public class BoardListService {
             case "title-content":
                 articles = this.boardListMapper.searchByTitleContentAndCategoryAll(
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "title":
                 articles = this.boardListMapper.searchByTitleAndCategoryAll(
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "content":
                 articles = this.boardListMapper.searchByContentAndCategoryAll(
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "comment":
                 articles = this.boardListMapper.searchByCommentAndCategoryAll(
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "nickname":
                 articles = this.boardListMapper.searchByNicknameAndCategoryAll(
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             default:
                 articles = this.boardListMapper.selectArticlesForBoardListAllByCategory(
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
         }
         boardListVo.setArticles(articles);
         boardListVo.setResult(BoardListResult.SUCCESS);
@@ -416,44 +494,49 @@ public class BoardListService {
                 articles = this.boardListMapper.searchByTitleContentAndCategory(
                         boardEntity.getIndex(),
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "title":
                 articles = this.boardListMapper.searchByTitleAndCategory(
                         boardEntity.getIndex(),
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "content":
                 articles = this.boardListMapper.searchByContentAndCategory(
                         boardEntity.getIndex(),
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "comment":
                 articles = this.boardListMapper.searchByCommentAndCategory(
                         boardEntity.getIndex(),
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "nickname":
                 articles = this.boardListMapper.searchByNicknameAndCategory(
                         boardEntity.getIndex(),
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             default:
                 articles = this.boardListMapper.selectArticlesForBoardListByCategory(
                         boardEntity.getIndex(),
                         category,
+                        keyword,
                         pagingModel.rowCountPerPage,
-                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage,
-                        keyword);
+                        (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
         }
         boardListVo.setArticles(articles);
         boardListVo.setResult(BoardListResult.SUCCESS);
@@ -476,6 +559,7 @@ public class BoardListService {
                         alignment,
                         pagingModel.rowCountPerPage,
                         (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "title":
                 articles = this.boardListMapper.searchByTitleAndAlignment(
                         boardEntity.getIndex(),
@@ -483,6 +567,7 @@ public class BoardListService {
                         alignment,
                         pagingModel.rowCountPerPage,
                         (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "content":
                 articles = this.boardListMapper.searchByContentAndAlignment(
                         boardEntity.getIndex(),
@@ -490,6 +575,7 @@ public class BoardListService {
                         alignment,
                         pagingModel.rowCountPerPage,
                         (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "comment":
                 articles = this.boardListMapper.searchByCommentAndAlignment(
                         boardEntity.getIndex(),
@@ -497,6 +583,7 @@ public class BoardListService {
                         alignment,
                         pagingModel.rowCountPerPage,
                         (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             case "nickname":
                 articles = this.boardListMapper.searchByNicknameAndAlignment(
                         boardEntity.getIndex(),
@@ -504,6 +591,7 @@ public class BoardListService {
                         alignment,
                         pagingModel.rowCountPerPage,
                         (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
+                break;
             default:
                 articles = this.boardListMapper.searchByTitleContentAndAlignment(
                         boardEntity.getIndex(),

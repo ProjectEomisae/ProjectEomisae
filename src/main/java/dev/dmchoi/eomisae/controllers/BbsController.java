@@ -101,6 +101,10 @@ public class BbsController {
 
         } else {
             this.boardListService.listBoardByCriteria(boardListVo, paging, criteria, keyword);
+            System.out.println(boardListVo.getUrlName());
+            System.out.println(paging.totalRowCount);
+            System.out.println(criteria);
+            System.out.println(keyword);
             if (urlName.contains("al")) {
                 this.boardListService.listBoardAllByCriteria(boardListVo, paging, criteria, keyword);
 //                System.out.println("cri가 null이 아닐 때 : " + boardListVo.getArticles().size());
@@ -177,6 +181,7 @@ public class BbsController {
 
     @RequestMapping(value = "{urlName}/{aid}", method = RequestMethod.GET)
     public ModelAndView getBoardListDetail(ModelAndView modelAndView,
+                                           @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
                                            @PathVariable(value = "urlName", required = true) String urlName,
                                            @PathVariable(value = "aid", required = true) int aid,
                                            ArticleReadVo articleReadVo,
@@ -185,8 +190,20 @@ public class BbsController {
                                            @RequestParam(name = "criteria", required = false) String criteria,
                                            @RequestParam(name = "keyword", required = false) String keyword,
                                            @RequestParam(name = "category", required = false) Optional<Integer> optionalCategory,
+                                           @RequestParam(name = "alignment", required = false) Optional<Integer> optionalAlignment,
                                            BoardListVoForNo boardListVoForNo,
-                                           BoardListVoForFavorite boardListVoForFavorite) {
+                                           BoardListVoForFavorite boardListVoForFavorite,
+                                           ArticleViewEntity articleView) {
+        if (user != null) {
+            articleView.setUserIndex(user.getIndex());
+            articleView.setArticleIndex(aid);
+            this.boardListService.addArticleView(boardListVo, articleView);
+        }
+        if (user == null) {
+
+        }
+
+        int alignment = optionalAlignment.orElse(0);
         int category = optionalCategory.orElse(0);
 //        System.out.println("category 값 : " + category);
         int page = optionalPage.orElse(1);
@@ -238,6 +255,21 @@ public class BbsController {
                 }
             }
         }
+        // 정렬이 설정될 때
+        if (alignment > 0) {
+            if (criteria != null) {
+                totalRowCount = this.boardListService.boardTotalCountByCriteria(boardListVo, criteria, keyword);
+                paging = new PagingModel(totalRowCount, page);
+                this.boardListService.listBoardByAlignment(boardListVo, paging, alignment, criteria, keyword);
+            }
+            if (urlName.contains("al")) {
+                if (criteria != null) {
+                    totalRowCount = this.boardListService.boardTotalCountAllByCategory(category, criteria, keyword);
+                    paging = new PagingModel(totalRowCount, page);
+                    this.boardListService.listBoardAllByCategory(boardListVo, paging, category, criteria, keyword);
+                }
+            }
+        }
 
         List<BoardListArticleDto> boardListVoForNoList = this.boardListService.getArticlesForNo();
         boardListVoForNo.setArticles(boardListVoForNoList);
@@ -261,10 +293,10 @@ public class BbsController {
 
     @RequestMapping(value = "{urlName}", method = RequestMethod.POST)
     public ModelAndView postBoardList(ModelAndView modelAndView,
-                                            @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
-                                            @PathVariable(value = "urlName", required = true) String urlName,
-                                            JoinCommentWriteVo joinCommentWriteVo,
-                                            HttpServletResponse response) {
+                                      @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                      @PathVariable(value = "urlName", required = true) String urlName,
+                                      JoinCommentWriteVo joinCommentWriteVo,
+                                      HttpServletResponse response) {
         if (user == null) {
             response.setStatus(404);
             return null;
@@ -335,6 +367,24 @@ public class BbsController {
         return responseJson.toString();
     }
 
+    @RequestMapping(value = "{urlName}/{bid}/{aid}/article-report", method = RequestMethod.GET)
+    @ResponseBody
+    public String getArticleReport(
+            @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+            @PathVariable(value = "urlName", required = true) String urlName,
+            @PathVariable(value = "bid", required = true) int bid,
+            @PathVariable(value = "aid", required = true) int aid,
+            BoardListVo boardListVo,
+            ArticleReportEntity articleReport) {
+        articleReport.setUserIndex(user.getIndex());
+        articleReport.setBoardIndex(bid);
+        articleReport.setArticleIndex(aid);
+        this.boardListService.addArticleReport(boardListVo, articleReport);
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("result", boardListVo.getResult().name().toLowerCase());
+        return responseJson.toString();
+    }
+
     @RequestMapping(value = "{urlName}/{aid}/{cid}/like", method = RequestMethod.GET)
     @ResponseBody
     public String getCommentLike(
@@ -348,6 +398,24 @@ public class BbsController {
         commentLike.setArticleIndex(aid);
         commentLike.setCommentIndex(cid);
         this.boardListService.addCommentLike(boardListVo, commentLike);
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("result", boardListVo.getResult().name().toLowerCase());
+        return responseJson.toString();
+    }
+
+    @RequestMapping(value = "{urlName}/{aid}/{cid}/report", method = RequestMethod.GET)
+    @ResponseBody
+    public String getCommentReport(
+            @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+            @PathVariable(value = "urlName", required = true) String urlName,
+            @PathVariable(value = "aid", required = true) int aid,
+            @PathVariable(value = "cid", required = true) int cid,
+            BoardListVo boardListVo,
+            CommentReportEntity commentReport) {
+        commentReport.setUserIndex(user.getIndex());
+        commentReport.setArticleIndex(aid);
+        commentReport.setCommentIndex(cid);
+        this.boardListService.addCommentReport(boardListVo, commentReport);
         JSONObject responseJson = new JSONObject();
         responseJson.put("result", boardListVo.getResult().name().toLowerCase());
         return responseJson.toString();
@@ -452,6 +520,60 @@ public class BbsController {
         modelAndView.addObject("categoryEntities", this.boardListService.getCategories());
         modelAndView.addObject("title", boardListVo.getName());
         modelAndView.setViewName("redirect:/bbs/" + articleWriteVo.getBoardUrlName());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "{urlName}/{aid}/{cid}/modify", method = RequestMethod.GET)
+    public ModelAndView getCommentModify(ModelAndView modelAndView,
+                                         @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                         @PathVariable(value = "urlName", required = true) String urlName,
+                                         @PathVariable(value = "aid", required = true) int aid,
+                                         @PathVariable(value = "cid", required = true) int cid,
+                                         BoardListVo boardListVo,
+                                         CommentReadVo commentReadVo,
+                                         HttpServletResponse response) {
+        boardListVo.setUrlName(urlName);
+        commentReadVo.setIndex(cid);
+        commentReadVo.setArticleIndex(aid);
+        boardListVo.setResult(null);
+        if (user == null) {
+            response.setStatus(404);
+//            modelAndView.setViewName("redirect:/bbs/" + boardListVo.getUrlName());
+            return null;
+        }
+        BoardEntity boardEntity = this.boardListService.boardByUrlName(boardListVo);
+        boardListVo.setName(boardEntity.getName());
+        boardListVo.setId(boardEntity.getId());
+        boardListVo.setIndex(boardEntity.getIndex());
+        boardListVo.setCommentLevel(boardEntity.getCommentLevel());
+        this.articleReadService.readComment(commentReadVo);
+        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
+        modelAndView.addObject("title", boardListVo.getName());
+        modelAndView.addObject("commentReadVo", commentReadVo);
+        modelAndView.setViewName("bbs/commentModify");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "{urlName}/{aid}/{cid}/modify", method = RequestMethod.POST)
+    public ModelAndView postCommentModify(ModelAndView modelAndView,
+                                          @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                          @PathVariable(value = "urlName", required = true) String urlName,
+                                          @PathVariable(value = "aid", required = true) int aid,
+                                          @PathVariable(value = "cid", required = true) int cid,
+                                          BoardListVo boardListVo,
+                                          CommentModifyVo commentModifyVo) {
+        boardListVo.setUrlName(urlName);
+        commentModifyVo.setUserIndex(user.getIndex());
+        commentModifyVo.setIndex(cid);
+        commentModifyVo.setArticleIndex(aid);
+        if (user == null) {
+            modelAndView.setViewName("redirect:/bbs/" + boardListVo.getUrlName());
+            return null;
+        }
+        this.articleReadService.modifyArticleComment(commentModifyVo);
+        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
+        modelAndView.addObject("title", boardListVo.getName());
+        modelAndView.setViewName("redirect:/bbs/" + boardListVo.getUrlName());
         return modelAndView;
     }
 

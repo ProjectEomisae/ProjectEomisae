@@ -10,19 +10,43 @@
     <!--    <link th:href="@{/bbs/resources/stylesheets/image-main.css}" rel="stylesheet">-->
     <link th:href="@{/bbs/resources/stylesheets/detail.css}" rel="stylesheet">
     <link th:href="@{/bbs/resources/stylesheets/common.css}" rel="stylesheet">
-    <link th:href="@{/bbs/resources/stylesheets/non-image-main.css}" rel="stylesheet">
-    <script defer th:src="@{/bbs/resources/scripts/non-image-main.js}"></script>
+    <link th:href="@{/bbs/resources/stylesheets/non-image-main.css}" rel="stylesheet"
+          th:if="${boardListVo.getId().equals('전체글') || boardListVo.getId().equals('커뮤니티') || boardListVo.getId().equals('운영관리')}">
+    <link th:href="@{/bbs/resources/stylesheets/image-main.css}" rel="stylesheet"
+          th:if="${boardListVo.getId().equals('쇼핑정보') || boardListVo.getId().equals('구매인증') || boardListVo.getId().equals('실사후기') || boardListVo.getId().equals('데일리룩') || boardListVo.getId().equals('플리마켓')}">
+    <script defer th:src="@{/bbs/resources/scripts/non-image-main.js}"
+            th:if="${boardListVo.getId().equals('전체글') || boardListVo.getId().equals('커뮤니티') || boardListVo.getId().equals('운영관리')}"></script>
+    <script defer th:src="@{/bbs/resources/scripts/image-main.js}"
+            th:if="${boardListVo.getId().equals('쇼핑정보') || boardListVo.getId().equals('구매인증') || boardListVo.getId().equals('실사후기') || boardListVo.getId().equals('데일리룩') || boardListVo.getId().equals('플리마켓')}"></script>
     <!--    <script defer th:src="@{/bbs/resources/scripts/image-main.js}"></script>-->
     <script defer th:src="@{/bbs/resources/scripts/detail.js}"></script>
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
-<body th:with="criteria=${#request.getParameter('criteria')}, keyword=${#request.getParameter('keyword')}, category=${#request.getParameter('category')}">
+<body th:with="criteria=${#request.getParameter('criteria')}, keyword=${#request.getParameter('keyword')}, category=${#request.getParameter('category')}, alignment=${#request.getParameter('alignment')}">
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>
 <main id="main" th:with="isSearch = ${criteria != null && keyword != null}">
     <div class="nav-container">
         <div class="nav-menu">
+            <ul class="list" th:if="${boardListVo.getId().equals('쇼핑정보')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '커뮤니티')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('fs')} ? 'selected'">
+                    <a th:href="@{/bbs/fs}">인기정보</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('os')} ? 'selected'">
+                    <a th:href="@{/bbs/os}">패션정보</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('rt')} ? 'selected'">
+                    <a th:href="@{/bbs/rt}">기타정보</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('dr')} ? 'selected'">
+                    <a th:href="@{/bbs/dr}">래플정보</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('ec')} ? 'selected'">
+                    <a th:href="@{/bbs/ec}">이벤트정보</a>
+                </li>
+            </ul>
             <ul class="list" th:if="${boardListVo.getId().equals('커뮤니티')}">
                 <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '커뮤니티')}">-->
                 <li class="link" th:classappend="${#request.getRequestURI().contains('fe')} ? 'selected'">
@@ -42,6 +66,48 @@
                 </li>
                 <li class="link" th:classappend="${#request.getRequestURI().contains('ui')} ? 'selected'">
                     <a th:href="@{/bbs/ui}">가입인사</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('구매인증')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('gl')} ? 'selected'">
+                    <a th:href="@{/bbs/gl}">패션구매</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('ha')} ? 'selected'">
+                    <a th:href="@{/bbs/ha}">기타구매</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('실사후기')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('pot')} ? 'selected'">
+                    <a th:href="@{/bbs/pot}">패션후기</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('pop')} ? 'selected'">
+                    <a th:href="@{/bbs/pop}">기타후기</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('gm')} ? 'selected'">
+                    <a th:href="@{/bbs/gm}">소장품자랑</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('데일리룩')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${#request.getRequestURI().contains('dl')} ? 'selected'">
+                    <a th:href="@{/bbs/dl}">데일리룩</a>
+                </li>
+                <li class="link" th:classappend="${#request.getRequestURI().contains('ds')} ? 'selected'">
+                    <a th:href="@{/bbs/ds}">데일리슈</a>
+                </li>
+            </ul>
+            <ul class="list" th:if="${boardListVo.getId().equals('플리마켓')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
+                <li class="link" th:classappend="${title.equals('판매')} ? 'selected'">
+                    <a th:href="@{/bbs/jo}">판매</a>
+                </li>
+                <li class="link" th:classappend="${title.equals('구매')} ? 'selected'">
+                    <a th:href="@{/bbs/jo2}">구매</a>
+                </li>
+                <li class="link" th:classappend="${title.equals('교환')} ? 'selected'">
+                    <a th:href="@{/bbs/jo3}">교환</a>
                 </li>
             </ul>
             <ul class="list" th:if="${boardListVo.getId().equals('운영관리')}">
@@ -77,8 +143,12 @@
                                 </h2>
                             </div>
                             <div class="user-section">
-                                <div class="user">
-                                    <img>
+                                <div class="user box">
+                                    <img th:if="${articleReadVo.getArticleProfileId() != null && articleReadVo.getArticleProfileId() != ''}"
+                                         th:src="@{'/user/profile-id?id=' + ${articleReadVo.getArticleProfileId()}}">
+                                    <img alt="프로필 이미지"
+                                         th:if="${articleReadVo.getArticleProfileId() == null || articleReadVo.getArticleProfileId() == ''}"
+                                         th:src="@{/resources/images/profile.png}">
                                     <span th:text="${articleReadVo.userNickname}">
                                         관리자
                                     </span>
@@ -128,7 +198,8 @@
                         <div class="input-container">
                             <table>
                                 <tbody>
-                                <tr>
+                                <tr class="url"
+                                    th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('jp') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('rt') || #request.getRequestURI().contains('dr') || #request.getRequestURI().contains('ec')}">
                                     <td>
                                         링크
                                         <i class="fa-solid fa-circle-question"></i>
@@ -136,6 +207,198 @@
                                     <td>
                                         <a target="_blank" th:href="@{${articleReadVo.getUrl()}}"
                                            th:text="${articleReadVo.getUrl()}"></a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('dr')}"
+                                    th:classappend="${articleReadVo.getDiscountCode() == null || articleReadVo.getDiscountCode().equals('')} ? 'off'">
+                                    <td>
+                                        할인 코드
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getDiscountCode()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('dr')}"
+                                    th:classappend="${articleReadVo.getShippingInfo() == null || articleReadVo.getShippingInfo().equals('')} ? 'off'">
+                                    <td>
+                                        배송 정보
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getShippingInfo()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha')}"
+                                    th:classappend="${articleReadVo.getOrderDate() == null || articleReadVo.getOrderDate().equals('')} ? 'off'">
+                                    <td>
+                                        주문 날짜
+                                    </td>
+                                    <td>
+                                        <span th:text="${#dates.format(articleReadVo.getOrderDate(), 'yyyy-MM-dd')}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop')}"
+                                    th:classappend="${articleReadVo.getShoppingMall() == null || articleReadVo.getShoppingMall().equals('')} ? 'off'">
+                                    <td>
+                                        쇼핑몰
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getShoppingMall()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${title.equals('판매') || title.equals('구매') || title.equals('교환')}"
+                                    th:classappend="${articleReadVo.getContact() == null || articleReadVo.getContact().equals('')} ? 'off'">
+                                    <td>
+                                        연락처
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getContact()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || #request.getRequestURI().contains('gm') || title.equals('판매') || title.equals('구매') || title.equals('교환')}"
+                                    th:classappend="${articleReadVo.getBrand() == null || articleReadVo.getBrand().equals('')} ? 'off'">
+                                    <td>
+                                        브랜드
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getBrand()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('gm') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || title.equals('판매') || title.equals('구매') || title.equals('교환')}"
+                                    th:classappend="${articleReadVo.getProductName() == null || articleReadVo.getProductName().equals('')} ? 'off'">
+                                    <td>
+                                        상품명
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getProductName()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${title.equals('교환')}"
+                                    th:classappend="${articleReadVo.getMySize() == null || articleReadVo.getMySize().equals('')} ? 'off'">
+                                    <td>
+                                        본인 사이즈
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getMySize()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${title.equals('교환')}"
+                                    th:classappend="${articleReadVo.getExchangeSize() == null || articleReadVo.getExchangeSize().equals('')} ? 'off'">
+                                    <td>
+                                        교환 사이즈
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getExchangeSize()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || title.equals('판매') || title.equals('구매')}"
+                                    th:classappend="${articleReadVo.getProductSize() == null || articleReadVo.getProductSize().equals('')} ? 'off'">
+                                    <td>
+                                        사이즈
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getProductSize()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${title.equals('판매')}"
+                                    th:classappend="${articleReadVo.getGender() == null || articleReadVo.getGender().equals('')} ? 'off'">
+                                    <td>
+                                        성별
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getGender()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${title.equals('판매')}"
+                                    th:classappend="${articleReadVo.getProductStatus() == null || articleReadVo.getProductStatus().equals('')} ? 'off'">
+                                    <td>
+                                        제품 상태
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getProductStatus()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${title.equals('판매') || title.equals('구매') || title.equals('교환')}"
+                                    th:classappend="${articleReadVo.getTradeMethod() == null || articleReadVo.getTradeMethod().equals('')} ? 'off'">
+                                    <td>
+                                        거래 방법
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getTradeMethod()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${title.equals('판매') || title.equals('구매')}"
+                                    th:classappend="${articleReadVo.getPurchaseProductPrice() == null || articleReadVo.getPurchaseProductPrice().equals('')} ? 'off'">
+                                    <td>
+                                        구매 가격
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getCurrencyForPurchasing() + ' '}"></span>
+                                        <span th:text="${articleReadVo.getPurchaseProductPrice()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${title.equals('판매')}"
+                                    th:classappend="${articleReadVo.getSaleProductPrice() == null || articleReadVo.getSaleProductPrice().equals('')} ? 'off'">
+                                    <td>
+                                        판매 가격
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getCurrencyForSailing() + ' '}"></span>
+                                        <span th:text="${articleReadVo.getSaleProductPrice()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || #request.getRequestURI().contains('gm')}"
+                                    th:classappend="${articleReadVo.getProductPrice() == null || articleReadVo.getProductPrice().equals('')} ? 'off'">
+                                    <td>
+                                        가격
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getCurrencyForProduct() + ' '}"></span>
+                                        <span th:text="${articleReadVo.getProductPrice()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('dl')}"
+                                    th:classappend="${articleReadVo.getOuter() == null || articleReadVo.getOuter().equals('')} ? 'off'">
+                                    <td>
+                                        아우터
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getOuter()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('dl')}"
+                                    th:classappend="${articleReadVo.getTop() == null || articleReadVo.getTop().equals('')} ? 'off'">
+                                    <td>
+                                        상의
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getTop()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('dl')}"
+                                    th:classappend="${articleReadVo.getBottom() == null || articleReadVo.getBottom().equals('')} ? 'off'">
+                                    <td>
+                                        하의
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getBottom()()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('ds') || #request.getRequestURI().contains('dl')}"
+                                    th:classappend="${articleReadVo.getShoes() == null || articleReadVo.getShoes().equals('')} ? 'off'">
+                                    <td>
+                                        신발
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getShoes()()}"></span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#request.getRequestURI().contains('dl')}"
+                                    th:classappend="${articleReadVo.getAcc() == null || articleReadVo.getAcc().equals('')} ? 'off'">
+                                    <td>
+                                        액세서리
+                                    </td>
+                                    <td>
+                                        <span th:text="${articleReadVo.getAcc()()}"></span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -168,7 +431,7 @@
                                     <input class="articleIndex" type="hidden"
                                            th:value="${articleReadVo.getIndex()}">
                                     <input class="urlName" type="hidden" th:value="${urlName}">
-                                <span>
+                                    <span>
                                     <span>
                                     <i class="fa fa-heart"></i>
                                     </span>
@@ -179,6 +442,7 @@
                                     <span class="like-count" th:text="${articleReadVo.getLike()}">16</span>
                                 </button>
                                 <button class="button buy-article" type="button"
+                                        th:if="${!#request.getRequestURI().contains('fe')}"
                                         th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != articleReadVo.getUserIndex()} ? 'on'"
                                         onclick="if(!classList.contains('on')) {return false}">
                                     <input class="boardIndex" type="hidden"
@@ -186,7 +450,7 @@
                                     <input class="articleIndex" type="hidden"
                                            th:value="${articleReadVo.getIndex()}">
                                     <input class="urlName" type="hidden" th:value="${urlName}">
-                                <span>
+                                    <span>
                                     <span>
                             <i class="fas fa-shopping-cart"></i>
                                     </span>
@@ -204,7 +468,7 @@
                                     스크랩
                                 </span>
                                 </button>
-                                <button class="button buy" type="button">
+                                <button class="button" type="button">
                                 <span>
                                     <span>
                                         <i class="fas fa-share-square"></i>
@@ -212,7 +476,14 @@
                                     공유
                                 </span>
                                 </button>
-                                <button class="button buy" type="button">
+                                <button class="button report-article" type="button"
+                                        th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != articleReadVo.getUserIndex()} ? 'on'"
+                                        onclick="if(!classList.contains('on')) {return false}">
+                                    <input class="boardIndex" type="hidden"
+                                           th:value="${articleReadVo.getBoardIndex()}">
+                                    <input class="articleIndex" type="hidden"
+                                           th:value="${articleReadVo.getIndex()}">
+                                    <input class="urlName" type="hidden" th:value="${urlName}">
                                 <span>
                                     <span>
                                         <i class="fa fa-trash-o"></i>
@@ -280,9 +551,10 @@
                                                    th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/delete'}">
                                                     삭제</a>
                                             </li>
-                                            <li class="list">
-                                                <a class="link" th:href="@{/}">
-                                                    신고</a>
+                                            <li class="list modify-article-report"
+                                                th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() != #request.getAttribute('user').getIndex()}">
+                                                <span class="link">
+                                                    신고</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -322,12 +594,14 @@
                      th:if="${comment.getDepth() == 0}">
                     <div class="comment-box">
                         <div class="user-profile">
-                            <img alt="유저프로필"
-                                 th:src="@{/resources/images/profile.png (profildId=${comment.getProfileId()})}">
+                            <img th:if="${comment.getProfileId() != null && comment.getProfileId() != ''}"
+                                 th:src="@{'/user/profile-id?id=' + ${comment.getProfileId()}}">
+                            <img alt="프로필 이미지" th:if="${comment.getProfileId() == null || comment.getProfileId() == ''}"
+                                 th:src="@{/resources/images/profile.png}">
                         </div>
                         <div class="user-content">
                             <div class="top">
-                                <div class="user">
+                                <div class="user box">
                                 <span th:text="${comment.getUserNickname()}">
                                     관리자
                                 </span>
@@ -385,7 +659,7 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == comment.getUserIndex()}">
-                                            <a class="link" th:href="@{/}">
+                                            <a class="link" th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${comment.getIndex()} + '/modify'}">
                                                 수정
                                             </a>
                                         </li>
@@ -397,16 +671,23 @@
                                                 삭제
                                             </a>
                                         </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">
-                                                신고
-                                            </a>
+                                        <li class="list comment-report"
+                                            th:if="${#request.getAttribute('user') != null && comment.getUserIndex() != #request.getAttribute('user').getIndex()}"
+                                            th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != comment.getUserIndex()} ? 'on'"
+                                            onclick="if(!classList.contains('on')) {return false}">
+                                            <input class="articleIndex" type="hidden"
+                                                   th:value="${articleReadVo.getIndex()}">
+                                            <input class="commentIndex" type="hidden"
+                                                   th:value="${comment.getIndex()}">
+                                            <input class="urlName" type="hidden" th:value="${urlName}">
+                                                <span class="link">
+                                                    신고</span>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="down">
-                                <div class="content" th:text="${comment.getContent()}"
+                                <div class="content" th:utext="${comment.getContent()}"
                                      th:if="${comment.isDeleted() != true}">
                                     좋은 정보 감사드립니다. ^^
                                 </div>
@@ -448,12 +729,14 @@
                             <img class="image" alt="" th:src="@{/bbs/resources/images/recomment.png}">
                         </div>
                         <div class="user-profile">
-                            <img alt="유저프로필"
-                                 th:src="@{/resources/images/profile.png (profildId=${recomment.getProfileId()})}">
+                            <img th:if="${recomment.getProfileId() != null && recomment.getProfileId() != ''}"
+                                 th:src="@{'/user/profile-id?id=' + ${recomment.getProfileId()}}">
+                            <img alt="프로필 이미지" th:if="${recomment.getProfileId() == null || recomment.getProfileId() == ''}"
+                                 th:src="@{/resources/images/profile.png}">
                         </div>
                         <div class="user-content">
                             <div class="top">
-                                <div class="user">
+                                <div class="user box">
                                 <span th:text="${recomment.getUserNickname()}">
                                     관리자
                                 </span>
@@ -511,7 +794,7 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == recomment.getUserIndex()}">
-                                            <a class="link" th:href="@{/}">
+                                            <a class="link" th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${recomment.getIndex()} + '/modify'}">
                                                 수정
                                             </a>
                                         </li>
@@ -523,10 +806,17 @@
                                                 삭제
                                             </a>
                                         </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">
-                                                신고
-                                            </a>
+                                        <li class="list comment-report"
+                                            th:if="${#request.getAttribute('user') != null && recomment.getUserIndex() != #request.getAttribute('user').getIndex()}"
+                                            th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != recomment.getUserIndex()} ? 'on'"
+                                            onclick="if(!classList.contains('on')) {return false}">
+                                            <input class="articleIndex" type="hidden"
+                                                   th:value="${articleReadVo.getIndex()}">
+                                            <input class="commentIndex" type="hidden"
+                                                   th:value="${recomment.getIndex()}">
+                                            <input class="urlName" type="hidden" th:value="${urlName}">
+                                            <span class="link">
+                                                    신고</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -534,7 +824,7 @@
                             <div class="down">
                                 <span class="tag-parent-name" th:text="${'@' + comment.getUserNickname()}">
                                 </span>
-                                <div class="content" th:text="${recomment.getContent()}"
+                                <div class="content" th:utext="${recomment.getContent()}"
                                      th:if="${recomment.isDeleted() != true}">
                                     좋은 정보 감사드립니다. ^^
                                 </div>
@@ -575,12 +865,14 @@
                             <img class="image" alt="" th:src="@{/bbs/resources/images/recomment.png}">
                         </div>
                         <div class="user-profile">
-                            <img alt="유저프로필"
-                                 th:src="@{/resources/images/profile.png (profildId=${comment.getProfileId()})}">
+                            <img th:if="${rerecomment.getProfileId() != null && rerecomment.getProfileId() != ''}"
+                                 th:src="@{'/user/profile-id?id=' + ${rerecomment.getProfileId()}}">
+                            <img alt="프로필 이미지" th:if="${rerecomment.getProfileId() == null || rerecomment.getProfileId() == ''}"
+                                 th:src="@{/resources/images/profile.png}">
                         </div>
                         <div class="user-content">
                             <div class="top">
-                                <div class="user">
+                                <div class="user box">
                                 <span th:text="${rerecomment.getUserNickname()}">
                                     관리자
                                 </span>
@@ -638,7 +930,7 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == rerecomment.getUserIndex()}">
-                                            <a class="link" th:href="@{/}">
+                                            <a class="link" th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${rerecomment.getIndex()} + '/modify'}">
                                                 수정
                                             </a>
                                         </li>
@@ -650,10 +942,17 @@
                                                 삭제
                                             </a>
                                         </li>
-                                        <li class="list">
-                                            <a class="link" th:href="@{/}">
-                                                신고
-                                            </a>
+                                        <li class="list comment-report"
+                                            th:if="${#request.getAttribute('user') != null && rerecomment.getUserIndex() != #request.getAttribute('user').getIndex()}"
+                                            th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != rerecomment.getUserIndex()} ? 'on'"
+                                            onclick="if(!classList.contains('on')) {return false}">
+                                            <input class="articleIndex" type="hidden"
+                                                   th:value="${articleReadVo.getIndex()}">
+                                            <input class="commentIndex" type="hidden"
+                                                   th:value="${rerecomment.getIndex()}">
+                                            <input class="urlName" type="hidden" th:value="${urlName}">
+                                            <span class="link">
+                                                    신고</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -661,7 +960,7 @@
                             <div class="down">
                                 <span class="tag-parent-name" th:text="${'@' + rerecomment.getParentUserNickname()}">
                                 </span>
-                                <div class="content" th:text="${rerecomment.getContent()}"
+                                <div class="content" th:utext="${rerecomment.getContent()}"
                                      th:if="${rerecomment.isDeleted() != true}">
                                     좋은 정보 감사드립니다. ^^
                                 </div>
@@ -720,7 +1019,7 @@
                 </div>
             </div>
             <div class="title-container"
-                 th:if="${!boardListVo.getId().equals('운영관리')}">
+                 th:if="${!boardListVo.getId().equals('운영관리') && (boardListVo.getId().equals('전체글') || boardListVo.getId().equals('커뮤니티') || boardListVo.getId().equals('운영관리'))}">
                 <div class="title-section">
                     <h3 class="title">
                         <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()}}">
@@ -745,6 +1044,56 @@
                         th:if="${boardListVo.getUrlName().contains('al')}">
                         사이트 전체 글을 모아 볼 수 있는 게시판으로 글 작성이 불가능 합니다.<br>
                         해당 게시판에서 글 작성 해주세요
+                    </h5>
+                </div>
+            </div>
+            <div class="title-container"
+                 th:if="${!boardListVo.getId().equals('실사후기') && (boardListVo.getId().equals('쇼핑정보') || boardListVo.getId().equals('구매인증') || boardListVo.getId().equals('실사후기') || boardListVo.getId().equals('데일리룩') || boardListVo.getId().equals('플리마켓'))}">
+                <div class="title-section">
+                    <h3 class="title">
+                        <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()}}">
+                            <span th:text="${boardListVo.getName()}"></span>
+                        </a>
+                    </h3>
+                    <h5 class="sub-title"
+                        th:if="${boardListVo.getUrlName().contains('fs')}">
+                        패션정보, 기타정보 게시판의 인기글을 모아 볼 수 있는 공간입니다.
+                    </h5>
+                    <h5 class="sub-title"
+                        th:if="${boardListVo.getUrlName().contains('os')}">
+                        패션 쇼핑 정보를 공유하는 공간입니다. [세일 정보 게시판 규정]<br>
+                        일정 수 이상의 샀어요를 받은 정보글은 인기정보 게시판으로 이동됩니다.
+                    </h5>
+                    <h5 class="sub-title"
+                        th:if="${boardListVo.getUrlName().contains('rt')}">
+                        패션 외 기타 판매 제품 정보를 공유하는 공간입니다. [세일 정보 게시판 규정]<br>
+                        일정 수 이상의 샀어요를 받은 정보글은 인기정보 게시판으로 이동됩니다.
+                    </h5>
+                    <h5 class="sub-title"
+                        th:if="${boardListVo.getUrlName().contains('dr')}">
+                        래플, 드로우 정보를 공유하는 게시판입니다.
+                    </h5>
+                    <h5 class="sub-title"
+                        th:if="${boardListVo.getUrlName().contains('ec')}">
+                        퀴즈 정답, 응모, 쿠폰 정보를 공유하는 공간입니다. [세일 정보 게시판 규정]<br>
+                        일정 수 이상의 추천을 받은 정보글은 인기정보 게시판으로 이동됩니다.
+                    </h5>
+                    <h5 class="sub-title"
+                        th:if="${boardListVo.getUrlName().contains('gl')}">
+                        패션 관련 상품 구매를 인증하는 공간입니다.
+                    </h5>
+                    <h5 class="sub-title"
+                        th:if="${boardListVo.getUrlName().contains('dl')}">
+                        데일리룩 게시판 규정
+                    </h5>
+                    <h5 class="sub-title"
+                        th:if="${boardListVo.getUrlName().contains('ds')}">
+                        데일리슈 게시판 규정
+                    </h5>
+                    <h5 class="sub-title"
+                        th:if="${title.equals('판매')}">
+                        동일 제품 중복 등록할 수 없습니다 끌어올리기 기능 사용해주세요.<br>
+                        판매글 작성 40P, 끌어올리기 20P 차감 (끌올 기능 안내)
                     </h5>
                 </div>
             </div>
@@ -818,22 +1167,26 @@
                             </a>
                             <ul class="align-list">
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link"
+                                       th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${1})}">
                                         최신순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link"
+                                       th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${2})}">
                                         조회순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link"
+                                       th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${3})}">
                                         추천순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{/static}">
+                                    <a class="link"
+                                       th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${4})}">
                                         댓글순
                                     </a>
                                 </li>
@@ -882,7 +1235,8 @@
                     </label>
                 </form>
             </div>
-            <div class="article-container">
+            <div class="article-container"
+                 th:if="${boardListVo.getId().equals('전체글') || boardListVo.getId().equals('커뮤니티') || boardListVo.getId().equals('운영관리')}">
                 <div class="article-section">
                     <table>
                         <thead>
@@ -925,7 +1279,7 @@
                                      th:if="${article.getContent().contains('download-image')}">
                             </span>
                             </td>
-                            <td class="user">
+                            <td class="user box">
                                 <div class="user-name">
                                     <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
                                          alt="profile" title="어미새">
@@ -939,7 +1293,9 @@
                                                 (91.6%)</a>
                                         </li>
                                         <li class="list">
-                                            <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역 보기</a>
+                                            <a class="link my-page" th:href="@{/user/my-page/memberOwnDocument}"
+                                               th:classappend="${#request.getAttribute('user') != null && article.getUserIndex() == #request.getAttribute('user').getIndex()} ? 'on'">활동
+                                                내역 보기</a>
                                         </li>
                                         <li class="list">
                                             <a class="link" th:href="@{/static}">회원 차단</a>
@@ -984,7 +1340,7 @@
                                      th:if="${article.getContent().contains('download-image')}">
                             </span>
                             </td>
-                            <td class="user">
+                            <td class="user box">
                                 <div class="user-name">
                                     <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
                                          alt="profile" title="어미새">
@@ -1012,6 +1368,60 @@
                         </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="image-article-container"
+                 th:if="${boardListVo.getId().equals('쇼핑정보') || boardListVo.getId().equals('구매인증') || boardListVo.getId().equals('실사후기') || boardListVo.getId().equals('데일리룩') || boardListVo.getId().equals('플리마켓')}">
+                <div class="image-article-section">
+                    <div class="image-articles">
+                        <div class="article"
+                             th:each="article : ${boardListVo.getArticles()}">
+                            <div class="image">
+                                <a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}">
+                                    <img class="tmb"
+                                         th:src="@{/resources/images/profile.png}"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="article-category">
+                                    <span th:each="category : ${categoryEntities}"
+                                          th:text="${category.getName()}"
+                                          th:if="${article.getCategoryIndex() == category.getIndex()}">기타국내</span>
+                                    <span th:text="${#dates.format(article.getWrittenAt(), 'yy.MM.dd')}">22.08.15</span>
+                                </div>
+                                <h3 class="title">
+                                    <a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}"
+                                       th:text="${article.getTitle()}">
+                                        광동 선착순 2종 5,900원
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info">
+                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <span>
+                                    <div>
+                                        <img alt="3" th:src="@{/resources/images/3.gif}">
+                                        <span th:text="${article.getUserNickname()}">사용자</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="article-info">
+                                <span>
+                                    <i class="fa-solid fa-heart"></i>
+                                    <span th:text="${article.getLike()}"></span>
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    <span th:text="${article.getCommentCount()}"></span>
+                                </span>
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    <span th:text="${article.getView()}"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="empty-container down">

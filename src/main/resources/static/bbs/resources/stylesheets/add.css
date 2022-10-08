@@ -1,45 +1,32 @@
 @charset "UTF-8";
 
 #main {
-    overflow: hidden;
-    max-width: 1250px;
-    width: 1250px;
+    width: 78.125rem;
+    max-width: 78.125rem;
     height: auto;
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-#main {
     overflow: hidden;
-    max-width: 1250px;
-    width: 1250px;
-    height: auto;
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 0.9375rem;
+    padding-left: 0.9375rem;
 }
 
 #main > .main-container {
-    padding-top: 40px;
-    padding-bottom: 40px;
     align-items: flex-start;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding: 2.5rem 1.875rem;
 }
 
 #main > .nav-container {
-    padding-left: 30px;
-    padding-right: 30px;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: 1.875rem;
+    padding-right: 1.875rem;
 }
 
 #main > .nav-container > .nav-menu {
@@ -47,19 +34,19 @@
 }
 
 #main > .nav-container > .nav-menu > .list {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    border-bottom: 0.0625rem solid rgb(var(--color-white-dim));
     margin: 0;
+    position: relative;
     padding: 0;
     white-space: nowrap;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-bottom: 1px solid #e8eaeb;
-    width: 100%;
 }
 
 #main > .nav-container > .nav-menu > .list > .link {
@@ -68,26 +55,26 @@
 }
 
 #main > .nav-container > .nav-menu > .list > .link > a {
+    border-bottom: 0.125rem solid transparent;
+    color: rgb(var(--color-black-66));
     display: inline-block;
-    color: #666666;
-    font-size: 0.874rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    line-height: 58px;
-    padding: 0 10px 0 10px;
-    margin-right: 10px;
+    line-height: 3.625rem;
+    margin-right: 0.625rem;
+    padding: 0 0.625rem 0 0.625rem;
     text-transform: uppercase;
     text-decoration: none;
-    border-bottom: 2px solid transparent;
     transition: all 150ms;
 }
 
 #main > .nav-container > .nav-menu > .list > .link:hover > a {
-    color: #25282b;
+    color: rgb(var(--color-black-1));
 }
 
 #main > .nav-container > .nav-menu > .list > .link.selected > a {
-    color: #e87a72;
-    border-bottom: 2px solid #e87a72;
+    color: rgb(var(--color-pink));
+    border-bottom: 0.125rem solid rgb(var(--color-pink));
 }
 
 /* ------------- board write section ------------- */
@@ -118,23 +105,22 @@
 }
 
 #main > .write-form-container > .form-container > .form-head > input::-ms-input-placeholder {
-    color: rgb(145, 145, 145);
+    color: rgb(var(--color-grey-e0));
 }
 
 #main > .write-form-container > .form-container > .form-head > input::-webkit-input-placeholder {
-    color: rgb(145, 145, 145);
+    color: rgb(var(--color-grey-e0));
 }
 
-#main > .write-form-container > .form-container > .form-head > input::-moz-placeholder
-{
-    color: rgb(145, 145, 145);
+#main > .write-form-container > .form-container > .form-head > input::-moz-placeholder {
+    color: rgb(var(--color-grey-e0));
 }
 
 #main > .write-form-container > .form-container > .form-head > .option-category {
     width: 6.25rem;
     appearance: auto;
-    border-right: 0.0625rem solid rgb(241, 241, 241);
-    color: rgb(176, 176, 176);
+    border-right: 0.0625rem solid rgb(var(--line-color-white));
+    color: rgb(var(--color-grey-e1));
     font-size: 0.75rem;
 }
 
@@ -150,7 +136,7 @@
 #main > .write-form-container > .form-container > .product-container {
     width: 100%;
     align-items: center;
-    border-bottom: 0.0625rem solid rgb(241, 241, 241);
+    border-bottom: 0.0625rem solid rgb(var(--line-color-white));
     display: flex;
     font-size: 0.75rem;
     flex-direction: row;
@@ -162,7 +148,7 @@
 
 #main > .write-form-container > .form-container > .product-container > .product-title {
     width: 15%;
-    color: rgb(145, 145, 145);
+    color: rgb(var(--color-grey-e0));
     font-weight: 500;
 }
 
@@ -175,7 +161,7 @@
 #main > .write-form-container > .form-container > .product-container > .product-input > .input {
     max-width: 18.75rem;
     height: 2rem;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0;
     padding: 0 0.75rem;
 }
@@ -205,7 +191,7 @@
     max-width: 17.25rem;
     min-height: 1rem;
     height: 9rem;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     border: unset;
     color: inherit;
     font-family: inherit;
@@ -234,7 +220,7 @@
 #main > .write-form-container > .form-container > .product-container > .product-input > .input-row > .input {
     width: 18.75rem;
     height: 2rem;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0;
     padding: 0 0.75rem;
 }
@@ -256,7 +242,7 @@
 #main > .write-form-container > .form-container > .product-container > .product-input > .price-row > .input {
     width: 18.75rem;
     height: 2rem;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0;
     padding: 0 0.75rem;
 }
@@ -265,7 +251,7 @@
     width: auto;
     height: 2rem;
     appearance: auto;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0.2rem 0.25rem 0;
     padding: 0 0.75rem;
 }
@@ -281,7 +267,7 @@
     width: 18.75rem;
     height: 2rem;
     appearance: auto;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0;
     padding: 0 0.75rem;
 }
@@ -294,7 +280,7 @@
 #main > .write-form-container > .form-container > .product-container > .product-input > .contact-row > .input {
     width: 18.75rem;
     height: 2rem;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0;
     padding: 0 0.75rem;
 }
@@ -303,7 +289,7 @@
     width: auto;
     height: 2rem;
     appearance: auto;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0.2rem 0.25rem 0;
     padding: 0 0.75rem;
 }
@@ -317,14 +303,14 @@
     width: 18.75rem;
     height: 2rem;
     appearance: auto;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0;
     padding: 0 0.75rem;
 }
 
 #main > .write-form-container > .form-container > .text-container {
-    background-color: rgb(247, 247, 247);
-    border: 0.0625rem solid rgb(241, 241, 241);
+    background-color: rgb(var(--color-white-fa));
+    border: 0.0625rem solid rgb(var(--line-color-white));
     margin: 0.25rem;
     padding: 1.5625rem 2.1875rem;
     line-height: 2.5rem;
@@ -343,17 +329,16 @@
     max-width: 18.75rem;
     height: 2rem;
     appearance: auto;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0;
     padding: 0 0.75rem;
 }
 
 
-
 #main > .write-form-container > .file-upload-container {
-    background-color: rgb(247, 247, 247);
-    border-left: 0.0625rem solid rgb(241, 241, 241);
-    border-right: 0.0625rem solid rgb(241, 241, 241);
+    background-color: rgb(var(--color-white-fa));
+    border-left: 0.0625rem solid rgb(var(--line-color-white));
+    border-right: 0.0625rem solid rgb(var(--line-color-white));
     font-size: 0.75rem;
     padding: 0.75rem;
 }
@@ -365,10 +350,10 @@
 #main > .write-form-container > .file-upload-container > .image-upload {
     background: linear-gradient(to bottom, rgb(var(--color-white)) 5%, rgb(232, 232, 232) 100%);
     background-color: rgb(var(--color-white));
-    border: 0.0625rem solid rgb(211, 211, 211);
+    border: 0.0625rem solid rgb(var(--color-gray-e4));
     border-radius: 0.1rem;
     box-shadow: inset 0 0.0625rem 0 0 rgb(var(--color-white));
-    color: rgb(85, 91, 97);
+    color: rgb(var(--color-black-60));
     cursor: pointer;
     display: inline-block;
     font-size: 0.75rem;
@@ -377,7 +362,7 @@
 }
 
 #main > .write-form-container > .file-upload-container > .image-upload > i {
-    color: rgb(85, 91, 97);
+    color: rgb(var(--color-black-60));
     font-size: 0.85rem;
     margin-right: 0.2rem;
 }
@@ -396,12 +381,12 @@
 }
 
 #main > .write-form-container > .image-function > .result {
-    font-weight: normal;
-    overflow-x: hidden;
-    font-size: 12px;
-    letter-spacing: -0.03em;
     background: transparent;
+    font-weight: normal;
+    font-size: 0.75rem;
+    letter-spacing: -0.03em;
     line-height: 1.5;
+    overflow-x: hidden;
 }
 
 #main > .write-form-container > .image-function > .input {
@@ -411,20 +396,20 @@
 #main > .write-form-container > .image-function > .input > input {
     background: linear-gradient(to bottom, rgb(var(--color-white)) 5%, rgb(232, 232, 232) 100%);
     background-color: rgb(var(--color-white));
-    border: 0.0625rem solid rgb(211, 211, 211);
+    border: 0.0625rem solid rgb(var(--color-gray-e4));
     border-radius: 0.1rem;
     box-shadow: inset 0 0.0625rem 0 0 rgb(var(--color-white));
-    color: rgb(85, 91, 97);
+    color: rgb(var(--color-black-60));
     cursor: pointer;
     display: inline-block;
     font-size: 0.75rem;
-    text-shadow: 0 0.0625rem 0 rgb(var(--color-white));
     padding: 0.185rem 0.75rem;
+    text-shadow: 0 0.0625rem 0 rgb(var(--color-white));
 }
 
 #main > .write-form-container > .image-components {
     display: none;
-    padding: 0 10px;
+    padding: 0 0.625rem;
 }
 
 #main > .write-form-container > .image-components.visible {
@@ -433,14 +418,14 @@
 
 #main > .write-form-container > .image-components > .title-image-text {
     width: 100%;
-    margin-bottom: 5px;
-    padding: 10px 12px 8px;
+    padding: 0.625rem 0.75rem 0.5rem;
     box-sizing: border-box;
-    background: #6cbd7e;
-    color: #ffffff;
-    font-size: 12px;
+    background: rgb(108, 189, 126);
+    color: rgb(var(--color-white));
+    font-size: 0.75rem;
+    left: -0.125rem;
+    margin-bottom: 0.3125rem;
     position: relative;
-    left: -2px;
 }
 
 #main > .write-form-container > .image-components > .title-image-text > h2 {
@@ -450,11 +435,11 @@
 
 #main > .write-form-container > .image-components > .list-images {
     border-bottom: 0;
+    border-bottom: 0.0625rem solid rgb(var(--color-gray-e5));
+    max-height: 10rem;
+    margin: 0 -0.3125rem;
     overflow-y: auto;
-    max-height: 160px;
-    margin: 0 -5px;
-    padding: 5px 0;
-    border-bottom: 1px solid #E6E6E6;
+    padding: 0.3125rem 0;
 }
 
 #main > .write-form-container > .image-components > .list-images > ul {
@@ -464,26 +449,26 @@
 }
 
 #main > .write-form-container > .image-components > .list-images > ul > li {
-    width: 100px;
-    height: 100px;
-    position: relative;
+    width: 6.25rem;
+    height: 6.25rem;
+    border: 0.1875rem solid rgb(var(--color-gray-e4));
     display: inline-block;
-    margin: 3px;
-    border: 3px solid #DDD;
+    margin: 0.1875rem;
+    position: relative;
 }
 
 #main > .write-form-container > .image-components > .list-images > ul > li > strong {
     display: none;
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 #main > .write-form-container > .image-components > .list-images > ul > li > .file-info > .file-size {
     display: none;
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 #main > .write-form-container > .image-components > .list-images > ul > li > .file-info > span > img {
@@ -494,57 +479,57 @@
 }
 
 #main > .write-form-container > .image-components > .list-images > ul > li > .file-info > .checkbox > input {
-    appearance: auto;
-    position: absolute;
     top: 0;
     left: 0;
+    appearance: auto;
     box-sizing: border-box;
-    padding: 0;
     list-style-type: none;
+    position: absolute;
+    padding: 0;
 }
 
 #main > .write-form-container > .image-components > .list-images > ul > li > .file-info > .button {
-    visibility: hidden;
-    font-size: 2rem;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 100%;
-    padding: 1px;
+    font-size: 2rem;
+    padding: 0.0625rem;
     position: absolute;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
 }
 
 #main > .write-form-container > .image-components > .list-images > ul > li:hover > .file-info > .button {
-    font-size: 2rem;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    font-size: 2rem;
     border-radius: 100%;
-    padding: 1px;
+    padding: 0.0625rem;
     position: absolute;
+    transform: translate(-50%, -50%);
     visibility: visible;
 }
 
 #main > .write-form-container > .image-components > .list-images > ul > li > .file-info > .button:checked {
-    cursor: pointer;
-    position: absolute;
     top: 0;
     left: auto;
     right: 0;
-    margin: 0;
-    padding: 1px 0 1px 2px;
+    background-color: rgb(108, 189, 126);
+    border-radius: 0 0 0 0.3125rem;
     border: 0 none;
-    border-radius: 0 0 0 5px;
-    font-size: 15px;
-    line-height: 15px;
-    background-color: #6cbd7e;
+    cursor: pointer;
+    font-size: 0.9375rem;
+    line-height: 0.9375rem;
+    margin: 0;
+    position: absolute;
+    padding: 0.0625rem 0 0.0625rem 0.125rem;
 }
 
 #main > .write-form-container > .form-bottom {
     align-items: center;
     background-color: rgb(var(--color-white));
-    border: 0.0625rem solid rgb(241, 241, 241);
-    color: rgb(255, 51, 49);
+    border: 0.0625rem solid rgb(var(--line-color-white));
+    color: rgb(var(--color-red-fa));
     display: flex;
     font-size: 0.75rem;
     font-weight: 500;
@@ -566,7 +551,7 @@
 
 #main > .write-form-container > .form-bottom > .submit-button {
     width: 7.5rem;
-    border-left: 0.0625rem solid rgb(241, 241, 241);
+    border-left: 0.0625rem solid rgb(var(--line-color-white));
     cursor: pointer;
     padding: 1rem 0;
 }

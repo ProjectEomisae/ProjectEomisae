@@ -28,12 +28,20 @@
             keyProperty="index"
             parameterType="dev.dmchoi.eomisae.entities.bbs.ArticleEntity">
         INSERT INTO `eomisae_article`.`articles` (`user_index`, `board_index`, `board_urlName`, `written_at`, `title`,
-                                                  `tag`,
-                                                  `url`,
-                                                  `content`, `view`, `like`, `buy`, `category_index`, `blind_status`)
-        VALUES (#{userIndex}, #{boardIndex}, #{boardUrlName}, #{writtenAt}, #{title}, #{tag}, #{url}, #{content},
-                #{view},
-                #{like}, #{buy}, #{categoryIndex}, #{blindStatus})
+                                                  `tag`, `url`, `discount_code`, `shipping_info`, `order_date`,
+                                                  `shopping_mall`, `contact`, `brand`, `product_name`, `product_size`,
+                                                  `my_size`, `exchange_size`, `currency_for_product`, `product_price`,
+                                                  `currency_for_purchasing`, `purchase_product_price`,
+                                                  `currency_for_sailing`, `sale_product_price`, `outer`, `top`,
+                                                  `bottom`, `shoes`, `acc`, `content`, `view`, `like`, `buy`,
+                                                  `category_index`, `gender`, `product_status`, `trade_method`,
+                                                  `blind_status`)
+        VALUES (#{userIndex}, #{boardIndex}, #{boardUrlName}, #{writtenAt}, #{title}, #{tag}, #{url}, #{discountCode},
+                #{shippingInfo}, #{orderDate}, #{shoppingMall}, #{contact}, #{brand}, #{productName}, #{productSize},
+                #{mySize}, #{exchangeSize}, #{currencyForProduct}, #{productPrice}, #{currencyForPurchasing},
+                #{purchaseProductPrice}, #{currencyForSailing}, #{saleProductPrice}, #{outer}, #{top}, #{bottom},
+                #{shoes}, #{acc}, #{content}, #{view}, #{like}, #{buy}, #{categoryIndex}, #{gender}, #{productStatus},
+                #{tradeMethod}, #{blindStatus})
     </insert>
 
     <insert id="insertComment"
@@ -73,19 +81,44 @@
     </select>
     <select id="selectArticleByIndex"
             resultType="dev.dmchoi.eomisae.entities.bbs.ArticleEntity">
-        SELECT `index`          AS `index`,
-               `user_index`     AS `userIndex`,
-               `board_index`    AS `boardIndex`,
-               `written_at`     AS `writtenAt`,
-               `title`          AS `title`,
-               `tag`            AS `tag`,
-               `url`            AS `url`,
-               `content`        AS `content`,
-               `view`           AS `view`,
-               `like`           AS `like`,
-               `buy`            AS `buy`,
-               `category_index` AS `categoryIndex`,
-               `blind_status`   AS `blindStatus`
+        SELECT `index`                   AS `index`,
+               `user_index`              AS `userIndex`,
+               `board_index`             AS `boardIndex`,
+               `board_urlName`           AS `boardUrlName`,
+               `written_at`              AS `writtenAt`,
+               `title`                   AS `title`,
+               `tag`                     AS `tag`,
+               `url`                     AS `url`,
+               `discount_code`           AS `discountCode`,
+               `shipping_info`           AS `shippingInfo`,
+               `order_date`              AS `orderDate`,
+               `shopping_mall`           AS `shoppingMall`,
+               `contact`                 AS `contact`,
+               `brand`                   AS `brand`,
+               `product_name`            AS `productName`,
+               `product_size`            AS `productSize`,
+               `my_size`                 AS `mySize`,
+               `exchange_size`           AS `exchangeSize`,
+               `currency_for_product`    AS `currencyForProduct`,
+               `product_price`           AS `productPrice`,
+               `currency_for_purchasing` AS `currencyForPurchasing`,
+               `purchase_product_price`  AS `purchaseProductPrice`,
+               `currency_for_sailing`    AS `currencyForSailing`,
+               `sale_product_price`      AS `saleProductPrice`,
+               `outer`                   AS `outer`,
+               `top`                     AS `top`,
+               `bottom`                  AS `bottom`,
+               `shoes`                   AS `shoes`,
+               `acc`                     AS `acc`,
+               `content`                 AS `content`,
+               `view`                    AS `view`,
+               `like`                    AS `like`,
+               `buy`                     AS `buy`,
+               `category_index`          AS `categoryIndex`,
+               `gender`                  AS `gender`,
+               `product_status`          AS `productStatus`,
+               `trade_method`            AS `tradeMethod`,
+               `blind_status`            AS `blindStatus`
         FROM `eomisae_article`.`articles`
         WHERE `index` = #{index}
         LIMIT 1
@@ -102,7 +135,8 @@
                `parent_user_index` AS `parentUserIndex`,
                `depth`             AS `depth`,
                `like`              AS `like`,
-               `deleted_flag`      AS `isDeleted`
+               `deleted_flag`      AS `isDeleted`,
+               `blind_status`      AS `blindStatus`
         FROM `eomisae_comment`.`comments`
         WHERE `index` = #{index}
         LIMIT 1
@@ -120,6 +154,7 @@
                `comment`.`depth`             AS `depth`,
                `comment`.`like`              AS `like`,
                `comment`.`deleted_flag`      AS `isDeleted`,
+               `comment`.`blind_status`      AS `blindStatus`,
                `user`.`nickname`             AS `nickname`
         FROM `eomisae_comment`.`comments` AS `comment`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON `comment`.`user_index` = `user`.`index`
@@ -130,18 +165,62 @@
     <update id="updateArticle"
             parameterType="dev.dmchoi.eomisae.vos.bbs.ArticleWriteVo">
         UPDATE `eomisae_article`.`articles`
-        SET `user_index`     = #{userIndex},
-            `board_index`    = #{boardIndex},
-            `written_at`     = #{writtenAt},
-            `title`          = #{title},
-            `tag`            = #{tag},
-            `url`            = #{url},
-            `content`        = #{content},
-            `view`           = #{view},
-            `like`           = #{like},
-            `buy`            = #{buy},
-            `category_index` = #{categoryIndex},
-            `blind_status`   = #{blindStatus}
+        SET `index`                   = #{index},
+            `user_index`              = #{userIndex},
+            `board_index`             = #{boardIndex},
+            `board_urlName`           = #{boardUrlName},
+            `written_at`              = #{writtenAt},
+            `title`                   = #{title},
+            `tag`                     = #{tag},
+            `url`                     = #{url},
+            `discount_code`           = #{discountCode},
+            `shipping_info`           = #{shippingInfo},
+            `order_date`              = #{orderDate},
+            `shopping_mall`           = #{shoppingMall},
+            `contact`                 = #{contact},
+            `brand`                   = #{brand},
+            `product_name`            = #{productName},
+            `product_size`            = #{productSize},
+            `my_size`                 = #{mySize},
+            `exchange_size`           = #{exchangeSize},
+            `currency_for_product`    = #{currencyForProduct},
+            `product_price`           = #{productPrice},
+            `currency_for_purchasing` = #{currencyForPurchasing},
+            `purchase_product_price`  = #{purchaseProductPrice},
+            `currency_for_sailing`    = #{currencyForSailing},
+            `sale_product_price`      = #{saleProductPrice},
+            `outer`                   = #{outer},
+            `top`                     = #{top},
+            `bottom`                  = #{bottom},
+            `shoes`                   = #{shoes},
+            `acc`                     = #{acc},
+            `content`                 = #{content},
+            `view`                    = #{view},
+            `like`                    = #{like},
+            `buy`                     = #{buy},
+            `category_index`          = #{categoryIndex},
+            `gender`                  = #{gender},
+            `product_status`          = #{productStatus},
+            `trade_method`            = #{tradeMethod},
+            `blind_status`            = #{blindStatus}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateArticleComment"
+            parameterType="dev.dmchoi.eomisae.entities.bbs.CommentEntity">
+        UPDATE `eomisae_comment`.`comments`
+        SET `index`             = #{index},
+            `article_index`     = #{articleIndex},
+            `user_index`        = #{userIndex},
+            `content`           = #{content},
+            `written_at`        = #{writtenAt},
+            `parent_index`      = #{parentIndex},
+            `parent_user_index` = #{parentUserIndex},
+            `depth`             = #{depth},
+            `like`              = #{like},
+            `deleted_flag`      = #{isDeleted},
+            `blind_status`      = #{blindStatus}
         WHERE `index` = #{index}
         LIMIT 1
     </update>
