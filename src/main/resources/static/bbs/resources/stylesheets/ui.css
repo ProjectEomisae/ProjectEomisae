@@ -1,33 +1,32 @@
 @charset "UTF-8";
 
 #main {
-    overflow: hidden;
-    max-width: 1250px;
-    width: 1250px;
+    width: 78.125rem;
+    max-width: 78.125rem;
     height: auto;
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
-    padding-right: 15px;
-    padding-left: 15px;
+    overflow: hidden;
+    padding-right: 0.9375rem;
+    padding-left: 0.9375rem;
 }
 
 #main > .main-container {
-    padding-top: 40px;
-    padding-bottom: 40px;
     align-items: flex-start;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding: 2.5rem 1.875rem;
 }
 
 #main > .nav-container {
-    padding-left: 30px;
-    padding-right: 30px;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding-left: 1.875rem;
+    padding-right: 1.875rem;
 }
 
 #main > .nav-container > .nav-menu {
@@ -35,19 +34,19 @@
 }
 
 #main > .nav-container > .nav-menu > .list {
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    border-bottom: 0.0625rem solid rgb(var(--color-white-dim));
     margin: 0;
     padding: 0;
-    white-space: nowrap;
     position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-bottom: 1px solid #e8eaeb;
-    width: 100%;
+    white-space: nowrap;
 }
 
 #main > .nav-container > .nav-menu > .list > .link {
@@ -56,37 +55,26 @@
 }
 
 #main > .nav-container > .nav-menu > .list > .link > a {
+    border-bottom: 0.125rem solid transparent;
+    color: rgb(var(--color-black-66));
     display: inline-block;
-    color: #666666;
-    font-size: 0.874rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    line-height: 58px;
-    padding: 0 10px 0 10px;
-    margin-right: 10px;
+    line-height: 3.625rem;
+    margin-right: 0.625rem;
+    padding: 0 0.625rem 0 0.625rem;
     text-transform: uppercase;
     text-decoration: none;
-    border-bottom: 2px solid transparent;
     transition: all 150ms;
 }
 
 #main > .nav-container > .nav-menu > .list > .link:hover > a {
-    color: #25282b;
+    color: rgb(var(--color-black-1));
 }
 
 #main > .nav-container > .nav-menu > .list > .link.selected > a {
-    color: #e87a72;
-    border-bottom: 2px solid #e87a72;
-}
-
-#main > .main-container {
-    padding-left: 30px;
-    padding-right: 30px;
-    align-items: flex-start;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    position: relative;
-
+    border-bottom: 0.125rem solid rgb(var(--color-pink));
+    color: rgb(var(--color-pink));
 }
 
 #main > .main-container > .main-section {
@@ -94,23 +82,23 @@
 }
 
 #main > .main-container > .main-section > .empty-container {
-    border: 1px solid #dedede;
-    text-align: center;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    background: #fff;
-    display: inline-block;
     width: 100%;
-    height: 90px;
+    height: 5.625rem;
+    border: 0.0625rem solid rgb(var(--color-gray-e4));
+    background: rgb(var(--color-white));
+    display: inline-block;
+    padding-top: 0.9375rem;
+    padding-bottom: 0.9375rem;
+    text-align: center;
 }
 
 #main > .main-container > .main-section > .menu-container {
-    padding-top: 0.75rem;
     align-items: stretch;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     margin-bottom: 1rem;
+    padding-top: 0.75rem;
 }
 
 #main > .main-container > .main-section > .menu-container > .menu-section {
@@ -121,35 +109,34 @@
 }
 
 #main > .main-container > .main-section > .menu-container > .menu-section > .left {
-    flex: 1;
     display: flex;
+    flex: 1;
 }
 
 #main > .main-container > .main-section > .menu-container > .menu-section > div > div > .link {
-    font-size: 11px;
+    height: 1.875rem;
+    background: rgb(var(--color-black-38));
+    border: 0.0625rem solid rgb(var(--color-white));
+    color: rgb(var(--color-white));
     display: inline-block;
-    padding: 0 16px;
-    height: 30px;
-    background: #383838;
-    border: 1px solid #fff;
-    line-height: 30px;
-    color: #fff;
+    font-size: 0.6875rem;
+    line-height: 1.875rem;
+    padding: 0 1rem;
 }
 
 #main > .main-container > .main-section > .menu-container > .menu-section > div > div > .link:hover {
-    color: #f44336;
-    border: 1px solid #fff;
+    border: 0.0625rem solid rgb(var(--color-white));
+    color: rgb(var(--color-red-fa));
     text-decoration: underline;
     transition: all 0.1s;
 }
 
 #main > .main-container > .main-section > .menu-container > .menu-section > .left > div > .link > i {
-    font-size: 10px;
-    color: #fff;
+    color: rgb(var(--color-white));
+    font-size: 0.625rem;
+    margin-left: 0.25rem;
     vertical-align: 0;
-    margin-left: 4px;
 }
-
 
 #main > .main-container > .main-section > .menu-container > .menu-section > .left > div > .link {
     cursor: pointer;
@@ -157,16 +144,16 @@
 
 #main > .main-container > .main-section > .menu-container > .menu-section > .left > .align > .align-list {
     width: 4.0625rem;
+    min-width: 10rem;
+    max-height: 40.625rem;
+    border-radius: 0.1875rem;
+    border: 0.0625rem solid rgb(var(--color-gray-e5));
+    background-color: rgba(var(--color-white), 0.98);
+    display: block;
     opacity: 0;
+    overflow-y: auto;
     position: absolute;
     pointer-events: none;
-    display: block;
-    border-radius: 3px;
-    border: 1px solid #e5e5e5;
-    background-color: rgba(255, 255, 255, 0.98);
-    min-width: 160px;
-    max-height: 650px;
-    overflow-y: auto;
     transition: all 0.2s;
 }
 
@@ -176,31 +163,31 @@
 }
 
 #main > .main-container > .main-section > .menu-container > .menu-section > .left > .align > .align-list > .list {
+    width: 100%;
+    min-height: 2.25rem;
     color: rgba(0, 0, 0, 0.87);
     cursor: pointer;
-    min-height: 36px;
-    width: 100%;
     text-align: left;
     text-transform: none;
 }
 
 #main > .main-container > .main-section > .menu-container > .menu-section > .left > .align > .align-list > .list > .link {
-    font-size: 0.75rem;
-    color: #777;
-    font-weight: normal;
+    color: rgb(var(--color-black-77));
     display: block;
-    line-height: 36px;
+    font-size: 0.75rem;
+    font-weight: normal;
+    line-height: 2.25rem;
     padding: 0 0.75rem;
 }
 
 #main > .main-container > .main-section > .menu-container > .menu-section > .left > .align > .align-list > .list > .link:hover {
-    font-size: 0.75rem;
-    color: #777;
-    font-weight: bold;
+    background-color: rgb(var(--color-white-fa));
+    color: rgb(var(--color-black-77));
     display: block;
-    line-height: 36px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 2.25rem;
     padding: 0 0.80rem;
-    background-color: #f9f9fa;
     transition: all 50ms;
 }
 
@@ -221,18 +208,18 @@
 }
 
 #main > .main-container > .main-section > .search-container > .search-form {
-    height: 44px;
-    line-height: 44px;
-    padding: 0 16px;
-    border: 1px solid #e5e5e5;
-    background: #fff;
+    height: 2.75rem;
+    border: 0.0625rem solid rgb(var(--color-white-dim));
+    background: rgb(var(--color-white));
+    line-height: 2.75rem;
+    padding: 0 1rem;
 
 }
 
 #main > .main-container > .main-section > .search-container > .search-form > .criteria {
+    appearance: auto;
     margin-left: 0.5rem;
     padding-right: 0.5rem;
-    appearance: auto;
 }
 
 #main > .main-container > .main-section > .search-container > .search-form > .keyword {
@@ -240,9 +227,7 @@
     font-size: 0.8rem;
 }
 
-
 /* paging*/
-
 
 #main > .main-container > .main-section > table {
     align-items: center;
@@ -253,31 +238,31 @@
 }
 
 #main > .main-container > .main-section > table > tbody > tr > td > .page-container {
-    margin: 24px auto;
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: 1.5rem auto;
 }
 
 
 #main > .main-container > .main-section > table > tbody > tr > td > .page-container > .page-section > a,
 #main > .main-container > .main-section > table > tbody > tr > td > .page-container > .page-section > span {
-    min-width: 36px;
-    height: 36px;
-    line-height: 36px;
-    color: #444;
-    text-decoration: none;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    color: rgb(var(--color-black-44));
     display: inline-block;
-    font-weight: bold;
     font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 2.25rem;
     text-align: center;
+    text-decoration: none;
 }
 
 #main > .main-container > .main-section > table > tbody > tr > td > .page-container > .page-section > a.selected {
-    background: #444;
-    color: #fff;
-    border-radius: 32px;
+    background: rgb(var(--color-black-44));
+    border-radius: 2rem;
+    color: rgb(var(--color-white));
 }
 
 #main > .main-container > .main-section > table > tbody > tr > td > .page-container > .page-section > a > i {
@@ -293,31 +278,31 @@
 
 #main > .main-container > .main-section > .comment-container > .comment {
     width: 100%;
-    background: #fff;
-    border: 1px solid #e5e5e5;
     align-items: flex-start;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    background: rgb(var(--color-white));
+    border: 0.0625rem solid rgb(var(--color-white-dim));
     font-weight: bold;
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile {
     width: 5rem;
-    margin-right: 0.75rem;
     align-items: flex-start;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-right: 0.75rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > img {
     width: 1.875rem;
     height: 1.875rem;
-    line-height: 2.5rem;
     border-radius: 50%;
-    margin-right: 8px;
+    line-height: 2.5rem;
+    margin-right: 0.5rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content {
@@ -329,9 +314,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 0.0625rem solid rgb(var(--line-color-white));
+    line-height: 1.875rem;
     padding: 1rem;
-    line-height: 30px;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > .user {
@@ -339,29 +324,29 @@
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > .user > span:first-child {
-    color: #0d3c5f;
-    font-weight: 500;
-    font-size: 15px;
+    color: rgb(var(--color-blue-dim));
     cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9375rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > .user > span:first-child:hover {
-    color: #e87a72;
+    color: rgb(var(--color-pink));
     text-decoration: underline;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > .user > .user-info {
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 3px;
+    min-width: 5rem;
+    box-shadow: 0 0 0.0625rem 0.0625rem rgb(31 45 61 / 15%);
+    background: white;
+    border-radius: 0.1875rem;
     font-size: 0.875rem;
     font-weight: 400;
-    box-shadow: 0 0 1px 1px rgb(31 45 61 / 15%);
-    background: white;
-    min-width: 80px;
+    margin: 0.625rem 0;
+    opacity: 0;
+    padding: 0.625rem;
+    position: absolute;
+    pointer-events: none;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > .user > .user-info.on {
@@ -371,34 +356,34 @@
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > .user > .user-info.on > .user-menu > .list {
+    color: rgb(var(--color-black-1));
+    padding: 0.375rem 0.625rem;
     text-align: left;
-    padding: 6px 10px;
-    color: #25282b;
     transition: all 150ms;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > .user > .user-info.on > .user-menu > .list:first-child {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 0.0625rem solid rgb(var(--color-grey-e1));
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .user-profile > .user > .user-info.on > .user-menu > .list:hover {
-    color: #e87a72;
+    color: rgb(var(--color-pink));
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .top > .function > .date {
-    margin-left: 8px;
-    font-size: 12px;
+    color: rgb(var(--color-grey-e1));
+    font-size: 0.75rem;
     font-weight: 400;
-    color: #a5a5a5;
+    margin-left: 0.5rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .middle {
+    border-bottom: 0.0625rem solid rgb(var(--line-color-white));
+    color: rgb(0, 0, 0);
     font-size: 0.75rem;
-    padding: 1rem;
     font-weight: 400;
-    color: #000;
     line-height: 1.5;
-    border-bottom: 1px solid #f1f1f1;
+    padding: 1rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down {
@@ -411,28 +396,28 @@
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .like {
     width: 3rem;
-    height: 48px;
-    line-height: 48px;
+    height: 3rem;
     border: none;
-    padding: 0 16px;
     cursor: pointer;
+    line-height: 3rem;
+    padding: 0 1rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .like > i {
-    color: #999;
+    color: rgb(var(--color-grey-e0));
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .like:active > i {
-    color: #ff3854;
+    color: rgb(255, 56, 84);
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .like > span {
-    font-size: 13px;
-    color: #999;
+    color: rgb(var(--color-grey-e0));
+    font-size: 0.8125rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .like > span:hover {
-    text-decoration: underline #e87a72;;
+    text-decoration: underline rgb(var(--color-pink));
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form {
@@ -446,46 +431,45 @@
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > label > [type=text] {
     width: 100%;
+    height: 3rem;
+    border: none;
     display: flex;
     flex: 1;
-    height: 48px;
-    line-height: 48px;
-    border: none;
-    padding: 0 16px;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 3rem;
+    padding: 0 1rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > label > [type=text]::placeholder {
-    color: #ccc;
+    color: rgb(var(--color-gray-e3));
     font-weight: 400;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > button,
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > .menu-box > button{
+    height: 3rem;
     border: unset;
     background-color: unset;
     cursor: pointer;
-    height: 48px;
-    line-height: 48px;
-    border: none;
-    padding: 0 16px;
+    color: rgb(var(--color-gray-e3));
     font-size: 1.125rem;
-    color: #ccc;
+    line-height: 3rem;
+    padding: 0 1rem;
 }
 
-/**/
-
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > .menu-box > .user-info {
+    min-width: 5rem;
+    background: rgb(var(--color-white));
+    border-radius: 0.1875rem;
+    box-shadow: 0 0 0.0625rem 0.0625rem rgb(31 45 61 / 15%);
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin: 0.625rem 0;
     opacity: 0;
     position: absolute;
     pointer-events: none;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 3px;
-    font-size: 0.875rem;
-    font-weight: 400;
-    box-shadow: 0 0 1px 1px rgb(31 45 61 / 15%);
-    background: white;
-    min-width: 80px;
+    padding: 0.625rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > .menu-box > .user-info.visible {
@@ -495,27 +479,24 @@
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > .menu-box > .user-info.visible > .user-menu > .list {
+    color: rgb(var(--color-black-1));
+    padding: 0.375rem 0.625rem;
     text-align: left;
-    padding: 6px 10px;
-    color: #25282b;
     transition: all 150ms;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > .menu-box > .user-info.visible > .user-menu > .list:first-child {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 0.0625rem solid rgb(var(--color-grey-e1));
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .down > .comment-form > .menu-box > .user-info.visible > .user-menu > .list:hover {
-    color: #e87a72;
+    color: rgb(var(--color-pink));
 }
 
-/* */
-
-
 #main > .main-container > .main-section > .comment-container > .write-comment {
-    background: #fff;
-    margin-bottom: 24px;
-    border: 1px solid #e5e5e5;
+    background: rgb(var(--color-white));
+    border: 0.0625rem solid rgb(var(--color-gray-e5));
+    margin-bottom: 1.5rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box {
@@ -524,83 +505,82 @@
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box > label {
-    height: 160px;
-    max-height: 160px;
+    height: 10rem;
+    max-height: 10rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box > label > .textarea.content::placeholder {
+    color: rgb(var(--color-gray-e4));
     font-size: 1.5rem;
-    color: #ddd;
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box > label > textarea {
     width: 96%;
-    height: 160px;
-    max-height: 160px;
+    height: 10rem;
+    max-height: 10rem;
+    min-height: 5rem;
     border: none;
-    min-height: 80px;
-    color: #555b61;
+    background: rgb(var(--color-white));
+    color: rgb(var(--color-black-60));
     font-size: 0.875rem;
     font-family: "Noto Sans KR", sans-serif;
-    resize: none;
     outline: none;
-    background: #fff;
+    resize: none;
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box > .tag {
-    border-top: 1px solid #f1f1f1;
     height: auto;
-    min-height: 44px;
-    padding: 6px 12px;
+    min-height: 2.75rem;
+    border-top: 0.0625rem solid rgb(var(--line-color-white));
+    padding: 0.375rem 0.75rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box > .tag > li {
-    height: 32px;
-    line-height: 32px;
-    padding-left: 4px;
+    height: 2rem;
     border: none;
-    font-size: 13px;
     background: transparent;
+    font-size: 0.8125rem;
+    line-height: 2rem;
+    padding-left: 0.25rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box > .tag > li > .lang-tag {
     width: 100%;
-    color: #999;
-    font-size: 12px;
+    color: rgb(var(--color-grey-e0));
+    font-size: 0.75rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box > .option {
-    height: 44px;
-    border-top: 1px solid #f1f1f1;
+    height: 2.75rem;
+    border-top: 0.0625rem solid rgb(var(--line-color-white));
     display: flex;
     justify-content: flex-end;
 }
 
 #main > .main-container > .main-section > .comment-container > .write-comment > .write-box > .option > .input {
-    height: 30px;
-    line-height: 30px;
-    margin: 7px 16px 0 0;
-    border-radius: 15px;
-    background: #02b875;
-    color: #fff;
-    font-size: 12px;
+    height: 1.875rem;
+    border-radius: 0.9375rem;
+    background: rgb(2, 184, 117);
     cursor: pointer;
-    padding: 0 24px;
+    color: rgb(var(--color-white));
+    font-size: 0.75rem;
+    line-height: 1.875rem;
+    margin: 0.4375rem 1rem 0 0;
+    padding: 0 1.5rem;
     text-align: center;
 }
-
 
 /* 대댓글 */
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment {
     width: 100%;
-    background-color: #fcfcfc;
-    border: 1px solid #e5e5e5;
-    border-collapse: collapse;
     align-items: flex-start;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    background-color: rgb(var(--color-white-fa));
+    border-bottom: 0.0625rem solid rgb(var(--color-gray-e5));
+    border-collapse: collapse;
     font-weight: bold;
 }
 
@@ -626,10 +606,10 @@
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > span:first-child {
-    color: #0d3c5f;
+    color: rgb(var(--color-blue-dim));
+    cursor: pointer;
     font-weight: 600;
     font-size: 0.75rem;
-    cursor: pointer;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > span:first-child:hover {
@@ -637,25 +617,25 @@
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > .divider {
-    height: 9px;
-    width: 1px;
-    background: #d5d5d5;
-    margin: 0 1px 0px;
+    width: 0.0625rem;
+    height: 0.5625rem;
+    background: rgb(var(--color-gray-e4));
     display: inline-block;
+    margin: 0 0.0625rem 0;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > .user-info {
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 3px;
+    min-width: 5rem;
+    background: rgb(var(--color-white));
+    box-shadow: 0 0 0.0625rem 0.0625rem rgb(31 45 61 / 15%);
+    border-radius: 0.1875rem;
     font-size: 0.875rem;
     font-weight: 400;
-    box-shadow: 0 0 1px 1px rgb(31 45 61 / 15%);
-    background: white;
-    min-width: 80px;
+    margin: 0.625rem 0;
+    opacity: 0;
+    position: absolute;
+    padding: 0.625rem;
+    pointer-events: none;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > .user-info.on {
@@ -665,23 +645,23 @@
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > .user-info.on > .user-menu > .list {
+    color: rgb(var(--color-black-1));
+    padding: 0.375rem 0.625rem;
     text-align: left;
-    padding: 6px 10px;
-    color: #25282b;
     transition: all 150ms;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > .user-info.on > .user-menu > .list:first-child {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 0.0625rem solid rgb(var(--color-grey-e1));
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > .user-info.on > .user-menu > .list:hover {
-    color: #e87a72;
+    color: rgb(var(--color-pink));
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > .date {
+    color: rgb(var(--color-grey-e2));
     font-size: 0.625rem;
-    color: #bbb;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .function {
@@ -692,11 +672,11 @@
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .down {
     width: 100%;
-    color: #000000;
+    color: rgb(0, 0, 0);
     font-size: 0.75rem;
-    padding: 0.5rem 1rem;
     font-weight: 400;
-    line-height: 1.375rem
+    line-height: 1.375rem;
+    padding: 0.5rem 1rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .down > .content.delete {
@@ -713,18 +693,18 @@
 
 @media screen and (max-width: 880px) {
     #main > .main-container {
-        padding: 40px 0 0 0;
+        padding: 2.5rem 0 0 0;
     }
 
     #main > .main-container > .main-section {
-        position: relative;
         width: 100%;
+        position: relative;
     }
 
     #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > a:first-child {
-        text-overflow: ellipsis;
-        overflow: hidden;
         display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 
@@ -734,8 +714,8 @@
     }
 
     #main > .nav-container {
-        padding: unset;
         overflow-x: scroll;
+        padding: unset;
     }
 
     ::-webkit-scrollbar {

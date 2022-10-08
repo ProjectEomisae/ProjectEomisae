@@ -117,3 +117,11 @@ window.document.querySelectorAll('.like').forEach(x => {
     });
 });
 
+window.document.body.querySelectorAll('.link.my-page').forEach(e => {
+    e.addEventListener('click', x => {
+        if (!e.classList.contains('on')) {
+            x.preventDefault();
+            alert('권한이 없습니다.');
+        }
+    });
+});

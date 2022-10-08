@@ -7,6 +7,7 @@ import dev.dmchoi.eomisae.entities.bbs.CommentEntity;
 import dev.dmchoi.eomisae.entities.bbs.ImageEntity;
 import dev.dmchoi.eomisae.vos.bbs.ArticleCommentWriteVo;
 import dev.dmchoi.eomisae.vos.bbs.ArticleWriteVo;
+import dev.dmchoi.eomisae.vos.bbs.CommentModifyVo;
 import dev.dmchoi.eomisae.vos.bbs.JoinCommentWriteVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -35,6 +36,8 @@ public interface IArticleReadMapper {
             @Param(value = "id") String id);
 
     int updateArticle(ArticleWriteVo articleWriteVo);
+
+    int updateArticleComment(CommentModifyVo commentModifyVo);
 
     int updateForDeletingArticleComment(CommentEntity commentEntity);
 }

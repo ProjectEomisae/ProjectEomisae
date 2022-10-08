@@ -207,7 +207,7 @@
                             로그인
                         </a>
                     </div>
-                    <div class="login-only message"
+                    <div class="login-only _message"
                     th:if="${user != null}">
                         <div class="top-login-container-user">
                             <div class="message-button">
@@ -229,7 +229,7 @@
                         </div>
                         <div class="user-info-container">
                             <div class="user-profile">
-                                <div>
+                                <div th:if="${#request.getAttribute('user') != null}">
                                     <img th:if="${user.getProfileId() != null && user.getProfileId() != ''}"
                                          th:src="@{'/user/profile-id?id=' + ${user.getProfileId()}}">
                                     <img alt="프로필 이미지" th:if="${user.getProfileId() == null || user.getProfileId() == ''}" th:src="@{/resources/images/profile.png}">
@@ -303,7 +303,11 @@
             <div class="my-container"
             th:classappend="${user == null} ? 'non-member'">
                 <a class="content">
-                    <div class="profile-image"><img alt="user" th:src="@{/resources/images/profile.png}"></div>
+                    <div class="profile-image" th:if="${#request.getAttribute('user') != null}">
+                        <img th:if="${user.getProfileId() != null && user.getProfileId() != ''}"
+                             th:src="@{'/user/profile-id?id=' + ${user.getProfileId()}}">
+                        <img alt="프로필 이미지" th:if="${user.getProfileId() == null || user.getProfileId() == ''}" th:src="@{/resources/images/profile.png}">
+                    </div>
                 </a>
                 <div class="profile-content">
                     <span
@@ -315,7 +319,7 @@
                     <i class="fa-solid fa-angle-right"></i>
                 </div>
             </div>
-            <div class="login-only user"
+            <div class="login-only _user"
             th:if="${user != null}">
                 <a th:href="@{/user/my-page/memberInfo}">
                     <div class="info">

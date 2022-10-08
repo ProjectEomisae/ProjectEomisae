@@ -167,7 +167,7 @@
                     </div>
                     <div class="right">
                         <div class="function">
-                            <a class="link write" th:href="@{'/bbs/' + ${boardListVo.getUrlName() + '/add'}}" th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getLevel() > boardListVo.getWriteLevel()} ? 'on'">
+                            <a class="link write" th:href="@{'/bbs/' + ${boardListVo.getUrlName() + '/add'}}" th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getLevel() >= boardListVo.getWriteLevel()} ? 'on'">
                                 쓰기
                             </a>
                             <a class="link search">
@@ -244,7 +244,7 @@
                                      th:if="${article.getContent().contains('download-image')}">
                             </span>
                             </td>
-                            <td class="user">
+                            <td class="user box">
                                 <div class="user-name">
                                     <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
                                          alt="profile" title="어미새">
@@ -257,7 +257,7 @@
                                                th:text="${'Lv.' + article.getLevel() + ' (' + (article.getPoint() * 100) / 3000 + '%)'}">Lv.14 (91.6%)</a>
                                         </li>
                                         <li class="list">
-                                            <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역 보기</a>
+                                            <a class="link my-page" th:href="@{/user/my-page/memberOwnDocument}" th:classappend="${#request.getAttribute('user') != null && article.getUserIndex() == #request.getAttribute('user').getIndex()} ? 'on'">활동 내역 보기</a>
                                         </li>
                                         <li class="list" th:if="${#request.getAttribute('user') != null && article.getUserIndex() != #request.getAttribute('user').getIndex()}">
                                             <a class="link" th:href="@{/}">쪽지 보내기</a>
@@ -305,7 +305,7 @@
                                      th:if="${article.getContent().contains('download-image')}">
                             </span>
                             </td>
-                            <td class="user">
+                            <td class="user box">
                                 <div class="user-name">
                                     <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
                                          alt="profile" title="어미새">
@@ -318,7 +318,7 @@
                                                th:text="${'Lv.' + article.getLevel() + ' (' + (article.getPoint() * 100) / 3000 + '%)'}">Lv.14 (91.6%)</a>
                                         </li>
                                         <li class="list">
-                                            <a class="link" th:href="@{/user/my-page/memberOwnDocument}">활동 내역 보기</a>
+                                            <a class="link my-page" th:href="@{/user/my-page/memberOwnDocument}" th:classappend="${#request.getAttribute('user') != null && article.getUserIndex() == #request.getAttribute('user').getIndex()} ? 'on'">활동 내역 보기</a>
                                         </li>
                                         <li class="list" th:if="${#request.getAttribute('user') != null && article.getUserIndex() != #request.getAttribute('user').getIndex()}">
                                             <a class="link" th:href="@{/}">쪽지 보내기</a>

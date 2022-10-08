@@ -129,7 +129,7 @@ window.document.querySelector('.exit-box').addEventListener('click', () => {
 
 const messageContainer = window.document.querySelector('.message-container');
 
-const loginOnly = window.document.querySelector('.login-only.message');
+const loginOnly = window.document.querySelector('.login-only._message');
 
 if(loginOnly != null) {
     window.document.querySelector('.message-button').addEventListener('click', () => {

@@ -150,9 +150,9 @@ window.document.querySelector('.input.comment').addEventListener('click', x => {
 });
 
 const ArticleBuy = window.document.querySelector('.buy-article');
-ArticleBuy.addEventListener('click', x => {
+ArticleBuy?.addEventListener('click', x => {
     if (!ArticleBuy.classList.contains('on')) {
-        alert('추천할 수 없습니다.');
+        alert('본인 게시글 혹은 한 게시글에는 중복으로 할 수 없습니다.');
         return false;
     }
     const xhr = new XMLHttpRequest();
@@ -195,6 +195,8 @@ ArticleLike.addEventListener('click', x => {
                     switch (responseJson['result']) {
                         case 'success':
                             ArticleLike.querySelector('.like-count').innerText = parseInt(ArticleLike.querySelector('.like-count').innerText) + 1;
+                            const userSection = window.document.querySelector('.user-section');
+                            userSection.querySelector(':scope > .like-count > b').innerText = parseInt(userSection.querySelector(':scope > .like-count > b').innerText) + 1;
                             break;
                         case 'not_found':
                             alert('찾을 수 없는 게시판입니다.');
@@ -210,6 +212,39 @@ ArticleLike.addEventListener('click', x => {
         };
         xhr.send();
     });
+
+const ArticleReport = window.document.querySelector('.report-article');
+ArticleReport.addEventListener('click', x => {
+    if (!ArticleReport.classList.contains('on')) {
+        alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
+        return false;
+    }
+    confirm('신고하시겠습니까? 신고된 글은 관리자가 검토 후 조치합니다.');
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `./${ArticleReport.querySelector('.boardIndex').value}/${ArticleReport.querySelector('.articleIndex').value}/article-report`)
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                const responseJson = JSON.parse(xhr.responseText);
+                switch (responseJson['result']) {
+                    case 'success':
+                        alert('신고가 접수되었습니다.');
+                        break;
+                    case 'not_allowed':
+                        alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
+                        break;
+                }
+            } else {
+                alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해 주세요.');
+            }
+        }
+    };
+    xhr.send();
+});
+
+window.document.querySelector('.modify-article-report')?.addEventListener('click', () => {
+    ArticleReport.click();
+});
 
 window.document.querySelectorAll('.like').forEach(x => {
     x.addEventListener('click', y => {
@@ -232,6 +267,36 @@ window.document.querySelectorAll('.like').forEach(x => {
                             break;
                         case 'not_allowed':
                             alert('더 이상 추천을 누를 수 없습니다.');
+                            break;
+                    }
+                } else {
+                    alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해 주세요.');
+                }
+            }
+        };
+        xhr.send();
+    });
+});
+
+window.document.querySelectorAll('.comment-report').forEach(x => {
+    x.addEventListener('click', y => {
+        if (!x.classList.contains('on')) {
+            alert('비회원이거나 혹은 한 댓글에 대한 중복 신고는 할 수 없습니다.');
+            return false;
+        }
+        confirm('신고하시겠습니까? 신고된 글은 관리자가 검토 후 조치합니다.');
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `./${x.querySelector('.articleIndex').value}/${x.querySelector('.commentIndex').value}/report`)
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const responseJson = JSON.parse(xhr.responseText);
+                    switch (responseJson['result']) {
+                        case 'success':
+                            alert('신고가 접수되었습니다.');
+                            break;
+                        case 'not_allowed':
+                            alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
                             break;
                     }
                 } else {

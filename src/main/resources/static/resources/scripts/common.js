@@ -1,4 +1,4 @@
-const showInput = document.getElementById('shopInput');
+const showInput = document.getElementById('showInput');
 const selectOption = document.getElementById('selectBox');
 
 function showText() {

@@ -210,7 +210,7 @@
                     </div>
                     <div class="right">
                         <div class="function">
-                            <a class="link write" th:href="@{'/bbs/' + ${boardListVo.getUrlName() + '/add'}}" th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getLevel() > boardListVo.getWriteLevel()} ? 'on'">
+                            <a class="link write" th:href="@{'/bbs/' + ${boardListVo.getUrlName() + '/add'}}" th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getLevel() >= boardListVo.getWriteLevel()} ? 'on'">
                                 쓰기
                             </a>
                             <a class="link search">

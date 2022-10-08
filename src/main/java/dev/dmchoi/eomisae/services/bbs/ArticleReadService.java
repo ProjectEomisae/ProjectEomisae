@@ -35,6 +35,9 @@ public class ArticleReadService {
         if (articleWriteVo.getUrl() == null) {
             articleWriteVo.setUrl(null);
         }
+        if (articleWriteVo.getTag() == null) {
+            articleWriteVo.setTag(null);
+        }
         articleWriteVo.setView(0);
         articleWriteVo.setLike(0);
         articleWriteVo.setBuy(0);
@@ -102,13 +105,42 @@ public class ArticleReadService {
             }
         }
         articleReadVo.setUrl(articleEntity.getUrl());
+        articleReadVo.setDiscountCode(articleEntity.getDiscountCode());
+        articleReadVo.setShippingInfo(articleEntity.getShippingInfo());
+        articleReadVo.setOrderDate(articleEntity.getOrderDate());
+        articleReadVo.setShoppingMall(articleEntity.getShoppingMall());
+        articleReadVo.setContact(articleEntity.getContact());
+        articleReadVo.setBrand(articleEntity.getBrand());
+        articleReadVo.setProductName(articleEntity.getProductName());
+        articleReadVo.setProductSize(articleEntity.getProductSize());
+        articleReadVo.setMySize(articleEntity.getMySize());
+        articleReadVo.setExchangeSize(articleEntity.getExchangeSize());
+        articleReadVo.setCurrencyForProduct(articleEntity.getCurrencyForProduct());
+        articleReadVo.setProductPrice(articleEntity.getProductPrice());
+        articleReadVo.setCurrencyForPurchasing(articleEntity.getCurrencyForPurchasing());
+        articleReadVo.setPurchaseProductPrice(articleEntity.getPurchaseProductPrice());
+        articleReadVo.setCurrencyForSailing(articleEntity.getCurrencyForSailing());
+        articleReadVo.setOuter(articleEntity.getOuter());
+        articleReadVo.setTop(articleEntity.getTop());
+        articleReadVo.setBottom(articleEntity.getBottom());
+        articleReadVo.setShoes(articleEntity.getShoes());
+        articleReadVo.setAcc(articleEntity.getAcc());
         articleReadVo.setContent(articleEntity.getContent());
         articleReadVo.setView(articleEntity.getView());
         articleReadVo.setLike(articleEntity.getLike());
         articleReadVo.setBuy(articleEntity.getBuy());
         articleReadVo.setCategoryIndex(articleEntity.getCategoryIndex());
+        articleReadVo.setGender(articleEntity.getGender());
+        articleReadVo.setProductStatus(articleEntity.getProductStatus());
+        articleReadVo.setTradeMethod(articleEntity.getTradeMethod());
         articleReadVo.setBlindStatus(articleEntity.getBlindStatus());
         articleReadVo.setUserNickname(writerEntity.getNickname());
+        if (writerEntity.getProfileId() != null) {
+            articleReadVo.setArticleProfileId(writerEntity.getProfileId());
+        } else {
+            articleReadVo.setArticleProfileId("");
+        }
+        System.out.println(articleReadVo.getArticleProfileId());
         articleReadVo.setPoint(writerEntity.getPoint());
         articleReadVo.setLevel(writerEntity.getLevel());
         articleReadVo.setResult(ArticleReadResult.SUCCESS);
@@ -128,6 +160,16 @@ public class ArticleReadService {
 //            System.out.println("프로필 : " + articleReadCommentDto.getProfileId() + " ");
         }
         articleReadVo.setComments(articleReadCommentDtos);
+    }
+
+    public void readComment(CommentReadVo commentReadVo) {
+        CommentEntity commentEntity = this.articleReadMapper.selectArticleCommentByIndex(commentReadVo.getIndex());
+        if (commentEntity == null || commentEntity.getIndex() == 0) {
+            commentReadVo.setResult(CommentReadResult.NOT_FOUND);
+            return;
+        }
+        commentReadVo.setResult(CommentReadResult.SUCCESS);
+        commentReadVo.copyValuesOf(commentEntity);
     }
 
     public void uploadImages(ImageEntity... imageEntities) {
@@ -160,6 +202,23 @@ public class ArticleReadService {
         articleWriteVo.setLevel(writerEntity.getLevel());
         articleWriteVo.setResult(ArticleWriteResult.SUCCESS);
         this.articleReadMapper.updateArticle(articleWriteVo);
+    }
+
+    public void modifyArticleComment(CommentModifyVo commentModifyVo) {
+        CommentEntity commentEntity = this.articleReadMapper.selectArticleCommentByIndex(commentModifyVo.getIndex());
+        if (commentEntity == null || commentEntity.getIndex() == 0) {
+            commentModifyVo.setResult(CommentModifyResult.NOT_FOUND);
+            return;
+        }
+        commentModifyVo.setWrittenAt(new Date());
+        commentModifyVo.setParentIndex(commentEntity.getParentIndex());
+        commentModifyVo.setParentUserIndex(commentEntity.getParentUserIndex());
+        commentModifyVo.setDepth(commentEntity.getDepth());
+        commentModifyVo.setLike(commentEntity.getLike());
+        commentModifyVo.setDeleted(commentEntity.isDeleted());
+        commentModifyVo.setBlindStatus(commentEntity.getBlindStatus());
+        commentModifyVo.setResult(CommentModifyResult.SUCCESS);
+        this.articleReadMapper.updateArticleComment(commentModifyVo);
     }
 
     public void writeComment(String urlName, UserEntity user, ArticleCommentWriteVo articleCommentWriteVo) {

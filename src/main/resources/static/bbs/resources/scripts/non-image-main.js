@@ -30,13 +30,12 @@ alignButton.addEventListener('click', () => {
     } else {
         alignElement.querySelector('.align-list').classList.remove('on');
     }
-    ;
 });
 
-const userElement = window.document.querySelectorAll('.user');
+const userElement = window.document.querySelectorAll('.user.box');
 userElement.forEach(x => {
     x.querySelector('span').addEventListener('click', () => {
-        Array.from(userElement).filter(el => el.querySelector('.user-info') !== x.querySelector('.user-info')).forEach(e => e.classList.remove('on'));
+        Array.from(userElement).filter(el => el.querySelector('.user-info') !== x.querySelector('.user-info')).forEach(e => e.querySelector('.user-info').classList.remove('on'));
         if (!x.querySelector('.user-info').classList.contains('on')) {
             x.querySelector('.user-info').classList.add('on');
         } else {
@@ -79,4 +78,13 @@ window.document.querySelector('.link.write').addEventListener('click', x => {
         x.preventDefault();
         alert('권한이 없습니다.');
     }
+});
+
+window.document.body.querySelectorAll('.link.my-page').forEach(e => {
+    e.addEventListener('click', x => {
+        if (!e.classList.contains('on')) {
+            x.preventDefault();
+            alert('권한이 없습니다.');
+        }
+    });
 });

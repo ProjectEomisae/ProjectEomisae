@@ -2,6 +2,8 @@ package dev.dmchoi.eomisae.controllers;
 
 import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
+import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
+import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
@@ -18,6 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import dev.dmchoi.eomisae.services.UserService;
+import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -453,22 +459,4 @@ public class UserController extends StandardController {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
