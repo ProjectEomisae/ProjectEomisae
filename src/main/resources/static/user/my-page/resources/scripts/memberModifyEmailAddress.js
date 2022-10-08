@@ -9,6 +9,9 @@ emailModifyInput.addEventListener('focusout', e => {
         hiddenWarning.classList.remove('success-text');
         hiddenWarning.classList.add('failure-text');
         warning.innerText = '올바른 이메일을 입력해주세요.';
+        if (emailModifyInput.value === '') {
+            warning.innerText = '이메일을 입력해주세요.';
+        }
         emailModifyInput.focus();
         emailModifyInput.select();
     } else {
@@ -51,3 +54,13 @@ emailModifyInput.addEventListener('focusout', e => {
     }
 });
 
+emailModifyForm.onsubmit = e => {
+    if (emailModifyInput.value === '') {
+        alert('이메일을 입력해주세요.');
+        hiddenWarning.classList.remove('success-text');
+        hiddenWarning.classList.remove('failure-text');
+        emailModifyInput.focus();
+        emailModifyInput.select();
+        e.preventDefault();
+    }
+};

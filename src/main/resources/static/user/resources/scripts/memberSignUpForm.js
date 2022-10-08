@@ -1,17 +1,10 @@
 const registerForm = window.document.getElementById('registerForm');
+
 const hiddenWarning = window.document.querySelector('.hidden-warning');
 const warning = window.document.querySelector('.warning');
 const emailWarning = window.document.querySelector('.email-warning');
 const idWarning = window.document.querySelector('.id-warning');
 const nicknameWarning = window.document.querySelector('.nickname-warning');
-
-const emailInput = window.document.getElementById('emailInput');
-const passwordInput = window.document.getElementById('passwordInput');
-const passwordCheckInput = window.document.getElementById('passwordCheckInput');
-const idInput = window.document.getElementById('idInput');
-const nickNameInput = window.document.getElementById('nickNameInput');
-
-const isTermsAgreed = window.document.getElementById('isTermsAgreed');
 
 const emailRegex = new RegExp('^(?=.{10,100}$)([0-9a-z][0-9a-z_]*[0-9a-z])@([0-9a-z][0-9a-z\\-]*[0-9a-z]\\.)?([0-9a-z][0-9a-z\\-]*[0-9a-z])\\.([a-z]{2,15})(\\.[a-z]{2})?$');
 const passwordRegex = new RegExp('^([0-9a-zA-Z`~!@#$%^&*()\\-_=+\\[{\\]}\\\\|;:\'",<.>/?]{6,100})$');
@@ -19,16 +12,16 @@ const idRegex = new RegExp('^[A-Za-z]{1}[A-Za-z0-9_]{1,}|$');
 const nickNameRegex = new RegExp('^(.*[가-힣]{2,5})|(.*[a-z]{4,10})|(.*[0-9]{4,10})$');
 
 
-emailInput.addEventListener('focusout', e => {
-    if (!emailRegex.test(emailInput.value)) {
+registerForm['email'].addEventListener('focusout', e => {
+    if (!emailRegex.test(registerForm['email'].value)) {
         emailWarning.style.display = 'block';
         emailWarning.innerText = '올바른 이메일을 입력해주세요.';
-        emailInput.focus();
-        emailInput.select();
+        registerForm['email'].focus();
+        registerForm['email'].select();
     } else {
         const xhr = new XMLHttpRequest();
         const formData = new FormData();
-        formData.append('email', emailInput.value);
+        formData.append('email', registerForm['email'].value);
         xhr.open('POST', 'check-email');
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -58,16 +51,16 @@ emailInput.addEventListener('focusout', e => {
     }
 });
 
-idInput.addEventListener('focusout', e => {
-    if (!idRegex.test(idInput.value)) {
+registerForm['userId'].addEventListener('focusout', e => {
+    if (!idRegex.test(registerForm['userId'].value)) {
         idWarning.style.display = 'block';
         idWarning.innerText = '아아디의 값은 영문,숫자,_만 가능하며 첫 글자는 영문이어야 합니다.';
-        idInput.focus();
-        idInput.select();
+        registerForm['userId'].focus();
+        registerForm['userId'].select();
     } else {
         const xhr = new XMLHttpRequest();
         const formData = new FormData();
-        formData.append('userId', idInput.value);
+        formData.append('userId', registerForm['userId'].value);
         xhr.open('POST', 'check-user-id');
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -99,18 +92,18 @@ idInput.addEventListener('focusout', e => {
     }
 });
 
-nickNameInput.addEventListener('focusout', e => {
-   if(!nickNameRegex.test(nickNameInput.value)) {
+registerForm['nickname'].addEventListener('focusout', e => {
+   if(!nickNameRegex.test(registerForm['nickname'].value)) {
        document.documentElement.scrollTop = 0;
-       hiddenWarning.classList.add('show');
+       hiddenWarning.classList.add('show');``
        nicknameWarning.style.display = 'none';
        warning.innerText = '닉네임의 값이 한글(2-5), 영문 또는 숫자(4-10)에 맞지 않습니다.';
-       nickNameInput.focus();
-       nickNameInput.select();
+       registerForm['nickname'].focus();
+       registerForm['nickname'].select();
    } else {
        const xhr = new XMLHttpRequest();
        const formData = new FormData;
-       formData.append('nickname', nickNameInput.value);
+       formData.append('nickname', registerForm['nickname'].value);
        xhr.open('POST', 'check-nickname');
        xhr.onreadystatechange = () => {
            if(xhr.readyState === XMLHttpRequest.DONE) {
@@ -145,59 +138,66 @@ nickNameInput.addEventListener('focusout', e => {
 
 
 registerForm.onsubmit = e => {
-    if (isTermsAgreed.checked === false) {
+    if (registerForm['termsAgreed'].checked === false) {
         document.documentElement.scrollTop = 0;
         hiddenWarning.classList.add('show');
         warning.innerText = '약관동의 값은 필수입니다.';
         e.preventDefault();
         return false;
     }
-    if (!emailRegex.test(emailInput.value)) {
+    if (!emailRegex.test(registerForm['email'].value)) {
         alert('이메일 주소의 값은 올바른 메일 주소가 아닙니다.');
-        emailInput.focus();
-        emailInput.select();
+        registerForm['email'].focus();
+        registerForm['email'].select();
         e.preventDefault();
         return false;
     }
-    if (!passwordRegex.test(passwordInput.value)) {
+    if (!passwordRegex.test(registerForm['password'].value)) {
         document.documentElement.scrollTop = 0;
         hiddenWarning.classList.add('show');
         warning.innerText = '비밀번호의 글자 수를 맞추어 주세요.';
-        passwordInput.focus();
-        passwordInput.select();
+        registerForm['password'].focus();
+        registerForm['password'].select();
         e.preventDefault();
         return false;
     }
-    if(passwordCheckInput.value !== passwordInput.value) {
+    if(registerForm['passwordCheck'].value !== registerForm['password'].value) {
         document.documentElement.scrollTop = 0;
         hiddenWarning.classList.add('show');
         warning.innerText = '새 비밀번호 확인이(가) 잘못되었습니다.';
-        passwordCheckInput.focus();
-        passwordCheckInput.select();
+        registerForm['passwordCheck'].focus();
+        registerForm['passwordCheck'].select();
         e.preventDefault();
         return false;
     }
-    if(!idRegex.test(idInput.value)) {
+    if(!idRegex.test(registerForm['userId'].value)) {
         idWarning.style.display = 'block';
         idWarning.innerText = '아아디의 값은 영문,숫자,_만 가능하며 첫 글자는 영문이어야 합니다.';
-        idInput.focus();
-        idInput.select();
+        registerForm['userId'].focus();
+        registerForm['userId'].select();
         e.preventDefault();
         return false;
     }
-    if(nickNameInput.value === '') {
+    if(registerForm['nickname'].value === '') {
         alert('닉네임 값은 필수입니다.');
-        nickNameInput.focus();
-        nickNameInput.select();
+        registerForm['nickname'].focus();
+        registerForm['nickname'].select();
         e.preventDefault();
         return false;
     }
-    if(!nickNameRegex.test(nickNameInput.value)) {
+    if(!nickNameRegex.test(registerForm['nickname'].value)) {
         document.documentElement.scrollTop = 0;
         hiddenWarning.classList.add('show');
         warning.innerText = '닉네임의 값이 한글(2-5), 영문 또는 숫자(4-10)에 맞지 않습니다.';
-        nickNameInput.focus();
-        nickNameInput.select();
+        registerForm['nickname'].focus();
+        registerForm['nickname'].select();
+        e.preventDefault();
+        return false;
+    }
+    if(registerForm['findPasswordAnswer'].value === '') {
+        alert('계정찾기에 이용되는 비밀번호 찾기 답변 값은 필수입니다.');
+        registerForm['findPasswordAnswer'].focus();
+        registerForm['findPasswordAnswer'].select();
         e.preventDefault();
         return false;
     }

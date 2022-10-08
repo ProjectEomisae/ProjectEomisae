@@ -5,8 +5,6 @@ import dev.dmchoi.eomisae.entities.member.SessionEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
-import dev.dmchoi.eomisae.enums.member.user.ModifyResult;
-import dev.dmchoi.eomisae.interfaces.IResult;
 import dev.dmchoi.eomisae.models.PagingModel;
 import dev.dmchoi.eomisae.services.bbs.BoardListService;
 import dev.dmchoi.eomisae.services.SystemService;
@@ -46,7 +44,6 @@ import java.util.Optional;
 @Controller(value = "dev.dmchoi.eomisae.controllers.UserController")
 @RequestMapping(value = "/user")
 public class UserController extends StandardController {
-
     private final UserService userService;
     private final BoardListService boardListService;
 
@@ -442,6 +439,17 @@ public class UserController extends StandardController {
         this.userService.deleteUser(user, deleteUserVo);
         responseJson.put("result", deleteUserVo.getResult().name().toLowerCase());
         return responseJson.toString();
+    }
+
+    @RequestMapping(value="/memberFindAccount", method = RequestMethod.GET)
+    public ModelAndView getMemberFindAccount(@RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                             ModelAndView modelAndView) {
+        if(user != null) {
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
+        modelAndView.setViewName("user/memberFindAccount");
+        return modelAndView;
     }
 
 }

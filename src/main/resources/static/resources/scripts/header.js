@@ -218,8 +218,8 @@ loginForm.querySelector('.login-button').addEventListener('click', e => {
                         window.location.href = '/';
                         break;
                     case 'email_not_verified' :
-                        alert('이메일 인증이 완료되지 않았습니다.');
-                        window.history.back();
+                        alert('이메일 인증이 완료되지 않았습니다.\n\n확인을 누르면 메인페이지로 이동합니다.');
+                        window.location.href = '/';
                         break;
                     case 'success' :
                         window.location.reload();

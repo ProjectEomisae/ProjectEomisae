@@ -508,6 +508,12 @@ public class UserService {
         deleteUserVo.setResult(DeleteUserResult.SUCCESS);
     }
 
+    public String userFindAccountByEmail(UserEntity user) {
+
+
+        return null;
+    }
+
 }
 
 
