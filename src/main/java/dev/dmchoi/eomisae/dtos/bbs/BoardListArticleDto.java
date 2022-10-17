@@ -7,6 +7,7 @@ public class BoardListArticleDto extends ArticleEntity {
     private int level;
     private int point;
     private int commentCount;
+    private String profileId;
 
     public String getUserNickname() {
         return userNickname;
@@ -41,6 +42,15 @@ public class BoardListArticleDto extends ArticleEntity {
 
     public BoardListArticleDto setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+        return this;
+    }
+
+    public String getProfileId() {
+        return profileId;
+    }
+
+    public BoardListArticleDto setProfileId(String profileId) {
+        this.profileId = profileId;
         return this;
     }
 }

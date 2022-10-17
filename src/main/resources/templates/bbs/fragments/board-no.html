@@ -17,8 +17,11 @@ th:each="articleForNo : ${boardListVoForNo.getArticles()}">
     </td>
     <td class="user box">
         <div class="user-name">
-            <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
-                 alt="profile" title="어미새">
+            <img th:if="${articleForNo.getProfileId() != null && articleForNo.getProfileId() != ''}"
+                 th:src="@{'/user/profile-id?id=' + ${articleForNo.getProfileId()}}">
+            <img alt="프로필 이미지"
+                 th:if="${articleForNo.getProfileId() == null || articleForNo.getProfileId() == ''}"
+                 th:src="@{/resources/images/profile.png}">
             <span th:text="${articleForNo.getUserNickname()}">어미새어미새어미새</span>
         </div>
         <div class="user-info">

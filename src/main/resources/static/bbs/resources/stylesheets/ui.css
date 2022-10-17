@@ -593,16 +593,21 @@
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top {
-    width: 100%;
+    width: 98%;
     align-items: center;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding: 0.125rem;
+    justify-content: flex-start;
+    padding: 0.15rem;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user {
-    margin-left: 1rem;
+    flex: 1;
+    padding: 0.375rem;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .exit {
+    cursor: pointer;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .user-content > .recomment-box > .recomment > .user-content > .top > .user > span:first-child {

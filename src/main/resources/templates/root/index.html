@@ -26,95 +26,19 @@
                             <h5 class="board-title"><i class="fa-solid fa-cart-shopping"></i>세일정보</h5>
                             <table class="article-content">
                                 <tbody>
-                                <tr>
+                                <tr th:each="articleForSale : ${boardListVoForSale.getArticles()}">
                                     <td class="title">
                                         <div class="title-content">
                                             <a th:href="@{/}">
-                                            <strong>국내</strong>
+                                                <strong th:each="category : ${categoryEntities}"
+                                                      th:text="${category.getName()}"
+                                                      th:if="${articleForSale.getCategoryIndex() == category.getIndex()}"></strong>
                                             </a>
-                                            <a class="content" th:href="@{/}">3레벨 미만 회원은 0시간 57분 이후 열람 가능합니다.</a>
+                                            <a class="content" th:href="@{'/bbs/' + ${articleForSale.getBoardUrlName()} + '/' + ${articleForSale.getIndex()}}" th:text="${articleForSale.getTitle()}">3레벨 미만 회원은 0시간 57분 이후 열람 가능합니다.</a>
                                         </div>
                                     </td>
                                     <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>패션국내</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">휴고보스 전쟁용 흰티 3장 2발대</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>이벤트</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">3레벨 미만 회원은 0시간 49분 이후 열람 가능합니다.</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>기타국내</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">위메프/허닭 주먹밥 1+1 1988원 1</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>국내</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">염색샴푸 모다모다 프로체인지 블랙샴푸 39,900원~</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>국내</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">롯데 과자 유통기한 임박 특가</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        <div class="title-content">
-                                            <a th:href="@{/}">
-                                                <strong>국내</strong>
-                                            </a>
-                                            <a class="content" th:href="@{/}">롯데 과자 유통기한 임박 특가</a>
-                                        </div>
-                                    </td>
-                                    <td class="time">
-                                        <span class="date">08-08</span>
+                                        <span class="date" th:text="${#dates.format(articleForSale.getWrittenAt(), 'MM-dd')}">08-08</span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -133,7 +57,9 @@
                                     <td class="title">
                                         <div class="title-content">
                                             <a th:href="@{/}">
-                                                <strong>판매</strong>
+                                                <strong th:each="category : ${categoryEntities}"
+                                                        th:text="${category.getName()}"
+                                                        th:if="${article.getCategoryIndex() == category.getIndex()}"></strong>
                                             </a>
                                             <a class="content" th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}" th:text="${article.getTitle()}"></a>
                                         </div>
@@ -160,40 +86,18 @@
                 <h5 class="board-title"><i class="fa-solid fa-cart-shopping"></i>실사후기</h5>
                 <div class="image-box">
                     <ul class="article-list">
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                        <li class="articles" th:each="articleForRealImage : ${boardListVoForRealImage.getArticles()}">
+                            <a class="content" th:href="@{'/bbs/' + ${articleForRealImage.getBoardUrlName()} + '/'+ ${articleForRealImage.getIndex()}}">
+                                <img class="tmb" th:if="${articleForRealImage.getThumbnailId() != null && articleForRealImage.getThumbnailId() != ''}"
+                                     th:src="@{'/bbs/thumbnail-id?thumbnailId=' + ${articleForRealImage.getThumbnailId()}}">
+                                <img class="tmb" alt="프로필 이미지"
+                                     th:if="${articleForRealImage.getThumbnailId() == null || articleForRealImage.getThumbnailId() == ''}"
+                                     th:src="@{/bbs/resources/images/default_image.gif}">
                             </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
-                        </li>
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
-                            </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
-                        </li>
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
-                            </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
-                        </li>
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
-                            </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
-                        </li>
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
-                            </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                            <strong class="category" th:each="category : ${categoryEntities}"
+                                    th:text="${category.getName()}"
+                                    th:if="${articleForRealImage.getCategoryIndex() == category.getIndex()}"></strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title" th:text="${articleForRealImage.getTitle()}">에어포스 로우 블랙 후기</a>
                         </li>
                     </ul>
                 </div>
@@ -203,40 +107,18 @@
                 <h5 class="board-title"><i class="fa-solid fa-camera"></i>데일리룩</h5>
                 <div class="image-box">
                     <ul class="article-list">
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
+                        <li class="articles" th:each="articleForDailyImage : ${boardListVoForDailyImage.getArticles()}">
+                            <a class="content" th:href="@{'/bbs/' + ${articleForDailyImage.getBoardUrlName()} + '/'+ ${articleForDailyImage.getIndex()}}">
+                                <img class="tmb" th:if="${articleForDailyImage.getThumbnailId() != null && articleForDailyImage.getThumbnailId() != ''}"
+                                     th:src="@{'/bbs/thumbnail-id?thumbnailId=' + ${articleForDailyImage.getThumbnailId()}}">
+                                <img class="tmb" alt="프로필 이미지"
+                                     th:if="${articleForDailyImage.getThumbnailId() == null || articleForDailyImage.getThumbnailId() == ''}"
+                                     th:src="@{/bbs/resources/images/default_image.gif}">
                             </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
-                        </li>
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
-                            </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
-                        </li>
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
-                            </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
-                        </li>
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
-                            </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
-                        </li>
-                        <li class="articles">
-                            <a th:href="@{/}"><img
-                                    src="https://eomisae.co.kr/files/thumbnails/012/475/092/177x158.crop.jpg?20220808161910">
-                            </a>
-                            <strong class="category">국내</strong>
-                            <a href="https://eomisae.co.kr/92475012" class="title">에어포스 로우 블랙 후기</a>
+                            <strong class="category" th:each="category : ${categoryEntities}"
+                                    th:text="${category.getName()}"
+                                    th:if="${articleForDailyImage.getCategoryIndex() == category.getIndex()}"></strong>
+                            <a href="https://eomisae.co.kr/92475012" class="title" th:text="${articleForDailyImage.getTitle()}">에어포스 로우 블랙 후기</a>
                         </li>
                     </ul>
                 </div>

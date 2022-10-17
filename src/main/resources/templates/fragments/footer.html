@@ -2,9 +2,12 @@
 <body>
 <footer class="footer" th:fragment="content">
     <div class="footer-container">
-        <div class="notice-container">
-            <a th:href="@{/}">공지사항</a>
-            <span>[완료]서버 하드웨어 교체 및 점검 안내 / 22.08.02 (화) 오전 08시~10시</span>
+        <div class="notice-container" th:if="${boardListVoForNo != null}">
+            <span>공지사항</span>
+            <a class="content"
+               th:each="articleForNo : ${boardListVoForNo.getArticles()[0]}"
+               th:href="@{'/bbs/' + ${articleForNo.getBoardUrlName()} + '/'+ ${articleForNo.getIndex()}}"
+               th:text="${articleForNo.getTitle()}"></a>
         </div>
         <div class="footer-menu-container">
             <ul class="footer-menu">

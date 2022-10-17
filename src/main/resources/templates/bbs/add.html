@@ -138,7 +138,7 @@
             </ul>
         </div>
     </div>
-    <form class="write-form-container" method="post">
+    <form class="write-form-container" id="form" method="post">
         <div class="form-container">
             <div class="form-head">
                 <select class="select option-category" name="categoryIndex">
@@ -157,7 +157,7 @@
                  th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('jp') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('rt') || #request.getRequestURI().contains('dr') || #request.getRequestURI().contains('ec')}">
                 <div class="product-col product-title">* 링크</div>
                 <div class="product-col product-input">
-                    <input class="input" name="url" type="text">
+                    <input class="input" name="url" type="text" maxlength="100">
                     <span class="refer-text">- 단축, 변형 URL사용을 금지합니다.</span>
                 </div>
             </div>
@@ -165,14 +165,14 @@
                  th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('dr')}">
                 <div class="product-col product-title">할인 코드</div>
                 <div class="textarea-container">
-                    <textarea name="discountCode" class="product-textarea"></textarea>
+                    <textarea name="discountCode" class="product-textarea" maxlength="50"></textarea>
                 </div>
             </div>
             <div class="product-container"
                  th:if="${#request.getRequestURI().contains('fs') || #request.getRequestURI().contains('os') || #request.getRequestURI().contains('dr')}">
                 <div class="product-col product-title">배송 정보</div>
                 <div class="textarea-container">
-                    <textarea name="shippingInfo" class="product-textarea"></textarea>
+                    <textarea name="shippingInfo" class="product-textarea" maxlength="100"></textarea>
                 </div>
             </div>
             <!--            -->
@@ -191,7 +191,7 @@
                  th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop')}">
                 <div class="product-col product-title">* 쇼핑몰</div>
                 <div class="product-col product-input">
-                    <input class="input" name="shoppingMall" type="text">
+                    <input class="input" name="shoppingMall" type="text" maxlength="50">
                     <!--                    <span class="refer-text">- 국내 구매 제품은 기타구매 게시판에 등록할 수 없습니다.</span>-->
                 </div>
             </div>
@@ -199,11 +199,7 @@
                 <div class="product-col product-title">* 연락처</div>
                 <div class="product-col product-input option-input">
                     <div class="contact-row">
-                        <select class="allow-disclosure">
-                            <option>모두 공개 허용</option>
-                            <option>승인한 회원만 공개 허용</option>
-                        </select>
-                        <input class="input" name="contact" type="tel">
+                        <input class="input" name="contact" type="tel" maxlength="12">
                     </div>
                 </div>
             </div>
@@ -211,7 +207,7 @@
                  th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || #request.getRequestURI().contains('gm') || title.equals('판매') || title.equals('구매') || title.equals('교환')}">
                 <div class="product-col product-title">* 브랜드</div>
                 <div class="product-col product-input">
-                    <input class="input" name="brand" type="text">
+                    <input class="input" name="brand" type="text" maxlength="30">
                     <!--                    <span class="refer-text">- 레벨 제한 중인 정보글을 보고 구매한 경우, 해당 글 레벨 제한이 끝난 이후에 작성해 주세요.</span>-->
                 </div>
             </div>
@@ -219,26 +215,26 @@
                  th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('gm') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || title.equals('판매') || title.equals('구매') || title.equals('교환')}">
                 <div class="product-col product-title">* 상품명</div>
                 <div class="textarea-container">
-                    <textarea class="product-textarea" name="productName"></textarea>
+                    <textarea class="product-textarea" name="productName" maxlength="500"></textarea>
                 </div>
             </div>
             <div class="product-container" th:if="${title.equals('교환')}">
                 <div class="product-col product-title">* 본인 사이즈</div>
                 <div class="textarea-container">
-                    <textarea class="product-textarea" name="mySize"></textarea>
+                    <textarea class="product-textarea" name="mySize" maxlength="20"></textarea>
                 </div>
             </div>
             <div class="product-container" th:if="${title.equals('교환')}">
                 <div class="product-col product-title">* 교환 사이즈</div>
                 <div class="textarea-container">
-                    textarea class="product-textarea" name="exchangeSize"></textarea>
+                    <textarea class="product-textarea" name="exchangeSize" maxlength="20"></textarea>
                 </div>
             </div>
             <div class="product-container"
                  th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha') || #request.getRequestURI().contains('pot') || #request.getRequestURI().contains('pop') || title.equals('판매') || title.equals('구매')}">
                 <div class="product-col product-title">* 사이즈</div>
                 <div class="textarea-container">
-                    <textarea class="product-textarea" name="productSize"></textarea>
+                    <textarea class="product-textarea" name="productSize" maxlength="20"></textarea>
                 </div>
             </div>
 
@@ -284,7 +280,7 @@
                             <option value="£">£(GBP)</option>
                             <option value="€">€(EUR)</option>
                         </select>
-                        <input class="input" name="purchaseProductPrice" type="text" onkeyup="inputNumberFormat(this)">
+                        <input class="input" name="purchaseProductPrice" type="text" maxlength="100" onkeyup="inputNumberFormat(this)">
                     </div>
                 </div>
             </div>
@@ -298,7 +294,7 @@
                             <option value="£">£(GBP)</option>
                             <option value="€">€(EUR)</option>
                         </select>
-                        <input class="input" name="saleProductPrice" type="text" onkeyup="inputNumberFormat(this)">
+                        <input class="input" name="saleProductPrice" type="text" maxlength="100" onkeyup="inputNumberFormat(this)">
                     </div>
                         <span class="refer-text">- 배송비 포함 최종 가격</span>
                 </div>
@@ -314,7 +310,7 @@
                             <option value="£">£</option>
                             <option value="€">€</option>
                         </select>
-                        <input class="input" name="productPrice" type="text" onkeyup="inputNumberFormat(this)">
+                        <input class="input" name="productPrice" type="text" maxlength="100" onkeyup="inputNumberFormat(this)">
                     </div>
                     <span class="refer-text">- 배송비 포함 최종 가격</span>
                 </div>
@@ -323,34 +319,34 @@
             <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
                 <div class="product-col product-title">아우터</div>
                 <div class="product-col product-input">
-                    <input class="input" name="outer" type="text">
+                    <input class="input" name="outer" type="text" maxlength="100">
                 </div>
             </div>
             <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
                 <div class="product-col product-title">*상의</div>
                 <div class="product-col product-input">
-                    <input class="input" name="top" type="text">
+                    <input class="input" name="top" type="text" maxlength="100">
                     <span class="refer-text">- 상/하의가 나오지 않거나 알아보기 보기 힘든 수준의 사진 등록 시 삭제 처리될 수 있습니다.</span>
                 </div>
             </div>
             <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
                 <div class="product-col product-title">*하의</div>
                 <div class="product-col product-input">
-                    <input class="input" name="bottom" type="text">
+                    <input class="input" name="bottom" type="text" maxlength="100">
                     <span class="refer-text">- 전체적인 모습이 나오지 않거나 데일리룩으로 보기 어려운 경우 이동, 삭제될 수 있습니다.</span>
                 </div>
             </div>
             <div class="product-container" th:if="${#request.getRequestURI().contains('ds') || #request.getRequestURI().contains('dl')}">
                 <div class="product-col product-title">*신발</div>
                 <div class="product-col product-input">
-                    <input class="input" name="shoes" type="text">
+                    <input class="input" name="shoes" type="text" maxlength="100">
                     <span class="refer-text">- 반드시 신발 착용 사진을 올려주세요.</span>
                 </div>
             </div>
             <div class="product-container" th:if="${#request.getRequestURI().contains('dl')}">
                 <div class="product-col product-title">액세서리</div>
                 <div class="product-col product-input">
-                    <input class="input" name="acc" type="text">
+                    <input class="input" name="acc" type="text" maxlength="100">
                 </div>
             </div>
             <div class="text-container"
@@ -383,6 +379,7 @@
             </div>
         </div>
         <textarea class="editor" name="content" id="editor"></textarea>
+        <input hidden name="thumbnailId">
         <!--        <input type="hidden" name="thumbnailId" th:value="${}">-->
         <div class="file-upload-container" id="fileUpload">
             <div class="image-upload" id="imageUploadButton"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</div>

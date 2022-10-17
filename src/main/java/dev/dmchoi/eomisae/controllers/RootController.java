@@ -6,9 +6,7 @@ import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.services.SystemService;
 import dev.dmchoi.eomisae.services.UserService;
 import dev.dmchoi.eomisae.services.bbs.BoardListService;
-import dev.dmchoi.eomisae.vos.bbs.BoardListVo;
-import dev.dmchoi.eomisae.vos.bbs.BoardListVoForEv;
-import dev.dmchoi.eomisae.vos.bbs.BoardListVoForNo;
+import dev.dmchoi.eomisae.vos.bbs.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -41,16 +39,29 @@ public class RootController extends StandardController {
     public ModelAndView getIndex(@RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
                                  ModelAndView modelAndView,
                                  BoardListVo boardListVo,
+                                 BoardListVoForSale boardListVoForSale,
                                  BoardListVoForNo boardListVoForNo,
-                                 BoardListVoForEv boardListVoForEv) {
+                                 BoardListVoForEv boardListVoForEv,
+                                 BoardListVoForRealImage boardListVoForRealImage,
+                                 BoardListVoForDailyImage boardListVoForDailyImage) {
         boardListVo.setArticles(this.boardListService.getNewArticlesForAll());
+        List<BoardListArticleDto> boardListVoForSaleList = this.boardListService.getArticleForSale();
+        boardListVoForSale.setArticles(boardListVoForSaleList);
         List<BoardListArticleDto> boardListVoForNoList = this.boardListService.getNewArticlesForNo();
         boardListVoForNo.setArticles(boardListVoForNoList);
         List<BoardListArticleDto> boardListVoForEvList = this.boardListService.getNewArticlesForEv();
         boardListVoForEv.setArticles(boardListVoForEvList);
+        List<BoardListArticleDto> boardListVoForRealImageList = this.boardListService.getArticleForRealImage();
+        boardListVoForRealImage.setArticles(boardListVoForRealImageList);
+        List<BoardListArticleDto> boardListVoForDailyImageList = this.boardListService.getArticleForDailyImage();
+        boardListVoForDailyImage.setArticles(boardListVoForDailyImageList);
         modelAndView.addObject("boardListVo", boardListVo);
+        modelAndView.addObject("boardListVoForSale", boardListVoForSale);
         modelAndView.addObject("boardListVoForNo", boardListVoForNo);
         modelAndView.addObject("boardListVoForEv", boardListVoForEv);
+        modelAndView.addObject("boardListVoForRealImage", boardListVoForRealImage);
+        modelAndView.addObject("boardListVoForDailyImage", boardListVoForDailyImage);
+        modelAndView.addObject("categoryEntities", this.boardListService.getCategories());
         modelAndView.setViewName("root/index");
         return modelAndView;
     }

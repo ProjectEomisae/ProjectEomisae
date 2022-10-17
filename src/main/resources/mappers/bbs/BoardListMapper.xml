@@ -61,7 +61,8 @@
             keyColumn="index"
             keyProperty="index"
             parameterType="dev.dmchoi.eomisae.entities.bbs.CommentReportEntity">
-        INSERT INTO `eomisae_comment`.`comment_report` (`user_index`, `article_index`, `comment_index`, `created_at`, `checked_flag`)
+        INSERT INTO `eomisae_comment`.`comment_report` (`user_index`, `article_index`, `comment_index`, `created_at`,
+                                                        `checked_flag`)
         VALUES (#{userIndex}, #{articleIndex}, #{commentIndex}, #{createdAt}, #{isChecked})
     </insert>
 
@@ -212,6 +213,7 @@
                `gender`                  AS `gender`,
                `product_status`          AS `productStatus`,
                `trade_method`            AS `tradeMethod`,
+               `thumbnail_id`            AS `thumbnailId`,
                `blind_status`            AS `blindStatus`
         FROM `eomisae_article`.`articles`
         WHERE `board_index` = #{bid}
@@ -317,14 +319,19 @@
             OR `content` LIKE CONCAT('%', #{keyword}, '%'))
     </select>
 
-    <!--    <select id="selectPageByBoardIndex"-->
-    <!--            resultType="_int">-->
-    <!--        SELECT LAG(`index`, 1, 0) OVER (ORDER BY `index` ASC)  AS `prev`,-->
-    <!--               LEAD(`index`, 1, 0) OVER (ORDER BY `index` ASC) AS `next`-->
-    <!--        FROM `eomisae_article`.`articles`-->
-    <!--        WHERE `board_index` = #{boardIndex}-->
-    <!--        ORDER BY `index`-->
-    <!--    </select>-->
+    <select id="selectPageByBoardIndex"
+            resultType="dev.dmchoi.eomisae.vos.bbs.ArticleReadVo">
+        SELECT *
+        FROM (SELECT `index`                                         AS `index`,
+                     LAG(`index`, 1, 0) OVER (ORDER BY `index` ASC)  AS `prev`,
+                     LEAD(`index`, 1, 0) OVER (ORDER BY `index` ASC) AS `next`
+              FROM `eomisae_article`.`articles`
+              WHERE `board_index` = #{boardIndex}
+              ORDER BY `index`) AS `num`
+        WHERE `index` = #{aid}
+    </select>
+    <!--    - LAG(num, 1, 0 ) : 이전 row값, num값보다 1 이전 값을 얻어옴. null일 경우 0 얻어온다.-->
+    <!--    - LEAD(num, 1, 0) : 다음 row값, 해당 값보다 1 다음 값을 얻어옴. null일 경우 0 얻어온다.-->
 
     <select id="selectCategories"
             resultType="dev.dmchoi.eomisae.entities.bbs.CategoryEntity">
@@ -333,6 +340,38 @@
                `board_index` AS `boardIndex`
         FROM `eomisae_article`.`categories`
         ORDER BY `index`
+    </select>
+
+    <select id="selectGenders"
+            resultType="dev.dmchoi.eomisae.entities.bbs.GenderEntity">
+        SELECT `value` AS `value`,
+               `text`  AS `text`
+        FROM `eomisae_article`.`gender`
+        ORDER BY `value`
+    </select>
+
+    <select id="selectProductStatuses"
+            resultType="dev.dmchoi.eomisae.entities.bbs.ProductStatusEntity">
+        SELECT `value` AS `value`,
+               `text`  AS `text`
+        FROM `eomisae_article`.`product_status`
+        ORDER BY `value`
+    </select>
+
+    <select id="selectTradeMethods"
+            resultType="dev.dmchoi.eomisae.entities.bbs.TradeMethodEntity">
+        SELECT `value` AS `value`,
+               `text`  AS `text`
+        FROM `eomisae_article`.`trade_method`
+        ORDER BY `value`
+    </select>
+
+    <select id="selectCurrencies"
+            resultType="dev.dmchoi.eomisae.entities.bbs.CurrencyEntity">
+        SELECT `value` AS `value`,
+               `text`  AS `text`
+        FROM `eomisae_article`.`currency`
+        ORDER BY `value`
     </select>
 
     <select id="getCountByTitleContentAll"
@@ -559,10 +598,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -612,10 +653,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -625,6 +668,180 @@
         GROUP BY `article`.`index`
         ORDER BY `article`.`index` DESC
         LIMIT 6
+    </select>
+
+    <select id="selectArticlesForSale"
+            resultType="dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto">
+        SELECT `article`.`index`                   AS `index`,
+               `article`.`user_index`              AS `userIndex`,
+               `article`.`board_index`             AS `boardIndex`,
+               `article`.`board_urlName`           AS `boardUrlName`,
+               `article`.`written_at`              AS `writtenAt`,
+               `article`.`title`                   AS `title`,
+               `article`.`tag`                     AS `tag`,
+               `article`.`url`                     AS `url`,
+               `article`.`discount_code`           AS `discountCode`,
+               `article`.`shipping_info`           AS `shippingInfo`,
+               `article`.`order_date`              AS `orderDate`,
+               `article`.`shopping_mall`           AS `shoppingMall`,
+               `article`.`contact`                 AS `contact`,
+               `article`.`brand`                   AS `brand`,
+               `article`.`product_name`            AS `productName`,
+               `article`.`product_size`            AS `productSize`,
+               `article`.`my_size`                 AS `mySize`,
+               `article`.`exchange_size`           AS `exchangeSize`,
+               `article`.`currency_for_product`    AS `currencyForProduct`,
+               `article`.`product_price`           AS `productPrice`,
+               `article`.`currency_for_purchasing` AS `currencyForPurchasing`,
+               `article`.`purchase_product_price`  AS `purchaseProductPrice`,
+               `article`.`currency_for_sailing`    AS `currencyForSailing`,
+               `article`.`sale_product_price`      AS `saleProductPrice`,
+               `article`.`outer`                   AS `outer`,
+               `article`.`top`                     AS `top`,
+               `article`.`bottom`                  AS `bottom`,
+               `article`.`shoes`                   AS `shoes`,
+               `article`.`acc`                     AS `acc`,
+               `article`.`content`                 AS `content`,
+               `article`.`view`                    AS `view`,
+               `article`.`like`                    AS `like`,
+               `article`.`buy`                     AS `buy`,
+               `article`.`category_index`          AS `categoryIndex`,
+               `article`.`gender`                  AS `gender`,
+               `article`.`product_status`          AS `productStatus`,
+               `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
+               `article`.`blind_status`            AS `blindStatus`,
+               `user`.`nickname`                   AS `userNickname`,
+               `user`.`level`                      AS `level`,
+               `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
+               COUNT(`comment`.`index`)            AS `commentCount`
+        FROM `eomisae_article`.`articles` AS `article`
+                 LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
+                 LEFT JOIN `eomisae_comment`.`comments` AS `comment` ON article.`index` = comment.article_index
+                 LEFT JOIN `eomisae_article`.`categories` AS `category` ON article.category_index = category.`index`
+                 LEFT JOIN `eomisae_board`.`boards` AS `board` ON `article`.`board_urlName` = `board`.`urlName`
+        WHERE article.`board_index` > 0
+          AND article.`board_index` <![CDATA[ < ]]> 6
+        GROUP BY `article`.`index`
+        ORDER BY `article`.`index` DESC
+        LIMIT 6
+    </select>
+
+    <select id="selectArticlesForRealImage"
+            resultType="dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto">
+        SELECT `article`.`index`                   AS `index`,
+               `article`.`user_index`              AS `userIndex`,
+               `article`.`board_index`             AS `boardIndex`,
+               `article`.`board_urlName`           AS `boardUrlName`,
+               `article`.`written_at`              AS `writtenAt`,
+               `article`.`title`                   AS `title`,
+               `article`.`tag`                     AS `tag`,
+               `article`.`url`                     AS `url`,
+               `article`.`discount_code`           AS `discountCode`,
+               `article`.`shipping_info`           AS `shippingInfo`,
+               `article`.`order_date`              AS `orderDate`,
+               `article`.`shopping_mall`           AS `shoppingMall`,
+               `article`.`contact`                 AS `contact`,
+               `article`.`brand`                   AS `brand`,
+               `article`.`product_name`            AS `productName`,
+               `article`.`product_size`            AS `productSize`,
+               `article`.`my_size`                 AS `mySize`,
+               `article`.`exchange_size`           AS `exchangeSize`,
+               `article`.`currency_for_product`    AS `currencyForProduct`,
+               `article`.`product_price`           AS `productPrice`,
+               `article`.`currency_for_purchasing` AS `currencyForPurchasing`,
+               `article`.`purchase_product_price`  AS `purchaseProductPrice`,
+               `article`.`currency_for_sailing`    AS `currencyForSailing`,
+               `article`.`sale_product_price`      AS `saleProductPrice`,
+               `article`.`outer`                   AS `outer`,
+               `article`.`top`                     AS `top`,
+               `article`.`bottom`                  AS `bottom`,
+               `article`.`shoes`                   AS `shoes`,
+               `article`.`acc`                     AS `acc`,
+               `article`.`content`                 AS `content`,
+               `article`.`view`                    AS `view`,
+               `article`.`like`                    AS `like`,
+               `article`.`buy`                     AS `buy`,
+               `article`.`category_index`          AS `categoryIndex`,
+               `article`.`gender`                  AS `gender`,
+               `article`.`product_status`          AS `productStatus`,
+               `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
+               `article`.`blind_status`            AS `blindStatus`,
+               `user`.`nickname`                   AS `userNickname`,
+               `user`.`level`                      AS `level`,
+               `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
+               COUNT(`comment`.`index`)            AS `commentCount`
+        FROM `eomisae_article`.`articles` AS `article`
+                 LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
+                 LEFT JOIN `eomisae_comment`.`comments` AS `comment` ON article.`index` = comment.article_index
+                 LEFT JOIN `eomisae_article`.`categories` AS `category` ON article.category_index = category.`index`
+                 LEFT JOIN `eomisae_board`.`boards` AS `board` ON `article`.`board_urlName` = `board`.`urlName`
+        WHERE article.`board_index` > 14
+          AND article.`board_index` <![CDATA[ < ]]> 18
+        GROUP BY `article`.`index`
+        ORDER BY `article`.`index` DESC
+        LIMIT 4
+    </select>
+
+    <select id="selectArticlesForDailyImage"
+            resultType="dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto">
+        SELECT `article`.`index`                   AS `index`,
+               `article`.`user_index`              AS `userIndex`,
+               `article`.`board_index`             AS `boardIndex`,
+               `article`.`board_urlName`           AS `boardUrlName`,
+               `article`.`written_at`              AS `writtenAt`,
+               `article`.`title`                   AS `title`,
+               `article`.`tag`                     AS `tag`,
+               `article`.`url`                     AS `url`,
+               `article`.`discount_code`           AS `discountCode`,
+               `article`.`shipping_info`           AS `shippingInfo`,
+               `article`.`order_date`              AS `orderDate`,
+               `article`.`shopping_mall`           AS `shoppingMall`,
+               `article`.`contact`                 AS `contact`,
+               `article`.`brand`                   AS `brand`,
+               `article`.`product_name`            AS `productName`,
+               `article`.`product_size`            AS `productSize`,
+               `article`.`my_size`                 AS `mySize`,
+               `article`.`exchange_size`           AS `exchangeSize`,
+               `article`.`currency_for_product`    AS `currencyForProduct`,
+               `article`.`product_price`           AS `productPrice`,
+               `article`.`currency_for_purchasing` AS `currencyForPurchasing`,
+               `article`.`purchase_product_price`  AS `purchaseProductPrice`,
+               `article`.`currency_for_sailing`    AS `currencyForSailing`,
+               `article`.`sale_product_price`      AS `saleProductPrice`,
+               `article`.`outer`                   AS `outer`,
+               `article`.`top`                     AS `top`,
+               `article`.`bottom`                  AS `bottom`,
+               `article`.`shoes`                   AS `shoes`,
+               `article`.`acc`                     AS `acc`,
+               `article`.`content`                 AS `content`,
+               `article`.`view`                    AS `view`,
+               `article`.`like`                    AS `like`,
+               `article`.`buy`                     AS `buy`,
+               `article`.`category_index`          AS `categoryIndex`,
+               `article`.`gender`                  AS `gender`,
+               `article`.`product_status`          AS `productStatus`,
+               `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
+               `article`.`blind_status`            AS `blindStatus`,
+               `user`.`nickname`                   AS `userNickname`,
+               `user`.`level`                      AS `level`,
+               `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
+               COUNT(`comment`.`index`)            AS `commentCount`
+        FROM `eomisae_article`.`articles` AS `article`
+                 LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
+                 LEFT JOIN `eomisae_comment`.`comments` AS `comment` ON article.`index` = comment.article_index
+                 LEFT JOIN `eomisae_article`.`categories` AS `category` ON article.category_index = category.`index`
+                 LEFT JOIN `eomisae_board`.`boards` AS `board` ON `article`.`board_urlName` = `board`.`urlName`
+        WHERE article.`board_index` > 17
+          AND article.`board_index` <![CDATA[ < ]]> 20
+        GROUP BY `article`.`index`
+        ORDER BY `article`.`index` DESC
+        LIMIT 4
     </select>
 
     <select id="selectArticlesForNo"
@@ -666,10 +883,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -720,10 +939,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -775,10 +996,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -830,10 +1053,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -886,10 +1111,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -941,10 +1168,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -996,10 +1225,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1050,10 +1281,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1106,10 +1339,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1163,10 +1398,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1220,10 +1457,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1278,10 +1517,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1333,10 +1574,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1387,11 +1630,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
-
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1443,10 +1687,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1498,10 +1744,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1553,10 +1801,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1609,10 +1859,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1664,11 +1916,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
-
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1721,10 +1974,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1777,10 +2032,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1876,10 +2133,12 @@
                `article`.`like`           AS `like`,
                `article`.`buy`            AS `buy`,
                `article`.`category_index` AS `categoryIndex`,
+               `article`.`thumbnail_id`   AS `thumbnailId`,
                `article`.`blind_status`   AS `blindStatus`,
                `user`.`nickname`          AS `userNickname`,
                `user`.`level`             AS `level`,
                `user`.`point`             AS `point`,
+               `user`.`profile_id`        AS `profileId`,
                COUNT(`comment`.`index`)   AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1932,10 +2191,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -1987,10 +2248,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2043,10 +2306,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2099,10 +2364,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2155,10 +2422,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2212,10 +2481,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2268,10 +2539,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2325,10 +2598,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2382,10 +2657,12 @@
                `article`.`gender`                  AS `gender`,
                `article`.`product_status`          AS `productStatus`,
                `article`.`trade_method`            AS `tradeMethod`,
+               `article`.`thumbnail_id`            AS `thumbnailId`,
                `article`.`blind_status`            AS `blindStatus`,
                `user`.`nickname`                   AS `userNickname`,
                `user`.`level`                      AS `level`,
                `user`.`point`                      AS `point`,
+               `user`.`profile_id`                 AS `profileId`,
                COUNT(`comment`.`index`)            AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2439,10 +2716,12 @@
         `article`.`gender` AS `gender`,
         `article`.`product_status` AS `productStatus`,
         `article`.`trade_method` AS `tradeMethod`,
+        `article`.`thumbnail_id` AS `thumbnailId`,
         `article`.`blind_status` AS `blindStatus`,
         `user`.`nickname` AS `userNickname`,
         `user`.`level` AS `level`,
         `user`.`point` AS `point`,
+        `user`.`profile_id` AS `profileId`,
         COUNT(`comment`.`index`) AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
         LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2511,10 +2790,12 @@
         `article`.`gender` AS `gender`,
         `article`.`product_status` AS `productStatus`,
         `article`.`trade_method` AS `tradeMethod`,
+        `article`.`thumbnail_id` AS `thumbnailId`,
         `article`.`blind_status` AS `blindStatus`,
         `user`.`nickname` AS `userNickname`,
         `user`.`level` AS `level`,
         `user`.`point` AS `point`,
+        `user`.`profile_id` AS `profileId`,
         COUNT(`comment`.`index`) AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
         LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2582,11 +2863,12 @@
         `article`.`gender` AS `gender`,
         `article`.`product_status` AS `productStatus`,
         `article`.`trade_method` AS `tradeMethod`,
+        `article`.`thumbnail_id` AS `thumbnailId`,
         `article`.`blind_status` AS `blindStatus`,
         `user`.`nickname` AS `userNickname`,
         `user`.`level` AS `level`,
         `user`.`point` AS `point`,
-
+        `user`.`profile_id` AS `profileId`,
         COUNT(`comment`.`index`) AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
         LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2655,10 +2937,12 @@
         `article`.`gender` AS `gender`,
         `article`.`product_status` AS `productStatus`,
         `article`.`trade_method` AS `tradeMethod`,
+        `article`.`thumbnail_id` AS `thumbnailId`,
         `article`.`blind_status` AS `blindStatus`,
         `user`.`nickname` AS `userNickname`,
         `user`.`level` AS `level`,
         `user`.`point` AS `point`,
+        `user`.`profile_id` AS `profileId`,
         COUNT(`comment`.`index`) AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
         LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
@@ -2727,10 +3011,12 @@
         `article`.`gender` AS `gender`,
         `article`.`product_status` AS `productStatus`,
         `article`.`trade_method` AS `tradeMethod`,
+        `article`.`thumbnail_id` AS `thumbnailId`,
         `article`.`blind_status` AS `blindStatus`,
         `user`.`nickname` AS `userNickname`,
         `user`.`level` AS `level`,
         `user`.`point` AS `point`,
+        `user`.`profile_id` AS `profileId`,
         COUNT(`comment`.`index`) AS `commentCount`
         FROM `eomisae_article`.`articles` AS `article`
         LEFT JOIN `eomisae_member`.`users` AS `user` ON article.user_index = user.`index`
