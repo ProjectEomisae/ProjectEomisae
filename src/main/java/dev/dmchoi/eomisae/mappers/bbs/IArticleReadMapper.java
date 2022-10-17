@@ -22,8 +22,13 @@ public interface IArticleReadMapper {
     CommentEntity selectArticleCommentByIndex(
             @Param(value = "index") int index);
 
-    List<ArticleReadCommentDto> selectCommentsForArticleRead(
+    int selectCommentsCountForArticleRead(
             @Param(value = "aid") int aid);
+
+    List<ArticleReadCommentDto> selectCommentsForArticleRead(
+            @Param(value = "aid") int aid,
+            @Param(value = "count") int count,
+            @Param(value = "offset") int offset);
 
     int insertImage(ImageEntity imageEntity);
 

@@ -10,15 +10,7 @@
     <link th:href="@{/bbs/resources/stylesheets/add.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/index.css}" rel="stylesheet">
     <link th:href="@{/resources/stylesheets/common.css}" rel="stylesheet">
-    <script th:if="${commentReadVo != null && commentReadVo.getResult() == T(dev.dmchoi.eomisae.enums.bbs.CommentReadResult).NOT_FOUND}">
-        alert('존재하지 않는 댓글입니다.');
-        window.history.back();
-    </script>
-    <script th:if="${commentModifyVo != null && commentModifyVo.getResult() == T(dev.dmchoi.eomisae.enums.bbs.CommentModifyResult).SUCCESS}">
-        alert('댓글이 성공적으로 작성되었습니다.');
-        window.history.back();
-    </script>
-    <script th:if="${#request.getAttribute('user').getIndex() != commentReadVo.getUserIndex()}">
+    <script th:if="${#request.getAttribute('user').getIndex() != articleCommentWriteVo.getUserIndex()}">
         alert('작성할 수 있는 권한이 없습니다.');
         window.history.back();
     </script>
@@ -34,6 +26,7 @@
     <div class="nav-container">
         <div class="nav-menu">
             <ul class="list" th:if="${boardListVo.getId().equals('쇼핑정보')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '커뮤니티')}">-->
                 <li class="link" th:classappend="${#request.getRequestURI().contains('fs')} ? 'selected'">
                     <a th:href="@{/bbs/fs}">인기정보</a>
                 </li>
@@ -51,6 +44,7 @@
                 </li>
             </ul>
             <ul class="list" th:if="${boardListVo.getId().equals('커뮤니티')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '커뮤니티')}">-->
                 <li class="link" th:classappend="${#request.getRequestURI().contains('fe')} ? 'selected'">
                     <a th:href="@{/bbs/fe}">자유게시판</a>
                 </li>
@@ -71,6 +65,7 @@
                 </li>
             </ul>
             <ul class="list" th:if="${boardListVo.getId().equals('구매인증')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
                 <li class="link" th:classappend="${#request.getRequestURI().contains('gl')} ? 'selected'">
                     <a th:href="@{/bbs/gl}">패션구매</a>
                 </li>
@@ -79,6 +74,7 @@
                 </li>
             </ul>
             <ul class="list" th:if="${boardListVo.getId().equals('실사후기')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
                 <li class="link" th:classappend="${#request.getRequestURI().contains('pot')} ? 'selected'">
                     <a th:href="@{/bbs/pot}">패션후기</a>
                 </li>
@@ -90,6 +86,7 @@
                 </li>
             </ul>
             <ul class="list" th:if="${boardListVo.getId().equals('데일리룩')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
                 <li class="link" th:classappend="${#request.getRequestURI().contains('dl')} ? 'selected'">
                     <a th:href="@{/bbs/dl}">데일리룩</a>
                 </li>
@@ -98,6 +95,7 @@
                 </li>
             </ul>
             <ul class="list" th:if="${boardListVo.getId().equals('플리마켓')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
                 <li class="link" th:classappend="${title.equals('판매')} ? 'selected'">
                     <a th:href="@{/bbs/jo}">판매</a>
                 </li>
@@ -109,6 +107,7 @@
                 </li>
             </ul>
             <ul class="list" th:if="${boardListVo.getId().equals('운영관리')}">
+                <!--            <ul class="list" th:if="${#strings.equals(boardListVo.getId(), '운영관리')}">-->
                 <li class="link" th:classappend="${#request.getRequestURI().contains('no')} ? 'selected'">
                     <a th:href="@{/bbs/no}">공지사항</a>
                 </li>
@@ -122,7 +121,7 @@
         </div>
     </div>
     <form class="write-form-container" method="post">
-        <textarea class="editor" name="content" id="editor" maxlength="1000" th:text="${commentReadVo.getContent()}"></textarea>
+        <textarea class="editor" name="content" id="editor" maxlength="1000"></textarea>
         <div class="file-upload-container" id="fileUpload">
             <div class="image-upload" id="imageUploadButton"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</div>
             <span class="file-size-limit">파일 크기 제한 : 10.00MB (허용 확장자 : *.jpeg;*.jpg;*.png;*.gif;)</span>
@@ -147,9 +146,8 @@
                        onclick="if (confirm('정말로 돌아갈까요? 작성하신 정보가 모두 유실됩니다.')) {window.history.back();}">
             </div>
             <input type="hidden" name="boardIndex" th:value="${boardListVo.getIndex()}">
-            <input type="hidden" name="articleIndex" th:value="${commentReadVo.getArticleIndex()}">
-            <input type="hidden" name="commentIndex" th:value="${commentReadVo.getIndex()}">
-            <input class="button-input submit-button" type="submit" value="댓글 수정하기">
+            <input type="hidden" name="articleIndex" th:value="${articleCommentWriteVo.getArticleIndex()}">
+            <input class="button-input submit-button" type="submit" value="댓글 작성하기">
         </div>
     </form>
 </main>

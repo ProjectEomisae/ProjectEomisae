@@ -4,6 +4,7 @@ import dev.dmchoi.eomisae.interfaces.IEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class ArticleEntity implements IEntity<ArticleEntity> {
     public static ArticleEntity build() {
@@ -48,6 +49,7 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
     private String gender;
     private String productStatus;
     private String tradeMethod;
+    private String thumbnailId;
     private int blindStatus;
 
     public int getIndex() {
@@ -383,6 +385,15 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
         return this;
     }
 
+    public String getThumbnailId() {
+        return thumbnailId;
+    }
+
+    public ArticleEntity setThumbnailId(String thumbnailId) {
+        this.thumbnailId = thumbnailId;
+        return this;
+    }
+
     public int getBlindStatus() {
         return blindStatus;
     }
@@ -432,6 +443,7 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
         articleEntity.gender = this.gender;
         articleEntity.productStatus = this.productStatus;
         articleEntity.tradeMethod = this.tradeMethod;
+        articleEntity.thumbnailId = this.thumbnailId;
         articleEntity.blindStatus = this.blindStatus;
         return articleEntity;
     }
@@ -475,6 +487,7 @@ public class ArticleEntity implements IEntity<ArticleEntity> {
         this.gender = articleEntity.gender;
         this.productStatus = articleEntity.productStatus;
         this.tradeMethod = articleEntity.tradeMethod;
+        this.thumbnailId = articleEntity.thumbnailId;
         this.blindStatus = articleEntity.blindStatus;
     }
 }

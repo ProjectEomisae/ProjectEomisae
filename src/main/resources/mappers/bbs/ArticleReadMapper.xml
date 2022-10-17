@@ -35,13 +35,14 @@
                                                   `currency_for_sailing`, `sale_product_price`, `outer`, `top`,
                                                   `bottom`, `shoes`, `acc`, `content`, `view`, `like`, `buy`,
                                                   `category_index`, `gender`, `product_status`, `trade_method`,
+                                                  `thumbnail_id`,
                                                   `blind_status`)
         VALUES (#{userIndex}, #{boardIndex}, #{boardUrlName}, #{writtenAt}, #{title}, #{tag}, #{url}, #{discountCode},
                 #{shippingInfo}, #{orderDate}, #{shoppingMall}, #{contact}, #{brand}, #{productName}, #{productSize},
                 #{mySize}, #{exchangeSize}, #{currencyForProduct}, #{productPrice}, #{currencyForPurchasing},
                 #{purchaseProductPrice}, #{currencyForSailing}, #{saleProductPrice}, #{outer}, #{top}, #{bottom},
                 #{shoes}, #{acc}, #{content}, #{view}, #{like}, #{buy}, #{categoryIndex}, #{gender}, #{productStatus},
-                #{tradeMethod}, #{blindStatus})
+                #{tradeMethod}, #{thumbnailId}, #{blindStatus})
     </insert>
 
     <insert id="insertComment"
@@ -118,6 +119,7 @@
                `gender`                  AS `gender`,
                `product_status`          AS `productStatus`,
                `trade_method`            AS `tradeMethod`,
+               `thumbnail_id`            AS `thumbnailId`,
                `blind_status`            AS `blindStatus`
         FROM `eomisae_article`.`articles`
         WHERE `index` = #{index}
@@ -142,6 +144,15 @@
         LIMIT 1
     </select>
 
+    <select id="selectCommentsCountForArticleRead"
+            resultType="_int">
+        SELECT COUNT(0)
+        FROM `eomisae_comment`.`comments` AS `comment`
+                 LEFT JOIN `eomisae_member`.`users` AS `user` ON `comment`.`user_index` = `user`.`index`
+        WHERE `comment`.`article_index` = ${aid}
+        ORDER BY `comment`.`index`
+    </select>
+
     <select id="selectCommentsForArticleRead"
             resultType="dev.dmchoi.eomisae.dtos.bbs.ArticleReadCommentDto">
         SELECT `comment`.`index`             AS `index`,
@@ -160,6 +171,7 @@
                  LEFT JOIN `eomisae_member`.`users` AS `user` ON `comment`.`user_index` = `user`.`index`
         WHERE `comment`.`article_index` = ${aid}
         ORDER BY `comment`.`index`
+        LIMIT #{count} OFFSET #{offset}
     </select>
 
     <update id="updateArticle"
@@ -202,6 +214,7 @@
             `gender`                  = #{gender},
             `product_status`          = #{productStatus},
             `trade_method`            = #{tradeMethod},
+            `thumbnail_id`            = #{thumbnailId},
             `blind_status`            = #{blindStatus}
         WHERE `index` = #{index}
         LIMIT 1

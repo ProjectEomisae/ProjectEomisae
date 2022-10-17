@@ -56,17 +56,20 @@
                             </a>
                             <ul class="align-list">
                                 <li class="list">
-                                    <a class="link" th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${1})}">
+                                    <a class="link"
+                                       th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${1})}">
                                         최신순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${3})}">
+                                    <a class="link"
+                                       th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${3})}">
                                         추천순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${4})}">
+                                    <a class="link"
+                                       th:href="@{${aid} (criteria = ${criteria}, keyword = ${keyword}, alignment=${4})}">
                                         댓글순
                                     </a>
                                 </li>
@@ -140,7 +143,9 @@
                                                     (91.6%)</a>
                                             </li>
                                             <li class="list">
-                                                <a class="link my-page" th:href="@{/user/my-page/memberOwnDocument}" th:classappend="${#request.getAttribute('user') != null && comment.getUserIndex() == #request.getAttribute('user').getIndex()} ? 'on'">활동 내역 보기</a>
+                                                <a class="link my-page" th:href="@{/user/my-page/memberOwnDocument}"
+                                                   th:classappend="${#request.getAttribute('user') != null && comment.getUserIndex() == #request.getAttribute('user').getIndex()} ? 'on'">활동
+                                                    내역 보기</a>
                                             </li>
                                             <li class="list">
                                                 <a class="link" th:href="@{/}">쪽지 보내기</a>
@@ -197,6 +202,10 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        <a class="exit" onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')"
+                                           th:href="@{'./' + ${boardListVo.getUrlName()} + '/' +  ${recomment.getIndex()} + '/comment-delete'}">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </a>
                                     </div>
                                     <div class="down">
                                         <div class="content" th:text="${recomment.getContent()}"
@@ -222,14 +231,16 @@
                             <form class="comment-form" method="post">
                                 <label>
                                     <span hidden>댓글</span>
-                                    <input placeholder="이곳에 댓글을 입력하세요" type="text" maxlength="100" name="content"
+                                    <input class="comment-input" placeholder="이곳에 댓글을 입력하세요" type="text" maxlength="100"
+                                           name="content"
                                            th:if="${#request.getAttribute('user') != null}">
                                     <input hidden name="parentIndex" th:value="${comment.getIndex()}">
                                     <input hidden name="depth" th:value=1>
                                     <input hidden name="parentUserIndex"
                                            th:value="${comment.getUserIndex()}">
                                 </label>
-                                <button type="submit">
+                                <button class="submit-button" type="submit"
+                                        th:classappend="${#request.getAttribute('user') != null} ? 'on'">
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                                 <div class="menu-box">

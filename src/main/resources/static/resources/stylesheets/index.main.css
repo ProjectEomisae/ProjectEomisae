@@ -255,9 +255,6 @@
 }
 
 #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box {
-    width: 25.625rem;
-    height: 21.25rem;
-    overflow: hidden;
     padding: 0.625rem 0.625rem 1.25rem 0.625rem;
 }
 
@@ -274,19 +271,18 @@
 
 #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box > .article-list > .articles {
     width: 11.0625rem;
+    height: 9.875rem;
     margin-right: 1.75rem;
-    margin-bottom: 1.5rem;
-}
-
-#main > .main-container > .main-section > .middle-container > .real-image-container > .image-box > .article-list > .articles > a {
-    width: 11.0625rem;
-    height: 9.875rem
+    margin-bottom: 3.5rem;
 }
 
 #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box > .article-list > .articles > a img {
     width: 100%;
+    height: 100%;
     display: block;
     position: relative;
+    object-fit: cover;
+    object-position: center;
 }
 
 #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box > .article-list > .articles > .category {
@@ -346,9 +342,6 @@
 }
 
 #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box {
-    width: 25.625rem;
-    height: 21.25rem;
-    overflow: hidden;
     padding: 0.625rem 0.625rem 1.25rem 0.625rem;
 }
 
@@ -366,19 +359,18 @@
 
 #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box > .article-list > .articles {
     width: 11.0625rem;
-    margin-right: 1.75rem;
-    margin-bottom: 1.5rem;
-}
-
-#main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box > .article-list > .articles > a {
-    width: 11.0625rem;
     height: 9.875rem;
+    margin-right: 1.75rem;
+    margin-bottom: 3.5rem;
 }
 
 #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box > .article-list > .articles > a img {
     width: 100%;
+    height: 100%;
     display: block;
     position: relative;
+    object-fit: cover;
+    object-position: center;
 }
 
 #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box > .article-list > .articles > .category {

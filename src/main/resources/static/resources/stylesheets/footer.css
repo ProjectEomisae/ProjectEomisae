@@ -19,15 +19,19 @@ body > .footer > .footer-container > .notice-container {
     padding-bottom: 1rem;
 }
 
-body > .footer > .footer-container > .notice-container > a {
+body > .footer > .footer-container > .notice-container > span {
     color: rgb(var(--color-white));
     font-weight: 600;
 }
 
-body > .footer > .footer-container > .notice-container > span {
+body > .footer > .footer-container > .notice-container > a {
     color:  rgba(var(--color-white), 65%);
     font-weight: 400;
     margin-left: 1rem;
+}
+
+body > .footer > .footer-container > .notice-container > a:hover {
+    text-decoration: underline;
 }
 
 body > .footer > .footer-container  > .footer-menu-container > .footer-menu {

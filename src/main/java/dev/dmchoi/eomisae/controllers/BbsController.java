@@ -1,13 +1,10 @@
 package dev.dmchoi.eomisae.controllers;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import dev.dmchoi.eomisae.dtos.bbs.ArticleReadCommentDto;
 import dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto;
 import dev.dmchoi.eomisae.dtos.bbs.BoardReadCommentDto;
 import dev.dmchoi.eomisae.entities.bbs.*;
+import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
-import dev.dmchoi.eomisae.enums.bbs.ArticleWriteResult;
-import dev.dmchoi.eomisae.enums.bbs.BoardListResult;
 import dev.dmchoi.eomisae.models.PagingModel;
 import dev.dmchoi.eomisae.services.bbs.ArticleReadService;
 import dev.dmchoi.eomisae.services.bbs.BoardListService;
@@ -25,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -96,15 +92,11 @@ public class BbsController {
 //                System.out.println("cri가 null일 때 : " + boardListVo.getArticles().size());
             }
             if (urlName.contains("ui")) {
-                this.boardListService.readComment(boardListVo, paging);
+                this.boardListService.readJoinComment(boardListVo, paging);
             }
 
         } else {
             this.boardListService.listBoardByCriteria(boardListVo, paging, criteria, keyword);
-            System.out.println(boardListVo.getUrlName());
-            System.out.println(paging.totalRowCount);
-            System.out.println(criteria);
-            System.out.println(keyword);
             if (urlName.contains("al")) {
                 this.boardListService.listBoardAllByCriteria(boardListVo, paging, criteria, keyword);
 //                System.out.println("cri가 null이 아닐 때 : " + boardListVo.getArticles().size());
@@ -187,6 +179,7 @@ public class BbsController {
                                            ArticleReadVo articleReadVo,
                                            BoardListVo boardListVo,
                                            @RequestParam(name = "page") Optional<Integer> optionalPage,
+                                           @RequestParam(name = "commentPage") Optional<Integer> optionalCommentPage,
                                            @RequestParam(name = "criteria", required = false) String criteria,
                                            @RequestParam(name = "keyword", required = false) String keyword,
                                            @RequestParam(name = "category", required = false) Optional<Integer> optionalCategory,
@@ -199,14 +192,12 @@ public class BbsController {
             articleView.setArticleIndex(aid);
             this.boardListService.addArticleView(boardListVo, articleView);
         }
-        if (user == null) {
-
-        }
 
         int alignment = optionalAlignment.orElse(0);
         int category = optionalCategory.orElse(0);
 //        System.out.println("category 값 : " + category);
         int page = optionalPage.orElse(1);
+        int commentPage = optionalCommentPage.orElse(1);
         int totalRowCount;
         boardListVo.setUrlName(urlName);
         boardListVo.setResult(null);
@@ -277,12 +268,17 @@ public class BbsController {
         boardListVoForFavorite.setArticles(boardListVoForFavoriteList);
         articleReadVo.setResult(null);
         articleReadVo.setIndex(aid);
-        this.articleReadService.readArticle(articleReadVo);
+        PagingModel commentPaging = new PagingModel(this.articleReadService.getCommentsCountForArticleRead(articleReadVo), commentPage);
+        this.articleReadService.readArticle(articleReadVo, commentPaging);
+//        System.out.println("commentPaging.totalRowCount : " + commentPaging.totalRowCount);
+//        System.out.println("commentPaging.rowCountPerPage : " + commentPaging.rowCountPerPage);
+//        System.out.println("commentPaging.requestPage : " + commentPaging.requestPage );
 //        System.out.println(articleReadVo.getComments().size());
 //        System.out.println(articleReadVo.getUserNickname());
         modelAndView.addObject("articleReadVo", articleReadVo);
         modelAndView.addObject("title", boardListVo.getName());
         modelAndView.addObject("paging", paging);
+        modelAndView.addObject("commentPaging", commentPaging);
         modelAndView.addObject("boardListVo", boardListVo);
         modelAndView.addObject("boardListVoForNo", boardListVoForNo);
         modelAndView.addObject("boardListVoForFavorite", boardListVoForFavorite);
@@ -326,6 +322,70 @@ public class BbsController {
         articleCommentWriteVo.setWrittenAt(new Date());
         articleCommentWriteVo.setResult(null);
         articleCommentWriteVo.setDeleted(false);
+        this.articleReadService.writeComment(urlName, user, articleCommentWriteVo);
+        modelAndView.setViewName("redirect:/bbs/" + urlName + '/' + aid);
+        return modelAndView;
+    }
+
+    //check
+    @RequestMapping(value = "{urlName}/{aid}/add", method = RequestMethod.GET)
+    public ModelAndView getCommentWriteByEditor(ModelAndView modelAndView,
+                                                @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                                @PathVariable(value = "urlName", required = true) String urlName,
+                                                @PathVariable(value = "aid", required = true) int aid,
+                                                ArticleCommentWriteVo articleCommentWriteVo,
+                                                BoardListVo boardListVo,
+                                                HttpServletResponse response) {
+        if (user == null) {
+            response.setStatus(404);
+            return null;
+        }
+        articleCommentWriteVo.setUserIndex(user.getIndex());
+        articleCommentWriteVo.setArticleIndex(aid);
+        articleCommentWriteVo.setResult(null);
+        articleCommentWriteVo.setDeleted(false);
+        boardListVo.setUrlName(urlName);
+        boardListVo.setResult(null);
+
+        BoardEntity boardEntity = this.boardListService.boardByUrlName(boardListVo);
+        boardListVo.setName(boardEntity.getName());
+        boardListVo.setId(boardEntity.getId());
+        boardListVo.setIndex(boardEntity.getIndex());
+        boardListVo.setCommentLevel(boardEntity.getCommentLevel());
+
+        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
+        modelAndView.addObject("title", boardListVo.getName());
+        modelAndView.addObject("boardListVo", boardListVo);
+        modelAndView.addObject("articleCommentWriteVo", articleCommentWriteVo);
+        modelAndView.setViewName("bbs/commentAdd");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "{urlName}/{aid}/add", method = RequestMethod.POST)
+    public ModelAndView postCommentWriteByEditor(ModelAndView modelAndView,
+                                                 @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                                 @PathVariable(value = "urlName", required = true) String urlName,
+                                                 @PathVariable(value = "aid", required = true) int aid,
+                                                 @RequestParam(name = "pid", required = false) Optional<Integer> optionalPid,
+                                                 @RequestParam(name = "depth", required = false) Optional<Integer> optionalDepth,
+                                                 @RequestParam(name = "pUid", required = false) Optional<Integer> optionalPUid,
+                                                 ArticleCommentWriteVo articleCommentWriteVo,
+                                                 HttpServletResponse response) {
+        if (user == null) {
+            response.setStatus(404);
+            return null;
+        }
+        int pid = optionalPid.orElse(0);
+        int depth = optionalDepth.orElse(0);
+        int pUid = optionalPUid.orElse(0);
+        articleCommentWriteVo.setUserIndex(user.getIndex());
+        articleCommentWriteVo.setArticleIndex(aid);
+        articleCommentWriteVo.setWrittenAt(new Date());
+        articleCommentWriteVo.setResult(null);
+        articleCommentWriteVo.setDeleted(false);
+        articleCommentWriteVo.setParentIndex(pid);
+        articleCommentWriteVo.setDepth(depth);
+        articleCommentWriteVo.setParentUserIndex(pUid);
         this.articleReadService.writeComment(urlName, user, articleCommentWriteVo);
         modelAndView.setViewName("redirect:/bbs/" + urlName + '/' + aid);
         return modelAndView;
@@ -497,6 +557,10 @@ public class BbsController {
         modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
         modelAndView.addObject("articleReadVo", articleReadVo);
         modelAndView.addObject("categoryEntities", this.boardListService.getCategories());
+        modelAndView.addObject("genders", this.boardListService.getGenders());
+        modelAndView.addObject("productStatuses", this.boardListService.getProductStatuses());
+        modelAndView.addObject("tradeMethods", this.boardListService.getTradeMethods());
+        modelAndView.addObject("currencies", this.boardListService.getCurrencies());
         modelAndView.addObject("title", boardListVo.getName());
         modelAndView.setViewName("bbs/modify");
         return modelAndView;
@@ -533,9 +597,9 @@ public class BbsController {
                                          CommentReadVo commentReadVo,
                                          HttpServletResponse response) {
         boardListVo.setUrlName(urlName);
+        boardListVo.setResult(null);
         commentReadVo.setIndex(cid);
         commentReadVo.setArticleIndex(aid);
-        boardListVo.setResult(null);
         if (user == null) {
             response.setStatus(404);
 //            modelAndView.setViewName("redirect:/bbs/" + boardListVo.getUrlName());
@@ -550,6 +614,7 @@ public class BbsController {
         modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
         modelAndView.addObject("title", boardListVo.getName());
         modelAndView.addObject("commentReadVo", commentReadVo);
+        modelAndView.addObject("boardListVo", boardListVo);
         modelAndView.setViewName("bbs/commentModify");
         return modelAndView;
     }
@@ -573,7 +638,7 @@ public class BbsController {
         this.articleReadService.modifyArticleComment(commentModifyVo);
         modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
         modelAndView.addObject("title", boardListVo.getName());
-        modelAndView.setViewName("redirect:/bbs/" + boardListVo.getUrlName());
+        modelAndView.setViewName("redirect:/bbs/" + boardListVo.getUrlName() + '/' + aid);
         return modelAndView;
     }
 
@@ -601,15 +666,12 @@ public class BbsController {
             @PathVariable(value = "urlName", required = true) String urlName,
             @PathVariable(value = "aid", required = true) int aid,
             ArticleDeleteVo articleDeleteVo) {
-        System.out.println(urlName);
         if (user == null) {
             response.setStatus(404);
             return null;
         }
         articleDeleteVo.setIndex(aid);
         articleDeleteVo.setBoardUrlName(urlName);
-        System.out.println(articleDeleteVo.getIndex());
-        System.out.println(articleDeleteVo.getBoardUrlName());
         this.articleReadService.deleteArticle(user, articleDeleteVo);
         modelAndView.setViewName("redirect:/bbs/" + urlName);
         return modelAndView;
@@ -644,7 +706,6 @@ public class BbsController {
             @PathVariable(value = "aid", required = true) int aid,
             @PathVariable(value = "cid", required = true) int cid,
             ArticleCommentDeleteVo articleCommentDeleteVo) {
-        System.out.println(urlName);
         if (user == null) {
             response.setStatus(404);
             return null;
@@ -653,7 +714,6 @@ public class BbsController {
         articleCommentDeleteVo.setArticleIndex(aid);
         articleCommentDeleteVo.setResult(null);
         articleCommentDeleteVo.setUserIndex(user.getIndex());
-        System.out.println(articleCommentDeleteVo.getIndex());
         this.articleReadService.updateForDeletingArticleComment(user, articleCommentDeleteVo);
         // 댓글을 삭제하는 것이 아닌, isDeleted를 true로 변경. true인 댓글은 '삭제된 댓글입니다'를 표시하며 남겨두기 위함.
         modelAndView.setViewName("redirect:/bbs/" + urlName + '/' + aid);
@@ -717,7 +777,6 @@ public class BbsController {
         // TODO: 2022/09/21 업로드시 들어간 이미지 중 하나를 해당 게시글의 썸네일 이미지로 지정하려 한다.
         //  Article 테이블에는 thumbnailId 컬럼을 추가할 예정. 업로드시 이미지 고유의 id를 게시글에 어떻게 전달하면 좋을까?
         //  1. 업로드시 JSON으로 전달된 url에서 id를 가져와 form에 전달하려 하였지만, 에디터 자체의 xhr처리 로직에서 이 부분을 어떻게 다루어야 할 지 몰라서 PASS
-        //  2.
 
     }
 
@@ -774,6 +833,21 @@ public class BbsController {
         modelAndView.addObject("boardListVoForFavorite", boardListVoForFavorite);
         modelAndView.setViewName("bbs/mail/mail");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "thumbnail-id", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getThumbnailId(@RequestParam(value = "thumbnailId", required = true) String thumbnailId,
+                                               HttpServletResponse response) {
+        ImageEntity imageEntity = this.articleReadService.getImage(thumbnailId);
+        if (imageEntity == null) {
+            response.setStatus(404);
+            return null;
+        }
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus status = HttpStatus.OK;
+        headers.add("Content-Length", String.valueOf(imageEntity.getData().length));
+        headers.add("Content-Type", "image/png");
+        return new ResponseEntity<>(imageEntity.getData(), headers, status);
     }
 
 }
