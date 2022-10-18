@@ -176,7 +176,7 @@
                 </div>
             </div>
             <!--            -->
-            <div class="product-container"
+            <div class="product-container date-container"
                  th:if="${#request.getRequestURI().contains('gl') || #request.getRequestURI().contains('ha')}">
                 <div class="product-col product-title">* 주문날짜</div>
                 <div class="product-col product-input">
@@ -231,7 +231,7 @@
             <div class="product-container" th:if="${title.equals('교환')}">
                 <div class="product-col product-title">* 교환 사이즈</div>
                 <div class="textarea-container">
-                    textarea class="product-textarea" name="exchangeSize"></textarea>
+                    <textarea class="product-textarea" name="exchangeSize"></textarea>
                 </div>
             </div>
             <div class="product-container"

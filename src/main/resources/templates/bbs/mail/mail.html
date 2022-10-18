@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="user" type="dev.dmchoi.eomisae.entities.member.UserEntity"*/-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -45,14 +46,14 @@
                     <span class="info-title">이름</span>
                     <div class="input-container">
                         <i class="icon fa-regular fa-user"></i>
-                        <input class="input" name="nickName" type="text" value="뮤지컬라풀" disabled="disabled">
+                        <input class="input" name="nickName" type="text"  th:value="${user.getNickname()}" disabled>
                     </div>
                 </div>
                 <div class="info-container">
                     <span class="info-title">이메일</span>
                     <div class="input-container">
                         <i class="icon fa-regular fa-envelope"></i>
-                        <input class="input" name="nickName" type="text" value="dmchoi224@naver.com" disabled="disabled">
+                        <input class="input" name="nickName" type="text" th:value="${user.getEmail()}" disabled>
                     </div>
                 </div>
             </div>

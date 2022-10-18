@@ -81,7 +81,8 @@ body > .mypage-header > .header-container > .header-nav > .list.auto-login-selec
 }
 
 @media screen and (max-width: 760px) {
-    body > .main > .mypage-table {
-        width: auto;
+    body > .main > .mypage-table > .table-container{
+        text-align: left;
     }
+
 }

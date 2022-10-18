@@ -22,6 +22,7 @@ import dev.dmchoi.eomisae.vos.member.user.LoginVo;
 import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -285,7 +286,6 @@ public class UserService {
     public void putProfileImage(ProfileImageEntity profileImageEntity) {
         this.userMapper.insertProfileImage(profileImageEntity);
     }
-
     public ProfileImageEntity getProfileImage(String id) {
         return this.userMapper.selectProfileImage(id);
     }
@@ -294,12 +294,10 @@ public class UserService {
         UserEntity originUser = this.userMapper.selectUserEmailByIndex(user.getIndex());
         if (user.getIndex() == 0) {
             userModifyVo.setResult(ModifyResult.FAILURE);
-            System.out.println("userModifyVo.getResult()" + userModifyVo.getResult());
             return;
         }
         if (this.userMapper.selectUserCountByEmail(user.getEmail()) > 0 || originUser.getEmail().equals(user.getEmail())) {
             userModifyVo.setResult(ModifyResult.FAILURE_DUPLICATE_USER_EMAIL);
-            System.out.println("userModifyVo.getResult()" + userModifyVo.getResult());
         } else {
             Date currentDate = new Date();
             Date expiredAt = DateUtils.addMinutes(currentDate, EMAIL_VALID_MINUTES);
@@ -319,13 +317,13 @@ public class UserService {
                 saltB = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, saltB);
             }
             ModifyUserEmailVerificationCodeEntity modifyUserEmailVerificationCodeEntity = new ModifyUserEmailVerificationCodeEntity();
-            modifyUserEmailVerificationCodeEntity.setCreatedAt(currentDate);
-            modifyUserEmailVerificationCodeEntity.setExpiresAt(expiredAt);
-            modifyUserEmailVerificationCodeEntity.setExpired(false);
-            modifyUserEmailVerificationCodeEntity.setCode(code);
-            modifyUserEmailVerificationCodeEntity.setSalt(String.format("%s%s", saltA, saltB));
-            modifyUserEmailVerificationCodeEntity.setUserIndex(user.getIndex());
-            modifyUserEmailVerificationCodeEntity.setModifyEmail(user.getEmail());
+            modifyUserEmailVerificationCodeEntity.setCreatedAt(currentDate)
+                    .setExpiresAt(expiredAt)
+                    .setExpired(false)
+                    .setCode(code)
+                    .setSalt(String.format("%s%s", saltA, saltB))
+                    .setUserIndex(user.getIndex())
+                    .setModifyEmail(user.getEmail());
 
             this.userMapper.insertUserModifyEmailVerificationCode(modifyUserEmailVerificationCodeEntity);
 
@@ -385,8 +383,6 @@ public class UserService {
         this.userMapper.updateModifyEmail(user);
         this.userMapper.updateUserModifyEmailVerificationCode(modifyUserEmailVerificationCodeEntity);
         emailVerifyVo.setResult(UserEmailVerifyResult.SUCCESS);
-        System.out.println("재설정된 이메일 : " + user.getEmail());
-        System.out.println("====== 이메일 재설정 메일 인증 완료 ======");
     }
 
     @Transactional
@@ -396,21 +392,20 @@ public class UserService {
             userModifyVo.setResult(ModifyResult.FAILURE);
             return;
         }
-        user.setIndex(tempUser.getIndex());
-        user.setEmail(tempUser.getEmail());
-        user.setPassword(tempUser.getPassword());
-        user.setPoint(tempUser.getPoint());
-        user.setLevel(tempUser.getLevel());
-        user.setCreatedAt(tempUser.getCreatedAt());
-        user.setFindPasswordIndex(tempUser.getFindPasswordIndex());
-        user.setFindPasswordAnswer(tempUser.getFindPasswordAnswer());
-        user.setTermsAgreedAt(tempUser.getTermsAgreedAt());
-        user.setTermsAgreed(tempUser.isTermsAgreed());
-        user.setEmailVerified(tempUser.isEmailVerified());
-
-        user.setUserId(userModifyVo.getUserId());
-        user.setNickname(userModifyVo.getNickname());
-        user.setMessageReceptionIndex(userModifyVo.getMessageReceptionIndex());
+        user.setIndex(tempUser.getIndex())
+                .setEmail(tempUser.getEmail())
+                .setPassword(tempUser.getPassword())
+                .setPoint(tempUser.getPoint())
+                .setLevel(tempUser.getLevel())
+                .setCreatedAt(tempUser.getCreatedAt())
+                .setFindPasswordIndex(tempUser.getFindPasswordIndex())
+                .setFindPasswordAnswer(tempUser.getFindPasswordAnswer())
+                .setTermsAgreedAt(tempUser.getTermsAgreedAt())
+                .setTermsAgreed(tempUser.isTermsAgreed())
+                .setEmailVerified(tempUser.isEmailVerified())
+                .setUserId(userModifyVo.getUserId())
+                .setNickname(userModifyVo.getNickname())
+                .setMessageReceptionIndex(userModifyVo.getMessageReceptionIndex());
 
         if (userModifyVo.isMailReceived()) {
             Date currentDate = new Date();
@@ -451,11 +446,11 @@ public class UserService {
             userModifyVo.setResult(ModifyResult.FAILURE);
             return;
         }
-        if(!UserService.checkPassword(modifyPassword)) {
+        if (!UserService.checkPassword(modifyPassword)) {
             userModifyVo.setResult(ModifyResult.ILLEGAL_PASSWORD);
             return;
         }
-        if(!modifyPassword.equals(modifyPasswordCheck)) {
+        if (!modifyPassword.equals(modifyPasswordCheck)) {
             userModifyVo.setResult(ModifyResult.FAILURE_NOT_MATCH_PASSWORD);
             return;
         }
@@ -477,12 +472,13 @@ public class UserService {
         user.setIndex(originPassword.getIndex());
         user.setPassword(userModifyVo.getPassword());
 
-        if(this.userMapper.updateModifyUserPassword(user) == 0) {
+        if (this.userMapper.updateModifyUserPassword(user) == 0) {
             userModifyVo.setResult(ModifyResult.FAILURE);
         }
         this.userMapper.updateModifyUserPassword(user);
         userModifyVo.setResult(ModifyResult.SUCCESS);
     }
+
     @Transactional
     public void deleteProfileImage(UserEntity user, ProfileImageEntity profileImageEntity) {
         this.userMapper.deleteProfileImage(profileImageEntity);
@@ -499,7 +495,7 @@ public class UserService {
             deleteUserVo.setResult(DeleteUserResult.FAILURE_ORIGIN_PASSWORD);
             return;
         }
-        if(this.userMapper.deleteUserByEmail(user) == 0) {
+        if (this.userMapper.deleteUserByEmail(user) == 0) {
             deleteUserVo.setResult(DeleteUserResult.FAILURE);
             return;
         }
@@ -507,10 +503,104 @@ public class UserService {
         deleteUserVo.setResult(DeleteUserResult.SUCCESS);
     }
 
-    public String userFindAccountByEmail(UserEntity user) {
+    public void userFindAccountByEmail(String email, FindAccountVo findAccountVo) throws MessagingException {
+        UserEntity originUser = this.userMapper.selectUserByEmail(email);
+        if (email == null || originUser == null || originUser.getEmail() == null) {
+            findAccountVo.setResult(FindAccountResult.FAILURE);
+            return;
+        }
+        String temporaryPassword = RandomStringUtils.randomAscii(8);
+        originUser.setPassword(CryptoUtils.hash(CryptoUtils.Hash.SHA_512, temporaryPassword));
+        this.userMapper.updateModifyUserPassword(originUser);
 
+        Context context = new Context();
+        context.setVariable("email", originUser.getEmail());
+        context.setVariable("name", originUser.getNickname());
+        context.setVariable("password", temporaryPassword); // 임시 비밀번호 생성
 
-        return null;
+        MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+        mimeMessageHelper.setSubject("아이디/비밀번호 정보입니다.");
+        mimeMessageHelper.setFrom("dmchoi224@gmail.com");
+        mimeMessageHelper.setTo(originUser.getEmail());
+        mimeMessageHelper.setText(this.springTemplateEngine.process("user/findAccountVerificationTemplate", context), true);
+        this.javaMailSender.send(mimeMessage);
+
+        findAccountVo.setResult(FindAccountResult.SUCCESS);
+    }
+
+    public void userFindAccountByQna(String email, int questionIndex, String answer, FindAccountVo findAccountVo) throws MessagingException {
+        UserEntity originUser = this.userMapper.selectUserByEmail(email);
+        if (email == null || questionIndex == 0 || originUser == null || originUser.getEmail() == null) {
+            findAccountVo.setResult(FindAccountResult.FAILURE);
+            return;
+        }
+        if (!email.equals(originUser.getEmail())) {
+            findAccountVo.setResult(FindAccountResult.FAILURE);
+            return;
+        }
+        if (questionIndex != originUser.getFindPasswordIndex()) {
+            findAccountVo.setResult(FindAccountResult.NOT_MATCH_QUESTION_INDEX);
+            return;
+        } else { // 인덱스가 일치할 떄
+            if (!answer.equals(originUser.getFindPasswordAnswer())) {
+                findAccountVo.setResult(FindAccountResult.NOT_MATCH_ANSWER);
+                return;
+            }
+        }
+        String temporaryPassword = RandomStringUtils.randomAscii(8);
+        originUser.setPassword(CryptoUtils.hash(CryptoUtils.Hash.SHA_512, temporaryPassword));
+        this.userMapper.updateModifyUserPassword(originUser);
+
+        Context context = new Context();
+        context.setVariable("email", originUser.getEmail());
+        context.setVariable("name", originUser.getNickname());
+        context.setVariable("password", temporaryPassword); // 임시 비밀번호 생성
+
+        MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+        mimeMessageHelper.setSubject("임시 비밀번호가 발급 되었습니다.");
+        mimeMessageHelper.setFrom("dmchoi224@gmail.com");
+        mimeMessageHelper.setTo(originUser.getEmail());
+        mimeMessageHelper.setText(this.springTemplateEngine.process("user/findAccountVerificationTemplate", context), true);
+        this.javaMailSender.send(mimeMessage);
+        findAccountVo.setResult(FindAccountResult.SUCCESS);
+    }
+
+    public void resendVerificationEmail(String email, RegisterVo registerVo) throws MessagingException {
+        UserEntity pendingUser = this.userMapper.selectUserByEmail(email);
+        if (pendingUser == null || email == null) {
+            registerVo.setResult(RegisterResult.FAILURE);
+            return;
+        }
+        if (pendingUser.getEmail() != null && !email.equals(pendingUser.getEmail())) {
+            registerVo.setResult(RegisterResult.FAILURE);
+            return;
+        }
+        UserEmailVerificationCodeEntity resendCodeSalt = this.userMapper.selectUserEmailVerificationCodeByUserIndex(pendingUser.getIndex());
+        if (resendCodeSalt == null || resendCodeSalt.getIndex() == 0) {
+            registerVo.setResult(RegisterResult.FAILURE);
+            return;
+        }
+        Date currentDate = new Date();
+        Date expiredAt = DateUtils.addMinutes(currentDate, CODE_VALID_MINUTES);
+        resendCodeSalt.setCreatedAt(currentDate)
+                .setExpiresAt(expiredAt)
+                .setExpired(false);
+        Context context = new Context();
+        context.setVariable("email", pendingUser.getEmail());
+        context.setVariable("name", pendingUser.getNickname());
+        context.setVariable("resendCodeSalt", resendCodeSalt);
+
+        MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+        mimeMessageHelper.setSubject("가입 인증 재발송 메일입니다.");
+        mimeMessageHelper.setFrom("dmchoi224@gmail.com");
+        mimeMessageHelper.setTo(pendingUser.getEmail());
+        mimeMessageHelper.setText(this.springTemplateEngine.process("user/resendEmailVerificationTemplate", context), true);
+        this.javaMailSender.send(mimeMessage);
+
+        registerVo.setResult(RegisterResult.SUCCESS);
     }
 
 }

@@ -92,7 +92,7 @@ public class UserController extends StandardController {
             LoginVo loginVo) {
         loginVo.setResult(null);
         this.userService.login(loginVo, request);
-        if(loginVo.getIndex() == 0) {
+        if (loginVo.getIndex() == 0) {
             loginVo.setIndex(0);
         }
         this.systemService.putActivityLog(loginVo.getIndex(), request, loginVo);
@@ -328,29 +328,26 @@ public class UserController extends StandardController {
 
     @RequestMapping(value = "/my-page/memberModifyEmailAddress", method = RequestMethod.GET)
     public ModelAndView getMemberModifyEmailAddress(ModelAndView modelAndView) {
-
         modelAndView.setViewName("user/my-page/memberModifyEmailAddress");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberModifyEmailAddress", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView postMemberModifyEmailAddress(ModelAndView modelAndView,
-                                                     @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
-                                                     UserModifyVo userModifyVo,
-                                                     @RequestParam(value = "email", required = false) String tempEmail) throws MessagingException {
+    public String postMemberModifyEmailAddress(
+            @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+            UserModifyVo userModifyVo,
+            @RequestParam(value = "email", required = false) String tempEmail) throws MessagingException {
         user.setEmail(tempEmail);
         user.setEmailVerified(false);
         this.userService.modifyEmail(user, userModifyVo);
-        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
-        modelAndView.addObject("userModifyVo", userModifyVo);
-        modelAndView.setViewName("user/my-page/memberModifyEmailAddress");
-        return modelAndView;
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("result", userModifyVo.getResult().name().toLowerCase());
+        return responseJson.toString();
     }
 
     @RequestMapping(value = "/my-page/memberModifyInfo", method = RequestMethod.GET)
     public ModelAndView getMemberModifyInfo(ModelAndView modelAndView) {
-
         modelAndView.setViewName("user/my-page/memberModifyInfo");
         return modelAndView;
     }
@@ -388,6 +385,7 @@ public class UserController extends StandardController {
         modelAndView.setViewName("user/my-page/memberInfo");
         return modelAndView;
     }
+
 
     @RequestMapping(value = "/my-page/memberModifyInfo/delete", method = RequestMethod.GET)
     public ModelAndView getProfileImageDelete(HttpServletResponse response,
@@ -447,15 +445,63 @@ public class UserController extends StandardController {
         return responseJson.toString();
     }
 
-    @RequestMapping(value="/memberFindAccount", method = RequestMethod.GET)
+    @RequestMapping(value = "/memberFindAccount", method = RequestMethod.GET)
     public ModelAndView getMemberFindAccount(@RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
                                              ModelAndView modelAndView) {
-        if(user != null) {
+        if (user != null) {
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
         modelAndView.setViewName("user/memberFindAccount");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "findAccountEmail", method = RequestMethod.POST)
+    @ResponseBody
+    public String postFindAccountByEmail(HttpServletResponse response,
+                                         @RequestParam(value = "email", required = false) String email,
+                                         FindAccountVo findAccountVo) throws MessagingException {
+        if (email == null) {
+            response.setStatus(404);
+            return null;
+        }
+        JSONObject responseJson = new JSONObject();
+        this.userService.userFindAccountByEmail(email, findAccountVo);
+        responseJson.put("result", findAccountVo.getResult().name().toLowerCase());
+        return responseJson.toString();
+    }
+
+    @RequestMapping(value = "findAccountQna", method = RequestMethod.POST)
+    @ResponseBody
+    public String postFindAccountByQna(HttpServletResponse response,
+                                       @RequestParam(value = "email", required = false) String email,
+                                       @RequestParam(value = "findAccountIndex", required = false) int questionIndex,
+                                       @RequestParam(value = "findAccountAnswer", required = false) String answer,
+                                       FindAccountVo findAccountVo) throws MessagingException {
+        if (email == null) {
+            response.setStatus(404);
+            return null;
+        }
+        JSONObject responseJson = new JSONObject();
+        this.userService.userFindAccountByQna(email, questionIndex, answer, findAccountVo);
+        responseJson.put("result", findAccountVo.getResult().name().toLowerCase());
+        return responseJson.toString();
+    }
+
+    @RequestMapping(value = "resendVerificationEmail", method = RequestMethod.POST)
+    @ResponseBody
+    public String postResendVerificationEmail(HttpServletResponse response,
+                                              @RequestParam(value = "email", required = false) String email,
+                                              RegisterVo registerVo) throws MessagingException {
+
+        if (email == null) {
+            response.setStatus(404);
+            return null;
+        }
+        JSONObject responseJson = new JSONObject();
+        this.userService.resendVerificationEmail(email, registerVo);
+        responseJson.put("result", registerVo.getResult().name().toLowerCase());
+        return responseJson.toString();
     }
 
 }

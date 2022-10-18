@@ -25,7 +25,7 @@
     </script>
     <script th:if="${userModifyVo != null && userModifyVo.getResult().name().equals('SUCCESS')}">
         alert('입력하신 이메일로 이메일 재설정 인증과 관련된 내용이 전송되었습니다.\n\n해당 메일을 통해 5분이내에 이메일 재설정을 완료해주세요.\n\n5분 이내에 이메일 변경을 하지 않으면 기존 이메일을 사용합니다.');
-        window.location.href = '/user/my-page/memberModifyEmailAddress ';
+        window.location.href = '/user/my-page/memberModifyEmailAddress';
     </script>
 </head>
 <body>
@@ -34,11 +34,7 @@
 <main class="main" id="main">
     <section class="email-modify-container">
         <h1 class="title">이메일 주소 변경</h1>
-        <div class="hidden-warning" id="hiddenWarning">
-            <div class="warning-container">
-                <span class="warning" id="warning"></span>
-            </div>
-        </div>
+        <div class="hidden-warning" id="hiddenWarning"></div>
         <span class="subtitle">사용하는 이메일 주소를 변경할 수 있습니다.</span>
         <form class="email-modify-form" id="emailModifyForm" method="post"
               th:action="@{/user/my-page/memberModifyEmailAddress}">

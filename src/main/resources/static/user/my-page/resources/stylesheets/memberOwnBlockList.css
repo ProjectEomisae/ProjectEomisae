@@ -145,18 +145,3 @@ body > .mypage-header > .header-container > .header-nav > .list.block-list-selec
     color: rgb(85, 91, 97);
     cursor: unset;
 }
-
-@media screen and (max-width: 760px) {
-    body > .main > .mypage-table > .table-container {
-        border: unset;
-    }
-
-    body > .main > .mypage-table > .table-container thead {
-        display: none;
-    }
-
-    body > .main > .mypage-table > .table-container tr > td {
-/*테이블하다가 맘*/
-        content: attr(data-label);
-    }
-}

@@ -10,6 +10,10 @@ public interface IUserMapper {
 
     UserEntity selectUserByIndex(
             @Param(value = "index") int index); // index로 유저 SELECT
+
+    UserEntity selectUserByEmail(
+            @Param(value = "email") String email);
+
     UserEntity selectUser(
             @Param(value = "email") String email,
             @Param(value = "password") String password);
@@ -21,21 +25,27 @@ public interface IUserMapper {
     int selectUserCountById(String userId);
 
     UserEntity selectUserEmailByIndex(@Param(value = "index") int index);
-    UserEntity selectUserPasswordByIndex(@Param(value="index") int index);
+
+    UserEntity selectUserPasswordByIndex(@Param(value = "index") int index);
+
     UserEmailVerificationCodeEntity selectUserEmailVerificationCode(
             @Param(value = "code") String code,
             @Param(value = "salt") String salt);
+    UserEmailVerificationCodeEntity selectUserEmailVerificationCodeByUserIndex(@Param(value="userIndex") int userIndex);
 
     ModifyUserEmailVerificationCodeEntity selectUserModifyEmailVerificationCode(
             @Param(value = "code") String code,
             @Param(value = "salt") String salt);
 
     ProfileImageEntity selectProfileImage(@Param(value = "id") String id);
+
     SessionEntity selectSessionByKey(
             @Param(value = "key") String key); // 유효한 세션을 가져올 것. SELECT
+
     int deleteProfileImage(ProfileImageEntity profileImageEntity);
 
     int insertUser(UserEntity user);
+
     int insertUserEmailVerificationCode(UserEmailVerificationCodeEntity userEmailVerificationCodeEntity);
 
     int insertProfileImage(ProfileImageEntity profileImageEntity);

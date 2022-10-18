@@ -27,6 +27,30 @@
         LIMIT 1
     </select>
 
+    <select id="selectUserByEmail"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        SELECT `index`                   AS `index`,
+               `email`                   AS `email`,
+               `password`                AS `password`,
+               `user_id`                 AS `userId`,
+               `nickname`                AS `nickname`,
+               `point`                   AS `point`,
+               `level`                   AS `level`,
+               `created_at`              AS `createdAt`,
+               `find_password_index`     AS `findPasswordIndex`,
+               `find_password_answer`    AS `findPasswordAnswer`,
+               `terms_agreed_at`         AS `termsAgreedAt`,
+               `mail_received_at`        AS `mailReceivedAt`,
+               `terms_agreed_flag`       AS `isTermsAgreed`,
+               `mail_received_flag`      AS `isMailReceived`,
+               `message_reception_index` AS `messageReceptionIndex`,
+               `email_verified_flag`     AS `isEmailVerified`,
+               `profile_id`              AS `profileId`
+        FROM `eomisae_member`.`users`
+        WHERE `email` = #{email}
+        LIMIT 1
+    </select>
+
     <select id="selectUserByIndex"
             resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
         SELECT `index`                   AS `index`,
@@ -90,6 +114,20 @@
         FROM `eomisae_member`.`user_email_verification_code`
         WHERE `code` = #{code}
           AND `salt` = #{salt}
+        LIMIT 1;
+    </select>
+
+    <select id="selectUserEmailVerificationCodeByUserIndex"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity">
+        SELECT `index`        AS `index`,
+               `created_at`   AS `createdAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`,
+               `code`         AS `code`,
+               `salt`         AS `salt`,
+               `user_index`   AS `userIndex`
+        FROM `eomisae_member`.`user_email_verification_code`
+        WHERE `user_index` = #{userIndex}
         LIMIT 1;
     </select>
 

@@ -1,12 +1,8 @@
 @charset "UTF-8";
 
 #main {
-    width: 78.125rem;
-    max-width: 78.125rem;
     height: auto;
     box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
     overflow: hidden;
     padding-right: 0.9375rem;
     padding-left: 0.9375rem;
@@ -21,10 +17,13 @@
 }
 
 #main > .nav-container {
+    width: 78.125rem;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
     padding-right: 1.875rem;
     padding-left: 1.875rem;
 }
@@ -78,7 +77,10 @@
 }
 
 #main > .main-container > .main-section {
-    width: 53.4375rem;
+    max-width: 53.4375rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 #main > .main-container > .main-section > .title-container {
@@ -212,6 +214,12 @@
     filter: brightness(110%);
 }
 
+@media screen and (max-width: 760px) {
+    #main > .main-container > .main-section > .title-container {
+        align-items: flex-start;
+        font-size: 1.45rem;
+    }
+}
 
 
 

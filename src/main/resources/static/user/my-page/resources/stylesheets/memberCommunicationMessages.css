@@ -222,3 +222,7 @@ body > .mypage-header > .header-container > .header-nav > .list.message-selected
     color: rgb(85, 91, 97);
     cursor: unset;
 }
+
+@media screen and (max-width: 760px) {
+
+}

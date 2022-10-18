@@ -1,11 +1,17 @@
 @charset "UTF-8";
 
 body > .main {
-    min-height: 100vh;
-    align-items: flex-start;
+    align-items: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     font-size: 0.8125rem;
+}
+body > .main > .register-form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 body > .main > .register-form > .register {
@@ -22,7 +28,7 @@ body > .main > .register-form > .register > .title {
     margin-bottom: 1.5rem;
 }
 
-body > .main > .register-form > .register > .hidden-warning  {
+body > .main > .register-form > .register > .hidden-warning {
     display: none;
 }
 
@@ -30,7 +36,7 @@ body > .main > .register-form > .register > .hidden-warning.show {
     display: block;
 }
 
-body > .main > .register-form > .register > .hidden-warning > .warning-container  {
+body > .main > .register-form > .register > .hidden-warning > .warning-container {
     width: 100%;
     background-color: rgb(242, 222, 222);
     border: 0.0625rem solid rgb(238, 211, 215);
@@ -71,8 +77,16 @@ body > .main > .register-form > .register > .terms-of-use-container > .confirm {
     margin-bottom: 0.8rem;
 }
 
+body > .main > .register-form > .register > .terms-of-use-container > .confirm > .agree {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
 body > .main > .register-form > .register > .terms-of-use-container > .confirm > .agree > .agree-check {
     appearance: auto;
+    margin-right: 0.5rem;
 }
 
 body > .main > .register-form > .register > .label-container {
@@ -91,8 +105,9 @@ body > .main > .register-form > .register > .label-container > .input-container 
     width: 12.875rem;
     border: 0.0625rem solid #ccc;
     border-radius: 0.2rem;
-    padding: 0 0.425rem;
     box-shadow: unset;
+    margin: 0 0.5rem 0.1rem 0;
+    padding: 0 0.425rem;
 }
 
 body > .main > .register-form > .register > .label-container > .input-container > .input-red:focus {
@@ -115,7 +130,6 @@ body > .main > .register-form > .register > .label-container > .input-container 
 
 body > .main > .register-form > .register > .label-container > .input-container > .input-text {
     display: inline-block;
-    margin-left: 0.5rem;
 }
 
 body > .main > .register-form > .register > .label-container > .input-container > .warning {
@@ -153,11 +167,6 @@ body > .main > .register-form > .register > .label-container > .controls > .inpu
     border-radius: 0.2rem;
     padding: 0 0.425rem;
 }
-
-/*body > .main > .register-form > .register > .label-container > .controls > .input-container > .input:focus {*/
-/*    border-color: rgb(82, 168, 236);*/
-/*    box-shadow: 0 0 0.375rem rgb(125, 194, 248);*/
-/*}*/
 
 body > .main > .register-form > .register > .label-container > .profile-upload-container > .input-container {
     display: flex;
@@ -234,3 +243,31 @@ body > .main > .register-form > .register > .submit-container > .button.register
     background: linear-gradient(to bottom, rgb(38, 38, 38) 1%, rgb(0, 0, 0) 100%);
     color: rgb(var(--color-white));
 }
+
+
+@media screen and (max-width: 760px) {
+    body > .main > .register-form > .register {
+        width:calc(100% - 2rem);
+    }
+    body > .main > .register-form > .register > .label-container > .control-label {
+        width: 8rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

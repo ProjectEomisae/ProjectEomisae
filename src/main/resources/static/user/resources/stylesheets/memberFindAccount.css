@@ -6,7 +6,7 @@ body > .main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 1rem;
+    margin: 1rem 0;
 }
 
 body > .main > .find-account-container {
@@ -117,7 +117,8 @@ body > .main > .find-account-container.by-qna-container > .find-account-form {
 }
 
 body > .main > .find-account-container> .find-account-form  > .input-container > .input {
-    border-radius: 0.2rem;
+    border-top-left-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
     margin-bottom: 0.6rem;
 }
 

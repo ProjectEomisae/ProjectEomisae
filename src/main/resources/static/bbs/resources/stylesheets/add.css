@@ -143,7 +143,7 @@
 }
 
 #main > .write-form-container > .form-container > .product-container > .product-col {
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.65rem;
 }
 
 #main > .write-form-container > .form-container > .product-container > .product-title {
@@ -240,7 +240,7 @@
 }
 
 #main > .write-form-container > .form-container > .product-container > .product-input > .price-row > .input {
-    width: 18.75rem;
+    width: 15.3rem;
     height: 2rem;
     background-color: rgb(var(--color-white-fa));
     margin: 0.25rem 0;
@@ -554,4 +554,63 @@
     border-left: 0.0625rem solid rgb(var(--line-color-white));
     cursor: pointer;
     padding: 1rem 0;
+}
+
+@media screen and (max-width: 760px) {
+    #main > .write-form-container > .form-container > .product-container.date-container > .product-input > .input-row {
+        flex-direction: column;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .product-title {
+        width: 5rem;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .product-input > .input-row > .input {
+        width: 12rem;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .product-input > .input-row > .button-input {
+        margin: unset;
+    }
+
+    #main > .write-form-container > .form-bottom > .button-container {
+        width: calc(100% - 5rem);
+        border-right: 0.0625rem solid rgb(var(--line-color-white));
+    }
+
+    #main > .write-form-container > .form-bottom > .button-container > .button-input {
+        padding: 1rem 0.85rem;
+    }
+
+    #main > .write-form-container > .form-bottom > .submit-button {
+        width: 5rem;
+        border: unset;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .textarea-container > .product-textarea {
+        width: unset;
+        min-width: 10.375rem;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .option-input > .price-row {
+        width: 100%;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .product-input > .price-row > .input {
+        width: 8.5rem;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .option-input > .contact-row,
+    #main > .write-form-container > .form-container > .product-container > .option-input > .price-row {
+        flex-direction: column;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .product-input > .contact-row > .input {
+        width: 11.8rem;
+    }
+
+    #main > .write-form-container > .form-container > .product-container > .option-container > .select-container {
+        width: unset;
+    }
+
 }

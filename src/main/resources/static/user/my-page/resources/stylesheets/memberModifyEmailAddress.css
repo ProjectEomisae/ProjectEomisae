@@ -27,38 +27,22 @@ body > .main > .email-modify-container > .hidden-warning {
 
 body > .main > .email-modify-container > .hidden-warning.success-text {
     display: block;
-}
-
-body > .main > .email-modify-container > .hidden-warning.success-text > .warning-container {
-    width: 100%;
     background-color: rgb(217, 237, 247);
     border: 0.0625rem solid rgb(188, 232, 241);
     border-radius: 0.25rem;
     color: rgb(58, 135, 173);
     margin-bottom: 0.8rem;
-    padding: 0.8rem 0;
-}
-
-body > .main > .email-modify-container > .hidden-warning.success-text > .warning-container > .warning {
-    margin-left: 1rem;
+    padding: 1rem 0 1rem 1rem;
 }
 
 body > .main > .email-modify-container > .hidden-warning.failure-text {
     display: block;
-}
-
-body > .main > .email-modify-container > .hidden-warning.failure-text > .warning-container {
-    width: 100%;
     background-color: rgb(242, 222, 222);
     border: 0.0625rem solid rgb(238, 211, 215);
     border-radius: 0.25rem;
     color: rgb(185, 74, 72);
     margin-bottom: 0.8rem;
-    padding: 0.8rem 0;
-}
-
-body > .main > .email-modify-container > .hidden-warning.failure-text > .warning-container > .warning {
-    margin-left: 1rem;
+    padding: 1rem 0 1rem 1rem;
 }
 
 body > .main > .email-modify-container > .email-modify-form {
