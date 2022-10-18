@@ -8,6 +8,7 @@ import dev.dmchoi.eomisae.enums.bbs.*;
 import dev.dmchoi.eomisae.mappers.IUserMapper;
 import dev.dmchoi.eomisae.mappers.bbs.IArticleReadMapper;
 import dev.dmchoi.eomisae.mappers.bbs.IBoardListMapper;
+import dev.dmchoi.eomisae.models.PagingModel;
 import dev.dmchoi.eomisae.vos.bbs.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,13 +55,13 @@ public class ArticleReadService {
 
         if (boardEntity.getWriteLevel() > userLevel) {
             articleWriteVo.setResult(ArticleWriteResult.NOT_ALLOWED);
-            System.out.println(articleWriteVo.getResult());
             return;
         }
         System.out.println("게시판 레벨 : " + boardEntity.getWriteLevel());
         articleWriteVo.setResult(ArticleWriteResult.SUCCESS);
         this.articleReadMapper.insertArticle(articleWriteVo);
     }
+
     public void deleteArticle(UserEntity user, ArticleDeleteVo articleDeleteVo) {
         ArticleEntity articleEntity = this.articleReadMapper.selectArticleByIndex(articleDeleteVo.getIndex());
         if (user.getIndex() != articleEntity.getUserIndex()) {
@@ -84,6 +85,10 @@ public class ArticleReadService {
     }
 
     public void readArticle(ArticleReadVo articleReadVo) {
+        this.readArticle(articleReadVo, null);
+    }
+
+    public void readArticle(ArticleReadVo articleReadVo, PagingModel pagingModel) {
         ArticleEntity articleEntity = this.articleReadMapper.selectArticleByIndex(articleReadVo.getIndex());
         if (articleEntity == null || articleEntity.getIndex() == 0) {
             articleReadVo.setResult(ArticleReadResult.NOT_FOUND);
@@ -101,9 +106,11 @@ public class ArticleReadService {
             for (String result : tagName) {
                 tags.add(result);
                 articleReadVo.setTags(tags);
-                System.out.println(articleReadVo.getTags());
             }
         }
+        ArticleReadVo temp = boardListMapper.selectPageByBoardIndex(articleReadVo.getBoardIndex(), articleReadVo.getIndex());
+        articleReadVo.setPrev(temp.getPrev())
+                .setNext(temp.getNext());
         articleReadVo.setUrl(articleEntity.getUrl());
         articleReadVo.setDiscountCode(articleEntity.getDiscountCode());
         articleReadVo.setShippingInfo(articleEntity.getShippingInfo());
@@ -120,6 +127,7 @@ public class ArticleReadService {
         articleReadVo.setCurrencyForPurchasing(articleEntity.getCurrencyForPurchasing());
         articleReadVo.setPurchaseProductPrice(articleEntity.getPurchaseProductPrice());
         articleReadVo.setCurrencyForSailing(articleEntity.getCurrencyForSailing());
+        articleReadVo.setSaleProductPrice(articleEntity.getSaleProductPrice());
         articleReadVo.setOuter(articleEntity.getOuter());
         articleReadVo.setTop(articleEntity.getTop());
         articleReadVo.setBottom(articleEntity.getBottom());
@@ -133,6 +141,7 @@ public class ArticleReadService {
         articleReadVo.setGender(articleEntity.getGender());
         articleReadVo.setProductStatus(articleEntity.getProductStatus());
         articleReadVo.setTradeMethod(articleEntity.getTradeMethod());
+        articleReadVo.setThumbnailId(articleEntity.getThumbnailId());
         articleReadVo.setBlindStatus(articleEntity.getBlindStatus());
         articleReadVo.setUserNickname(writerEntity.getNickname());
         if (writerEntity.getProfileId() != null) {
@@ -140,26 +149,32 @@ public class ArticleReadService {
         } else {
             articleReadVo.setArticleProfileId("");
         }
-        System.out.println(articleReadVo.getArticleProfileId());
         articleReadVo.setPoint(writerEntity.getPoint());
         articleReadVo.setLevel(writerEntity.getLevel());
         articleReadVo.setResult(ArticleReadResult.SUCCESS);
-        List<ArticleReadCommentDto> articleReadCommentDtos = this.articleReadMapper.selectCommentsForArticleRead(articleReadVo.getIndex());
-        for (ArticleReadCommentDto articleReadCommentDto : articleReadCommentDtos) {
-            UserEntity tempUser = this.userMapper.selectUserByIndex(articleReadCommentDto.getUserIndex());
-            if (articleReadCommentDto.getParentUserIndex() != 0) {
-                UserEntity parentUser = this.userMapper.selectUserByIndex(articleReadCommentDto.getParentUserIndex());
-                articleReadCommentDto.setParentUserNickname(parentUser.getNickname());
-            }
-            articleReadCommentDto.setUserNickname(tempUser.getNickname());
-            articleReadCommentDto.setProfileId(tempUser.getProfileId());
-            articleReadCommentDto.setLevel(tempUser.getLevel());
-            articleReadCommentDto.setPoint(tempUser.getPoint());
+        if (pagingModel != null) {
+            List<ArticleReadCommentDto> articleReadCommentDtos = this.articleReadMapper.selectCommentsForArticleRead(articleReadVo.getIndex(), 20, (pagingModel.requestPage - 1) * 20);
+            for (ArticleReadCommentDto articleReadCommentDto : articleReadCommentDtos) {
+                UserEntity tempUser = this.userMapper.selectUserByIndex(articleReadCommentDto.getUserIndex());
+                if (articleReadCommentDto.getParentUserIndex() != 0) {
+                    UserEntity parentUser = this.userMapper.selectUserByIndex(articleReadCommentDto.getParentUserIndex());
+                    articleReadCommentDto.setParentUserNickname(parentUser.getNickname());
+                }
+                articleReadCommentDto.setUserNickname(tempUser.getNickname());
+                articleReadCommentDto.setProfileId(tempUser.getProfileId());
+                articleReadCommentDto.setLevel(tempUser.getLevel());
+                articleReadCommentDto.setPoint(tempUser.getPoint());
+
 //            System.out.println("닉네임 : " + articleReadCommentDto.getUserNickname() + " ");
 //            System.out.println("인덱스 : " + articleReadCommentDto.getIndex() + " ");
 //            System.out.println("프로필 : " + articleReadCommentDto.getProfileId() + " ");
+            }
+            articleReadVo.setComments(articleReadCommentDtos);
         }
-        articleReadVo.setComments(articleReadCommentDtos);
+    }
+
+    public int getCommentsCountForArticleRead(ArticleReadVo articleReadVo) {
+        return this.articleReadMapper.selectCommentsCountForArticleRead(articleReadVo.getIndex());
     }
 
     public void readComment(CommentReadVo commentReadVo) {
@@ -168,8 +183,9 @@ public class ArticleReadService {
             commentReadVo.setResult(CommentReadResult.NOT_FOUND);
             return;
         }
-        commentReadVo.setResult(CommentReadResult.SUCCESS);
         commentReadVo.copyValuesOf(commentEntity);
+        commentReadVo.setResult(CommentReadResult.SUCCESS);
+
     }
 
     public void uploadImages(ImageEntity... imageEntities) {
@@ -191,7 +207,7 @@ public class ArticleReadService {
         UserEntity writerEntity = this.userMapper.selectUserByIndex(articleEntity.getUserIndex());
         articleWriteVo.setUserIndex(articleEntity.getUserIndex());
         articleWriteVo.setBoardIndex(articleEntity.getBoardIndex());
-        articleWriteVo.setWrittenAt(new Date());
+        articleWriteVo.setWrittenAt(articleEntity.getWrittenAt());
         articleWriteVo.setUrl(articleEntity.getUrl());
         articleWriteVo.setView(articleEntity.getView());
         articleWriteVo.setLike(articleEntity.getLike());
@@ -232,7 +248,6 @@ public class ArticleReadService {
 
         if (boardEntity.getCommentLevel() > userLevel) {
             articleCommentWriteVo.setResult(ArticleCommentWriteResult.NOT_ALLOWED);
-            System.out.println(articleCommentWriteVo.getResult());
             return;
         }
         articleCommentWriteVo.setResult(ArticleCommentWriteResult.SUCCESS);

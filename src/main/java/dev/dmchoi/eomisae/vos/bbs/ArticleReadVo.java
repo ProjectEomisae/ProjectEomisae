@@ -16,6 +16,9 @@ public class ArticleReadVo extends ArticleEntity implements IResult<ArticleReadR
     private List<ArticleReadCommentDto> comments;
     private List<String> tags;
 
+    private int prev;
+    private int next;
+
     public String getUserNickname() {
         return userNickname;
     }
@@ -67,6 +70,24 @@ public class ArticleReadVo extends ArticleEntity implements IResult<ArticleReadR
 
     public ArticleReadVo setTags(List<String> tags) {
         this.tags = tags;
+        return this;
+    }
+
+    public int getPrev() {
+        return prev;
+    }
+
+    public ArticleReadVo setPrev(int prev) {
+        this.prev = prev;
+        return this;
+    }
+
+    public int getNext() {
+        return next;
+    }
+
+    public ArticleReadVo setNext(int next) {
+        this.next = next;
         return this;
     }
 

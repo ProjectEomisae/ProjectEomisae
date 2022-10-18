@@ -356,6 +356,10 @@
     text-align: center;
 }
 
+#main > .main-container > .main-section > .article-container > .article-section > table > tbody > .notice > .user.box {
+    width: 4rem;
+}
+
 #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > td {
     padding: 0 0.5rem;
     white-space: nowrap;
@@ -530,9 +534,9 @@
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles {
     width: 100%;
     display: grid;
-    /*grid-template-rows: repeat(5, 5fr);*/
+    /* grid-template-rows: repeat(5, 5fr); */
+    grid-template-columns: repeat(auto-fill, minmax(20%, 4fr));
     grid-auto-rows: 1fr;
-    grid-template-columns: repeat(4, 4fr);
     gap: 1rem;
 }
 
@@ -543,9 +547,16 @@
     box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
 }
 
+#main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article > .image {
+    width: 100%;
+    height: 56%;
+}
+
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article > .image > a img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles > .article > .content > .article-category {
@@ -699,12 +710,6 @@
         background: rgb(var(--color-white));
         box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
     }
-
-    #main > .main-container > .main-section > .article-container > .article-section > table > tbody > tr > .title > a:first-child{
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
 }
 
 @media screen and (max-width: 760px) {
@@ -731,7 +736,7 @@
     }
 
     #main > .main-container > .main-section > .image-article-container > .image-article-section > .image-articles {
-        grid-template-columns: repeat(2, 4fr);
+        grid-template-columns: repeat(2, minmax(142px, 4fr));
     }
 
     #main > .main-container > .main-section > .article-container > .article-section > table {

@@ -3,6 +3,7 @@ package dev.dmchoi.eomisae.mappers.bbs;
 import dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto;
 import dev.dmchoi.eomisae.dtos.bbs.BoardReadCommentDto;
 import dev.dmchoi.eomisae.entities.bbs.*;
+import dev.dmchoi.eomisae.vos.bbs.ArticleReadVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,10 +11,9 @@ import java.util.List;
 
 @Mapper
 public interface IBoardListMapper {
-    int selectPageByBoardIndex(
+    ArticleReadVo selectPageByBoardIndex(
             @Param(value = "boardIndex") int boardIndex,
-            @Param(value = "prev") int prev,
-            @Param(value = "next") int next);
+            @Param(value = "aid") int aid);
 
     int selectArticleCountTotal();     // 전체 게시판 게시글 갯수 불러오기
 
@@ -43,6 +43,10 @@ public interface IBoardListMapper {
                                                          @Param(value = "keyword") String keyword);
 
     CategoryEntity[] selectCategories(); // 카테고리 불러오기
+    GenderEntity[] selectGenders();
+    ProductStatusEntity[] selectProductStatuses();
+    TradeMethodEntity[] selectTradeMethods();
+    CurrencyEntity[] selectCurrencies();
 
     int getCountByTitleContentAll(     // 모든 게시판의 검색기준 제목+내용 별 게시글 개수
                                        @Param(value = "keyword") String keyword);
@@ -314,7 +318,9 @@ public interface IBoardListMapper {
     List<BoardListArticleDto> selectArticlesForAll();// 모든 게시판의 모든 게시글 불러오기
 
     List<BoardListArticleDto> selectNewArticlesForAll();// 모든 게시판의 최신 게시글 6개 불러오기
-
+    List<BoardListArticleDto> selectArticlesForSale();// 쇼핑 정보 게시판의 최신 게시글 6개 불러오기
+    List<BoardListArticleDto> selectArticlesForRealImage();// 실사 후기 게시판의 최신 게시글 6개 불러오기
+    List<BoardListArticleDto> selectArticlesForDailyImage();// 데일리룩 게시판의 최신 게시글 6개 불러오기
     List<BoardListArticleDto> selectArticlesForNo(); // 공지사항 게시판 용 게시글 불러오기
 
     List<BoardListArticleDto> selectNewArticlesForNo(); // 공지사항 게시판 용 최신 게시글 불러오기

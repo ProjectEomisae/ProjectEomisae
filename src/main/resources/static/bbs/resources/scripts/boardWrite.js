@@ -1,14 +1,28 @@
+let editorContent;
+const content = window.document.getElementById('editor');
 ClassicEditor
-    .create(window.document.getElementById('editor'), {
+    .create(content, {
         simpleUpload: {
             uploadUrl: '/bbs/add/upload-image',
         },
     }).then(editor => {
+    editorContent = editor;
+    editorContent.getData();
     editor.editing.view.change(writer => {
         writer.setStyle('min-height', '70vh', editor.editing.view.document.getRoot());
         writer.setStyle('max-height', '70vh', editor.editing.view.document.getRoot());
     });
+    // editorContent.getData().split('?').at(-1).split('"')[0];
+    // editorContent.getData().split('download-image?').at(-1).split('"')[0];
+    // editorContent.getData().split('download-image?').at(-1).split('">')[0];
+    // editorContent.addEventListener('input', () => {
+    //     if (editorContent.getData().includes('img') === true) {
+    //         alert('ok');
+    //     }
+    // });
+
 });
+
 
 
 // if (ClassicEditor.create()) {
@@ -53,6 +67,30 @@ window.document.querySelector('.submit-button').addEventListener('click', e => {
         e.preventDefault();
         alert('카테고리를 설정해 주세요.');
         window.document.querySelector('[name=categoryIndex]').focus();
+        return;
+    }
+
+    if (window.document.querySelector('[name=title]').value === '') {
+        e.preventDefault();
+        alert('제목을 입력해 주세요.');
+        window.document.querySelector('[name=title]').focus();
+        return false;
+    }
+
+    if (editorContent.getData() === '') {
+        e.preventDefault();
+        alert('내용을 입력해 주세요.');
+        window.document.querySelector('[name=content]').focus();
+        return false;
+    }
+    if (editorContent.getData().includes('img')) {
+        // const input = window.document.createElement('input');
+        // input.setAttribute('type', 'hidden');
+        // input.classList.add('inputImage');
+        // input.value = editorContent.getData();
+        // input.innerText = editorContent.getData();
+        // form.append(input);
+        window.document.querySelector('[name=thumbnailId]').value = editorContent.getData().split('id=').at(-1).split('"')[0];
     }
 });
 
@@ -151,10 +189,10 @@ window.document.querySelector('.submit-button').addEventListener('click', e => {
 //     const chc = window.document.createElement('p');
 //     chc.innerText = 'check';
 //     content.append(chc);
-    // ClassicEditor.editing.innerText = '            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>\n' +
-    //     '            <p>&bull; 사례를 약속한 회원은 사례 내용을 명확히 명시해주세요</p>\n' +
-    //     '            <p>> 사례 하겠습니다. &#10060</p>\n' +
-    //     '            <p>> 기프티콘으로 사례합니다. &#10060</p>\n' +
-    //     '            <p>> 스타벅스 카페라떼 Tall 기프티콘으로 사례합니다. &#11093</p>';
+// ClassicEditor.editing.innerText = '            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>\n' +
+//     '            <p>&bull; 사례를 약속한 회원은 사례 내용을 명확히 명시해주세요</p>\n' +
+//     '            <p>> 사례 하겠습니다. &#10060</p>\n' +
+//     '            <p>> 기프티콘으로 사례합니다. &#10060</p>\n' +
+//     '            <p>> 스타벅스 카페라떼 Tall 기프티콘으로 사례합니다. &#11093</p>';
 
 

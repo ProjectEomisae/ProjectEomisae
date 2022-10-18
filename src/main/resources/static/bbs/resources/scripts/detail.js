@@ -40,6 +40,10 @@ const modifyMenuButton = scrapElement.querySelector('.modify');
 
 modifyMenuButton.addEventListener('click', () => {
     exportMenuButton.parentNode.querySelector('.export-info').classList.remove('on');
+    if (!modifyMenuButton.classList.contains('on')) {
+        alert('로그인을 진행해 주세요.');
+        return;
+    }
     if (!modifyMenuButton.parentNode.querySelector('.modify-info').classList.contains('on')) {
         modifyMenuButton.parentNode.querySelector('.modify-info').classList.add('on');
     } else {
@@ -149,6 +153,14 @@ window.document.querySelector('.input.comment').addEventListener('click', x => {
     }
 });
 
+window.document.querySelector('.textarea.comment').addEventListener('click', x => {
+    if (!window.document.querySelector('.textarea.comment').classList.contains('on')) {
+        x.preventDefault();
+        alert('권한이 없습니다.');
+    }
+});
+
+
 const ArticleBuy = window.document.querySelector('.buy-article');
 ArticleBuy?.addEventListener('click', x => {
     if (!ArticleBuy.classList.contains('on')) {
@@ -182,56 +194,27 @@ ArticleBuy?.addEventListener('click', x => {
 
 const ArticleLike = window.document.querySelector('.like-article');
 ArticleLike.addEventListener('click', x => {
-        if (!ArticleLike.classList.contains('on')) {
-            alert('추천할 수 없습니다.');
-            return false;
-        }
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `./${ArticleLike.querySelector('.boardIndex').value}/${ArticleLike.querySelector('.articleIndex').value}/article-like`)
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    const responseJson = JSON.parse(xhr.responseText);
-                    switch (responseJson['result']) {
-                        case 'success':
-                            ArticleLike.querySelector('.like-count').innerText = parseInt(ArticleLike.querySelector('.like-count').innerText) + 1;
-                            const userSection = window.document.querySelector('.user-section');
-                            userSection.querySelector(':scope > .like-count > b').innerText = parseInt(userSection.querySelector(':scope > .like-count > b').innerText) + 1;
-                            break;
-                        case 'not_found':
-                            alert('찾을 수 없는 게시판입니다.');
-                            break;
-                        case 'not_allowed':
-                            alert('더 이상 추천을 누를 수 없습니다.');
-                            break;
-                    }
-                } else {
-                    alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해 주세요.');
-                }
-            }
-        };
-        xhr.send();
-    });
-
-const ArticleReport = window.document.querySelector('.report-article');
-ArticleReport.addEventListener('click', x => {
-    if (!ArticleReport.classList.contains('on')) {
-        alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
+    if (!ArticleLike.classList.contains('on')) {
+        alert('추천할 수 없습니다.');
         return false;
     }
-    confirm('신고하시겠습니까? 신고된 글은 관리자가 검토 후 조치합니다.');
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `./${ArticleReport.querySelector('.boardIndex').value}/${ArticleReport.querySelector('.articleIndex').value}/article-report`)
+    xhr.open('GET', `./${ArticleLike.querySelector('.boardIndex').value}/${ArticleLike.querySelector('.articleIndex').value}/article-like`)
     xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 const responseJson = JSON.parse(xhr.responseText);
                 switch (responseJson['result']) {
                     case 'success':
-                        alert('신고가 접수되었습니다.');
+                        ArticleLike.querySelector('.like-count').innerText = parseInt(ArticleLike.querySelector('.like-count').innerText) + 1;
+                        const userSection = window.document.querySelector('.user-section');
+                        userSection.querySelector(':scope > .like-count > b').innerText = parseInt(userSection.querySelector(':scope > .like-count > b').innerText) + 1;
+                        break;
+                    case 'not_found':
+                        alert('찾을 수 없는 게시판입니다.');
                         break;
                     case 'not_allowed':
-                        alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
+                        alert('더 이상 추천을 누를 수 없습니다.');
                         break;
                 }
             } else {
@@ -241,6 +224,37 @@ ArticleReport.addEventListener('click', x => {
     };
     xhr.send();
 });
+
+const ArticleReport = window.document.querySelector('.report-article');
+ArticleReport?.addEventListener('click', x => {
+    if (!ArticleReport.classList.contains('on')) {
+        alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
+        return false;
+    }
+    if (confirm('신고하시겠습니까? 신고된 글은 관리자가 검토 후 조치합니다.')) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `./${ArticleReport.querySelector('.boardIndex').value}/${ArticleReport.querySelector('.articleIndex').value}/article-report`)
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const responseJson = JSON.parse(xhr.responseText);
+                    switch (responseJson['result']) {
+                        case 'success':
+                            alert('신고가 접수되었습니다.');
+                            break;
+                        case 'not_allowed':
+                            alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
+                            break;
+                    }
+                } else {
+                    alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해 주세요.');
+                }
+            }
+        };
+        xhr.send();
+    }
+});
+
 
 window.document.querySelector('.modify-article-report')?.addEventListener('click', () => {
     ArticleReport.click();
@@ -284,28 +298,38 @@ window.document.querySelectorAll('.comment-report').forEach(x => {
             alert('비회원이거나 혹은 한 댓글에 대한 중복 신고는 할 수 없습니다.');
             return false;
         }
-        confirm('신고하시겠습니까? 신고된 글은 관리자가 검토 후 조치합니다.');
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `./${x.querySelector('.articleIndex').value}/${x.querySelector('.commentIndex').value}/report`)
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    const responseJson = JSON.parse(xhr.responseText);
-                    switch (responseJson['result']) {
-                        case 'success':
-                            alert('신고가 접수되었습니다.');
-                            break;
-                        case 'not_allowed':
-                            alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
-                            break;
+        if (confirm('신고하시겠습니까? 신고된 글은 관리자가 검토 후 조치합니다.')) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `./${x.querySelector('.articleIndex').value}/${x.querySelector('.commentIndex').value}/report`)
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        const responseJson = JSON.parse(xhr.responseText);
+                        switch (responseJson['result']) {
+                            case 'success':
+                                alert('신고가 접수되었습니다.');
+                                break;
+                            case 'not_allowed':
+                                alert('비회원이거나 혹은 한 게시글에 대한 중복 신고는 할 수 없습니다.');
+                                break;
+                        }
+                    } else {
+                        alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해 주세요.');
                     }
-                } else {
-                    alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해 주세요.');
                 }
-            }
-        };
-        xhr.send();
+            };
+            xhr.send();
+        }
     });
 });
 
-
+//
+// const commentRowPerPage = commentElement.querySelectorAll('.user-profile');
+// const more = window.document.getElementById('more');
+// if (commentRowPerPage.length % 10 === 0) {
+//     more.classList.add('visible');
+//     more.addEventListener('click', () => {
+//     });
+// } else {
+//     more.classList.remove('visible');
+// }

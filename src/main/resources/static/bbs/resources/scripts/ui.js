@@ -25,7 +25,8 @@ userElement.forEach(x => {
             x.querySelector('.user-info').classList.add('on');
         } else {
             x.querySelector('.user-info').classList.remove('on');
-        };
+        }
+        ;
         const main = window.document.getElementById('mainContainer');
 //Hide modal
         window.addEventListener('mouseup', (e) => {
@@ -62,6 +63,22 @@ window.document.querySelector('[value=게시]').addEventListener('click', x => {
         window.document.querySelector('.textarea.content').focus();
         window.document.querySelector('.textarea.content').select();
     }
+});
+
+window.document.querySelectorAll('.submit-button').forEach(e => {
+    e.addEventListener('click', x => {
+        if (!window.document.querySelector('.submit-button').classList.contains('on')) {
+            x.preventDefault();
+            alert('권한이 없습니다.');
+            return;
+        }
+        if (e.parentNode.querySelector('.comment-input').value === '') {
+            x.preventDefault();
+            alert('내용 값은 필수입니다.');
+            e.parentNode.querySelector('.comment-input').focus();
+            e.parentNode.querySelector('.comment-input').select();
+        }
+    });
 });
 
 window.document.querySelectorAll('.menu.button').forEach(x => {

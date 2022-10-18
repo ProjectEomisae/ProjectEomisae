@@ -138,7 +138,8 @@
                                 <li class="list"
                                     th:if="${!isSearch && !boardListVo.getUrlName().contains('al')}">
                                     <!--                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()} ,criteria = ${criteria}, keyword = ${keyword})}"-->
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
+                                    <a class="link"
+                                       th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
                                        th:each="category : ${categoryEntities}"
                                        th:text="${category.getName()}"
                                        th:if="${boardListVo.getIndex() == category.getBoardIndex()}">
@@ -149,7 +150,8 @@
                                 <li class="list"
                                     th:if="${isSearch && !boardListVo.getUrlName().contains('al')}">
                                     <!--                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()} ,criteria = ${criteria}, keyword = ${keyword})}"-->
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
+                                    <a class="link"
+                                       th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
                                        th:each="category : ${categoryEntities}"
                                        th:text="${category.getName()}"
                                        th:if="${boardListVo.getIndex() == category.getBoardIndex()}">
@@ -160,7 +162,8 @@
                                 <li class="list"
                                     th:if="${!isSearch && boardListVo.getUrlName().contains('al')}">
                                     <!--                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()} ,criteria = ${criteria}, keyword = ${keyword})}"-->
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
+                                    <a class="link"
+                                       th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
                                        th:each="category : ${categoryEntities}"
                                        th:text="${category.getName()}">
                                         잡담
@@ -170,7 +173,8 @@
                                 <li class="list"
                                     th:if="${isSearch && boardListVo.getUrlName().contains('al')}">
                                     <!--                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (category=${category.getIndex()} ,criteria = ${criteria}, keyword = ${keyword})}"-->
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
+                                    <a class="link"
+                                       th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, category=${category.getIndex()})}"
                                        th:each="category : ${categoryEntities}"
                                        th:text="${category.getName()}">
                                         잡담
@@ -186,22 +190,26 @@
                             </a>
                             <ul class="align-list">
                                 <li class="list">
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, alignment=${1})}">
+                                    <a class="link"
+                                       th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, alignment=${1})}">
                                         최신순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, alignment=${2})}">
+                                    <a class="link"
+                                       th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, alignment=${2})}">
                                         조회순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, alignment=${3})}">
+                                    <a class="link"
+                                       th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, alignment=${3})}">
                                         추천순
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a class="link" th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, alignment=${4})}">
+                                    <a class="link"
+                                       th:href="@{${boardListVo.getUrlName()} (criteria = ${criteria}, keyword = ${keyword}, alignment=${4})}">
                                         댓글순
                                     </a>
                                 </li>
@@ -210,7 +218,8 @@
                     </div>
                     <div class="right">
                         <div class="function">
-                            <a class="link write" th:href="@{'/bbs/' + ${boardListVo.getUrlName() + '/add'}}" th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getLevel() >= boardListVo.getWriteLevel()} ? 'on'">
+                            <a class="link write" th:href="@{'/bbs/' + ${boardListVo.getUrlName() + '/add'}}"
+                               th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getLevel() >= boardListVo.getWriteLevel()} ? 'on'">
                                 쓰기
                             </a>
                             <a class="link search">
@@ -227,17 +236,23 @@
                 <form class="search-form" method="get">
                     <select class="criteria" name="criteria">
                         <span hidden>검색 기준</span>
-                        <option value="title-content" th:selected="${criteria == null || !criteria.equals('title-content')}">제목+내용</option>
+                        <option value="title-content"
+                                th:selected="${criteria == null || !criteria.equals('title-content')}">제목+내용
+                        </option>
                         <option value="title" th:selected="${criteria != null && criteria.equals('title')}">제목</option>
-                        <option value="content" th:selected="${criteria != null && criteria.equals('content')}">내용</option>
-                        <option value="comment" th:selected="${criteria != null && criteria.equals('comment')}">댓글</option>
-                        <option value="nickname" th:selected="${criteria != null && criteria.equals('nickname')}">닉네임</option>
+                        <option value="content" th:selected="${criteria != null && criteria.equals('content')}">내용
+                        </option>
+                        <option value="comment" th:selected="${criteria != null && criteria.equals('comment')}">댓글
+                        </option>
+                        <option value="nickname" th:selected="${criteria != null && criteria.equals('nickname')}">닉네임
+                        </option>
                         <option value="tag" th:selected="${criteria != null && criteria.equals('tag')}">태그</option>
                         <option value="link" th:selected="${criteria != null && criteria.equals('link')}">링크</option>
                     </select>
                     <label>
                         <span hidden class="hint">검색어</span>
-                        <input class="keyword" type="text" th:value="${keyword}" name="keyword" placeholder="검색어를 입력하세요.">
+                        <input class="keyword" type="text" th:value="${keyword}" name="keyword"
+                               placeholder="검색어를 입력하세요.">
                         <input hidden th:value="${category}" name="category">
                         <input hidden type="submit">
                     </label>
@@ -259,12 +274,14 @@
                 <div class="image-article-section">
                     <div class="image-articles">
                         <div class="article"
-                        th:each="article : ${boardListVo.getArticles()}">
+                             th:each="article : ${boardListVo.getArticles()}">
                             <div class="image">
                                 <a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}">
-                                    <img class="tmb"
-                                         th:src="@{/resources/images/profile.png}"
-                                         alt="">
+                                    <img class="tmb" th:if="${article.getThumbnailId() != null && article.getThumbnailId() != ''}"
+                                         th:src="@{'/bbs/thumbnail-id?thumbnailId=' + ${article.getThumbnailId()}}">
+                                    <img class="tmb" alt="썸네일 이미지"
+                                         th:if="${article.getThumbnailId() == null || article.getThumbnailId() == ''}"
+                                         th:src="@{/resources/images/profile.png}">
                                 </a>
                             </div>
                             <div class="content">
@@ -275,23 +292,23 @@
                                     <span th:text="${#dates.format(article.getWrittenAt(), 'yy.MM.dd')}">22.08.15</span>
                                 </div>
                                 <h3 class="title">
-                                    <a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}" th:text="${article.getTitle()}">
+                                    <a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}"
+                                       th:text="${article.getTitle()}">
                                         광동 선착순 2종 5,900원
                                     </a>
                                 </h3>
                             </div>
                             <div class="info">
-                                <img alt="profile" th:src="@{/resources/images/profile.png}">
-                                <span>
-                                    <div>
-                                        <img alt="3" th:src="@{/resources/images/3.gif}">
-                                        <span th:text="${article.getUserNickname()}">사용자</span>
-                                    </div>
-                                </span>
+                                <img th:if="${article.getProfileId() != null && article.getProfileId() != ''}"
+                                     th:src="@{'/user/profile-id?id=' + ${article.getProfileId()}}">
+                                <img alt="프로필 이미지"
+                                     th:if="${article.getProfileId() == null || article.getProfileId() == ''}"
+                                     th:src="@{/resources/images/profile.png}">
+                                <span th:text="${article.getUserNickname()}">사용자</span>
                             </div>
                             <div class="article-info">
                                 <span>
-                                    <i class="fa-solid fa-heart" ></i>
+                                    <i class="fa-solid fa-heart"></i>
                                     <span th:text="${article.getLike()}"></span>
                                 </span>
                                 <span>

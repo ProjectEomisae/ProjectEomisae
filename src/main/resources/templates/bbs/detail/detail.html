@@ -187,7 +187,7 @@
                                 <div class="divider"></div>
                                 <span class="comment">
                                     댓글
-                                    <b th:text="${articleReadVo.getComments().size()}">2</b>
+                                    <b th:text="${commentPaging.totalRowCount}">2</b>
                                 </span>
                                 <div class="divider"></div>
                                 <i class="fa-solid fa-clock"></i>
@@ -380,7 +380,7 @@
                                         하의
                                     </td>
                                     <td>
-                                        <span th:text="${articleReadVo.getBottom()()}"></span>
+                                        <span th:text="${articleReadVo.getBottom()}"></span>
                                     </td>
                                 </tr>
                                 <tr th:if="${#request.getRequestURI().contains('ds') || #request.getRequestURI().contains('dl')}"
@@ -389,7 +389,7 @@
                                         신발
                                     </td>
                                     <td>
-                                        <span th:text="${articleReadVo.getShoes()()}"></span>
+                                        <span th:text="${articleReadVo.getShoes()}"></span>
                                     </td>
                                 </tr>
                                 <tr th:if="${#request.getRequestURI().contains('dl')}"
@@ -398,7 +398,7 @@
                                         액세서리
                                     </td>
                                     <td>
-                                        <span th:text="${articleReadVo.getAcc()()}"></span>
+                                        <span th:text="${articleReadVo.getAcc()}"></span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -442,7 +442,7 @@
                                     <span class="like-count" th:text="${articleReadVo.getLike()}">16</span>
                                 </button>
                                 <button class="button buy-article" type="button"
-                                        th:if="${!#request.getRequestURI().contains('fe')}"
+                                        th:if="${boardListVo.getId().equals('쇼핑정보')}"
                                         th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != articleReadVo.getUserIndex()} ? 'on'"
                                         onclick="if(!classList.contains('on')) {return false}">
                                     <input class="boardIndex" type="hidden"
@@ -477,6 +477,7 @@
                                 </span>
                                 </button>
                                 <button class="button report-article" type="button"
+                                        th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != articleReadVo.getUserIndex()}"
                                         th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != articleReadVo.getUserIndex()} ? 'on'"
                                         onclick="if(!classList.contains('on')) {return false}">
                                     <input class="boardIndex" type="hidden"
@@ -484,7 +485,7 @@
                                     <input class="articleIndex" type="hidden"
                                            th:value="${articleReadVo.getIndex()}">
                                     <input class="urlName" type="hidden" th:value="${urlName}">
-                                <span>
+                                    <span>
                                     <span>
                                         <i class="fa fa-trash-o"></i>
                                     </span>
@@ -533,7 +534,8 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="modify">
+                                    <div class="modify"
+                                         th:classappend="${#request.getAttribute('user') != null} ? 'on'">
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </div>
                                     <div class="modify-info">
@@ -552,7 +554,9 @@
                                                     삭제</a>
                                             </li>
                                             <li class="list modify-article-report"
-                                                th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() != #request.getAttribute('user').getIndex()}">
+                                                th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() != #request.getAttribute('user').getIndex()}"
+                                                th:classappend="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() != articleReadVo.getUserIndex()} ? 'on'"
+                                                onclick="if(!classList.contains('on')) {return false}">
                                                 <span class="link">
                                                     신고</span>
                                             </li>
@@ -572,13 +576,17 @@
                     </a>
                 </div>
                 <div class="page">
-                    <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getIndex() + 1}}">
+                    <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getPrev()}}"
+                       th:if="${articleReadVo.getPrev() != 0}">
                         <i class="fa-solid fa-angle-left"></i>
                         이전 글
                     </a>
-                    <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getIndex() - 1}}">
+                    <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getNext()}}"
+                       th:if="${articleReadVo.getNext() != 0}">
+<!--                       th:if="${boardListVo.getArticles().get(0).getIndex() != articleReadVo.getIndex()}">-->
                         다음 글
                         <i class="fa-solid fa-angle-right"></i>
+                    </a>
                     </a>
                 </div>
             </div>
@@ -588,7 +596,7 @@
             <div class="comment-container">
                 <div class="title">
                     <span>댓글</span>
-                    <b th:text="${articleReadVo.getComments().size()}">10</b>
+                    <b th:text="${commentPaging.totalRowCount}">10</b>
                 </div>
                 <div class="comment" th:each="comment : ${articleReadVo.getComments()}"
                      th:if="${comment.getDepth() == 0}">
@@ -625,13 +633,14 @@
                                         </ul>
                                     </div>
                                     <div class="divider"></div>
-                                    <span class="date">22.08.19</span>
+                                    <span class="date"
+                                          th:text="${#dates.format(comment.getWrittenAt(), 'yy.MM.dd')}">22.08.19</span>
                                     <span class="writer-article"
                                           th:if="${articleReadVo.getUserIndex() == comment.getUserIndex()}">
                                     글 작성자
                                 </span>
                                 </div>
-                                <div class="function">
+                                <div class="function" th:if="${comment.isDeleted() != true}">
                                 <span class="comment">
                                     <i class="fa-solid fa-comments"></i>
                                     <a class="link answer">
@@ -659,7 +668,8 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == comment.getUserIndex()}">
-                                            <a class="link" th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${comment.getIndex()} + '/modify'}">
+                                            <a class="link"
+                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${comment.getIndex()} + '/modify'}">
                                                 수정
                                             </a>
                                         </li>
@@ -680,7 +690,7 @@
                                             <input class="commentIndex" type="hidden"
                                                    th:value="${comment.getIndex()}">
                                             <input class="urlName" type="hidden" th:value="${urlName}">
-                                                <span class="link">
+                                            <span class="link">
                                                     신고</span>
                                         </li>
                                     </ul>
@@ -715,6 +725,9 @@
                                             </label>
                                         </div>
                                         <div class="option">
+                                            <a class="textarea"
+                                               th:href="@{'./' + ${articleReadVo.getIndex()} + '/add' (pid=${comment.getIndex()}, depth=1, pUid=${comment.getUserIndex()})}">에디터
+                                                사용하기</a>
                                             <input class="input" type="submit" value="댓글 달기">
                                         </div>
                                     </form>
@@ -731,7 +744,8 @@
                         <div class="user-profile">
                             <img th:if="${recomment.getProfileId() != null && recomment.getProfileId() != ''}"
                                  th:src="@{'/user/profile-id?id=' + ${recomment.getProfileId()}}">
-                            <img alt="프로필 이미지" th:if="${recomment.getProfileId() == null || recomment.getProfileId() == ''}"
+                            <img alt="프로필 이미지"
+                                 th:if="${recomment.getProfileId() == null || recomment.getProfileId() == ''}"
                                  th:src="@{/resources/images/profile.png}">
                         </div>
                         <div class="user-content">
@@ -760,13 +774,14 @@
                                         </ul>
                                     </div>
                                     <div class="divider"></div>
-                                    <span class="date">22.08.19</span>
+                                    <span class="date"
+                                          th:text="${#dates.format(recomment.getWrittenAt(), 'yy.MM.dd')}">22.08.19</span>
                                     <span class="writer-article"
                                           th:if="${articleReadVo.getUserIndex() == recomment.getUserIndex()}">
                                     글 작성자
                                 </span>
                                 </div>
-                                <div class="function">
+                                <div class="function" th:if="${recomment.isDeleted() != true}">
                                 <span class="comment">
                                     <i class="fa-solid fa-comments"></i>
                                     <a class="link answer">
@@ -794,7 +809,8 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == recomment.getUserIndex()}">
-                                            <a class="link" th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${recomment.getIndex()} + '/modify'}">
+                                            <a class="link"
+                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${recomment.getIndex()} + '/modify'}">
                                                 수정
                                             </a>
                                         </li>
@@ -852,6 +868,9 @@
                                             </label>
                                         </div>
                                         <div class="option">
+                                            <a class="textarea"
+                                               th:href="@{'./' + ${articleReadVo.getIndex()} + '/add' (pid=${comment.getIndex()}, depth=2, pUid=${recomment.getUserIndex()})}">에디터
+                                                사용하기</a>
                                             <input class="input" type="submit" value="댓글 달기">
                                         </div>
                                     </form>
@@ -867,7 +886,8 @@
                         <div class="user-profile">
                             <img th:if="${rerecomment.getProfileId() != null && rerecomment.getProfileId() != ''}"
                                  th:src="@{'/user/profile-id?id=' + ${rerecomment.getProfileId()}}">
-                            <img alt="프로필 이미지" th:if="${rerecomment.getProfileId() == null || rerecomment.getProfileId() == ''}"
+                            <img alt="프로필 이미지"
+                                 th:if="${rerecomment.getProfileId() == null || rerecomment.getProfileId() == ''}"
                                  th:src="@{/resources/images/profile.png}">
                         </div>
                         <div class="user-content">
@@ -896,13 +916,14 @@
                                         </ul>
                                     </div>
                                     <div class="divider"></div>
-                                    <span class="date">22.08.19</span>
+                                    <span class="date"
+                                          th:text="${#dates.format(rerecomment.getWrittenAt(), 'yy.MM.dd')}">22.08.19</span>
                                     <span class="writer-article"
                                           th:if="${articleReadVo.getUserIndex() == rerecomment.getUserIndex()}">
                                     글 작성자
                                 </span>
                                 </div>
-                                <div class="function">
+                                <div class="function" th:if="${rerecomment.isDeleted() != true}">
                                 <span class="comment">
                                     <i class="fa-solid fa-comments"></i>
                                     <a class="link answer">
@@ -930,7 +951,8 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == rerecomment.getUserIndex()}">
-                                            <a class="link" th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${rerecomment.getIndex()} + '/modify'}">
+                                            <a class="link"
+                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${rerecomment.getIndex()} + '/modify'}">
                                                 수정
                                             </a>
                                         </li>
@@ -988,6 +1010,9 @@
                                             </label>
                                         </div>
                                         <div class="option">
+                                            <a class="textarea"
+                                               th:href="@{'./' + ${articleReadVo.getIndex()} + '/add' (pid=${comment.getIndex()}, depth=2, pUid=${rerecomment.getUserIndex()})}">에디터
+                                                사용하기</a>
                                             <input class="input" type="submit" value="댓글 달기">
                                         </div>
                                     </form>
@@ -995,6 +1020,64 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="more" id="more" th:if="${commentPaging.totalRowCount > 20}">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div class="page-container">
+                                    <div class="page-section" th:if="${!isSearch}">
+                                        <a th:href="@{'./' + ${articleReadVo.getIndex()} (commentPage=${commentPaging.minPage})}"
+                                           th:text="${commentPaging.minPage}"
+                                           th:if="${commentPaging.requestPage > 7}">
+                                        </a>
+                                        <a th:href="@{'./' + ${articleReadVo.getIndex()} (commentPage=${commentPage})}"
+                                           th:each="commentPage : ${#numbers.sequence(commentPaging.boundStartPage, commentPaging.requestPage - 1)}"
+                                           th:text="${commentPage}"
+                                           th:if="${commentPaging.requestPage > commentPaging.boundStartPage}">
+                                        </a>
+                                        <a th:text="${commentPaging.requestPage}"
+                                           th:classappend="${commentPaging.requestPage} ? 'selected'">
+                                        </a>
+                                        <a th:href="@{'./' + ${articleReadVo.getIndex()} (commentPage=${commentPage})}"
+                                           th:each="commentPage : ${#numbers.sequence(commentPaging.requestPage + 1, commentPaging.boundEndPage - 1)}"
+                                           th:text="${commentPage}"
+                                           th:if="${commentPaging.requestPage < commentPaging.boundEndPage && commentPaging.boundEndPage > commentPage && commentPage != commentPaging.requestPage }">
+                                        </a>
+                                        <a th:href="@{'./' + ${articleReadVo.getIndex()} (commentPage=${commentPaging.maxPage})} "
+                                           th:text="${commentPaging.maxPage}"
+                                           th:if="${commentPaging.requestPage != commentPaging.maxPage}">
+                                        </a>
+                                    </div>
+                                    <div class="page-section" th:if="${isSearch}">
+                                        <a th:href="@{'./' + ${aid} (commentPage=${commentPaging.minPage}, criteria = ${criteria}, keyword = ${keyword}, category=${category})}"
+                                           th:text="${commentPaging.minPage}"
+                                           th:if="${commentPaging.requestPage > 7}">
+                                        </a>
+                                        <a th:href="@{'./' + ${aid} (commentPage=${commentPage}, criteria = ${criteria}, keyword = ${keyword}, category=${category})}"
+                                           th:each="commentPage : ${#numbers.sequence(commentPaging.boundStartPage, commentPaging.requestPage - 1)}"
+                                           th:text="${commentPage}"
+                                           th:if="${commentPaging.requestPage > commentPaging.boundStartPage}">
+                                        </a>
+                                        <a th:text="${commentPaging.requestPage}"
+                                           th:classappend="${commentPaging.requestPage} ? 'selected'">
+                                        </a>
+                                        <a th:href="@{'./' + ${aid} (commentPage=${commentPage}, criteria = ${criteria}, keyword = ${keyword}, category=${category})}"
+                                           th:each="commentPage : ${#numbers.sequence(commentPaging.requestPage + 1, commentPaging.boundEndPage - 1)}"
+                                           th:text="${commentPage}"
+                                           th:if="${commentPaging.requestPage < commentPaging.boundEndPage && commentPaging.boundEndPage > commentPage && commentPage != commentPaging.requestPage }">
+                                        </a>
+                                        <a th:href="@{'./' + ${aid} (commentPage=${commentPaging.maxPage}, criteria = ${criteria}, keyword = ${keyword}, category=${category})}"
+                                           th:text="${commentPaging.maxPage}"
+                                           th:if="${commentPaging.requestPage != commentPaging.maxPage}">
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="write-comment">
                     <div class="write-box">
@@ -1011,6 +1094,8 @@
                                 </label>
                             </div>
                             <div class="option">
+                                <a class="textarea comment" th:href="@{'./' + ${articleReadVo.getIndex()} + '/add'}"
+                                   th:classappend="${#request.getAttribute('user') != null} ? 'on'">에디터 사용하기</a>
                                 <input class="input comment" type="submit" value="댓글 달기"
                                        th:classappend="${#request.getAttribute('user') != null} ? 'on'">
                             </div>
@@ -1281,8 +1366,11 @@
                             </td>
                             <td class="user box">
                                 <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
-                                         alt="profile" title="어미새">
+                                    <img th:if="${article.getProfileId() != null && article.getProfileId() != ''}"
+                                         th:src="@{'/user/profile-id?id=' + ${article.getProfileId()}}">
+                                    <img alt="프로필 이미지"
+                                         th:if="${article.getProfileId() == null || article.getProfileId() == ''}"
+                                         th:src="@{/resources/images/profile.png}">
                                     <span th:text="${article.getUserNickname()}">어미새</span>
                                 </div>
                                 <div class="user-info">
@@ -1342,8 +1430,11 @@
                             </td>
                             <td class="user box">
                                 <div class="user-name">
-                                    <img src="//img.eomisae.co.kr/files/member_extra_info/profile_image/004/4.png?20201223213311"
-                                         alt="profile" title="어미새">
+                                    <img th:if="${article.getProfileId() != null && article.getProfileId() != ''}"
+                                         th:src="@{'/user/profile-id?id=' + ${article.getProfileId()}}">
+                                    <img alt="프로필 이미지"
+                                         th:if="${article.getProfileId() == null || article.getProfileId() == ''}"
+                                         th:src="@{/resources/images/profile.png}">
                                     <span th:text="${article.getUserNickname()}">어미새</span>
                                 </div>
                                 <div class="user-info">
@@ -1378,9 +1469,11 @@
                              th:each="article : ${boardListVo.getArticles()}">
                             <div class="image">
                                 <a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}">
-                                    <img class="tmb"
-                                         th:src="@{/resources/images/profile.png}"
-                                         alt="">
+                                    <img class="tmb" th:if="${article.getThumbnailId() != null && article.getThumbnailId() != ''}"
+                                         th:src="@{'/bbs/thumbnail-id?thumbnailId=' + ${article.getThumbnailId()}}">
+                                    <img class="tmb" alt="썸네일 이미지"
+                                         th:if="${article.getThumbnailId() == null || article.getThumbnailId() == ''}"
+                                         th:src="@{/resources/images/profile.png}">
                                 </a>
                             </div>
                             <div class="content">
@@ -1398,10 +1491,13 @@
                                 </h3>
                             </div>
                             <div class="info">
-                                <img alt="profile" th:src="@{/resources/images/profile.png}">
+                                <img class="profile" th:if="${article.getProfileId() != null && article.getProfileId() != ''}"
+                                     th:src="@{'/user/profile-id?id=' + ${article.getProfileId()}}">
+                                <img class="profile" alt="프로필 이미지"
+                                     th:if="${article.getProfileId() == null || article.getProfileId() == ''}"
+                                     th:src="@{/resources/images/profile.png}">
                                 <span>
                                     <div>
-                                        <img alt="3" th:src="@{/resources/images/3.gif}">
                                         <span th:text="${article.getUserNickname()}">사용자</span>
                                     </div>
                                 </span>

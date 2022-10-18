@@ -182,9 +182,20 @@ public class BoardListService {
         joinCommentDeleteVo.setResult(JoinCommentDeleteResult.SUCCESS);
         this.boardListMapper.deleteJoinComment(joinCommentEntity);
     }
-
     public CategoryEntity[] getCategories() {
         return this.boardListMapper.selectCategories();
+    }
+    public GenderEntity[] getGenders() {
+        return this.boardListMapper.selectGenders();
+    }
+    public ProductStatusEntity[] getProductStatuses() {
+        return this.boardListMapper.selectProductStatuses();
+    }
+    public TradeMethodEntity[] getTradeMethods() {
+        return this.boardListMapper.selectTradeMethods();
+    }
+    public CurrencyEntity[] getCurrencies() {
+        return this.boardListMapper.selectCurrencies();
     }
 
     // 모든 게시판 게시글 불러오기
@@ -195,6 +206,21 @@ public class BoardListService {
     // 모든 게시판 최신 게시글 6개 불러오기
     public List<BoardListArticleDto> getNewArticlesForAll() {
         return this.boardListMapper.selectNewArticlesForAll();
+    }
+
+    // 쇼핑 정보 게시판의 최신 게시글 6개 불러오기
+    public List<BoardListArticleDto> getArticleForSale() {
+        return this.boardListMapper.selectArticlesForSale();
+    }
+
+    // 실사 후기 게시판의 최신 게시글 6개 불러오기
+    public List<BoardListArticleDto> getArticleForRealImage() {
+        return this.boardListMapper.selectArticlesForRealImage();
+    }
+
+    // 데일리룩 게시판의 최신 게시글 6개 불러오기
+    public List<BoardListArticleDto> getArticleForDailyImage() {
+        return this.boardListMapper.selectArticlesForDailyImage();
     }
 
     // 공지사항 게시판용
@@ -224,7 +250,7 @@ public class BoardListService {
             boardListVo.setResult(BoardListResult.NOT_FOUND);
             return;
         }
-        boardListVo.setArticles(boardListArticleDtoList);
+//        boardListVo.setArticles(boardListArticleDtoList);
         List<BoardListArticleDto> articles = this.boardListMapper.selectArticlesForBoardListAll(
                 pagingModel.rowCountPerPage,
                 (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
@@ -246,7 +272,7 @@ public class BoardListService {
         boardListVo.setResult(BoardListResult.SUCCESS);
     }
 
-    public void readComment(BoardListVo boardListVo, PagingModel pagingModel) {
+    public void readJoinComment(BoardListVo boardListVo, PagingModel pagingModel) {
         BoardEntity boardEntity = this.boardListMapper.selectBoardByUrlName(boardListVo.getUrlName());
         if (boardEntity == null || boardEntity.getIndex() == 0) {
             boardListVo.setResult(BoardListResult.NOT_FOUND);
