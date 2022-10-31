@@ -20,8 +20,8 @@ ClassicEditor
     //         alert('ok');
     //     }
     // });
-
 });
+
 
 
 
@@ -81,15 +81,123 @@ window.document.querySelector('.submit-button').addEventListener('click', e => {
         e.preventDefault();
         alert('내용을 입력해 주세요.');
         window.document.querySelector('[name=content]').focus();
+        window.document.querySelector('[name=content]').select();
         return false;
     }
+
+    if (window.document.querySelector('[name=url]')?.value === '') {
+        e.preventDefault();
+        alert('링크는 필수 입력 값입니다.');
+        window.document.querySelector('[name=url]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=orderDate]')?.value === '') {
+        e.preventDefault();
+        alert('주문날짜는 필수 입력 값입니다.');
+        window.document.querySelector('[name=orderDate]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=shoppingMall]')?.value === '') {
+        e.preventDefault();
+        alert('쇼핑몰은 필수 입력 값입니다.');
+        window.document.querySelector('[name=shoppingMall]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=brand]')?.value === '') {
+        e.preventDefault();
+        alert('브랜드명은 필수 입력 값입니다.');
+        window.document.querySelector('[name=brand]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=productName]')?.value === '') {
+        e.preventDefault();
+        alert('상품명은 필수 입력 값입니다.');
+        window.document.querySelector('[name=productName]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=productSize]')?.value === '') {
+        e.preventDefault();
+        alert('상품 사이즈는 필수 입력 값입니다.');
+        window.document.querySelector('[name=productSize]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=productPrice]')?.value === '') {
+        e.preventDefault();
+        alert('상품 가격은 필수 입력 값입니다.');
+        window.document.querySelector('[name=productPrice]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=shoes]')?.value === '') {
+        e.preventDefault();
+        alert('신발은 필수 입력 값입니다.');
+        window.document.querySelector('[name=shoes]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=gender]')?.value === '') {
+        e.preventDefault();
+        alert('성별은 필수 입력 값입니다.');
+        window.document.querySelector('[name=gender]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=productStatus]')?.value === '') {
+        e.preventDefault();
+        alert('제품 상태는 필수 입력 값입니다.');
+        window.document.querySelector('[name=productStatus]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=tradeMethod]')?.value === '') {
+        e.preventDefault();
+        alert('거래 방법은 필수 입력 값입니다.');
+        window.document.querySelector('[name=tradeMethod]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=purchaseProductPrice]')?.value === '') {
+        e.preventDefault();
+        alert('구매 가격은 필수 입력 값입니다.');
+        window.document.querySelector('[name=purchaseProductPrice]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=saleProductPrice]')?.value === '') {
+        e.preventDefault();
+        alert('판매 가격은 필수 입력 값입니다.');
+        window.document.querySelector('[name=saleProductPrice]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=mySize]')?.value === '') {
+        e.preventDefault();
+        alert('본인 사이즈는 필수 입력 값입니다.');
+        window.document.querySelector('[name=mySize]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=exchangeSize]')?.value === '') {
+        e.preventDefault();
+        alert('교환 사이즈는 필수 입력 값입니다.');
+        window.document.querySelector('[name=exchangeSize]').focus();
+        return false;
+    }
+
+    if (window.document.querySelector('[name=contact]')?.value === '') {
+        e.preventDefault();
+        alert('연락처는 필수 입력 값입니다.');
+        window.document.querySelector('[name=contact]').focus();
+        return false;
+    }
+
     if (editorContent.getData().includes('img')) {
-        // const input = window.document.createElement('input');
-        // input.setAttribute('type', 'hidden');
-        // input.classList.add('inputImage');
-        // input.value = editorContent.getData();
-        // input.innerText = editorContent.getData();
-        // form.append(input);
         window.document.querySelector('[name=thumbnailId]').value = editorContent.getData().split('id=').at(-1).split('"')[0];
     }
 });
@@ -194,5 +302,52 @@ window.document.querySelector('.submit-button').addEventListener('click', e => {
 //     '            <p>> 사례 하겠습니다. &#10060</p>\n' +
 //     '            <p>> 기프티콘으로 사례합니다. &#10060</p>\n' +
 //     '            <p>> 스타벅스 카페라떼 Tall 기프티콘으로 사례합니다. &#11093</p>';
+
+
+function inputNumberFormat(obj) {
+    obj.value = comma(uncomma(obj.value));
+}
+
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+
+const nowDate = new Date();
+// const timeOff = new Date().getTimezoneOffset()*60000;
+const today = new Date(nowDate).toISOString().split("T")[0]; // -32400000
+// new Date(nowDate-timeOff).toISOString() : '2022-08-16T15:12:43.351Z' "T"를 기준으로 나누고 0번째 문자열 뽑아냄.
+document.getElementById("date").setAttribute("max", today);
+// input date의 max 범위 값을 오늘 날짜로 제한
+
+// UTC : 세계시 toISOString 함수는 UTC 시간을 기준으로 반환한다.
+// 한국 : UTC+9 이라서 UTC 와 9시간차이의 오프셋을 가지고 있다.
+// UTC 는 YYYY-MM-DD 형식의 문자열으로 반환을 하기 때문에 오프셋을 변경할 필요가 있다.
+// 현재 시간과의 차이를 분 단위로 반환하는 getTimezoneOffset() 함수를 사용한다.
+// 분 단위로 반환하기 때문에 기존 밀리초 단위로 인자를 받는 new Date() 함수에 넣기 위해서 1000(밀리초)*60(초) 를 곱해 밀리초 단위로 만든다.
+// 이후 현재 시간과의 차이만큼 빼어 시간을 설정하면 된다.
+
+const limitDay = new Date(nowDate.setDate(nowDate.getDate() -3));
+// Wed Oct 26 2022 19:05:41 GMT+0900 (한국 표준시)
+// 오늘 날짜 -3일
+
+const firstDay = new Date(limitDay).toISOString().split("T")[0];
+// '2022-10-26'
+document.getElementById("date").setAttribute("min", firstDay);
+// input date의 min 범위 값을 오늘 날짜 기준 3일 전으로 제한
+
+
+
+
+
+
+
+
+
 
 

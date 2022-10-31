@@ -177,45 +177,38 @@
     <update id="updateArticle"
             parameterType="dev.dmchoi.eomisae.vos.bbs.ArticleWriteVo">
         UPDATE `eomisae_article`.`articles`
-        SET `index`                   = #{index},
-            `user_index`              = #{userIndex},
-            `board_index`             = #{boardIndex},
-            `board_urlName`           = #{boardUrlName},
-            `written_at`              = #{writtenAt},
-            `title`                   = #{title},
-            `tag`                     = #{tag},
-            `url`                     = #{url},
-            `discount_code`           = #{discountCode},
-            `shipping_info`           = #{shippingInfo},
-            `order_date`              = #{orderDate},
-            `shopping_mall`           = #{shoppingMall},
-            `contact`                 = #{contact},
-            `brand`                   = #{brand},
-            `product_name`            = #{productName},
-            `product_size`            = #{productSize},
-            `my_size`                 = #{mySize},
-            `exchange_size`           = #{exchangeSize},
-            `currency_for_product`    = #{currencyForProduct},
-            `product_price`           = #{productPrice},
-            `currency_for_purchasing` = #{currencyForPurchasing},
-            `purchase_product_price`  = #{purchaseProductPrice},
-            `currency_for_sailing`    = #{currencyForSailing},
-            `sale_product_price`      = #{saleProductPrice},
-            `outer`                   = #{outer},
-            `top`                     = #{top},
-            `bottom`                  = #{bottom},
-            `shoes`                   = #{shoes},
-            `acc`                     = #{acc},
-            `content`                 = #{content},
-            `view`                    = #{view},
-            `like`                    = #{like},
-            `buy`                     = #{buy},
-            `category_index`          = #{categoryIndex},
-            `gender`                  = #{gender},
-            `product_status`          = #{productStatus},
-            `trade_method`            = #{tradeMethod},
-            `thumbnail_id`            = #{thumbnailId},
-            `blind_status`            = #{blindStatus}
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">`title` = #{title},</if>
+            <if test="tag != null and tag != ''">`tag` = #{tag},</if>
+            <if test="url != null">`url` = #{url},</if>
+            <if test="discountCode != null">`discount_code` = #{discountCode},</if>
+            <if test="shippingInfo != null">`shipping_info` = #{shippingInfo},</if>
+            <if test="orderDate != null">`order_date` = #{orderDate},</if>
+            <if test="shoppingMall != null">`shopping_mall` = #{shoppingMall},</if>
+            <if test="contact != null">`contact` = #{contact},</if>
+            <if test="brand != null">`brand` = #{brand},</if>
+            <if test="productName != null">`product_name` = #{productName},</if>
+            <if test="productSize != null">`product_size` = #{productSize},</if>
+            <if test="mySize != null">`my_size` = #{mySize},</if>
+            <if test="exchangeSize != null">`exchange_size` = #{exchangeSize},</if>
+            <if test="currencyForProduct != null">`currency_for_product` = #{currencyForProduct},</if>
+            <if test="productPrice != null">`product_price` = #{productPrice},</if>
+            <if test="currencyForPurchasing != null">`currency_for_purchasing` = #{currencyForPurchasing},</if>
+            <if test="purchaseProductPrice != null">`purchase_product_price` = #{purchaseProductPrice},</if>
+            <if test="currencyForSailing != null">`currency_for_sailing` = #{currencyForSailing},</if>
+            <if test="saleProductPrice != null">`sale_product_price` = #{saleProductPrice},</if>
+            <if test="outer != null">`outer` = #{outer},</if>
+            <if test="top != null">`top` = #{top},</if>
+            <if test="bottom != null">`bottom` = #{bottom},</if>
+            <if test="shoes != null">`shoes` = #{shoes},</if>
+            <if test="acc != null">`acc` = #{acc},</if>
+            <if test="content != null">`content` = #{content},</if>
+            <if test="categoryIndex != null">`category_index` = #{categoryIndex},</if>
+            <if test="gender != null">`gender` = #{gender},</if>
+            <if test="productStatus != null">`product_status` = #{productStatus},</if>
+            <if test="tradeMethod != null">`trade_method` = #{tradeMethod},</if>
+            <if test="thumbnailId != null">`thumbnail_id` = #{thumbnailId}</if>
+        </trim>
         WHERE `index` = #{index}
         LIMIT 1
     </update>
@@ -223,17 +216,8 @@
     <update id="updateArticleComment"
             parameterType="dev.dmchoi.eomisae.entities.bbs.CommentEntity">
         UPDATE `eomisae_comment`.`comments`
-        SET `index`             = #{index},
-            `article_index`     = #{articleIndex},
-            `user_index`        = #{userIndex},
-            `content`           = #{content},
-            `written_at`        = #{writtenAt},
-            `parent_index`      = #{parentIndex},
-            `parent_user_index` = #{parentUserIndex},
-            `depth`             = #{depth},
-            `like`              = #{like},
-            `deleted_flag`      = #{isDeleted},
-            `blind_status`      = #{blindStatus}
+        SET
+        <if test="content != null">`content` = #{content}</if>
         WHERE `index` = #{index}
         LIMIT 1
     </update>

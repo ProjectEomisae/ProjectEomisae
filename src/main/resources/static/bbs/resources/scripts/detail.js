@@ -3,7 +3,7 @@ const commentMenuButton = commentElement.querySelectorAll('.menu');
 
 commentMenuButton.forEach(x => {
     x.addEventListener('click', () => {
-        Array.from(commentMenuButton).filter(el => el !== x).forEach(e => e.parentNode.querySelector(':scope > .menu-list').classList.remove('on'));
+        Array.from(commentMenuButton).filter(el => el !== x).forEach(e => e.parentNode.querySelector('.menu-list').classList.remove('on'));
         if (!x.parentNode.querySelector('.menu-list').classList.contains('on')) {
             x.parentNode.querySelector('.menu-list').classList.add('on');
         } else {
@@ -199,7 +199,7 @@ ArticleLike.addEventListener('click', x => {
         return false;
     }
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `./${ArticleLike.querySelector('.boardIndex').value}/${ArticleLike.querySelector('.articleIndex').value}/article-like`)
+    xhr.open('PUT', `./${ArticleLike.querySelector('.boardIndex').value}/${ArticleLike.querySelector('.articleIndex').value}/article-like`)
     xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status >= 200 && xhr.status < 300) {
@@ -267,7 +267,7 @@ window.document.querySelectorAll('.like').forEach(x => {
             return false;
         }
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `./${x.querySelector('.articleIndex').value}/${x.querySelector('.commentIndex').value}/like`)
+        xhr.open('PUT', `./${x.querySelector('.articleIndex').value}/${x.querySelector('.commentIndex').value}/like`)
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status >= 200 && xhr.status < 300) {
@@ -333,3 +333,41 @@ window.document.querySelectorAll('.comment-report').forEach(x => {
 // } else {
 //     more.classList.remove('visible');
 // }
+
+
+
+
+// const commentDeleteForm = window.document.querySelectorAll('.commentDeleteForm');
+// const commentDelete = window.document.querySelectorAll('.link.delete');
+//
+// commentDelete.forEach(x => {
+//     x.addEventListener('click', () => {
+//         const urlName = x.parentNode.querySelector('.urlName').value;
+//         const cid = x.parentNode.querySelector('.commentIndex').value;
+//         const method = window.document.querySelector("[name=_method]").value;
+//         if (confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')) {
+//             const xhr = new XMLHttpRequest();
+//             xhr.open('POST', `./${cid}/comment-delete`, true)
+//             xhr.onreadystatechange = () => {
+//                 if (xhr.readyState === XMLHttpRequest.DONE) {
+//                     if (xhr.status >= 200 && xhr.status < 300) {
+//                         const responseJson = JSON.parse(xhr.responseText);
+//                         switch (responseJson['result']) {
+//                             case 'success':
+//                                 window.location.href = '';
+//                                 break;
+//                             default:
+//                                 alert('실패하였습니다.');
+//                                 break;
+//                         }
+//                     } else {
+//                         alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해 주세요.');
+//                     }
+//                 }
+//             };
+//             xhr.send();
+//         }
+//     });
+// });
+
+

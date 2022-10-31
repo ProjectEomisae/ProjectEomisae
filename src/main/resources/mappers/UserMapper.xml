@@ -60,6 +60,14 @@
         LIMIT 1
     </select>
 
+    <select id="selectUserIndexByEmail"
+            resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
+        SELECT `index` AS `index`
+        FROM `eomisae_member`.`users`
+        WHERE `email` = #{email}
+        LIMIT 1
+    </select>
+
     <select id="selectUserPasswordByIndex"
             resultType="dev.dmchoi.eomisae.entities.member.UserEntity">
         SELECT `index`    AS `index`,

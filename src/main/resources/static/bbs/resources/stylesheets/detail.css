@@ -347,7 +347,8 @@
     transition: all 150ms;
 }
 
-#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .scrap-container > .function > .right > .modify-info > .modify-menu > .list > .link {
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .scrap-container > .function > .right > .modify-info > .modify-menu > .list > .link,
+#main > .main-container > .main-section > .detail-container > .article-container > .article-section > .scrap-container > .function > .right > .modify-info > .modify-menu > .list > form > .link {
     box-sizing: border-box;
     color: rgb(var(--color-black-77));
     cursor: pointer;
@@ -596,7 +597,8 @@
     text-transform: none;
 }
 
-#main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .top > .function > .menu-list > .list > .link {
+#main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .top > .function > .menu-list > .list > .link,
+#main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .top > .function > .menu-list > .list > form {
     color: rgb(var(--color-black-77));
     display: block;
     font-size: 0.75rem;
@@ -605,7 +607,14 @@
     padding: 0 0.75rem;
 }
 
-#main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .top > .function > .menu-list > .list > .link:hover {
+#main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .top > .function > .menu-list > .list > form > .link {
+    width: 100%;
+    cursor: pointer;
+    text-align: left;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .top > .function > .menu-list > .list > .link:hover,
+#main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .top > .function > .menu-list > .list > form:hover {
     background-color: rgb(var(--color-white-fa));
     color: rgb(var(--color-black-77));
     display: block;
@@ -614,6 +623,12 @@
     line-height: 2.25rem;
     padding: 0 0.80rem;
     transition: all 50ms;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .top > .function > .menu-list > .list > form > .link > input {
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
 }
 
 #main > .main-container > .main-section > .comment-container > .comment > .comment-box > .user-content > .down {
@@ -826,7 +841,8 @@
     text-transform: none;
 }
 
-#main > .main-container > .main-section > .comment-container > .comment > .recomment > .user-content > .top > .function > .menu-list > .list > .link {
+#main > .main-container > .main-section > .comment-container > .comment > .recomment > .user-content > .top > .function > .menu-list > .list > .link,
+#main > .main-container > .main-section > .comment-container > .comment > .recomment > .user-content > .top > .function > .menu-list > .list > form {
     color: rgb(var(--color-black-77));
     display: block;
     font-size: 0.75rem;
@@ -835,7 +851,14 @@
     padding: 0 0.75rem;
 }
 
-#main > .main-container > .main-section > .comment-container > .comment > .recomment > .user-content > .top > .function > .menu-list > .list > .link:hover {
+#main > .main-container > .main-section > .comment-container > .comment > .recomment > .user-content > .top > .function > .menu-list > .list > form > .link {
+    width: 100%;
+    cursor: pointer;
+    text-align: left;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .recomment > .user-content > .top > .function > .menu-list > .list > .link:hover,
+#main > .main-container > .main-section > .comment-container > .comment > .recomment > .user-content > .top > .function > .menu-list > .list > form:hover {
     background-color: rgb(var(--color-white-fa));
     color: rgb(var(--color-black-77));
     display: block;
@@ -1070,7 +1093,8 @@
     text-transform: none;
 }
 
-#main > .main-container > .main-section > .comment-container > .comment > .re-recomment > .user-content > .top > .function > .menu-list > .list > .link {
+#main > .main-container > .main-section > .comment-container > .comment > .re-recomment > .user-content > .top > .function > .menu-list > .list > .link,
+#main > .main-container > .main-section > .comment-container > .comment > .re-recomment > .user-content > .top > .function > .menu-list > .list > form {
     color: rgb(var(--color-black-77));
     display: block;
     font-size: 0.75rem;
@@ -1079,7 +1103,14 @@
     padding: 0 0.75rem;
 }
 
-#main > .main-container > .main-section > .comment-container > .comment > .re-recomment > .user-content > .top > .function > .menu-list > .list > .link:hover {
+#main > .main-container > .main-section > .comment-container > .comment > .re-recomment > .user-content > .top > .function > .menu-list > .list > form > .link {
+    width: 100%;
+    cursor: pointer;
+    text-align: left;
+}
+
+#main > .main-container > .main-section > .comment-container > .comment > .re-recomment > .user-content > .top > .function > .menu-list > .list > .link:hover,
+#main > .main-container > .main-section > .comment-container > .comment > .re-recomment > .user-content > .top > .function > .menu-list > .list > form:hover{
     background-color: rgb(var(--color-white-fa));
     color: rgb(var(--color-black-77));
     display: block;
@@ -1093,8 +1124,8 @@
 #main > .main-container > .main-section > .comment-container > .comment > .re-recomment > .user-content > .down {
     width: 100%;
     font-size: 0.75rem;
-    padding: 0.5rem 0 0;
     font-weight: 400;
+    padding: 0.5rem 0 0;
     line-height: 1.375rem;
 }
 

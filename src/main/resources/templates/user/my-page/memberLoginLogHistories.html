@@ -43,7 +43,7 @@
             <tbody>
             <tr th:each="activityLog : ${activityLogEntities}">
                 <td th:text="${activityLog.getIndex()}">2</td>
-                <td th:text="${activityLog.getResult().equals('SUCCESS') ? '[성공]' : '[실패]'}" class="login-failed">[실패]</td>
+                <td th:text="${activityLog.getResult()}" class="login-failed">[실패]</td>
                 <td th:text="${activityLog.getClientIp()}">58.149.46.252</td>
                 <td th:text="${activityLog.getClientUa()}">Apple (Chrome 104.0.0.0)</td>
                 <td th:text="${#dates.format(activityLog.getCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}">2022-08-11 13:38:17</td>
