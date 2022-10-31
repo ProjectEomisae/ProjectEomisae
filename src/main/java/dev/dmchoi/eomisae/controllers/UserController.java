@@ -51,6 +51,7 @@ import java.util.Optional;
 @Controller(value = "dev.dmchoi.eomisae.controllers.UserController")
 @RequestMapping(value = "/user")
 public class UserController extends StandardController {
+
     private final UserService userService;
     private final BoardListService boardListService;
 
@@ -370,6 +371,8 @@ public class UserController extends StandardController {
     @ResponseBody
     public ModelAndView postMemberModifyInfo(HttpServletRequest request,
                                              HttpServletResponse response,
+    public ModelAndView postMemberModifyInfo(HttpServletRequest request,
+                                             HttpServletResponse response,
                                              @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
                                              ModelAndView modelAndView, UserModifyVo userModifyVo,
                                              @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws
@@ -377,6 +380,8 @@ public class UserController extends StandardController {
     public String postMemberModifyInfo(HttpServletResponse response,
                                        @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user, UserModifyVo userModifyVo,
                                        @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
+                                             @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws
+            IOException {
         userModifyVo.setResult(null);
         if (user == null) {
             response.setStatus(404);
@@ -405,6 +410,10 @@ public class UserController extends StandardController {
         JSONObject responseJson = new JSONObject();
         responseJson.put("result", userModifyVo.getResult().name().toLowerCase());
         return responseJson.toString();
+        if (userModifyVo.getIndex() == 0) {
+            this.systemService.putActivityLog(userModifyVo.getEmail(), request, userModifyVo);
+        }
+        this.systemService.putActivityLog(userModifyVo.getIndex(), request, userModifyVo);
         if (userModifyVo.getIndex() == 0) {
             this.systemService.putActivityLog(userModifyVo.getEmail(), request, userModifyVo);
         }
