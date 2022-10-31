@@ -108,7 +108,7 @@ window.document.querySelectorAll('.like').forEach(x => {
             return false;
         }
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `./${x.querySelector('#urlName').value}/${x.querySelector('#commentIndex').value}/like`)
+        xhr.open('PUT', `./${x.querySelector('#urlName').value}/${x.querySelector('#commentIndex').value}/like`)
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status >= 200 && xhr.status < 300) {

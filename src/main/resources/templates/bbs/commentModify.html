@@ -121,7 +121,9 @@
             </ul>
         </div>
     </div>
-    <form class="write-form-container" method="post">
+    <form class="write-form-container"
+          th:action="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' + ${commentReadVo.getArticleIndex()} + '/' + ${commentReadVo.getIndex()} + '/modify'}"
+          method="post">
         <textarea class="editor" name="content" id="editor" maxlength="1000" th:text="${commentReadVo.getContent()}"></textarea>
         <div class="file-upload-container" id="fileUpload">
             <div class="image-upload" id="imageUploadButton"><i class="fa-solid fa-file-circle-plus"></i>파일첨부</div>
@@ -149,6 +151,7 @@
             <input type="hidden" name="boardIndex" th:value="${boardListVo.getIndex()}">
             <input type="hidden" name="articleIndex" th:value="${commentReadVo.getArticleIndex()}">
             <input type="hidden" name="commentIndex" th:value="${commentReadVo.getIndex()}">
+            <input type="hidden" name="_method" value="patch">
             <input class="button-input submit-button" type="submit" value="댓글 수정하기">
         </div>
     </form>

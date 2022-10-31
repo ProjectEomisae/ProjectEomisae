@@ -34,7 +34,6 @@
     <script defer th:src="@{/resources/scripts/header.js}"></script>
     <script defer th:src="@{/resources/libraries/ckeditor/ckeditor.js}"></script>
     <script defer th:src="@{/bbs/resources/scripts/boardWrite.js}"></script>
-    <script defer th:src="@{/resources/scripts/common.js}"></script>
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
 </head>
@@ -181,10 +180,9 @@
                 <div class="product-col product-title">* 주문날짜</div>
                 <div class="product-col product-input">
                     <div class="input-row">
-                        <input id="date" class="input" name="orderDate" type="date" min="" max="" placeholder=" ">
-                        <input class="input button-input" type="button" value="삭제">
+                        <input id="date" class="input" name="orderDate" type="date" min="" max="" placeholder="" pattern="\d{4}-\d{2}-\d{2}">
                     </div>
-                    <span class="refer-text">- 3일이 지난 구매건은 등록할 수 없고 인보이스에 주문 날짜가 포함되어야 합니다.</span>
+                    <span class="refer-text">- 3일이 지난 구매건은 등록할 수 없습니다.</span>
                 </div>
             </div>
             <div class="product-container"

@@ -185,7 +185,6 @@ public class ArticleReadService {
         }
         commentReadVo.copyValuesOf(commentEntity);
         commentReadVo.setResult(CommentReadResult.SUCCESS);
-
     }
 
     public void uploadImages(ImageEntity... imageEntities) {
@@ -204,18 +203,8 @@ public class ArticleReadService {
             articleWriteVo.setResult(ArticleWriteResult.NOT_ALLOWED);
             return;
         }
-        UserEntity writerEntity = this.userMapper.selectUserByIndex(articleEntity.getUserIndex());
         articleWriteVo.setUserIndex(articleEntity.getUserIndex());
         articleWriteVo.setBoardIndex(articleEntity.getBoardIndex());
-        articleWriteVo.setWrittenAt(articleEntity.getWrittenAt());
-        articleWriteVo.setUrl(articleEntity.getUrl());
-        articleWriteVo.setView(articleEntity.getView());
-        articleWriteVo.setLike(articleEntity.getLike());
-        articleWriteVo.setBuy(articleEntity.getBuy());
-        articleWriteVo.setBlindStatus(articleEntity.getBlindStatus());
-        articleWriteVo.setUserNickname(writerEntity.getNickname());
-        articleWriteVo.setPoint(writerEntity.getPoint());
-        articleWriteVo.setLevel(writerEntity.getLevel());
         articleWriteVo.setResult(ArticleWriteResult.SUCCESS);
         this.articleReadMapper.updateArticle(articleWriteVo);
     }
@@ -226,13 +215,7 @@ public class ArticleReadService {
             commentModifyVo.setResult(CommentModifyResult.NOT_FOUND);
             return;
         }
-        commentModifyVo.setWrittenAt(new Date());
-        commentModifyVo.setParentIndex(commentEntity.getParentIndex());
-        commentModifyVo.setParentUserIndex(commentEntity.getParentUserIndex());
-        commentModifyVo.setDepth(commentEntity.getDepth());
-        commentModifyVo.setLike(commentEntity.getLike());
-        commentModifyVo.setDeleted(commentEntity.isDeleted());
-        commentModifyVo.setBlindStatus(commentEntity.getBlindStatus());
+        commentModifyVo.setUserIndex(commentEntity.getUserIndex());
         commentModifyVo.setResult(CommentModifyResult.SUCCESS);
         this.articleReadMapper.updateArticleComment(commentModifyVo);
     }

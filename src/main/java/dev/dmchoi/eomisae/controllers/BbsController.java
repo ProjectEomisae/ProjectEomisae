@@ -1,5 +1,6 @@
 package dev.dmchoi.eomisae.controllers;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto;
 import dev.dmchoi.eomisae.dtos.bbs.BoardReadCommentDto;
 import dev.dmchoi.eomisae.entities.bbs.*;
@@ -40,6 +41,7 @@ public class BbsController {
         this.boardListService = boardListService;
         this.articleReadService = articleReadService;
     }
+
 
     @Transactional
     @RequestMapping(value = "{urlName}", method = RequestMethod.GET)
@@ -409,7 +411,7 @@ public class BbsController {
         return responseJson.toString();
     }
 
-    @RequestMapping(value = "{urlName}/{bid}/{aid}/article-like", method = RequestMethod.GET)
+    @RequestMapping(value = "{urlName}/{bid}/{aid}/article-like", method = RequestMethod.PUT)
     @ResponseBody
     public String getArticleLike(
             @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
@@ -445,7 +447,7 @@ public class BbsController {
         return responseJson.toString();
     }
 
-    @RequestMapping(value = "{urlName}/{aid}/{cid}/like", method = RequestMethod.GET)
+    @RequestMapping(value = "{urlName}/{aid}/{cid}/like", method = RequestMethod.PUT)
     @ResponseBody
     public String getCommentLike(
             @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
@@ -566,7 +568,7 @@ public class BbsController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "{urlName}/{aid}/modify", method = RequestMethod.POST)
+    @RequestMapping(value = "{urlName}/{aid}/modify", method = RequestMethod.PATCH)
     public ModelAndView postModify(ModelAndView modelAndView,
                                    @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
                                    @PathVariable(value = "urlName", required = true) String urlName,
@@ -619,7 +621,7 @@ public class BbsController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "{urlName}/{aid}/{cid}/modify", method = RequestMethod.POST)
+    @RequestMapping(value = "{urlName}/{aid}/{cid}/modify", method = RequestMethod.PATCH)
     public ModelAndView postCommentModify(ModelAndView modelAndView,
                                           @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
                                           @PathVariable(value = "urlName", required = true) String urlName,
@@ -628,7 +630,6 @@ public class BbsController {
                                           BoardListVo boardListVo,
                                           CommentModifyVo commentModifyVo) {
         boardListVo.setUrlName(urlName);
-        commentModifyVo.setUserIndex(user.getIndex());
         commentModifyVo.setIndex(cid);
         commentModifyVo.setArticleIndex(aid);
         if (user == null) {
@@ -642,7 +643,7 @@ public class BbsController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "{urlName}/{cid}/like", method = RequestMethod.GET)
+    @RequestMapping(value = "{urlName}/{cid}/like", method = RequestMethod.PUT)
     @ResponseBody
     public String getJoinCommentLike(
             @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
@@ -658,7 +659,7 @@ public class BbsController {
         return responseJson.toString();
     }
 
-    @RequestMapping(value = "{urlName}/{aid}/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "{urlName}/{aid}", method = RequestMethod.DELETE)
     public ModelAndView getArticleDelete(
             HttpServletResponse response,
             ModelAndView modelAndView,
@@ -677,10 +678,10 @@ public class BbsController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "{urlName}/{cid}/comment-delete", method = RequestMethod.GET)
+    @RequestMapping(value = "{urlName}/{cid}/comment-delete", method = RequestMethod.DELETE)
     public ModelAndView getJoinCommentDelete(
-            HttpServletResponse response,
             ModelAndView modelAndView,
+            HttpServletResponse response,
             @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
             @PathVariable(value = "urlName", required = true) String urlName,
             @PathVariable(value = "cid", required = true) int cid,
@@ -689,15 +690,17 @@ public class BbsController {
             response.setStatus(404);
             return null;
         }
+        System.out.println(cid);
         joinCommentDeleteVo.setIndex(cid);
         joinCommentDeleteVo.setResult(null);
         joinCommentDeleteVo.setUserIndex(user.getIndex());
+        System.out.println("userIndex : " + user.getIndex());
         this.boardListService.deleteComment(user, joinCommentDeleteVo);
         modelAndView.setViewName("redirect:/bbs/" + urlName);
         return modelAndView;
     }
 
-    @RequestMapping(value = "{urlName}/{aid}/{cid}/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "{urlName}/{aid}/{cid}/delete", method = RequestMethod.DELETE)
     public ModelAndView getCommentDelete(
             HttpServletResponse response,
             ModelAndView modelAndView,

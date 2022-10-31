@@ -10,6 +10,9 @@
     </select>
 
     <insert id="insertActivityLog"
+            useGeneratedKeys="true"
+            keyProperty="index"
+            keyColumn="index"
             parameterType="dev.dmchoi.eomisae.entities.system.ActivityLogEntity">
         INSERT INTO `eomisae_system`.`activity_logs`(`user_index`, `created_at`, `client_ip`, `client_ua`,
                                                      `request_uri`, `result`)
@@ -20,14 +23,22 @@
                 SUBSTRING(#{requestUri}, 1, 500),
                 #{result})
     </insert>
-
+<!--
+ 어떠한 열이 VARCHAR(10) 인데 15자를 입력하면 오류가 날 수 있다. 그걸 막고자 mariaDB의 SUBSTRING 함수를 사용한다. 1자부터 500자까지. 만약 500자를 초과한다면 잘라서 넣겠다는 의미이다.
+ -->
     <insert id="insertBannedIp"
+            useGeneratedKeys="true"
+            keyProperty="index"
+            keyColumn="index"
             parameterType="dev.dmchoi.eomisae.entities.system.BannedIpEntity">
         INSERT INTO `eomisae_system`.`banned_ips`(created_at, expires_at, expired_flag, ip)
         VALUES (#{createdAt}, #{expiresAt}, #{isExpired}, #{ip})
     </insert>
 
     <insert id="insertExceptionLog"
+            useGeneratedKeys="true"
+            keyProperty="index"
+            keyColumn="index"
             parameterType="dev.dmchoi.eomisae.entities.system.ExceptionLogEntity">
         INSERT INTO `eomisae_system`.`exception_logs`(created_at, message, stacktrace)
         VALUES (#{createdAt},
@@ -60,6 +71,8 @@
           AND `result` IN ('FAILURE', 'ILLEGAL')
           AND `created_at` > DATE_SUB(NOW(), INTERVAL #{lookBackSeconds} SECOND)
     </select>
+<!-- 현재 시간에서 ~만큼(600초)의 시간을 뺀 것 보다 미래인 것. 그 중에 FAILURE, ILLEGAL을 일으킨 ip를 가져온다.
+     전달받은 lookBackSeconds만큼 현재시간에서 뺀 그 값보다 일시가. createdAt 값이 더 큰 레코드를 선택해야한다. -->
 
     <select id="selectBannedIpCountByIp"
             resultType="_int">
@@ -69,6 +82,7 @@
           AND `expires_at` > NOW()
           AND `expired_flag` = FALSE
     </select>
+<!-- 만료되지 않은 규칙만 가져온다는 것-->
 
     <select id="selectBannedIpCountByIpAll"
             resultType="_int">

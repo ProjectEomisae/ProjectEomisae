@@ -731,7 +731,7 @@ body > .header > .login-form > .login-container > .social-container:hover {
 }
 
 body > .header > .login-form > .login-container > .social-container:active {
-    filter: brightness(60%);
+    filter: brightness(30%);
 }
 
 body > .header > .login-form > .login-container > .social-container > .naver img {

@@ -538,20 +538,26 @@
                                          th:classappend="${#request.getAttribute('user') != null} ? 'on'">
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </div>
+
                                     <div class="modify-info">
                                         <ul class="modify-menu">
                                             <li class="list"
                                                 th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() == #request.getAttribute('user').getIndex()}">
-                                                <a class="link" th:href="@{${#request.getRequestURI()} + '/modify'}">
+                                                <a class="link"
+                                                   th:href="@{${#request.getRequestURI()} + '/modify'}">
                                                     수정
                                                 </a>
                                             </li>
                                             <li class="list"
                                                 th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() == #request.getAttribute('user').getIndex()}">
-                                                <a onclick="return confirm('정말로 삭제할까요? 삭제한 게시글은 다시 복구할 수 없습니다.')"
-                                                   class="link"
-                                                   th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/delete'}">
-                                                    삭제</a>
+                                                <form id="articleDeleteForm"
+                                                      th:action="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()}}"
+                                                      method="post">
+                                                    <input type="hidden" name="_method" value="delete">
+                                                    <a onclick="if (confirm('정말로 삭제할까요? 삭제한 게시글은 다시 복구할 수 없습니다.')) document.getElementById('articleDeleteForm').submit();"
+                                                       class="link">
+                                                        삭제</a>
+                                                </form>
                                             </li>
                                             <li class="list modify-article-report"
                                                 th:if="${#request.getAttribute('user') != null && articleReadVo.getUserIndex() != #request.getAttribute('user').getIndex()}"
@@ -583,7 +589,7 @@
                     </a>
                     <a th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/'+ ${articleReadVo.getNext()}}"
                        th:if="${articleReadVo.getNext() != 0}">
-<!--                       th:if="${boardListVo.getArticles().get(0).getIndex() != articleReadVo.getIndex()}">-->
+                        <!--                       th:if="${boardListVo.getArticles().get(0).getIndex() != articleReadVo.getIndex()}">-->
                         다음 글
                         <i class="fa-solid fa-angle-right"></i>
                     </a>
@@ -675,11 +681,12 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == comment.getUserIndex()}">
-                                            <a class="link"
-                                               onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')"
-                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${comment.getIndex()} + '/delete'}">
-                                                삭제
-                                            </a>
+                                            <form th:action="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${comment.getIndex()} + '/delete'}"
+                                                  method="post">
+                                                <input type="hidden" name="_method" value="delete">
+                                                <input class="link" type="submit" value="삭제"
+                                                       onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')">
+                                            </form>
                                         </li>
                                         <li class="list comment-report"
                                             th:if="${#request.getAttribute('user') != null && comment.getUserIndex() != #request.getAttribute('user').getIndex()}"
@@ -816,11 +823,12 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == recomment.getUserIndex()}">
-                                            <a class="link"
-                                               onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')"
-                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${recomment.getIndex()} + '/delete'}">
-                                                삭제
-                                            </a>
+                                            <form th:action="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${recomment.getIndex()} + '/delete'}"
+                                                  method="post">
+                                                <input type="hidden" name="_method" value="delete">
+                                                <input class="link" type="submit" value="삭제"
+                                                       onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')">
+                                            </form>
                                         </li>
                                         <li class="list comment-report"
                                             th:if="${#request.getAttribute('user') != null && recomment.getUserIndex() != #request.getAttribute('user').getIndex()}"
@@ -958,11 +966,12 @@
                                         </li>
                                         <li class="list"
                                             th:if="${#request.getAttribute('user') != null && #request.getAttribute('user').getIndex() == rerecomment.getUserIndex()}">
-                                            <a class="link"
-                                               onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')"
-                                               th:href="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${rerecomment.getIndex()} + '/delete'}">
-                                                삭제
-                                            </a>
+                                            <form th:action="@{'/bbs/' + ${boardListVo.getUrlName()} + '/' +  ${articleReadVo.getIndex()} + '/' + ${rerecomment.getIndex()} + '/delete'}"
+                                                  method="post">
+                                                <input type="hidden" name="_method" value="delete">
+                                                <input class="link" type="submit" value="삭제"
+                                                       onclick="return confirm('정말로 삭제할까요? 삭제한 댓글은 다시 복구할 수 없습니다.')">
+                                            </form>
                                         </li>
                                         <li class="list comment-report"
                                             th:if="${#request.getAttribute('user') != null && rerecomment.getUserIndex() != #request.getAttribute('user').getIndex()}"
@@ -1469,7 +1478,8 @@
                              th:each="article : ${boardListVo.getArticles()}">
                             <div class="image">
                                 <a th:href="@{'/bbs/' + ${article.getBoardUrlName()} + '/'+ ${article.getIndex()}}">
-                                    <img class="tmb" th:if="${article.getThumbnailId() != null && article.getThumbnailId() != ''}"
+                                    <img class="tmb"
+                                         th:if="${article.getThumbnailId() != null && article.getThumbnailId() != ''}"
                                          th:src="@{'/bbs/thumbnail-id?thumbnailId=' + ${article.getThumbnailId()}}">
                                     <img class="tmb" alt="썸네일 이미지"
                                          th:if="${article.getThumbnailId() == null || article.getThumbnailId() == ''}"
@@ -1491,7 +1501,8 @@
                                 </h3>
                             </div>
                             <div class="info">
-                                <img class="profile" th:if="${article.getProfileId() != null && article.getProfileId() != ''}"
+                                <img class="profile"
+                                     th:if="${article.getProfileId() != null && article.getProfileId() != ''}"
                                      th:src="@{'/user/profile-id?id=' + ${article.getProfileId()}}">
                                 <img class="profile" alt="프로필 이미지"
                                      th:if="${article.getProfileId() == null || article.getProfileId() == ''}"
