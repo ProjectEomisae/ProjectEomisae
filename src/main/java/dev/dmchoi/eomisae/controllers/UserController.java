@@ -96,6 +96,9 @@ public class UserController extends StandardController {
         if (loginVo.getIndex() == 0) {
             loginVo.setIndex(0);
         }
+        if (loginVo.getIndex() == 0) {
+            this.systemService.putActivityLog(loginVo.getEmail(), request, loginVo);
+        }
         this.systemService.putActivityLog(loginVo.getIndex(), request, loginVo);
         if (loginVo.getResult() == LoginResult.SUCCESS) {
             if (!loginVo.isAutosign()) {
@@ -184,7 +187,8 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "verify-email", method = RequestMethod.GET)
-    public ModelAndView getVerifyEmail(ModelAndView modelAndView,
+    public ModelAndView getVerifyEmail(HttpServletRequest request,
+                                       ModelAndView modelAndView,
                                        EmailVerifyVo emailVerifyVo,
                                        @RequestParam(name = "code", required = true) String code,
                                        @RequestParam(name = "salt", required = true) String salt) {
@@ -192,13 +196,15 @@ public class UserController extends StandardController {
         emailVerifyVo.setCode(code);
         emailVerifyVo.setSalt(salt);
         this.userService.emailVerify(emailVerifyVo);
+        this.systemService.putActivityLog(emailVerifyVo.getUserIndex(), request, emailVerifyVo);
         modelAndView.addObject("emailVerifyVo", emailVerifyVo);
         modelAndView.setViewName("user/verifyEmail");
         return modelAndView;
     }
 
     @RequestMapping(value = "verify-modify-email", method = RequestMethod.GET)
-    public ModelAndView getVerifyModifyEmail(ModelAndView modelAndView,
+    public ModelAndView getVerifyModifyEmail(HttpServletRequest request,
+                                             ModelAndView modelAndView,
                                              EmailVerifyVo emailVerifyVo,
                                              @RequestParam(name = "code", required = true) String code,
                                              @RequestParam(name = "salt", required = true) String salt) {
@@ -206,6 +212,7 @@ public class UserController extends StandardController {
         emailVerifyVo.setCode(code);
         emailVerifyVo.setSalt(salt);
         this.userService.modifyEmailVerify(emailVerifyVo);
+        this.systemService.putActivityLog(emailVerifyVo.getUserIndex(), request, emailVerifyVo);
         modelAndView.addObject("emailVerifyVo", emailVerifyVo);
         modelAndView.setViewName("user/verifyModifyEmail");
         return modelAndView;
@@ -266,16 +273,17 @@ public class UserController extends StandardController {
                                                    @RequestParam(name = "page") Optional<Integer> optionalPage) {
         if (user == null) {
             modelAndView.setViewName("redirect:/user/login");
+        } else {
+            int page = optionalPage.orElse(1);
+            int totalRowCount;
+            totalRowCount = this.systemService.activityLogTotalCountByUserIndex(user.getIndex());
+            PagingModel paging = new PagingModel(totalRowCount, page);
+            ActivityLogEntity[] activityLogEntities = this.systemService.getActivityLog(user.getIndex(), paging);
+            System.out.println(activityLogEntities.length);
+            modelAndView.addObject("paging", paging);
+            modelAndView.addObject("activityLogEntities", activityLogEntities);
+            modelAndView.setViewName("user/my-page/memberLoginLogHistories");
         }
-        int page = optionalPage.orElse(1);
-        int totalRowCount;
-        totalRowCount = this.systemService.activityLogTotalCountByUserIndex(user.getIndex());
-        PagingModel paging = new PagingModel(totalRowCount, page);
-        ActivityLogEntity[] activityLogEntities = this.systemService.getActivityLog(user.getIndex(), paging);
-        System.out.println(activityLogEntities.length);
-        modelAndView.addObject("paging", paging);
-        modelAndView.addObject("activityLogEntities", activityLogEntities);
-        modelAndView.setViewName("user/my-page/memberLoginLogHistories");
         return modelAndView;
     }
 
@@ -360,6 +368,12 @@ public class UserController extends StandardController {
 
     @RequestMapping(value = "/my-page/memberModifyInfo", method = RequestMethod.POST)
     @ResponseBody
+    public ModelAndView postMemberModifyInfo(HttpServletRequest request,
+                                             HttpServletResponse response,
+                                             @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                             ModelAndView modelAndView, UserModifyVo userModifyVo,
+                                             @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws
+            IOException {
     public String postMemberModifyInfo(HttpServletResponse response,
                                        @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user, UserModifyVo userModifyVo,
                                        @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
@@ -391,6 +405,14 @@ public class UserController extends StandardController {
         JSONObject responseJson = new JSONObject();
         responseJson.put("result", userModifyVo.getResult().name().toLowerCase());
         return responseJson.toString();
+        if (userModifyVo.getIndex() == 0) {
+            this.systemService.putActivityLog(userModifyVo.getEmail(), request, userModifyVo);
+        }
+        this.systemService.putActivityLog(userModifyVo.getIndex(), request, userModifyVo);
+        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
+        modelAndView.addObject("userModifyVo", userModifyVo);
+        modelAndView.setViewName("user/my-page/memberInfo");
+        return modelAndView;
     }
 
 

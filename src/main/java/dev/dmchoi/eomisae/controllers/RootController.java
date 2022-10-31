@@ -17,13 +17,11 @@ import java.util.List;
 @Controller(value = "dev.dmchoi.eomisae.controllers.RootController")
 @RequestMapping(value = "/")
 public class RootController extends StandardController {
-    private final UserService userService;
     private final BoardListService boardListService;
 
     @Autowired
-    private RootController(SystemService systemService, UserService userService, BoardListService boardListService) {
+    private RootController(SystemService systemService, BoardListService boardListService) {
         super(systemService);
-        this.userService = userService;
         this.boardListService = boardListService;
     }
 
@@ -73,6 +71,8 @@ public class RootController extends StandardController {
         return modelAndView;
     }
 
+
+    // 오류를 발생시키는 임의의 메서드
     @RequestMapping(value = "raise-error", method = RequestMethod.GET)
     @ResponseBody
     public String getRaiseError() throws Exception {
