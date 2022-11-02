@@ -30,10 +30,6 @@ body > .main > .info-deleting-container  > .title {
 }
 
 body > .main > .info-deleting-container > .info-deleting-form  {
-    /*align-items: flex-start;*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*justify-content: flex-start;*/
     margin-top: 1.25rem;
 }
 
@@ -80,18 +76,18 @@ body > .main > .info-deleting-container > .info-deleting-form > .row-container >
     color: rgb(var(--color-white));
 }
 
-body > .main > .info-deleting-container > .hidden-warning.failure-text > .warning-container {
-    width: 100%;
+body > .main > .info-deleting-container > .hidden-warning {
+    display: none;
+}
+
+body > .main > .info-deleting-container > .hidden-warning.failure-text {
+    display: block;
     background-color: rgb(242, 222, 222);
     border: 0.0625rem solid rgb(238, 211, 215);
     border-radius: 0.25rem;
     color: rgb(185, 74, 72);
-    margin: 0.8rem 0;
-    padding: 0.8rem 0;
-}
-
-body > .main > .info-deleting-container > .hidden-warning.failure-text > .warning-container > .warning {
-    margin-left: 1rem;
+    margin: 1rem 0 0.8rem 0;
+    padding: 1rem 0 1rem 1rem;
 }
 
 body > .main > .info-deleting-container > .email-modify-form {

@@ -1,26 +1,5 @@
 const emailModifyForm = window.document.getElementById('emailModifyForm');
 
-const hiddenWarning = {
-    getElement: () => window.document.getElementById('hiddenWarning'),
-    hide: () => {
-        if (hiddenWarning.getElement().classList.contains('failure-text')) {
-            hiddenWarning.getElement().classList.remove('failure-text');
-        } else if (hiddenWarning.getElement().classList.contains('success-text')) {
-            hiddenWarning.getElement().classList.remove('success-text');
-        }
-    },
-    successShow: (text) => {
-        hiddenWarning.getElement().classList.remove('failure-text');
-        hiddenWarning.getElement().innerText = text;
-        hiddenWarning.getElement().classList.add('success-text');
-    },
-    failureShow: (text) => {
-        hiddenWarning.getElement().classList.remove('success-text');
-        hiddenWarning.getElement().innerText = text;
-        hiddenWarning.getElement().classList.add('failure-text');
-    }
-};
-
 emailModifyForm.onsubmit = e => {
     e.preventDefault();
     if (emailModifyForm['email'].value === '') {
@@ -45,13 +24,13 @@ emailModifyForm.onsubmit = e => {
                         hiddenWarning.failureShow('이미 사용중인 이메일입니다. 다른 이메일을 입력해주세요.')
                         break;
                     case 'success' :
-                        hiddenWarning.successShow('입력하신 이메일로 이메일 변경 인증과 관련된 내용이 전송되었습니다.해당 메일을 통해 이메일 변경을 완료해주세요');
+                        hiddenWarning.successShow(`[${emailModifyForm['email'].value}] 으로 이메일 변경 인증과 관련된 내용이 전송되었습니다. 해당 메일을 통해 이메일 변경을 완료해주세요`);
                         break;
                     default :
-                        hiddenWarning.failureShow('알 수 없는 이유로 이메일 변경에 실패하였습니다. 잠시 후 다시 시도해주세요.');
+                        alert('알 수 없는 이유로 이메일 변경에 실패하였습니다. \n\n잠시 후 다시 시도해주시거나 고객센터를 통해 문의해주세요.');
                 }
             } else {
-                alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해 주세요.');
+                alert('서버와 통신하지 못하였습니다.\n\n잠시 후 다시 시도해주시거나 고객센터를 통해 문의해주세요');
             }
         }
     };

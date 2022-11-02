@@ -17,14 +17,6 @@ main.addEventListener('click', () => {
 });
 
 
-// document.addEventListener('mouseup', function(e) {
-//     var container = document.getElementById('container');
-//     if (!container.contains(e.target)) {
-//         container.style.display = 'none';
-//     }
-// });
-
-
 
 
 

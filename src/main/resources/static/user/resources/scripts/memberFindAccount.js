@@ -7,17 +7,17 @@ const hiddenWarningByEmail = {
     hide: () => {
         if (hiddenWarningByEmail.getElement().classList.contains('failure-text')) {
             hiddenWarningByEmail.getElement().classList.remove('failure-text');
-        } else {
+        } else if (hiddenWarningByEmail.getElement().classList.contains('success-text')) {
             hiddenWarningByEmail.getElement().classList.remove('success-text');
         }
     },
     successShow: (text) => {
-        hiddenWarningByEmail.getElement().classList.remove('failure-text');
+        hiddenWarningByEmail.hide();
         hiddenWarningByEmail.getElement().innerText = text;
         hiddenWarningByEmail.getElement().classList.add('success-text');
     },
     failureShow: (text) => {
-        hiddenWarningByEmail.getElement().classList.remove('success-text');
+        hiddenWarningByEmail.hide();
         hiddenWarningByEmail.getElement().innerText = text;
         hiddenWarningByEmail.getElement().classList.add('failure-text');
     }
@@ -28,17 +28,17 @@ const hiddenWarningByQna = {
     hide: () => {
         if (hiddenWarningByQna.getElement().classList.contains('failure-text')) {
             hiddenWarningByQna.getElement().classList.remove('failure-text');
-        } else {
+        } else if (hiddenWarningByQna.getElement().classList.contains('success-text')) {
             hiddenWarningByQna.getElement().classList.remove('success-text');
         }
     },
     successShow: (text) => {
-        hiddenWarningByQna.getElement().classList.remove('failure-text');
+        hiddenWarningByQna.hide();
         hiddenWarningByQna.getElement().innerText = text;
         hiddenWarningByQna.getElement().classList.add('success-text');
     },
     failureShow: (text) => {
-        hiddenWarningByQna.getElement().classList.remove('success-text');
+        hiddenWarningByQna.hide();
         hiddenWarningByQna.getElement().innerText = text;
         hiddenWarningByQna.getElement().classList.add('failure-text');
     }
@@ -49,17 +49,17 @@ const hiddenWarningResendEmail = {
     hide: () => {
         if (hiddenWarningResendEmail.getElement().classList.contains('failure-text')) {
             hiddenWarningResendEmail.getElement().classList.remove('failure-text');
-        } else {
+        } else if (hiddenWarningResendEmail.getElement().classList.contains('success-text')) {
             hiddenWarningResendEmail.getElement().classList.remove('success-text');
         }
     },
     successShow: (text) => {
-        hiddenWarningResendEmail.getElement().classList.remove('failure-text');
+        hiddenWarningResendEmail.hide();
         hiddenWarningResendEmail.getElement().innerText = text;
         hiddenWarningResendEmail.getElement().classList.add('success-text');
     },
     failureShow: (text) => {
-        hiddenWarningResendEmail.getElement().classList.remove('success-text');
+        hiddenWarningResendEmail.hide();
         hiddenWarningResendEmail.getElement().innerText = text;
         hiddenWarningResendEmail.getElement().classList.add('failure-text');
     }
@@ -88,8 +88,8 @@ findByEmailForm.onsubmit = e => {
                 const responseJson = JSON.parse(xhr.responseText);
                 switch (responseJson['result']) {
                     case 'success' :
-                        alert('메일을 성공적으로 보냈습니다. 메일을 확인해 주세요.');
-                        hiddenWarningByEmail.successShow('메일을 성공적으로 보냈습니다. 메일을 확인해 주세요.');
+                        alert('회원님의 정보가 담긴 메일을 성공적으로 보냈습니다. 메일을 확인해 주세요.');
+                        hiddenWarningByEmail.successShow('회원님의 정보가 담긴 메일을 성공적으로 보냈습니다. 메일을 확인해 주세요.');
                         break;
                     default :
                         hiddenWarningByEmail.failureShow('입력하신 이메일과 일치하는 회원이 없습니다.');
@@ -184,16 +184,16 @@ resendEmailForm.onsubmit = e => {
                 const responseJson = JSON.parse(xhr.responseText);
                 switch (responseJson['result']) {
                     case 'success' :
-                        alert(`${resendEmailForm['email'].value} 메일로 가입 인증 메일이 발송되었습니다. 메일을 확인해 주세요.`);
-                        hiddenWarningResendEmail.successShow(`${resendEmailForm['email'].value} 메일로 가입 인증 메일이 발송되었습니다. 메일을 확인해 주세요.`);
+                        alert('해당 메일로 가입 인증 메일이 다시 발송되었습니다. \n\n해당 메일을 통해 회원가입을 완료해주세요.');
+                        hiddenWarningResendEmail.successShow(`[ ${resendEmailForm['email'].value} ] 메일로 가입 인증 메일이 다시 발송되었습니다. 해당 메일을 통해 회원가입을 완료해주세요.`);
                         break;
                     default :
-                        hiddenWarningResendEmail.failureShow('잘못된 요청입니다.');
+                        alert('잘못된 요청입니다.');
                         resendEmailForm['email'].select();
                 }
             }
         } else {
-            hiddenWarningResendEmail.failureShow('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
+            alert('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
             resendEmailForm['email'].focus();
             resendEmailForm['email'].select();
         }

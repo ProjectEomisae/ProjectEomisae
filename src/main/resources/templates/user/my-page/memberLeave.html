@@ -16,18 +16,6 @@
     <script src="https://kit.fontawesome.com/0d51ab0f86.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="https://eomisae.co.kr/files/attach/xeicon/favicon.ico">
     <script defer th:src="@{/user/my-page/resources/scripts/memberLeave.js}"></script>
-    <script th:if="${deleteUserVo != null && deleteUserVo.getResult().name().equals('FAILURE_ORIGIN_PASSWORD')}">
-        alert('비밀번호 확인에 실패하였습니다.');
-        window.history.back();
-    </script>
-    <script th:if="${deleteUserVo != null && deleteUserVo.getResult().name().equals('FAILURE')}">
-        alert('알 수 없는 이유로 회원가입에 실패하였습니다.\n\n잠시 후 다시 시도해 주세요.');
-        window.history.back();
-    </script>
-    <script th:if="${userModifyVo != null && deleteUserVo.getResult().name().equals('SUCCESS')}">
-        alert('앙 성공디');
-        window.location.href = '/';
-    </script>
 </head>
 <body>
 <th:block th:replace="~{fragments/header.html :: content}"></th:block>

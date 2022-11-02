@@ -131,31 +131,24 @@ public class UserService {
             registerVo.setResult(RegisterResult.ILLEGAL);
             return;
         }
-        if (!registerVo.getUserId().equals("")) {
-            if (!UserService.checkUserId(registerVo.getUserId())) {
-                registerVo.setResult(RegisterResult.ILLEGAL);
-                return;
-            }
-        }
         if (this.userMapper.selectUserCountByEmail(registerVo.getEmail()) > 0) {
             registerVo.setResult(RegisterResult.FAILURE_DUPLICATE_EMAIL);
+            return;
+        }
+        if (this.userMapper.selectUserCountById(registerVo.getUserId()) > 0) {
+            registerVo.setResult(RegisterResult.FAILURE_DUPLICATE_ID);
             return;
         }
         if (this.userMapper.selectUserCountByNickname(registerVo.getNickname()) > 0) {
             registerVo.setResult(RegisterResult.FAILURE_DUPLICATE_NICKNAME);
             return;
         }
-
         registerVo.setPassword(CryptoUtils.hash(CryptoUtils.Hash.SHA_512, registerVo.getPassword()));
-
         if (registerVo.isMailReceived()) {
             registerVo.setMailReceivedAt(new Date());
         }
-
-        if (registerVo.isTermsAgreed()) {
-            registerVo.setTermsAgreedAt(new Date());
-        }
-
+        registerVo.setTermsAgreed(true);
+        registerVo.setTermsAgreedAt(new Date());
         if (this.userMapper.insertUser(registerVo) == 0) {
             registerVo.setResult(RegisterResult.FAILURE);
         } else {
@@ -286,6 +279,7 @@ public class UserService {
     public void putProfileImage(ProfileImageEntity profileImageEntity) {
         this.userMapper.insertProfileImage(profileImageEntity);
     }
+
     public ProfileImageEntity getProfileImage(String id) {
         return this.userMapper.selectProfileImage(id);
     }
@@ -440,21 +434,13 @@ public class UserService {
         userModifyVo.setResult(ModifyResult.SUCCESS);
     }
 
+    // TODO: 비밀번호 이메일 변경 xhr 완료
     public void modifyPassword(UserEntity user, UserModifyVo userModifyVo, String modifyPassword, String modifyPasswordCheck) {
         UserEntity originPassword = this.userMapper.selectUserPasswordByIndex(user.getIndex());
         if (originPassword == null || originPassword.getIndex() == 0) {
             userModifyVo.setResult(ModifyResult.FAILURE);
             return;
         }
-        if (!UserService.checkPassword(modifyPassword)) {
-            userModifyVo.setResult(ModifyResult.ILLEGAL_PASSWORD);
-            return;
-        }
-        if (!modifyPassword.equals(modifyPasswordCheck)) {
-            userModifyVo.setResult(ModifyResult.FAILURE_NOT_MATCH_PASSWORD);
-            return;
-        }
-
         String hashReceivedOriginPassword = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, userModifyVo.getPassword());
         String hashModifyPassword = CryptoUtils.hash(CryptoUtils.Hash.SHA_512, modifyPassword);
 

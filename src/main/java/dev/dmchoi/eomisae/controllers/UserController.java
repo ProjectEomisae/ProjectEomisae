@@ -38,6 +38,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
 import java.io.IOException;
@@ -137,11 +138,10 @@ public class UserController extends StandardController {
         return modelAndView;
     }
 
-    // TODO:  이메일 변경 인증 메일 submit 후 warning 띄우기
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.POST)
-    public ModelAndView postMemberSignUpForm(RegisterVo registerVo,
-                                             ModelAndView modelAndView,
-                                             @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws MessagingException, IOException {
+    @ResponseBody
+    public String postMemberSignUpForm(RegisterVo registerVo,
+                                       @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws MessagingException, IOException {
         registerVo.setEmailVerified(false);
         registerVo.setResult(null);
         if (registerVo.getUserId() == null || registerVo.getUserId().equals("")) {
@@ -149,7 +149,9 @@ public class UserController extends StandardController {
             tempUserId = tempUserId.substring(0, 6);
             registerVo.setUserId(tempUserId);
         }
-        if (!profileImage.isEmpty()) {
+        if (profileImage == null) {
+            registerVo.setProfileId(null);
+        } else {
             String profileId = String.format("%s%f%f", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()),
                     Math.random(),
                     Math.random());
@@ -159,12 +161,11 @@ public class UserController extends StandardController {
                     .setData(profileImage.getBytes());
             registerVo.setProfileId(profileId); // 프로필 이미지 user 에 set
             this.userService.putProfileImage(profileImageEntity); // 프로필 이미지 테이블에 insert
-            modelAndView.addObject("profileId", profileId);
         }
         this.userService.register(registerVo);
-        modelAndView.addObject("registerVo", registerVo);
-        modelAndView.setViewName("user/memberSignUpForm");
-        return modelAndView;
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("result", registerVo.getResult().name().toLowerCase());
+        return responseJson.toString();
     }
 
     @RequestMapping(value = "profile-id", method = RequestMethod.GET)
@@ -335,9 +336,14 @@ public class UserController extends StandardController {
     @RequestMapping(value = "/my-page/memberModifyEmailAddress", method = RequestMethod.POST)
     @ResponseBody
     public String postMemberModifyEmailAddress(
+            HttpServletResponse response,
             @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
             UserModifyVo userModifyVo,
             @RequestParam(value = "email", required = false) String tempEmail) throws MessagingException {
+        if (user == null) {
+            response.setStatus(404);
+            return null;
+        }
         user.setEmail(tempEmail);
         user.setEmailVerified(false);
         this.userService.modifyEmail(user, userModifyVo);
@@ -353,10 +359,10 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberModifyInfo", method = RequestMethod.POST)
-    public ModelAndView postMemberModifyInfo(HttpServletResponse response,
-                                             @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
-                                             ModelAndView modelAndView, UserModifyVo userModifyVo,
-                                             @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws IOException {
+    @ResponseBody
+    public String postMemberModifyInfo(HttpServletResponse response,
+                                       @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user, UserModifyVo userModifyVo,
+                                       @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
         userModifyVo.setResult(null);
         if (user == null) {
             response.setStatus(404);
@@ -367,7 +373,9 @@ public class UserController extends StandardController {
             tempUserId = tempUserId.substring(0, 6);
             userModifyVo.setUserId(tempUserId);
         }
-        if (!profileImage.isEmpty()) {
+        if (profileImage == null) {
+            userModifyVo.setProfileId(null);
+        } else {
             String profileId = String.format("%s%f%f", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()),
                     Math.random(),
                     Math.random());
@@ -377,13 +385,12 @@ public class UserController extends StandardController {
                     .setData(profileImage.getBytes());
             user.setProfileId(profileId);
             this.userService.putProfileImage(profileImageEntity);
-            modelAndView.addObject("profileId", profileId);
         }
         this.userService.modifyProfile(user, userModifyVo);
-        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
-        modelAndView.addObject("userModifyVo", userModifyVo);
-        modelAndView.setViewName("user/my-page/memberInfo");
-        return modelAndView;
+
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("result", userModifyVo.getResult().name().toLowerCase());
+        return responseJson.toString();
     }
 
 

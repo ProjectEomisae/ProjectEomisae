@@ -16,6 +16,30 @@ body > .main > .modify-profile-form > .modify-profile > .title {
     margin-bottom: 1.25rem;
 }
 
+body > .main > .modify-profile-form > .modify-profile> .hidden-warning {
+    display: none;
+}
+
+body > .main > .modify-profile-form > .modify-profile> .hidden-warning.success-text {
+    display: block;
+    background-color: rgb(217, 237, 247);
+    border: 0.0625rem solid rgb(188, 232, 241);
+    border-radius: 0.25rem;
+    color: rgb(58, 135, 173);
+    margin-bottom: 0.8rem;
+    padding: 1rem 0 1rem 1rem;
+}
+
+body > .main > .modify-profile-form > .modify-profile> .hidden-warning.failure-text {
+    display: block;
+    background-color: rgb(242, 222, 222);
+    border: 0.0625rem solid rgb(238, 211, 215);
+    border-radius: 0.25rem;
+    color: rgb(185, 74, 72);
+    margin-bottom: 0.8rem;
+    padding: 1rem 0 1rem 1rem;
+}
+
 body > .main > .modify-profile-form > .modify-profile > .label-container {
     align-items: flex-start;
     display: flex;
