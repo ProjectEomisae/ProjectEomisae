@@ -26,8 +26,6 @@ public interface IUserMapper {
 
     UserEntity selectUserEmailByIndex(@Param(value = "index") int index);
     UserEntity selectUserIndexByEmail(@Param(value = "email") String email);
-
-    UserEntity selectUserIndexByEmail(@Param(value = "email") String email);
     UserEntity selectUserPasswordByIndex(@Param(value="index") int index);
     UserEmailVerificationCodeEntity selectUserEmailVerificationCode(
             @Param(value = "code") String code,

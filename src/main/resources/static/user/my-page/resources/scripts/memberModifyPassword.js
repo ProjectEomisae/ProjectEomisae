@@ -51,8 +51,8 @@ passwordModifyForm.onsubmit = e => {
                         passwordModifyForm['password'].select();
                         break;
                     case 'success':
-                        alert('비밀번호 변경을 완료하였습니다.');
-                        hiddenWarning.successShow('비밀번호 변경을 완료하였습니다.');
+                        alert('비밀번호 변경을 완료하였습니다\n\n변경된 비밀번호로 다시 로그인 해주세요.');
+                        window.location.href = '/user/logout';
                         break;
                     default:
                         alert('알 수 없는 이유로 비밀번호를 수정하지 못하였습니다. \n\n잠시 후 다시 시도해주시거나 고객센터를 통해 문의해주세요.');

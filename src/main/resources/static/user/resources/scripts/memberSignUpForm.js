@@ -44,7 +44,7 @@ registerForm['email'].addEventListener('focusout', e => {
                     switch (response) {
                         case 0:
                             emailWarning.style.display = 'none';
-                            hiddenWarning.classList.remove('show');
+                            hiddenWarning.hide();
                             break;
                         case 1:
                             emailWarning.style.display = 'block';
@@ -66,9 +66,9 @@ registerForm['email'].addEventListener('focusout', e => {
 
 registerForm['userId'].addEventListener('focusout', e => {
     e.preventDefault();
-    if (!new RegExp('^[A-Za-z]{1}[A-Za-z0-9_]{1,}|$').test(registerForm['userId'].value)) {
+    if (!new RegExp('^[\\w\\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,20}$').test(registerForm['userId'].value)) {
         idWarning.style.display = 'block';
-        idWarning.innerText = '아아디의 값은 영문,숫자,_만 가능하며 첫 글자는 영문이어야 합니다.';
+        idWarning.innerText = '아이디의 값은 2자 이상 20자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.';
         registerForm['userId'].focus();
         registerForm['userId'].select();
     } else {
@@ -83,17 +83,17 @@ registerForm['userId'].addEventListener('focusout', e => {
                     switch (response) {
                         case 0:
                             idWarning.style.display = 'none';
-                            hiddenWarning.classList.remove('show');
+                            hiddenWarning.hide();
                             break;
                         case 1:
                             idWarning.style.display = 'block';
-                            hiddenWarning.classList.remove('show');
+                            hiddenWarning.hide();
                             idWarning.innerText = '이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.';
                             break;
                         default:
                             idWarning.style.display = 'block';
-                            hiddenWarning.classList.remove('show');
-                            idWarning.innerText = '아아디의 값은 영문,숫자,_만 가능하며 첫 글자는 영문이어야 합니다.';
+                            hiddenWarning.hide();
+                            idWarning.innerText = '아이디의 값은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.';
                             break;
                     }
                 } else {
@@ -105,11 +105,14 @@ registerForm['userId'].addEventListener('focusout', e => {
     }
 });
 
+// 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성
+// * 특이사항 : 한글 초성 및 모음은 허가하지 않는다.
+// 특수문자 제외
 registerForm['nickname'].addEventListener('focusout', e => {
     e.preventDefault();
-    if (!new RegExp('^(.*[가-힣]{2,5})|(.*[a-z]{4,10})|(.*[0-9]{4,10})$').test(registerForm['nickname'].value)) {
+    if (!new RegExp('^[\\w\\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$').test(registerForm['nickname'].value)) {
         document.documentElement.scrollTop = 0;
-        hiddenWarning.failureShow('닉네임의 값이 한글(2-5), 영문 또는 숫자(4-10)에 맞지 않습니다.');
+        hiddenWarning.failureShow('닉네임의 값은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.');
         nicknameWarning.style.display = 'none';
         registerForm['nickname'].focus();
         registerForm['nickname'].select();
@@ -135,7 +138,7 @@ registerForm['nickname'].addEventListener('focusout', e => {
                         default :
                             document.documentElement.scrollTop = 0;
                             nicknameWarning.style.display = 'none';
-                            hiddenWarning.failureShow('닉네임의 값이 한글(2-5), 영문 또는 숫자(4-10)에 맞지 않습니다.');
+                            hiddenWarning.failureShow('닉네임의 값이 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.');
                             break;
                     }
                 } else {
@@ -163,7 +166,7 @@ registerForm.onsubmit = e => {
     }
     if (!new RegExp('^([0-9a-zA-Z`~!@#$%^&*()\\-_=+\\[{\\]}\\\\|;:\'",<.>/?]{6,100})$').test(registerForm['password'].value)) {
         document.documentElement.scrollTop = 0;
-        hiddenWarning.failureShow('비밀번호의 글자 수를 맞추어 주세요.');
+        hiddenWarning.failureShow('비밀번호는 6자리 이상이어야 하며 영문과 숫자를 반드시 포함해야 합니다.');
         registerForm['password'].focus();
         registerForm['password'].select();
         return false;
@@ -175,9 +178,9 @@ registerForm.onsubmit = e => {
         registerForm['passwordCheck'].select();
         return false;
     }
-    if (!new RegExp('^[A-Za-z]{1}[A-Za-z0-9_]{1,}|$').test(registerForm['userId'].value)) {
+    if (!new RegExp('^[\\w\\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,20}$').test(registerForm['userId'].value)) {
         idWarning.style.display = 'block';
-        idWarning.innerText = '아아디의 값은 영문,숫자,_만 가능하며 첫 글자는 영문이어야 합니다.';
+        idWarning.innerText = '아이디의 값은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.';
         registerForm['userId'].focus();
         registerForm['userId'].select();
         return false;
@@ -188,9 +191,9 @@ registerForm.onsubmit = e => {
         registerForm['nickname'].focus();
         return false;
     }
-    if (!new RegExp('^(.*[가-힣]{2,5})|(.*[a-z]{4,10})|(.*[0-9]{4,10})$').test(registerForm['nickname'].value)) {
+    if (!new RegExp('^[\\w\\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$').test(registerForm['nickname'].value)) {
         document.documentElement.scrollTop = 0;
-        hiddenWarning.failureShow('닉네임의 값이 한글(2-5), 영문 또는 숫자(4-10)에 맞지 않습니다.');
+        hiddenWarning.failureShow('닉네임의 값은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.');
         registerForm['nickname'].focus();
         registerForm['nickname'].select();
         return false;
@@ -231,7 +234,7 @@ registerForm.onsubmit = e => {
                         hiddenWarning.failureShow('이미 사용중인 이메일 입니다.');
                         break;
                     case 'failure_duplicate_id' :
-                        document.documentElemen밋t.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
                         hiddenWarning.failureShow('이미 사용중인 아이디 입니다.');
                         break;
                     case 'failure_duplicate_nickname' :

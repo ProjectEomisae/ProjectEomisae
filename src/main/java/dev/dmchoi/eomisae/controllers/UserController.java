@@ -56,7 +56,7 @@ public class UserController extends StandardController {
     private final BoardListService boardListService;
 
     @Autowired
-    protected UserController(SystemService systemService, UserService userService, BoardListService boardListService, BoardListService boardListService1) {
+    protected UserController(SystemService systemService, UserService userService, BoardListService boardListService) {
         super(systemService);
         this.userService = userService;
         this.boardListService = boardListService;
@@ -244,15 +244,16 @@ public class UserController extends StandardController {
                                              BoardListVo boardListVo) {
         if (user == null) {
             modelAndView.setViewName("redirect:/user/login");
+        } else {
+            int page = optionalPage.orElse(1);
+            int totalRowCount;
+            totalRowCount = this.boardListService.boardTotalCountByUserIndex(user.getIndex());
+            PagingModel paging = new PagingModel(totalRowCount, page);
+            boardListVo.setArticles(this.boardListService.listBoardByUserIndex(user.getIndex(), paging));
+            modelAndView.addObject("paging", paging);
+            modelAndView.addObject("boardListVo", boardListVo);
+            modelAndView.setViewName("user/my-page/memberOwnDocument");
         }
-        int page = optionalPage.orElse(1);
-        int totalRowCount;
-        totalRowCount = this.boardListService.boardTotalCountByUserIndex(user.getIndex());
-        PagingModel paging = new PagingModel(totalRowCount, page);
-        boardListVo.setArticles(this.boardListService.listBoardByUserIndex(user.getIndex(), paging));
-        modelAndView.addObject("paging", paging);
-        modelAndView.addObject("boardListVo", boardListVo);
-        modelAndView.setViewName("user/my-page/memberOwnDocument");
         return modelAndView;
     }
 
@@ -369,18 +370,11 @@ public class UserController extends StandardController {
 
     @RequestMapping(value = "/my-page/memberModifyInfo", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView postMemberModifyInfo(HttpServletRequest request,
-                                             HttpServletResponse response,
-    public ModelAndView postMemberModifyInfo(HttpServletRequest request,
-                                             HttpServletResponse response,
-                                             @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
-                                             ModelAndView modelAndView, UserModifyVo userModifyVo,
-                                             @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws
-            IOException {
-    public String postMemberModifyInfo(HttpServletResponse response,
-                                       @RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user, UserModifyVo userModifyVo,
-                                       @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
-                                             @RequestParam(value = "profileImage", required = true) MultipartFile profileImage) throws
+    public String postMemberModifyInfo(@RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+                                       @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+                                       HttpServletRequest request,
+                                       HttpServletResponse response,
+                                       UserModifyVo userModifyVo) throws
             IOException {
         userModifyVo.setResult(null);
         if (user == null) {
@@ -406,24 +400,14 @@ public class UserController extends StandardController {
             this.userService.putProfileImage(profileImageEntity);
         }
         this.userService.modifyProfile(user, userModifyVo);
-
+        if (userModifyVo.getIndex() == 0) {
+            this.systemService.putActivityLog(userModifyVo.getEmail(), request, userModifyVo);
+        }
+        this.systemService.putActivityLog(userModifyVo.getIndex(), request, userModifyVo);
         JSONObject responseJson = new JSONObject();
         responseJson.put("result", userModifyVo.getResult().name().toLowerCase());
         return responseJson.toString();
-        if (userModifyVo.getIndex() == 0) {
-            this.systemService.putActivityLog(userModifyVo.getEmail(), request, userModifyVo);
-        }
-        this.systemService.putActivityLog(userModifyVo.getIndex(), request, userModifyVo);
-        if (userModifyVo.getIndex() == 0) {
-            this.systemService.putActivityLog(userModifyVo.getEmail(), request, userModifyVo);
-        }
-        this.systemService.putActivityLog(userModifyVo.getIndex(), request, userModifyVo);
-        modelAndView.addObject(UserEntity.ATTRIBUTE_NAME, user);
-        modelAndView.addObject("userModifyVo", userModifyVo);
-        modelAndView.setViewName("user/my-page/memberInfo");
-        return modelAndView;
     }
-
 
     @RequestMapping(value = "/my-page/memberModifyInfo/delete", method = RequestMethod.GET)
     public ModelAndView getProfileImageDelete(HttpServletResponse response,
@@ -431,7 +415,6 @@ public class UserController extends StandardController {
                                               ModelAndView modelAndView,
                                               @RequestParam(value = "id", required = true) String profileId,
                                               @RequestParam(value = "uid", required = true) int userIndex) {
-
         if (user == null) {
             response.setStatus(404);
             return null;
@@ -446,7 +429,6 @@ public class UserController extends StandardController {
         modelAndView.setViewName("/user/my-page/memberModifyInfo");
         return modelAndView;
     }
-
 
     @RequestMapping(value = "/my-page/memberModifyPassword", method = RequestMethod.GET)
     public ModelAndView getMemberModifyPassword(ModelAndView modelAndView) {
@@ -475,8 +457,9 @@ public class UserController extends StandardController {
 
     @RequestMapping(value = "/my-page/memberLeave", method = RequestMethod.POST)
     @ResponseBody
-    public String postMemberLeave(@RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
-                                  DeleteUserVo deleteUserVo) {
+    public String postMemberLeave
+            (@RequestAttribute(name = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+             DeleteUserVo deleteUserVo) {
         JSONObject responseJson = new JSONObject();
         this.userService.deleteUser(user, deleteUserVo);
         responseJson.put("result", deleteUserVo.getResult().name().toLowerCase());
@@ -484,8 +467,9 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/memberFindAccount", method = RequestMethod.GET)
-    public ModelAndView getMemberFindAccount(@RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
-                                             ModelAndView modelAndView) {
+    public ModelAndView getMemberFindAccount
+            (@RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
+             ModelAndView modelAndView) {
         if (user != null) {
             modelAndView.setViewName("redirect:/");
             return modelAndView;

@@ -7,14 +7,14 @@ modifyProfileForm.onsubmit = e => {
         modifyProfileForm['nickname'].focus();
         return false;
     }
-    if (!new RegExp('^[A-Za-z]{1}[A-Za-z0-9_]{1,}$').test(modifyProfileForm['userId'].value)) {
-        hiddenWarning.failureShow('아아디의 값은 영문,숫자,_만 가능하며 첫 글자는 영문이어야 합니다.');
+    if (!new RegExp('^[\\w\\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,20}$').test(modifyProfileForm['userId'].value)) {
+        hiddenWarning.failureShow('아이디의 값은 2자 이상 20자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.');
         modifyProfileForm['userId'].focus();
         modifyProfileForm['userId'].select();
         return false;
     }
-    if (!new RegExp('^(.*[가-힣]{2,5})|(.*[a-z]{4,10})|(.*[0-9]{4,10})$').test(modifyProfileForm['nickname'].value)) {
-        hiddenWarning.failureShow('닉네임의 값이 한글(2-5), 영문 또는 숫자(4-10)에 맞지 않습니다.');
+    if (!new RegExp('^[\\w\\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$').test(modifyProfileForm['nickname'].value)) {
+        hiddenWarning.failureShow('닉네임의 값은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.');
         modifyProfileForm['nickname'].focus();
         modifyProfileForm['nickname'].select();
         return false;
@@ -35,12 +35,12 @@ modifyProfileForm.onsubmit = e => {
                 const responseJson = JSON.parse(xhr.responseText);
                 switch (responseJson['result']) {
                     case 'illegal_nickname' :
-                        hiddenWarning.failureShow('닉네임의 값이 한글(2-5), 영문 또는 숫자(4-10)에 맞지 않습니다.');
+                        hiddenWarning.failureShow('닉네임의 값은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.');
                         modifyProfileForm['nickname'].focus();
                         modifyProfileForm['nickname'].select();
                         break;
                     case 'illegal_user_id' :
-                        hiddenWarning.failureShow('아아디의 값은 영문,숫자,_만 가능하며 첫 글자는 영문이어야 합니다.');
+                        hiddenWarning.failureShow('아이디의 값은 2자 이상 20자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.');
                         modifyProfileForm['userId'].focus();
                         modifyProfileForm['userId'].select();
                         break;

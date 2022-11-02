@@ -56,11 +56,11 @@ public class UserService {
     }
 
     public static boolean checkNickname(String input) {
-        return input != null && input.matches("^(.*[가-힣]{2,5})|(.*[a-z]{4,10})|(.*[0-9]{4,10})$");
+        return input != null && input.matches("^[\\w\\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$");
     }
 
     public static boolean checkUserId(String input) {
-        return input != null && input.matches("^[A-Za-z]{1}[A-Za-z0-9_]{1,}|$");
+        return input != null && input.matches("^[\\w\\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,20}$");
     }
 
     public static boolean checkPassword(String input) {

@@ -151,11 +151,11 @@ findByQnaForm.onsubmit = e => {
                         hiddenWarningByQna.failureShow('입력하신 이메일과 일치하는 회원이 없습니다.');
                         findByQnaForm['email'].select();
                 }
+            } else {
+                hiddenWarningByQna.failureShow('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
+                findByQnaForm['email'].focus();
+                findByQnaForm['email'].select();
             }
-        } else {
-            hiddenWarningByQna.failureShow('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
-            findByQnaForm['email'].focus();
-            findByQnaForm['email'].select();
         }
     };
     xhr.send(formData);
@@ -191,11 +191,11 @@ resendEmailForm.onsubmit = e => {
                         alert('잘못된 요청입니다.');
                         resendEmailForm['email'].select();
                 }
+            }  else {
+                alert('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
+                resendEmailForm['email'].focus();
+                resendEmailForm['email'].select();
             }
-        } else {
-            alert('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
-            resendEmailForm['email'].focus();
-            resendEmailForm['email'].select();
         }
     };
     xhr.send(formData);
