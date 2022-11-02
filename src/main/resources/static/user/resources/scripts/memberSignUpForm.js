@@ -44,7 +44,7 @@ registerForm['email'].addEventListener('focusout', e => {
                     switch (response) {
                         case 0:
                             emailWarning.style.display = 'none';
-                            hiddenWarning.classList.remove('show');
+                            hiddenWarning.hide();
                             break;
                         case 1:
                             emailWarning.style.display = 'block';
@@ -83,16 +83,16 @@ registerForm['userId'].addEventListener('focusout', e => {
                     switch (response) {
                         case 0:
                             idWarning.style.display = 'none';
-                            hiddenWarning.classList.remove('show');
+                            hiddenWarning.hide();
                             break;
                         case 1:
                             idWarning.style.display = 'block';
-                            hiddenWarning.classList.remove('show');
+                            hiddenWarning.hide();
                             idWarning.innerText = '이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.';
                             break;
                         default:
                             idWarning.style.display = 'block';
-                            hiddenWarning.classList.remove('show');
+                            hiddenWarning.hide();
                             idWarning.innerText = '아아디의 값은 영문,숫자,_만 가능하며 첫 글자는 영문이어야 합니다.';
                             break;
                     }
@@ -231,7 +231,7 @@ registerForm.onsubmit = e => {
                         hiddenWarning.failureShow('이미 사용중인 이메일 입니다.');
                         break;
                     case 'failure_duplicate_id' :
-                        document.documentElemen밋t.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
                         hiddenWarning.failureShow('이미 사용중인 아이디 입니다.');
                         break;
                     case 'failure_duplicate_nickname' :
