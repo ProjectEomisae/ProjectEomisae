@@ -9,11 +9,13 @@
 
 #### Project URL :  [Eomisae Project](https://eomisae.dmchoi.dev)
 
+#### Project PPT : [PPT](https://1drv.ms/p/s!ArtB08k_95EPhBIhK3GUo-zuPtLa)
+
 ----------------
 
 ##  Description
 
-![01](Uploading 스크린샷 2022-10-31 오후 8.04.38.png…)
+<img width="1406" alt="스크린샷 2022-10-31 오후 8 04 38" src="https://user-images.githubusercontent.com/108416296/200283960-3c195af5-5863-442f-a730-e61bb09e5380.png">
 
 어미새 사이트는 의류 뿐만 아니라 실생활에 필요한 다양한 제품들의  할인정보까지도 공유되고 있어 다방면으로 유용하고, 실제로 프로젝트를 주관했던 본인들도 평소에 자주 애용하던 사이트입니다.
 
