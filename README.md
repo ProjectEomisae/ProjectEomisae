@@ -37,10 +37,10 @@
 
 Rest API 의 구조에 맞추어 설계하였으며, MVC 패턴으로 개발
 
-#### 개발 언어 : Java 8
+> #### 개발 언어 : Java 8
 
-#### 개발 환경 : Spring Boot 2.6.10, Maven, Thymeleaf, Json, MyBatis
+> #### 개발 환경 : Spring Boot 2.6.10, Maven, Thymeleaf, Json, MyBatis
 
-#### 데이터 베이스 : MySQL (GCP SSH)
+> #### 데이터 베이스 : MySQL (GCP SSH)
 
-#### 형상 관리 툴 : GitHub
+> #### 형상 관리 툴 : GitHub
