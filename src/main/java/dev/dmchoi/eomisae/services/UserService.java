@@ -1,26 +1,18 @@
 package dev.dmchoi.eomisae.services;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import dev.dmchoi.eomisae.entities.member.*;
 import dev.dmchoi.eomisae.enums.member.user.*;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
 import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
-import dev.dmchoi.eomisae.entities.member.*;
 import dev.dmchoi.eomisae.enums.member.user.RegisterResult;
 import dev.dmchoi.eomisae.enums.member.user.UserEmailVerifyResult;
-import dev.dmchoi.eomisae.mappers.IUserMapper;
 import dev.dmchoi.eomisae.mappers.IUserMapper;
 import dev.dmchoi.eomisae.utils.CryptoUtils;
 import dev.dmchoi.eomisae.vos.member.user.*;
 import dev.dmchoi.eomisae.vos.member.user.LoginVo;
-import dev.dmchoi.eomisae.utils.CryptoUtils;
-import dev.dmchoi.eomisae.utils.CryptoUtils;
 import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
-import dev.dmchoi.eomisae.vos.member.user.LoginVo;
-import dev.dmchoi.eomisae.vos.member.user.EmailVerifyVo;
-import dev.dmchoi.eomisae.vos.member.user.LoginVo;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -29,7 +21,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 

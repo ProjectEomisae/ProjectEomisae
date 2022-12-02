@@ -32,8 +32,7 @@ public class SystemService {
         this.userMapper = userMapper;
     }
 
-
-    //  checkActivityAndBan 메서드에서는 전달받은 request가 가지고 있는 Ip 주소를 활용해서
+//  checkActivityAndBan 메서드에서는 전달받은 request가 가지고 있는 Ip 주소를 활용해서
 //  그 Ip 주소가 지난 몇 분 혹은 몇 시간 동안 몇번의 FAILURE나 ILLEGAL을 발생시켰는지 확인하고
 //  그 값을 넘어섰다면 banned_ips에다 insert를 하는 작업을 할 것.
     public void checkActivityAndBan(HttpServletRequest request) {
@@ -119,7 +118,6 @@ public class SystemService {
                 pagingModel.rowCountPerPage,
                 (pagingModel.requestPage - 1) * pagingModel.rowCountPerPage);
     }
-
 
     //  자바가 가진 예외는 StackTrace를 가지는 문자열 값이 없기 때문에 가상의 화면에 찍는다,
 //  가상으로 하나 더 만들어 거기다 찍어두고 찍은 내용을 스트링라이터로 가져온 다음 String으로 가져오는게

@@ -2,7 +2,7 @@
 @import "header.css";
 @import "footer.css";
 @import "myPageHeader.css";
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 :root {
     --color-default: 85, 91, 97;

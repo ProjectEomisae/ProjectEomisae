@@ -49,10 +49,14 @@ registerForm['email'].addEventListener('focusout', e => {
                         case 1:
                             emailWarning.style.display = 'block';
                             emailWarning.innerText = '이미 존재하는 메일 주소입니다. 다른 메일 주소를 입력해주세요.';
+                            registerForm['email'].focus();
+                            registerForm['email'].select();
                             break;
                         default:
                             emailWarning.style.display = 'block';
                             emailWarning.innerText = '올바른 이메일을 입력해주세요.';
+                            registerForm['email'].focus();
+                            registerForm['email'].select();
                             break;
                     }
                 } else {
@@ -89,11 +93,15 @@ registerForm['userId'].addEventListener('focusout', e => {
                             idWarning.style.display = 'block';
                             hiddenWarning.hide();
                             idWarning.innerText = '이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.';
+                            registerForm['userId'].focus();
+                            registerForm['userId'].select();
                             break;
                         default:
                             idWarning.style.display = 'block';
                             hiddenWarning.hide();
                             idWarning.innerText = '아이디의 값은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.';
+                            registerForm['userId'].focus();
+                            registerForm['userId'].select();
                             break;
                     }
                 } else {
@@ -134,11 +142,15 @@ registerForm['nickname'].addEventListener('focusout', e => {
                             nicknameWarning.style.display = 'block';
                             hiddenWarning.hide();
                             nicknameWarning.innerText = '이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.';
+                            registerForm['nickname'].focus();
+                            registerForm['nickname'].select();
                             break;
                         default :
                             document.documentElement.scrollTop = 0;
                             nicknameWarning.style.display = 'none';
                             hiddenWarning.failureShow('닉네임의 값이 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어야 합니다.');
+                            registerForm['nickname'].focus();
+                            registerForm['nickname'].select();
                             break;
                     }
                 } else {
@@ -204,6 +216,10 @@ registerForm.onsubmit = e => {
         registerForm['findPasswordAnswer'].focus();
         return false;
     }
+
+    cover.show('회원 가입 진행 중입니다.\n\n잠시만 기다려 주세요.');
+
+
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     formData.append('email', registerForm['email'].value);
@@ -221,6 +237,7 @@ registerForm.onsubmit = e => {
 
     xhr.open('POST', './memberSignUpForm');
     xhr.onreadystatechange = () => {
+        cover.hide();
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 const responseJson = JSON.parse(xhr.responseText);
@@ -232,14 +249,20 @@ registerForm.onsubmit = e => {
                     case 'failure_duplicate_email' :
                         document.documentElement.scrollTop = 0;
                         hiddenWarning.failureShow('이미 사용중인 이메일 입니다.');
+                        registerForm['email'].focus();
+                        registerForm['email'].select();
                         break;
                     case 'failure_duplicate_id' :
                         document.documentElement.scrollTop = 0;
                         hiddenWarning.failureShow('이미 사용중인 아이디 입니다.');
+                        registerForm['userId'].focus();
+                        registerForm['userId'].select();
                         break;
                     case 'failure_duplicate_nickname' :
                         document.documentElement.scrollTop = 0;
                         hiddenWarning.failureShow('이미 사용중인 닉네임 입니다.');
+                        registerForm['nickname'].focus();
+                        registerForm['nickname'].select();
                         break;
                     case 'success' :
                         alert('입력하신 이메일로 회원가입 인증과 관련된 내용이 전송되었습니다.\n\n해당 메일을 통해 회원가입을 완료해주세요.');

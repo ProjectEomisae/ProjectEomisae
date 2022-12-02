@@ -2,8 +2,6 @@ package dev.dmchoi.eomisae.controllers;
 
 import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.SessionEntity;
-import dev.dmchoi.eomisae.entities.member.UserEmailVerificationCodeEntity;
-import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.entities.system.ActivityLogEntity;
 import dev.dmchoi.eomisae.enums.member.user.LoginResult;
@@ -20,9 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import dev.dmchoi.eomisae.services.UserService;
-import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import dev.dmchoi.eomisae.vos.member.user.RegisterVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +33,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
 import java.io.IOException;
@@ -46,7 +40,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import java.util.Optional;
 
 @Controller(value = "dev.dmchoi.eomisae.controllers.UserController")
 @RequestMapping(value = "/user")
@@ -135,7 +128,7 @@ public class UserController extends StandardController {
     @RequestMapping(value = "/memberSignUpForm", method = RequestMethod.GET)
     public ModelAndView getMemberSignUpForm(ModelAndView modelAndView,
                                             @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
-        if (user != null) {
+        if (user == null) {
             modelAndView.setViewName("redirect:/");
         }
         modelAndView.setViewName("user/memberSignUpForm");
@@ -220,19 +213,31 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberInfo", method = RequestMethod.GET)
-    public ModelAndView getMemberInfo(ModelAndView modelAndView) {
+    public ModelAndView getMemberInfo(ModelAndView modelAndView,
+                                      @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberInfo");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberScrappedDocument", method = RequestMethod.GET)
-    public ModelAndView getMemberScrappedDocument(ModelAndView modelAndView) {
+    public ModelAndView getMemberScrappedDocument(ModelAndView modelAndView,
+                                                  @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberScrappedDocument");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberSavedDocument", method = RequestMethod.GET)
-    public ModelAndView getMemberSavedDocument(ModelAndView modelAndView) {
+    public ModelAndView getMemberSavedDocument(ModelAndView modelAndView,
+                                               @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberSavedDocument");
         return modelAndView;
     }
@@ -243,7 +248,7 @@ public class UserController extends StandardController {
                                              @RequestParam(name = "page") Optional<Integer> optionalPage,
                                              BoardListVo boardListVo) {
         if (user == null) {
-            modelAndView.setViewName("redirect:/user/login");
+            modelAndView.setViewName("redirect:/");
         } else {
             int page = optionalPage.orElse(1);
             int totalRowCount;
@@ -258,13 +263,21 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberOwnVote", method = RequestMethod.GET)
-    public ModelAndView getMemberOwnVote(ModelAndView modelAndView) {
+    public ModelAndView getMemberOwnVote(ModelAndView modelAndView,
+                                         @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberOwnVote");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberCommunicationMessages", method = RequestMethod.GET)
-    public ModelAndView getMemberCommunicationMessages(ModelAndView modelAndView) {
+    public ModelAndView getMemberCommunicationMessages(ModelAndView modelAndView,
+                                                       @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberCommunicationMessages");
         return modelAndView;
     }
@@ -274,7 +287,7 @@ public class UserController extends StandardController {
                                                    @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
                                                    @RequestParam(name = "page") Optional<Integer> optionalPage) {
         if (user == null) {
-            modelAndView.setViewName("redirect:/user/login");
+            modelAndView.setViewName("redirect:/");
         } else {
             int page = optionalPage.orElse(1);
             int totalRowCount;
@@ -290,55 +303,91 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberPointHistoryList", method = RequestMethod.GET)
-    public ModelAndView getMemberPointHistoryList(ModelAndView modelAndView) {
+    public ModelAndView getMemberPointHistoryList(ModelAndView modelAndView,
+                                                  @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberPointHistoryList");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberCashSendLog", method = RequestMethod.GET)
-    public ModelAndView getMemberCashSendLog(ModelAndView modelAndView) {
+    public ModelAndView getMemberCashSendLog(ModelAndView modelAndView,
+                                             @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberCashSendLog");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberCashHistoryList", method = RequestMethod.GET)
-    public ModelAndView getMemberCashHistoryList(ModelAndView modelAndView) {
+    public ModelAndView getMemberCashHistoryList(ModelAndView modelAndView,
+                                                 @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberCashHistoryList");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberOwnComment", method = RequestMethod.GET)
-    public ModelAndView getMemberOwnComment(ModelAndView modelAndView) {
+    public ModelAndView getMemberOwnComment(ModelAndView modelAndView,
+                                            @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberOwnComment");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberOwnVotePosting", method = RequestMethod.GET)
-    public ModelAndView getMemberOwnVotePosting(ModelAndView modelAndView) {
+    public ModelAndView getMemberOwnVotePosting(ModelAndView modelAndView,
+                                                @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberOwnVotePosting");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberOwnBlockList", method = RequestMethod.GET)
-    public ModelAndView getMemberOwnBlockList(ModelAndView modelAndView) {
+    public ModelAndView getMemberOwnBlockList(ModelAndView modelAndView,
+                                              @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberOwnBlockList");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberSnsManage", method = RequestMethod.GET)
-    public ModelAndView getMemberSnsManage(ModelAndView modelAndView) {
+    public ModelAndView getMemberSnsManage(ModelAndView modelAndView,
+                                           @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberSnsManage");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberAutoLoginManager", method = RequestMethod.GET)
-    public ModelAndView getMemberAutoLoginManager(ModelAndView modelAndView) {
+    public ModelAndView getMemberAutoLoginManager(ModelAndView modelAndView,
+                                                  @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberAutoLoginManager");
         return modelAndView;
     }
 
     @RequestMapping(value = "/my-page/memberModifyEmailAddress", method = RequestMethod.GET)
-    public ModelAndView getMemberModifyEmailAddress(ModelAndView modelAndView) {
+    public ModelAndView getMemberModifyEmailAddress(ModelAndView modelAndView,
+                                                    @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberModifyEmailAddress");
         return modelAndView;
     }
@@ -363,7 +412,11 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberModifyInfo", method = RequestMethod.GET)
-    public ModelAndView getMemberModifyInfo(ModelAndView modelAndView) {
+    public ModelAndView getMemberModifyInfo(ModelAndView modelAndView,
+                                            @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberModifyInfo");
         return modelAndView;
     }
@@ -431,7 +484,11 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberModifyPassword", method = RequestMethod.GET)
-    public ModelAndView getMemberModifyPassword(ModelAndView modelAndView) {
+    public ModelAndView getMemberModifyPassword(ModelAndView modelAndView,
+                                                @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberModifyPassword");
         return modelAndView;
     }
@@ -450,7 +507,11 @@ public class UserController extends StandardController {
     }
 
     @RequestMapping(value = "/my-page/memberLeave", method = RequestMethod.GET)
-    public ModelAndView getMemberLeave(ModelAndView modelAndView) {
+    public ModelAndView getMemberLeave(ModelAndView modelAndView,
+                                       @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user) {
+        if (user == null) {
+            modelAndView.setViewName("redirect:/");
+        }
         modelAndView.setViewName("user/my-page/memberLeave");
         return modelAndView;
     }

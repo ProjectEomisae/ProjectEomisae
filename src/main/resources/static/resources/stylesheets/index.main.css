@@ -21,11 +21,17 @@
 
 /* 세일 정보 */
 
+#main > .main-container > .main-section {
+    width: 68%;
+    margin-left: -1.5rem;
+}
+
 #main > .main-container > .main-section > .top-container {
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-bottom: 1.25rem;
 }
 
 #main > .main-container > .main-section > .top-container > .sale-container > .board-info {
@@ -36,7 +42,6 @@
     background-repeat: repeat;
     background-color: rgb(var(--color-white));
     border: 0.0625rem solid rgb(var(--color-white-dim));
-    margin: 0 0 1.25rem 1.25rem;
     overflow: hidden;
 }
 
@@ -124,7 +129,7 @@
     background-repeat: repeat;
     background-color: rgb(var(--color-white));
     border: 0.0625rem solid rgb(var(--color-white-dim));
-    margin: 0 0 1.25rem 1.25rem;
+    margin-left: 1.25rem;
     overflow: hidden;
 }
 
@@ -210,7 +215,7 @@
     border-width: 0.0625rem;
     border-style: solid;
     border-color: rgb(var(--color-white-dim)) rgb(var(--color-white-dim)) rgb(230, 230, 225);
-    margin: 0 0 1.25rem 1.25rem;
+    margin-bottom: 1.25rem;
 }
 
 #main > .main-container > .main-section > .empty-container > .empty-box > span {
@@ -223,10 +228,12 @@
 }
 
 #main > .main-container > .main-section > .middle-container {
+    width: 100%;
     align-items: stretch;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-bottom: 1.25rem;
 }
 
 /* real-image-container */
@@ -239,7 +246,6 @@
     background-position: 0;
     background-image: none;
     background-repeat: repeat;
-    margin: 0 0 1.25rem 1.25rem;
 }
 
 #main > .main-container > .main-section > .middle-container > .real-image-container > .board-title {
@@ -255,7 +261,7 @@
 }
 
 #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box {
-    padding: 0.625rem 0.625rem 1.25rem 0.625rem;
+    padding: 0.875rem;
 }
 
 #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box > .article-list {
@@ -303,6 +309,7 @@
 }
 
 #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box > .article-list > .articles > .title {
+    width: -webkit-fill-available;
     height: auto;
     color: rgb(var(--color-black-33));
     font-weight: bold;
@@ -327,7 +334,7 @@
     background-position: 0;
     background-image: none;
     background-repeat: repeat;
-    margin: 0 0 1.25rem 1.25rem;
+    margin-left: 1.25rem;
 }
 
 #main > .main-container > .main-section > .middle-container > .daily-image-container > .board-title {
@@ -342,11 +349,10 @@
 }
 
 #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box {
-    padding: 0.625rem 0.625rem 1.25rem 0.625rem;
+    padding: 0.875rem;
 }
 
 #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box > .article-list {
-    width: 25.625rem;
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     grid-template-columns: repeat(2, 1fr);
@@ -406,6 +412,10 @@
 
 /* side-empty-section */
 
+#main > .main-container > .side-section > * + * {
+    margin-top: 1.25rem;
+}
+
 #main > .main-container > .side-section > .side-empty-container {
     width: 18.75rem;
     height: 37.5rem;
@@ -414,8 +424,6 @@
     border-color: rgb(var(--color-white-dim)) rgb(var(--color-white-dim)) rgb(230, 230, 225);
     background-image: none;
     background-position: 0 0;
-    margin-right: 3rem;
-    margin-block: unset;
     padding-inline: unset;
     padding-block: unset;
 }
@@ -450,7 +458,6 @@
     background-image: none;
     background-repeat: repeat;
     background-color: rgb(var(--color-white));
-    margin: 0 2.75rem 1.25rem 0;
     overflow: hidden;
 }
 
@@ -459,6 +466,7 @@
     border: 0.0625rem solid rgb(var(--color-white-dim));
     border-radius: 0.1875rem;
 }
+
 /* check*/
 #main > .main-container > .side-section > .notice-container > .board-info > .board-title {
     border-bottom: 0.0625rem solid rgb(var(--color-white-dim));
@@ -543,7 +551,6 @@
     background-image: none;
     background-repeat: repeat;
     background-color: rgb(255, 255, 255);
-    margin: 0 2.75rem 1.25rem 0;
     overflow: hidden;
 }
 
@@ -638,15 +645,42 @@
         justify-content: center;
     }
 
+    #main > .main-container > .main-section {
+        width: 100%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+    }
+
+    #main > .main-container > .side-section > * + * {
+        margin: 0;
+    }
+
     #main > .main-container > .side-section {
         align-items: flex-start;
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
+        justify-content: center;
+        margin: 0 0 2rem 0;
     }
 
     #main > .main-container > .side-section > .side-empty-container {
         display: none;
+    }
+
+    #main > .main-container > .main-section > .middle-container {
+        justify-content: center;
+    }
+
+    #main > .main-container > .side-section > .notice-container,
+    #main > .main-container > .side-section > .event-container {
+        width: 100%;
+    }
+
+    #main > .main-container > .side-section > .event-container {
+        margin-left: 2rem;
     }
 }
 
@@ -678,6 +712,10 @@
         justify-content: flex-start;
     }
 
+    #main > .main-container > .main-section > .top-container > .sale-container {
+        margin-bottom: 2rem;
+    }
+
     #main > .main-container > .main-section > .top-container > .sale-container,
     #main > .main-container > .main-section > .top-container > .all-container {
         width: 100%;
@@ -686,6 +724,7 @@
     #main > .main-container > .main-section > .top-container > .sale-container > .board-info,
     #main > .main-container > .main-section > .top-container > .all-container > .board-info {
         width: calc(100% - 5vw);
+        margin-left: 1.25rem;
     }
 
     #main > .main-container > .main-section > .middle-container {
@@ -697,9 +736,37 @@
 
     #main > .main-container > .main-section > .empty-container {
         width: calc(100% - 2rem);
+    }
+
+    #main > .main-container > .side-section {
+        width: 95%;
+    }
+
+    #main > .main-container > .main-section > .middle-container > .real-image-container {
+        width: 100%;
+        height: 100%;
+        margin-bottom: 2rem;
+    }
+
+    #main > .main-container > .main-section > .middle-container > .daily-image-container {
+        width: 100%;
+        height: 100%;
         margin: 0;
     }
 
+    #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box > .article-list,
+    #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box > .article-list {
+        grid-template-columns: repeat(2, minmax(142px, 4fr));
+        grid-gap: 2rem;
+    }
+
+    #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box > .article-list > .articles,
+    #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box > .article-list > .articles {
+        width: 100%;
+        height: 80%;
+        margin: 0;
+        border: 0.0625rem solid rgba(0, 0, 0, 0.2);
+    }
 }
 
 @media screen and (max-width: 760px) {
@@ -719,6 +786,10 @@
         width: 100%;
     }
 
+    #main > .main-container > .main-section > .top-container > .sale-container {
+        margin: 0;
+    }
+
     #main > .main-container > .main-section > .top-container > .sale-container > .board-info,
     #main > .main-container > .main-section > .top-container > .all-container > .board-info {
         width: auto;
@@ -726,6 +797,7 @@
     }
 
     #main > .main-container > .side-section {
+        width: 100%;
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -741,11 +813,9 @@
 
     #main > .main-container > .main-section > .middle-container > .real-image-container,
     #main > .main-container > .main-section > .middle-container > .daily-image-container {
+        width: 100%;
+        height: 100%;
         margin: 1rem 0;
     }
-
-    #main > .main-container > .main-section > .middle-container > .real-image-container > .image-box,
-    #main > .main-container > .main-section > .middle-container > .daily-image-container > .image-box {
-        width: calc(100% - 3vw);
-    }
 }
+

@@ -78,11 +78,14 @@ findByEmailForm.onsubmit = e => {
         findByEmailForm['email'].select();
         return false;
     }
+    cover.show('요청하신 이메일로 발송 중입니다.\n\n잠시만 기다려 주세요.');
+
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     formData.append('email', findByEmailForm['email'].value);
     xhr.open('POST', './findAccountEmail');
     xhr.onreadystatechange = () => {
+        cover.hide();
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 const responseJson = JSON.parse(xhr.responseText);
@@ -97,7 +100,7 @@ findByEmailForm.onsubmit = e => {
                 }
             }
         } else {
-            hiddenWarningByEmail.failureShow('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
+            hiddenWarningByEmail.failureShow('서버와 통신하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
             findByEmailForm['email'].focus();
             findByEmailForm['email'].select();
         }
@@ -123,6 +126,9 @@ findByQnaForm.onsubmit = e => {
         findByQnaForm['findAccountAnswer'].focus();
         return false;
     }
+
+    cover.show('확인 중입니다.\n\n잠시만 기다려 주세요.');
+
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     formData.append('email', findByQnaForm['email'].value);
@@ -130,6 +136,7 @@ findByQnaForm.onsubmit = e => {
     formData.append('findAccountAnswer', findByQnaForm['findAccountAnswer'].value);
     xhr.open('POST', './findAccountQna');
     xhr.onreadystatechange = () => {
+        cover.hide();
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 const responseJson = JSON.parse(xhr.responseText);
@@ -152,7 +159,7 @@ findByQnaForm.onsubmit = e => {
                         findByQnaForm['email'].select();
                 }
             } else {
-                hiddenWarningByQna.failureShow('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
+                hiddenWarningByQna.failureShow('서버와 통신하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
                 findByQnaForm['email'].focus();
                 findByQnaForm['email'].select();
             }
@@ -174,11 +181,15 @@ resendEmailForm.onsubmit = e => {
         resendEmailForm['email'].select();
         return false;
     }
+
+    cover.show('인증 메일 재발송 중입니다.\n\n잠시만 기다려 주세요.');
+
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     formData.append('email', resendEmailForm['email'].value);
     xhr.open('POST', './resendVerificationEmail');
     xhr.onreadystatechange = () => {
+        cover.hide();
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 const responseJson = JSON.parse(xhr.responseText);
@@ -192,7 +203,7 @@ resendEmailForm.onsubmit = e => {
                         resendEmailForm['email'].select();
                 }
             }  else {
-                alert('서버와 통신하지 못하엿습니다. 잠시 후 다시 시도해 주세요.');
+                alert('서버와 통신하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
                 resendEmailForm['email'].focus();
                 resendEmailForm['email'].select();
             }

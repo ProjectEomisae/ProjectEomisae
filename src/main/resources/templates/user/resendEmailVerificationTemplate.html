@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
 </head>
-<body th:with="url=@{http://127.0.0.1:8080/user/verify-email(code=${resendCodeSalt.getCode()}, salt=${resendCodeSalt.getSalt()})}">
+<body th:with="url=@{https://eomisae.dmchoi.dev/user/verify-email(code=${resendCodeSalt.getCode()}, salt=${resendCodeSalt.getSalt()})}">
 <div style="align-items: stretch;
             display: flex;
             font-size: 0.825rem;
@@ -16,7 +16,7 @@
     <ul style="border-top: 0.09375rem solid rgb(0, 0, 0);
                 border-bottom: 0.09375rem solid rgb(0, 0, 0);
                 padding: 1rem 0 1rem 3rem;">
-        <li>Site : <a href="http://localhost:8080/">http://localhost:8080/</a></li>
+        <li>Site : <a href="https://eomisae.dmchoi.dev/">http://localhost:8080/</a></li>
         <li>이메일 주소 : <span th:text="${email}"></span></li>
         <li>닉네임 : <span th:text="${name}"></span></li>
     </ul>

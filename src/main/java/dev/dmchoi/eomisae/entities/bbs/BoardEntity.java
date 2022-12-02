@@ -9,7 +9,6 @@ public class BoardEntity implements IEntity<BoardEntity> {
     private int index;
     private String id;
     private String name;
-
     private String urlName;
     private int listLevel;
     private int readLevel;

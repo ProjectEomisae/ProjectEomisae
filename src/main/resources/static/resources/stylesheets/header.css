@@ -469,6 +469,7 @@ body > .header > .shadow {
     width: 100%;
     height: 100%;
     backdrop-filter: brightness(50%);
+    -webkit-backdrop-filter: brightness(50%);
     position: fixed;
 }
 
@@ -778,6 +779,58 @@ body > .header > .scroll-arrow > .scroll-button.on {
     z-index: 100;
 }
 
+._object-cover {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 75%);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    z-index: 9;
+}
+
+._object-cover > ._image {
+    height: 4rem;
+    animation-name: anim-cover-image;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+._object-cover > ._message {
+    color: rgb(255, 255, 255);
+    font-size: 1.125rem;
+    line-height: 75%;
+    margin-top: 2rem;
+    pointer-events: none;
+    text-align: center;
+    user-select: none;
+}
+
+body._covering {
+    overflow: hidden;
+}
+
+body._covering > ._object-cover {
+    display: flex;
+}
+
+@keyframes anim-cover-image {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 @media screen and (max-width: 1250px) {
 
     body > .header > .header-container > .top-bar {
@@ -844,7 +897,6 @@ body > .header > .scroll-arrow > .scroll-button.on {
     body > .header > .header-container > .top-bar > .top-container > .form-container > .top-login-container > .top-login-button {
         white-space: nowrap;
     }
-
 }
 
 @media screen and (max-width: 1110px) {

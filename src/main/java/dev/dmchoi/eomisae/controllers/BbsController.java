@@ -1,10 +1,7 @@
 package dev.dmchoi.eomisae.controllers;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import dev.dmchoi.eomisae.dtos.bbs.BoardListArticleDto;
-import dev.dmchoi.eomisae.dtos.bbs.BoardReadCommentDto;
 import dev.dmchoi.eomisae.entities.bbs.*;
-import dev.dmchoi.eomisae.entities.member.ProfileImageEntity;
 import dev.dmchoi.eomisae.entities.member.UserEntity;
 import dev.dmchoi.eomisae.models.PagingModel;
 import dev.dmchoi.eomisae.services.bbs.ArticleReadService;
@@ -151,7 +148,7 @@ public class BbsController {
 //            boardListVo.setResult(BoardListResult.NOT_FOUND);
 //        } else if (boardListVo.getListLevel() > user.getLevel()) {
 //            System.out.println("check");
-//            boardListVo.setResult(BoardListResult.NOT_ALLOWED);
+//            boardListVo.setResult(BoardLi\stResult.NOT_ALLOWED);
 //            System.out.println(boardListVo.getResult());
 //        }
         modelAndView.addObject("paging", paging);
@@ -773,7 +770,7 @@ public class BbsController {
         JSONObject responseJson = new JSONObject();
         JSONArray urlJson = new JSONArray();
         for (ImageEntity imageEntity : imageEntities) {
-            urlJson.put(String.format("http://127.0.0.1:8080/bbs/download-image?id=%s", imageEntity.getId()));
+            urlJson.put(String.format("https://eomisae.dmchoi.dev/bbs/download-image?id=%s", imageEntity.getId()));
         }
         responseJson.put("url", urlJson);
         return responseJson.toString();
@@ -830,7 +827,13 @@ public class BbsController {
 
     @RequestMapping(value = "/mail", method = RequestMethod.GET)
     public ModelAndView getMail(ModelAndView modelAndView,
+                                HttpServletResponse response,
+                                @RequestAttribute(value = UserEntity.ATTRIBUTE_NAME, required = false) UserEntity user,
                                 BoardListVoForFavorite boardListVoForFavorite) {
+        if (user == null) {
+            response.setStatus(404);
+            return null;
+        }
         List<BoardListArticleDto> boardListVoForFavoriteList = this.boardListService.getNewArticlesForFavorite();
         boardListVoForFavorite.setArticles(boardListVoForFavoriteList);
         modelAndView.addObject("boardListVoForFavorite", boardListVoForFavorite);
@@ -840,7 +843,7 @@ public class BbsController {
 
     @RequestMapping(value = "thumbnail-id", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getThumbnailId(@RequestParam(value = "thumbnailId", required = true) String thumbnailId,
-                                               HttpServletResponse response) {
+                                                 HttpServletResponse response) {
         ImageEntity imageEntity = this.articleReadService.getImage(thumbnailId);
         if (imageEntity == null) {
             response.setStatus(404);

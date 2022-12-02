@@ -184,7 +184,8 @@
                                 <li class="link" th:aria-selected="${#request.getRequestURI().contains('ev')}">
                                     <a th:href="@{/bbs/ev}">이벤트</a>
                                 </li>
-                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('mail')}">
+                                <li class="link" th:aria-selected="${#request.getRequestURI().contains('mail')}"
+                                th:classappend="${#request.getAttribute('user') == null} ? 'off'">
                                     <a th:href="@{/bbs/mail}">건의</a>
                                 </li>
                             </ul>
