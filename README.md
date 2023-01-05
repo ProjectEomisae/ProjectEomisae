@@ -3,7 +3,7 @@
   -  ###  어미새 (eomisae) 사이트는 국내외 디자이너 브랜드 포함 각종. 의류 브랜드에 대하여 해외 직구, 세일, 할인 정보 등을 공유하는 국내 패션 커뮤니티입니다.
 
 #### Project nickname : 어미새 프로젝트
-#### Project execution period : 2022.08.01~2021.10.01
+#### Project execution period : 2022.08.01~2022.10.01
 
 #### Project Hosting :  김지원, [최동민](https://dmchoi.dev)
 
